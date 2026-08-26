@@ -17,7 +17,7 @@
 
 **Narration:**
 
-“Track 1 nominates BUB1B L737Ter plus N1002K; phase remains unresolved. N1002 is conserved in checked homologs; wild-type structures support an Asn-contact motif, and AlphaMissense scores it 0.9229. None proves dysfunction. GO is orthogonal confirmation and direct phasing. Exact correction and isogenic assays test stability and function. Cis phase, WT-equivalent abundance and half-life, or WT-equivalent function stops the relevant branch.”
+“Track 1 nominates BUB1B L737Ter plus N1002K; phase remains unresolved. N1002 is conserved in checked homologs. Wild-type structures support an Asn-contact motif, and AlphaMissense scores it 0.9229. None proves dysfunction. The next gate is orthogonal confirmation and direct phasing. Exact correction and isogenic assays then test stability and function. Cis phase, WT-equivalent abundance and half-life, or WT-equivalent function stops the relevant branch.”
 
 ## 0:50–1:19 — One bounded repositioning lead
 
@@ -25,7 +25,7 @@
 
 **Narration:**
 
-“Arimoclomol leads ex vivo. If N1002K destabilizes BUBR1, heat-shock amplification might raise usable protein. Eleven arimoclomol-arm pairs had a positive mean HSP70 change, but sample loss precluded placebo comparison. No study tests BUB1B or MVA; the label says the clinical mechanism in NPC is unknown, ALS and inclusion-body-myositis trials missed efficacy endpoints, and Gaucher assays often used concentrations far above the label-estimated pediatric serum peak.”
+“Arimoclomol is the lead ex-vivo probe. If N1002K destabilizes BUBR1, heat-shock amplification might raise usable protein. In eleven paired samples from the arimoclomol arm, mean PBMC HSP70 increased from baseline at month twelve, but sample loss precluded a controlled placebo comparison. No study tests it in BUB1B or MVA. The label says its clinical mechanism in NPC is unknown. Trials in ALS and inclusion-body myositis missed efficacy endpoints. And Gaucher assays often used concentrations far above the label-estimated pediatric serum peak.”
 
 ## 1:19–1:52 — The exposure and causal funnel
 
@@ -33,7 +33,7 @@
 
 **Narration:**
 
-“Only after a demonstrated stability defect do we test 0.2 to 2 micromolar, with unbound-medium and intracellular LC-MS plus pulse-washout conditions. Five micromolar is non-advancing exploration; a signal only above 2 is a no-go. Exact correction is the causal anchor. Advancement requires checkpoint improvement and concordant first-division error reduction per completion and per enrolled founder, without cytostasis, toxicity, or increased abnormal-clone fitness.”
+“Only after the allele shows the predicted stability defect do we test 0.2 to 2 micromolar, measuring unbound concentration in the medium and intracellular drug by LC-MS, with pulse-and-washout conditions. Five micromolar is non-advancing exploration. Any signal seen only above 2 micromolar is a no-go. Exact correction is the causal anchor. Advancement requires checkpoint improvement and a concordant reduction in first-division errors, measured both per completed division and per enrolled founder, without cytostasis, toxicity, or increased abnormal-clone fitness.”
 
 ## 1:52–2:31 — The differentiator and its receipt
 
@@ -41,7 +41,7 @@
 
 **Narration:**
 
-“We implemented a deterministic paired hierarchical aggregate-count benchmark. The analyzer cannot receive generator truth, the edit event is the inferential unit, and one observed-data rule returns insufficient information instead of inventing a biological answer. Across fourteen thousand comparisons, all fourteen gates passed: strong-generation detection was ninety-point-six percent; the false-generation Wilson upper bound was zero-point-five-six percent; and the sparse mixed case failed closed eighty-five-point-two percent. Bulk-only results remain limited to the toy dynamics.”
+“We implemented a deterministic benchmark for paired, hierarchical aggregate counts. The analyzer never receives the hidden simulation truth. Each independent edit event is the unit of inference. And a prespecified observed-data rule returns insufficient information instead of inventing a biological answer. Across fourteen thousand comparisons, all fourteen prespecified benchmark checks passed. Detection of strong new-error generation was ninety point six percent. The Wilson upper confidence bound for false new-error generation calls was zero point five six percent. And the sparse mixed case failed closed eighty five point two percent. Bulk-only results remain limited to the toy dynamics.”
 
 ## 2:31–2:58 — Why this can matter
 
@@ -49,7 +49,7 @@
 
 **Narration:**
 
-“This is not a cure claim. It is a modular route from confirmation and phase to one exposure-bounded experiment, plus a reusable firewall against false rescue. A positive result nominates independent preclinical replication—not treatment. A negative result records which prespecified gate failed, then stops unsupported medicine. For this child and future studies, rigor means learning the right mechanism before calling anything rescue.”
+“This is not a cure claim. It is a modular path from confirmation and phase to one exposure-bounded experiment, plus a reusable firewall against false rescue. A positive result nominates independent preclinical replication—not treatment. A negative result records which prespecified gate failed, then stops unsupported medicine. For this child and future studies, rigor means learning the right mechanism before calling anything rescue.”
 
 ## Visual evidence notes
 

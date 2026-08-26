@@ -8,7 +8,7 @@
     {
       "path": "reports/josephmayo_track2_pitch_script.md",
       "role": "track2_pitch_script",
-      "sha256": "768bccfe64dd6fedc203dc9f45387f0585bfe29c5fa1e32595911a23ce5e7e33"
+      "sha256": "c53091d61ca92698c733da283882eea9a1e5e751b936ceff320e863b0a2c7801"
     },
     {
       "path": "configs/track2-generation-selection-benchmark.json",

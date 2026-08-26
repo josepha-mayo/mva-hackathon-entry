@@ -23,13 +23,13 @@
       "role": "track2_pitch_script",
       "path": "reports/josephmayo_track2_pitch_script.md",
       "status": "released",
-      "sha256": "768bccfe64dd6fedc203dc9f45387f0585bfe29c5fa1e32595911a23ce5e7e33"
+      "sha256": "c53091d61ca92698c733da283882eea9a1e5e751b936ceff320e863b0a2c7801"
     },
     {
       "role": "track2_reproducibility_manifest",
       "path": "release/track2-reproducibility.json",
       "status": "released",
-      "sha256": "f4dfd9af049968cbce543d905a0900594bfa3b5fa9fe013c0ca1d49b6e286850"
+      "sha256": "de9c2c55274e88dca00a87e7ce3fea163090dedc780c97dece483329a9af02a4"
     }
   ]
 }
