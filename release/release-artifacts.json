@@ -1,17 +1,35 @@
 {
-  "schema": "mva-public-release-quarantine/v1",
+  "schema": "mva-public-release-quarantine/v3",
   "artifacts": [
     {
       "role": "track1_submission_csv",
       "path": "submissions/track1/josephmayo_track1_bub1b_pair.csv",
       "status": "released",
-      "sha256": "26f1d11485449a51b278134ac5bb6b794c6593b5040f7208f052acc6f60c8490"
+      "sha256": "a12d5878c4bfdca43bf0e7143c7a5cc9323739db52a4fd69b5245a86d9cc5dab"
     },
     {
       "role": "track1_methods_report",
       "path": "reports/josephmayo_track1_report.md",
       "status": "released",
-      "sha256": "404aeb1959b3ecc18b9ec52caf324e3d38d6d1805371ed14f6f83c3d7fe8a248"
+      "sha256": "4e1dbcf21102b3f8378a3fdf422fa67c4f5398b5db2f73863a312249d3014de8"
+    },
+    {
+      "role": "track2_repositioning_report",
+      "path": "reports/josephmayo_track2_report.md",
+      "status": "released",
+      "sha256": "b0fb7ddeacd01dbc2e2e6ffe1a80fabd7099ebefea74c59aa9781820cfbfb620"
+    },
+    {
+      "role": "track2_pitch_script",
+      "path": "reports/josephmayo_track2_pitch_script.md",
+      "status": "released",
+      "sha256": "768bccfe64dd6fedc203dc9f45387f0585bfe29c5fa1e32595911a23ce5e7e33"
+    },
+    {
+      "role": "track2_reproducibility_manifest",
+      "path": "release/track2-reproducibility.json",
+      "status": "planned",
+      "sha256": null
     }
   ]
 }

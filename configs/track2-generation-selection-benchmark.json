@@ -1,0 +1,398 @@
+{
+  "schema": "mva-generation-selection-benchmark/v3",
+  "seed": 17032026,
+  "monte_carlo_replicates": 1000,
+  "design": {
+    "edit_events": 3,
+    "clones_per_edit_event": 2,
+    "runs_per_clone": 3,
+    "observation_opportunities_per_run": 250,
+    "shared_event_reference_errors": 300,
+    "shared_event_reference_nonerrors": 750,
+    "shared_division_reference_events": 400,
+    "arm_event_audit_errors": 250,
+    "arm_event_audit_nonerrors": 2000,
+    "arm_division_audit_events": 250
+  },
+  "heterogeneity": {
+    "edit_event_sd": 0.12,
+    "clone_sd": 0.08,
+    "run_sd": 0.05,
+    "arm_well_sd": 0.04,
+    "edit_treatment_sd": 0.06,
+    "clone_treatment_sd": 0.04
+  },
+  "vehicle": {
+    "division_probability": 0.85,
+    "new_error_probability": 0.08,
+    "error_daughter_reproduction_probability": 0.6,
+    "nonerror_daughter_reproduction_probability": 0.78,
+    "error_daughter_death_probability": 0.15,
+    "nonerror_daughter_death_probability": 0.05
+  },
+  "shared_measurement": {
+    "division_detection_probability": 0.95,
+    "error_event_sensitivity": 0.9,
+    "error_event_specificity": 0.995,
+    "followup_if_reproduced": 0.9,
+    "followup_if_died": 0.9,
+    "followup_if_other": 0.9
+  },
+  "vehicle_measurement": {
+    "division_detection_probability": 0.95,
+    "error_event_sensitivity": 0.9,
+    "error_event_specificity": 0.995,
+    "followup_if_reproduced": 0.9,
+    "followup_if_died": 0.9,
+    "followup_if_other": 0.9
+  },
+  "thresholds": {
+    "generation_reduction_ratio": 0.75,
+    "selection_reduction_ratio": 0.75,
+    "selection_increase_ratio": 1.25,
+    "division_reduction_ratio": 0.75,
+    "division_equivalence_lower_ratio": 0.8,
+    "division_equivalence_upper_ratio": 1.25,
+    "toxicity_increase_ratio": 2.0,
+    "event_detection_bias_ratio": 0.8,
+    "event_false_positive_increase_ratio": 2.0,
+    "division_detection_bias_ratio": 0.8,
+    "followup_bias_ratio": 0.85,
+    "minimum_calibration_youden": 0.75,
+    "minimum_detected_divisions_per_edit_event": 500,
+    "minimum_event_positive_followed_per_edit_event": 40,
+    "minimum_event_negative_followed_per_edit_event": 500,
+    "minimum_posterior_separation": 0.5,
+    "confidence_multiplier": 4.30265272991
+  },
+  "acceptance": {
+    "minimum_component_sensitivity_wilson_lower": 0.7,
+    "minimum_component_specificity_wilson_lower": 0.95,
+    "minimum_expected_flag_set_wilson_lower": 0.65,
+    "minimum_interval_coverage_wilson_lower": 0.9,
+    "maximum_absolute_log_ratio_bias": 0.2,
+    "minimum_generation_detection_wilson_lower": 0.8,
+    "maximum_false_generation_wilson_upper": 0.05,
+    "maximum_invalid_fraction_wilson_upper": 0.2
+  },
+  "scenarios": [
+    {
+      "name": "no_change",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.08,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": []
+    },
+    {
+      "name": "fewer_new_errors_strong",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.03,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ]
+    },
+    {
+      "name": "local_generation_ratio_0_75",
+      "gate": "power_curve",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.06,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ]
+    },
+    {
+      "name": "local_generation_ratio_0_6875",
+      "gate": "power_curve",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.055,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ]
+    },
+    {
+      "name": "local_generation_ratio_0_625",
+      "gate": "power_curve",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.05,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ]
+    },
+    {
+      "name": "error_daughter_pruning",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.08,
+        "error_daughter_reproduction_probability": 0.25,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.4,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "error_daughter_pruning"
+      ]
+    },
+    {
+      "name": "error_daughter_preservation",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.08,
+        "error_daughter_reproduction_probability": 0.82,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.08,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "error_daughter_preservation"
+      ]
+    },
+    {
+      "name": "generic_cytostasis",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.5,
+        "new_error_probability": 0.08,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "cytostasis"
+      ]
+    },
+    {
+      "name": "generic_toxicity",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.08,
+        "error_daughter_reproduction_probability": 0.5,
+        "nonerror_daughter_reproduction_probability": 0.65,
+        "error_daughter_death_probability": 0.3,
+        "nonerror_daughter_death_probability": 0.25
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "general_toxicity"
+      ]
+    },
+    {
+      "name": "mixed_generation_selection_cytostasis",
+      "gate": "fail_closed",
+      "treatment": {
+        "division_probability": 0.5,
+        "new_error_probability": 0.03,
+        "error_daughter_reproduction_probability": 0.22,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.45,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": []
+    },
+    {
+      "name": "event_detection_bias",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.08,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.6,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "event_detection_bias"
+      ]
+    },
+    {
+      "name": "event_specificity_bias",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.08,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.96,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "event_specificity_bias"
+      ]
+    },
+    {
+      "name": "division_detection_bias",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.08,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.6,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "division_detection_bias"
+      ]
+    },
+    {
+      "name": "informative_followup_bias",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.08,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.95,
+        "followup_if_died": 0.0,
+        "followup_if_other": 0.0
+      },
+      "expected_flags": [
+        "informative_followup_bias"
+      ]
+    }
+  ]
+}

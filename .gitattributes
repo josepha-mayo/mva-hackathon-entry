@@ -1,3 +1,16 @@
 /submissions/track1/josephmayo_track1_bub1b_pair.csv -text
 /reports/josephmayo_track1_report.md -text
 /release/release-artifacts.json text eol=lf
+/reports/josephmayo_track2_report.md text eol=lf
+/reports/josephmayo_track2_pitch_script.md text eol=lf
+/configs/track2-generation-selection-benchmark.json text eol=lf
+/src/mva_hackathon/generation_selection.py text eol=lf
+/scripts/run_generation_selection_benchmark.py text eol=lf
+/tests/test_generation_selection.py text eol=lf
+/reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json text eol=lf
+/src/mva_hackathon/reproducibility.py text eol=lf
+/scripts/verify_track2_reproducibility.py text eol=lf
+/tests/test_reproducibility.py text eol=lf
+/scripts/create_track2_reproducibility_manifest.py text eol=lf
+/release/track2-reproducibility.json text eol=lf
+/pyproject.toml text eol=lf

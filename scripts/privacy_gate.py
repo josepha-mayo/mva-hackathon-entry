@@ -24,16 +24,45 @@ if str(SOURCE_ROOT) not in sys.path:
     sys.path.insert(0, str(SOURCE_ROOT))
 
 from mva_hackathon.submission import SubmissionError, load_predictions_bytes
+from mva_hackathon.reproducibility import (
+    MANIFEST_PATH as TRACK2_REPRODUCIBILITY_MANIFEST_PATH,
+    validate_manifest_bytes as validate_track2_reproducibility_manifest,
+)
 
 MAX_PUBLIC_BYTES = 10 * 1024 * 1024
 
 RELEASE_MANIFEST_PATH = PurePosixPath("release/release-artifacts.json")
-RELEASE_MANIFEST_SCHEMA = "mva-public-release-quarantine/v1"
+RELEASE_MANIFEST_SCHEMA = "mva-public-release-quarantine/v3"
 RELEASE_ARTIFACT_PATHS = {
     "track1_submission_csv": PurePosixPath(
         "submissions/track1/josephmayo_track1_bub1b_pair.csv"
     ),
     "track1_methods_report": PurePosixPath("reports/josephmayo_track1_report.md"),
+    "track2_repositioning_report": PurePosixPath(
+        "reports/josephmayo_track2_report.md"
+    ),
+    "track2_pitch_script": PurePosixPath(
+        "reports/josephmayo_track2_pitch_script.md"
+    ),
+    "track2_reproducibility_manifest": TRACK2_REPRODUCIBILITY_MANIFEST_PATH,
+}
+RELEASE_MANIFEST_SCHEMA_ARTIFACT_PATHS = {
+    "mva-public-release-quarantine/v1": {
+        role: path
+        for role, path in RELEASE_ARTIFACT_PATHS.items()
+        if role in {"track1_submission_csv", "track1_methods_report"}
+    },
+    "mva-public-release-quarantine/v2": {
+        role: path
+        for role, path in RELEASE_ARTIFACT_PATHS.items()
+        if role
+        in {
+            "track1_submission_csv",
+            "track1_methods_report",
+            "track2_repositioning_report",
+        }
+    },
+    RELEASE_MANIFEST_SCHEMA: RELEASE_ARTIFACT_PATHS,
 }
 RELEASE_MANIFEST_TOP_LEVEL_KEYS = frozenset({"schema", "artifacts"})
 RELEASE_MANIFEST_ARTIFACT_KEYS = frozenset(
@@ -117,6 +146,24 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     PurePosixPath("tests/test_phen2gene_development.py"): frozenset(
         {"MVA", "PPS"}
     ),
+    PurePosixPath("scripts/run_generation_selection_benchmark.py"): frozenset(
+        {"E402"}
+    ),
+    PurePosixPath("src/mva_hackathon/generation_selection.py"): frozenset(
+        {"ARM_NAMES", "CLASSIFICATIONS", "COMPONENT_FLAGS", "ESTIMANDS", "SCHEMA"}
+    ),
+    PurePosixPath("src/mva_hackathon/reproducibility.py"): frozenset(
+        {"ARTIFACT_PATHS", "COMMANDS", "MANIFEST_PATH", "SCHEMA"}
+    ),
+    PurePosixPath("scripts/verify_track2_reproducibility.py"): frozenset(
+        {"E402", "GO", "NO-GO"}
+    ),
+    PurePosixPath("scripts/create_track2_reproducibility_manifest.py"): frozenset(
+        {"E402"}
+    ),
+    PurePosixPath("reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json"): frozenset(
+        {"SP0"}
+    ),
 }
 QUOTED_UPPER_IDENTIFIER_PATTERN = re.compile(
     r"[`'\"]([A-Z][A-Z0-9-]{1,15})[`'\"]"
@@ -195,7 +242,7 @@ NON_PUBLIC_ROOT_DIRECTORY_ALLOWLIST = frozenset(
     {
         PurePosixPath(".git"), PurePosixPath(".mypy_cache"),
         PurePosixPath(".pytest_cache"), PurePosixPath(".ruff_cache"),
-        PurePosixPath(".venv"),
+        PurePosixPath(".venv"), PurePosixPath("work"),
     }
 )
 GENERATED_DIRECTORY_NAME_ALLOWLIST = frozenset({"__pycache__"})
@@ -268,10 +315,69 @@ def _validate_track1_release_report(data: bytes) -> list[str]:
     return []
 
 
+def _validate_track2_release_report(data: bytes) -> list[str]:
+    if data.startswith(b"\xef\xbb\xbf"):
+        return ["Track 2 report must not contain a UTF-8 BOM"]
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError:
+        return ["Track 2 report must be strict UTF-8 Markdown"]
+    if not text.strip():
+        return ["Track 2 report must not be empty"]
+    if re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", text):
+        return ["Track 2 report contains a disallowed control character"]
+    if re.search(
+        r"<!--\s*(?:[A-Z][A-Z0-9]*_)+[A-Z0-9]+\s*-->|"
+        r"(?i:\b(?:TODO|TBD|PLACEHOLDER)\b)",
+        text,
+    ):
+        return ["Track 2 report contains an unresolved placeholder marker"]
+    required_sections = (
+        r"(?m)^## Executive decision\s*$",
+        r"(?m)^## (?:\d+\. )?Falsification and decision table\s*$",
+        r"(?m)^## (?:\d+\. )?Limitations\s*$",
+        r"(?m)^## References\s*$",
+    )
+    if any(re.search(pattern, text) is None for pattern in required_sections):
+        return ["Track 2 report is missing one or more required sections"]
+    return []
+
+
+def _validate_track2_pitch_script(data: bytes) -> list[str]:
+    issues = _validate_track2_release_report(data)
+    if issues and "missing one or more required sections" not in issues[0]:
+        return issues
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError:
+        return ["Track 2 pitch must be strict UTF-8 Markdown"]
+    required_markers = (
+        "# Three-minute Track 2 pitch",
+        "**Target runtime:**",
+        "**Claim boundary:**",
+        "## 0:00–0:22",
+        "## 2:31–2:58",
+    )
+    if any(marker not in text for marker in required_markers):
+        return ["Track 2 pitch is missing the frozen runtime or claim boundary"]
+    return []
+
+
 RELEASE_ROLE_VALIDATORS: dict[str, Callable[[bytes], list[str]]] = {
     "track1_submission_csv": _validate_track1_release_csv,
     "track1_methods_report": _validate_track1_release_report,
+    "track2_repositioning_report": _validate_track2_release_report,
+    "track2_pitch_script": _validate_track2_pitch_script,
+    "track2_reproducibility_manifest": lambda _data: [],
 }
+RELEASE_BIOLOGY_ROLES = frozenset(
+    {
+        "track1_submission_csv",
+        "track1_methods_report",
+        "track2_repositioning_report",
+        "track2_pitch_script",
+    }
+)
 
 
 def _validate_release_manifest(
@@ -304,13 +410,16 @@ def _validate_release_manifest(
                 details.append("manifest root must be an object")
             elif set(manifest) != RELEASE_MANIFEST_TOP_LEVEL_KEYS:
                 details.append("manifest root has missing or surplus keys")
-            elif manifest.get("schema") != RELEASE_MANIFEST_SCHEMA:
+            elif manifest.get("schema") not in RELEASE_MANIFEST_SCHEMA_ARTIFACT_PATHS:
                 details.append("manifest schema is not the supported fixed version")
             elif not isinstance(manifest.get("artifacts"), list):
                 details.append("manifest artifacts must be a list")
             else:
+                schema_artifact_paths = RELEASE_MANIFEST_SCHEMA_ARTIFACT_PATHS[
+                    manifest["schema"]
+                ]
                 artifacts = manifest["artifacts"]
-                if len(artifacts) != len(RELEASE_ARTIFACT_PATHS):
+                if len(artifacts) != len(schema_artifact_paths):
                     details.append("manifest must declare exactly the fixed release artifacts")
 
                 seen_roles: set[str] = set()
@@ -329,14 +438,14 @@ def _validate_release_manifest(
                     path_text = entry.get("path")
                     status = entry.get("status")
                     digest = entry.get("sha256")
-                    if not isinstance(role, str) or role not in RELEASE_ARTIFACT_PATHS:
+                    if not isinstance(role, str) or role not in schema_artifact_paths:
                         details.append(f"{label} has an unknown release role")
                         continue
                     if role in seen_roles:
                         details.append(f"{label} duplicates a release role")
                     seen_roles.add(role)
 
-                    expected_path = RELEASE_ARTIFACT_PATHS[role]
+                    expected_path = schema_artifact_paths[role]
                     if not isinstance(path_text, str) or path_text != expected_path.as_posix():
                         details.append(f"{label} does not use the role's fixed path and extension")
                         continue
@@ -369,13 +478,19 @@ def _validate_release_manifest(
                     if hashlib.sha256(artifact_data).hexdigest() != digest:
                         details.append(f"{label} digest does not match the exact artifact bytes")
                         continue
-                    validation_issues = RELEASE_ROLE_VALIDATORS[role](artifact_data)
+                    if role == "track2_reproducibility_manifest":
+                        validation_issues = validate_track2_reproducibility_manifest(
+                            artifact_data,
+                            load_artifact,
+                        )
+                    else:
+                        validation_issues = RELEASE_ROLE_VALIDATORS[role](artifact_data)
                     if validation_issues:
                         details.extend(f"{label}: {issue}" for issue in validation_issues)
                         continue
                     provisional[expected_path] = role
 
-                missing_roles = set(RELEASE_ARTIFACT_PATHS) - seen_roles
+                missing_roles = set(schema_artifact_paths) - seen_roles
                 if missing_roles:
                     details.append("manifest is missing one or more fixed release roles")
 
@@ -469,7 +584,7 @@ def _inspect_bytes(
             relative,
             text,
             source,
-            allow_released_biology=released_role is not None,
+            allow_released_biology=released_role in RELEASE_BIOLOGY_ROLES,
         )
     )
     return issues

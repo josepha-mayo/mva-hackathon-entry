@@ -8,7 +8,7 @@
 
 We prioritized causal variants for the challenge proband with a deterministic, CPU-only workflow that keeps discovery, phenotype reranking, mechanism assessment, and manual interpretation separate. We normalized and consequence-annotated the supplied single-sample GRCh38 call set, then built same-gene biallelic candidates only when both heterozygous alleles affected at least one shared protein-coding transcript. Candidate records preserve phase as `trans_confirmed`, `cis_confirmed`, or `unresolved`; unresolved phase is never promoted to trans. Gene2Phenotype allelic requirements and mechanisms, exact allele-and-gene ClinVar matches, current gnomAD rarity, call quality, and diagnosis-name-blinded HPO similarity were retained as separate evidence axes rather than collapsed into a clinical probability.
 
-The rank-1 hypothesis is a *BUB1B* pair on the MANE Select transcript NM_001211.6 / ENST00000287598.11: c.2210T>G p.(Leu737Ter) and c.3006T>G p.(Asn1002Lys). Both are high-quality heterozygous PASS calls. The first is a stop-gained, LoF-compatible allele with a two-star Pathogenic/Likely pathogenic ClinVar record. The second is an ultra-rare missense VUS in the BUBR1 kinase domain; public sequence, structural, conservation, and disease-architecture evidence motivates testing a hypomorphic/stability hypothesis but does not prove mutant function. The pair is rank 1 in evidence-synthesis and pathogenic-anchor orderings across three independently extracted HPO sets. Phase remains unresolved because no parental genotypes or informative phase block are available.
+The rank-1 hypothesis is a *BUB1B* pair on the MANE Select transcript NM_001211.6 / ENST00000287598.11: c.2210T>G p.(Leu737Ter) and c.3006T>G p.(Asn1002Lys). Both are high-quality heterozygous PASS calls. The first is a stop-gained, LoF-compatible allele with a two-star, two-submitter Pathogenic/Likely pathogenic **variant-level** ClinVar aggregate; the MVA-specific variant-condition record is one-star and its assertion is based on expected loss of function rather than a reported affected individual. The second is an ultra-rare missense VUS in the BUBR1 C-terminal domain; public sequence, structural, conservation, and disease-architecture evidence motivates testing a hypomorphic/stability hypothesis but does not prove mutant function. The pair is rank 1 in evidence-synthesis and pathogenic-anchor orderings across three independently extracted HPO sets. Phase remains unresolved because no parental genotypes or informative phase block are available.
 
 Strengths are pair-level reasoning, shared-transcript and mechanism gates, diagnosis-label-independent phenotype sensitivity, exact provenance, and explicit negative evidence. Limitations are unresolved phase, no direct assay for p.Asn1002Lys, incomplete assessment of structural/noncoding causes, one challenge subject, and no calibrated EPCR model. The proposed EPCR value is therefore an uncalibrated ordering value in the required EPCR field, not a posterior probability. This is a research hypothesis requiring parental segregation, orthogonal molecular confirmation, and genetics-team interpretation; it is not a clinical diagnosis or treatment recommendation.
 
@@ -28,7 +28,7 @@ Strengths are pair-level reasoning, shared-transcript and mechanism gates, diagn
 |---|---|---|
 | Fail-closed compound-pair graph | 9,862 protein-altering variants reduced to 1,182 pair-disease rows; shared transcript required; confirmed cis excluded | Unresolved phase is never promoted to trans |
 | Diagnosis-label-blinded robustness | Independent HPO extractions had Jaccard 0.867; evidence and anchor ranks remained 1 across lexical, consensus, and union sets | Phenotype supports ranking but cannot create or delete a genotype pair |
-| Allele-specific triangulation | Exact two-star P/LP stop anchor plus ultra-rare missense; AlphaMissense 0.9229 is counterbalanced by an equivalent-protein ClinVar VUS, bounded PubMed and Europe PMC searches that found no exact-variant paper, and no human experimental structure at N1002 | The missense remains a VUS and its mechanism remains unproven |
+| Allele-specific triangulation | Exact two-star, two-submitter variant-level P/LP stop aggregate (one-star for the MVA-specific condition record) plus ultra-rare missense; AlphaMissense 0.9229 is counterbalanced by an equivalent-protein ClinVar VUS, bounded PubMed and Europe PMC searches that found no exact-variant paper, and no human experimental structure at N1002 | The missense remains a VUS and its mechanism remains unproven |
 | Reproducibility | 152 public package tests, seven private adapter regressions, nine public-evidence invariants, and 10,000 exact scorer comparisons | Component correctness is not clinical validation |
 
 ### Automation and manual-review contract
@@ -103,7 +103,7 @@ Exact allele-key intersection against the pinned GRCh38 ClinVar file found six s
 
 | Evidence | p.(Leu737Ter) | p.(Asn1002Lys) |
 |---|---:|---:|
-| Exact ClinVar | VCV000533901; P/LP; two stars; no conflicts | no exact record |
+| Exact ClinVar | VCV000533901; variant-level P/LP; two submitters/two stars/no conflicts; MVA-specific RCV000641226 is Pathogenic/one submitter/one star | no exact record |
 | gnomAD v4.1.1 total AC / AN | 120 / 1,614,020 | 1 / 1,614,226 |
 | gnomAD total AF | 7.435e-5 | 6.195e-7 |
 | Homozygotes | 0 | 0 |

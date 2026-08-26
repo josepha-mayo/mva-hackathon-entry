@@ -42,7 +42,7 @@ git diff --cached --stat
 
 Public outputs may include the ranked challenge answer, code, methods, and aggregate/allowed evidence, but never the gated source files or unauthorized identifying detail. Cite public participant work if it influenced a hypothesis.
 
-The two final Track 1 release surfaces are fail-closed. Their exact paths and
+The two final Track 1 surfaces, Track 2 report, pitch script, and transitive reproducibility manifest are fail-closed. Their exact paths and
 states live in `release/release-artifacts.json`, and the privacy gate recognizes
 no alternate manifest location, role, path, or extension. A `planned` entry has
 a null digest and grants no exception; if its artifact already exists, the gate

@@ -8,10 +8,11 @@ Reproducible, privacy-first work for Sage Bionetworks' **Rare Disease, Real Kid:
 - Registration, access, secure-storage, and machine receipts remain private operational records and are not published in this repository.
 - Controlled-data processing occurs only in the separate local private root; gated source files and verbatim phenotype text are excluded from this tree.
 - The public leaderboard is saturated: at the 2026-08-26 18:07 UTC refresh, all 24 displayed entries scored 100 rank points and F-max 1.000.
-- Public participant outputs remain segregated landscape context and are not ranking inputs. Only the two organizer-required, exact-path release surfaces disclose the proposed challenge answer; their bytes are digest-bound at release.
+- Public participant outputs remain segregated landscape context and are not ranking inputs. Every answer-bearing release surface uses one fixed path and an exact-byte release digest.
 - No submission has been made. Track 1 allows six attempts; Track 2 allows one final attempt.
 - The local scorer matched all fields from the pinned official evaluator in 10,000 deterministic randomized synthetic cases.
 - A 600-case synthetic inheritance component benchmark recovered all 500 positive truths and all 200 compound-pair truths, excluded every confirmed-cis pair, and intentionally retained 60 unresolved distractor pairs. This validates enumeration invariants only, not biological ranking.
+- The Track 2 report nominates one exposure-gated ex-vivo screening hypothesis, not a treatment. Its v3 paired hierarchical fixed-cohort aggregate-count benchmark passed all 14 configured gates across 14,000 comparisons: strong-effect generation detection was 90.6%, the maximum false-generation 95% Wilson upper bound across required non-generation confounds was 0.564%, and the sparse mixed case failed closed 85.2% of the time. These are synthetic software-behavior measurements, not biological validation, treatment efficacy, or real-study power.
 
 ## Track 1 release surfaces
 
@@ -20,6 +21,16 @@ Reproducible, privacy-first work for Sage Bionetworks' **Rare Disease, Real Kid:
 - [Exact-byte release manifest](release/release-artifacts.json)
 
 The proposed causal pair is a research hypothesis, not a confirmed molecular diagnosis. Phase and the missense mechanism remain unresolved, and the report states the decisive confirmation path.
+
+## Track 2 release surface
+
+- [Drug-repositioning research report](reports/josephmayo_track2_report.md)
+- [Three-minute pitch script and storyboard](reports/josephmayo_track2_pitch_script.md)
+- [Generation-versus-selection benchmark receipt](reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json)
+- [Receipt-bound benchmark configuration](configs/track2-generation-selection-benchmark.json)
+- [Transitive reproducibility manifest](release/track2-reproducibility.json)
+
+The single lead is arimoclomol strictly as an exposure-gated ex-vivo probe. The proposal advances only after trans phase, an exact missense-allele defect, a prespecified chaperone-response signal at a conservative nominal concentration with measured medium and intracellular exposure, functional chromosome-segregation improvement, and clone-safety gates. It is not medical advice and does not support administering any medicine.
 
 ## Win condition
 
@@ -39,9 +50,12 @@ Account-specific access records and machine-specific storage verdicts must remai
 python -m unittest discover -s tests -v
 python scripts/check_access.py
 python scripts/privacy_gate.py .
+python scripts/verify_track2_reproducibility.py .
+python scripts/create_track2_reproducibility_manifest.py . --source-commit <40-hex>
 python scripts/storage_preflight.py --root $env:MVA_PRIVATE_ROOT --mode minimal
 python scripts/fetch_minimum.py --root $env:MVA_PRIVATE_ROOT
 python scripts/differential_score_check.py --official-evaluation <pinned-space-checkout>\evaluation.py --expected-commit d27c33953ecb0cfd7fa316c7cd93ff0ffb05cc1d --cases 10000
+python scripts/run_generation_selection_benchmark.py --config configs/track2-generation-selection-benchmark.json --output local_dev/track2-generation-selection.json
 ```
 
 `fetch_minimum.py` is plan-only unless `--apply` is supplied. It refuses to make even a gated payload request unless storage passes the encryption, ACL, volume, path, and free-space checks; pins the dataset revision; uses private staging/cache paths; and intentionally omits the eight raw FASTQ files.

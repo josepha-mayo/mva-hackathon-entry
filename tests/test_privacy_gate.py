@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from privacy_gate import (
     RELEASE_ARTIFACT_PATHS,
+    RELEASE_MANIFEST_SCHEMA,
     RELEASE_MANIFEST_PATH,
     findings,
 )
@@ -64,11 +65,17 @@ class PrivacyGateTests(unittest.TestCase):
         *,
         csv_status: str = "planned",
         report_status: str = "planned",
+        track2_report_status: str = "planned",
+        pitch_status: str = "planned",
+        reproducibility_status: str = "planned",
     ) -> tuple[Path, dict[str, object]]:
         artifacts: list[dict[str, object]] = []
         for role, status in (
             ("track1_submission_csv", csv_status),
             ("track1_methods_report", report_status),
+            ("track2_repositioning_report", track2_report_status),
+            ("track2_pitch_script", pitch_status),
+            ("track2_reproducibility_manifest", reproducibility_status),
         ):
             artifact_path = self.release_path(root, role)
             digest = None
@@ -83,7 +90,7 @@ class PrivacyGateTests(unittest.TestCase):
                 }
             )
         manifest: dict[str, object] = {
-            "schema": "mva-public-release-quarantine/v1",
+            "schema": RELEASE_MANIFEST_SCHEMA,
             "artifacts": artifacts,
         }
         manifest_path = root.joinpath(*RELEASE_MANIFEST_PATH.parts)
@@ -237,6 +244,42 @@ class PrivacyGateTests(unittest.TestCase):
             self.assertTrue(any("header order" in issue for issue in issues))
             self.assertTrue(any("non-synthetic biological identifier" in issue for issue in issues))
 
+    def test_legacy_v1_manifest_remains_valid_for_git_history(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            csv_path = self.write_release_csv(root)
+            report_path = self.release_path(root, "track1_methods_report")
+            report_path.parent.mkdir(parents=True, exist_ok=True)
+            report_path.write_text("# Track 1 methods\n", encoding="utf-8")
+            artifacts = []
+            for role, artifact_path in (
+                ("track1_submission_csv", csv_path),
+                ("track1_methods_report", report_path),
+            ):
+                artifacts.append(
+                    {
+                        "role": role,
+                        "path": RELEASE_ARTIFACT_PATHS[role].as_posix(),
+                        "status": "released",
+                        "sha256": hashlib.sha256(artifact_path.read_bytes()).hexdigest(),
+                    }
+                )
+            manifest_path = root.joinpath(*RELEASE_MANIFEST_PATH.parts)
+            manifest_path.parent.mkdir(parents=True, exist_ok=True)
+            manifest_path.write_text(
+                json.dumps(
+                    {
+                        "schema": "mva-public-release-quarantine/v1",
+                        "artifacts": artifacts,
+                    },
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            self.assertEqual(findings(root, include_git=False), [])
+
     def test_planned_report_receives_no_quarantine_until_digest_bound(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -278,6 +321,33 @@ class PrivacyGateTests(unittest.TestCase):
             self.assertTrue(any("phenotype bundle" in issue for issue in issues))
             self.assertFalse(any("non-synthetic biological identifier" in issue for issue in issues))
             self.assertFalse(any("genomic coordinate" in issue for issue in issues))
+
+    def test_track2_report_requires_digest_and_complete_sections(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            report = self.release_path(root, "track2_repositioning_report")
+            report.parent.mkdir(parents=True)
+            identifier = "control".upper() + str(42)
+            report.write_text(
+                "# Research report\n\n"
+                "## Executive decision\n\n"
+                f"Candidate gene {identifier}.\n\n"
+                "## Falsification and decision table\n\n"
+                "A negative result rejects the hypothesis.\n\n"
+                "## Limitations\n\n"
+                "Synthetic test only.\n\n"
+                "## References\n\n"
+                "Primary sources.\n",
+                encoding="utf-8",
+            )
+
+            self.write_manifest(root)
+            planned = findings(root, include_git=False)
+            self.assertTrue(any("planned artifact exists" in issue for issue in planned))
+            self.assertTrue(any("non-synthetic biological identifier" in issue for issue in planned))
+
+            self.write_manifest(root, track2_report_status="released")
+            self.assertEqual(findings(root, include_git=False), [])
 
     def test_released_report_rejects_unresolved_placeholder_markers(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
