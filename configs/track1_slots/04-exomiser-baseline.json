@@ -1,0 +1,17 @@
+{
+  "schema": "mva.track1-slot-config/v1",
+  "slot": 4,
+  "method_id": "exomiser-baseline",
+  "scientific_question": "How does a version-locked Exomiser baseline rank the supplied small-variant callset under the same offline public-resource boundary?",
+  "resource_scope": "public_offline_only",
+  "execution_mode": "fully_automated",
+  "phenotype_mode": "enabled",
+  "gene_disease_knowledge": "enabled",
+  "ranking_backend": "exomiser_baseline",
+  "input_evidence": "supplied_vcf_only",
+  "compound_heterozygous_pairing": "enabled",
+  "manual_candidate_injection": false,
+  "network_access": "disabled",
+  "leaderboard_adaptation": "prohibited",
+  "tool_lock_policy": "version_and_digest_required_before_execution"
+}

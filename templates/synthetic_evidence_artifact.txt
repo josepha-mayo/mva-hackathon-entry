@@ -1,0 +1,2 @@
+Synthetic evidence fixture for validator tests only.
+It contains no case data, phenotype terms, genomic coordinates, or candidate claims.

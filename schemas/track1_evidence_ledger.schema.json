@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mva:track1-evidence-ledger:v1",
+  "title": "MVA Track 1 normalized qualitative evidence ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "ledger_id", "purpose", "entries"],
+  "properties": {
+    "schema": {"const": "mva.track1-evidence-ledger/v1"},
+    "ledger_id": {"$ref": "#/$defs/opaqueId"},
+    "purpose": {"type": "string", "minLength": 20, "maxLength": 2000},
+    "entries": {"type": "array", "items": {"$ref": "#/$defs/evidenceEntry"}}
+  },
+  "$defs": {
+    "opaqueId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$",
+      "maxLength": 128
+    },
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "nullableDigest": {"anyOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "nullableOpaqueId": {"anyOf": [{"$ref": "#/$defs/opaqueId"}, {"type": "null"}]},
+    "nullableText": {"type": ["string", "null"], "maxLength": 2000},
+    "evidenceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id", "model_slot", "claim", "allele_or_pair_id", "evidence_type",
+        "privacy_class", "phase", "phase_state", "direction", "assessment_status",
+        "method_id", "source_class", "source_identifier", "source_version", "source_url",
+        "tool_name", "tool_version", "tool_digest", "run_digest", "config_digest",
+        "result", "unit", "independent_replication", "uncertainty", "counterevidence",
+        "decision_effect", "artifact_path", "artifact_sha256", "manual_action",
+        "reviewer", "reviewed_at", "not_assessable_reason", "limitations"
+      ],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/opaqueId"},
+        "model_slot": {"type": ["integer", "null"], "minimum": 1, "maximum": 6},
+        "claim": {"type": "string", "minLength": 10, "maxLength": 2000},
+        "allele_or_pair_id": {"$ref": "#/$defs/nullableOpaqueId"},
+        "evidence_type": {"$ref": "#/$defs/opaqueId"},
+        "privacy_class": {"enum": ["public", "synthetic", "controlled"]},
+        "phase": {
+          "enum": [
+            "ingest_qc", "phenotype_blind_discovery", "phenotype_aware_rerank",
+            "completeness_audit", "orthogonal_validation", "manual_review",
+            "submission_freeze"
+          ]
+        },
+        "phase_state": {
+          "enum": ["trans_confirmed", "cis_confirmed", "unresolved", "not_applicable", "not_assessable"]
+        },
+        "direction": {"enum": ["supports", "contradicts", "neutral"]},
+        "assessment_status": {"enum": ["positive", "negative", "not_assessable"]},
+        "method_id": {"$ref": "#/$defs/opaqueId"},
+        "source_class": {
+          "enum": [
+            "public_database", "public_literature", "public_ontology", "public_software",
+            "synthetic_fixture", "controlled_source", "derived_evidence", "manual_review"
+          ]
+        },
+        "source_identifier": {"$ref": "#/$defs/opaqueId"},
+        "source_version": {"$ref": "#/$defs/nullableText"},
+        "source_url": {
+          "anyOf": [
+            {"type": "string", "pattern": "^https://", "maxLength": 2000},
+            {"type": "null"}
+          ]
+        },
+        "tool_name": {"$ref": "#/$defs/nullableOpaqueId"},
+        "tool_version": {"$ref": "#/$defs/nullableText"},
+        "tool_digest": {"$ref": "#/$defs/nullableDigest"},
+        "run_digest": {"$ref": "#/$defs/nullableDigest"},
+        "config_digest": {"$ref": "#/$defs/nullableDigest"},
+        "result": {"type": ["string", "number", "boolean", "null"]},
+        "unit": {"$ref": "#/$defs/nullableText"},
+        "independent_replication": {
+          "enum": ["replicated", "not_replicated", "not_attempted", "not_applicable", "not_assessable"]
+        },
+        "uncertainty": {"type": "string", "minLength": 10, "maxLength": 2000},
+        "counterevidence": {
+          "type": "array", "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1, "maxLength": 2000}
+        },
+        "decision_effect": {"enum": ["promote", "demote", "exclude", "retain", "no_change", "defer"]},
+        "artifact_path": {
+          "anyOf": [
+            {"type": "string", "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$", "maxLength": 500},
+            {"type": "null"}
+          ]
+        },
+        "artifact_sha256": {"$ref": "#/$defs/nullableDigest"},
+        "manual_action": {"$ref": "#/$defs/nullableText"},
+        "reviewer": {"$ref": "#/$defs/nullableOpaqueId"},
+        "reviewed_at": {
+          "anyOf": [
+            {"type": "string", "format": "date-time", "pattern": "Z$"},
+            {"type": "null"}
+          ]
+        },
+        "not_assessable_reason": {"$ref": "#/$defs/nullableText"},
+        "limitations": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1, "maxLength": 2000}
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"assessment_status": {"const": "not_assessable"}}},
+          "then": {
+            "properties": {
+              "direction": {"const": "neutral"},
+              "phase_state": {"enum": ["not_assessable", "not_applicable"]},
+              "result": {"type": "null"},
+              "unit": {"type": "null"},
+              "independent_replication": {"const": "not_assessable"},
+              "decision_effect": {"enum": ["defer", "no_change"]},
+              "not_assessable_reason": {"type": "string", "minLength": 10, "maxLength": 2000}
+            }
+          },
+          "else": {
+            "properties": {
+              "result": {"type": ["string", "number", "boolean"]},
+              "not_assessable_reason": {"type": "null"}
+            }
+          }
+        },
+        {
+          "oneOf": [
+            {"properties": {"tool_name": {"type": "null"}, "tool_version": {"type": "null"}, "tool_digest": {"type": "null"}}},
+            {"properties": {"tool_name": {"type": "string"}, "tool_version": {"type": "string"}, "tool_digest": {"$ref": "#/$defs/digest"}}}
+          ]
+        },
+        {
+          "oneOf": [
+            {"properties": {"run_digest": {"type": "null"}, "config_digest": {"type": "null"}}},
+            {"properties": {"run_digest": {"$ref": "#/$defs/digest"}, "config_digest": {"$ref": "#/$defs/digest"}}}
+          ]
+        },
+        {
+          "oneOf": [
+            {"properties": {"artifact_path": {"type": "null"}, "artifact_sha256": {"type": "null"}}},
+            {"properties": {"artifact_path": {"type": "string"}, "artifact_sha256": {"$ref": "#/$defs/digest"}}}
+          ]
+        },
+        {
+          "oneOf": [
+            {"properties": {"reviewer": {"type": "null"}, "reviewed_at": {"type": "null"}}},
+            {"properties": {"reviewer": {"type": "string"}, "reviewed_at": {"type": "string"}}}
+          ]
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "enum": ["public_database", "public_literature", "public_ontology", "public_software"]
+              }
+            }
+          },
+          "then": {"properties": {"source_url": {"type": "string", "pattern": "^https://"}}}
+        },
+        {
+          "not": {
+            "properties": {
+              "privacy_class": {"enum": ["public", "synthetic"]},
+              "source_class": {"const": "controlled_source"}
+            },
+            "required": ["privacy_class", "source_class"]
+          }
+        }
+      ]
+    }
+  }
+}

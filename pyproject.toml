@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mva-hackathon-entry"
+version = "0.1.0"
+description = "Privacy-first reproducible tooling for the MVA Hackathon 2026"
+requires-python = ">=3.11"
+license = { text = "CC-BY-4.0" }
+dependencies = ["huggingface-hub==1.27.0"]
+
+[project.scripts]
+mva-synthetic-pipeline = "mva_hackathon.synthetic_pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

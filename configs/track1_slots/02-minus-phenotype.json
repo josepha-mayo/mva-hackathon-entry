@@ -1,0 +1,17 @@
+{
+  "schema": "mva.track1-slot-config/v1",
+  "slot": 2,
+  "method_id": "minus-phenotype",
+  "scientific_question": "Does the same integrated workflow recover a stable ranking when all phenotype-derived ranking evidence is disabled?",
+  "resource_scope": "public_offline_only",
+  "execution_mode": "fully_automated",
+  "phenotype_mode": "disabled",
+  "gene_disease_knowledge": "enabled",
+  "ranking_backend": "integrated_public_auto",
+  "input_evidence": "full_prespecified_local_evidence",
+  "compound_heterozygous_pairing": "enabled",
+  "manual_candidate_injection": false,
+  "network_access": "disabled",
+  "leaderboard_adaptation": "prohibited",
+  "tool_lock_policy": "version_and_digest_required_before_execution"
+}

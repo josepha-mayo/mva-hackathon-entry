@@ -1,0 +1,17 @@
+{
+  "schema": "mva.track1-slot-config/v1",
+  "slot": 3,
+  "method_id": "novel-gene-mask",
+  "scientific_question": "Which candidates remain competitive when established gene-disease links and their gene-specific phenotype links are masked?",
+  "resource_scope": "public_offline_only",
+  "execution_mode": "fully_automated",
+  "phenotype_mode": "enabled_with_gene_links_masked",
+  "gene_disease_knowledge": "masked",
+  "ranking_backend": "integrated_public_auto",
+  "input_evidence": "full_prespecified_local_evidence",
+  "compound_heterozygous_pairing": "enabled",
+  "manual_candidate_injection": false,
+  "network_access": "disabled",
+  "leaderboard_adaptation": "prohibited",
+  "tool_lock_policy": "version_and_digest_required_before_execution"
+}

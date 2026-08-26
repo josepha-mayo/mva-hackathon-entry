@@ -1,0 +1,101 @@
+{
+  "schema": "mva.synthetic-miniature-bundle/v1",
+  "fixture_class": "synthetic_only",
+  "fixture_id": "syn-miniature-a",
+  "alleles": [
+    {
+      "allele_id": "syn-allele-001",
+      "gene": "SYNGENE1",
+      "chrom": "chr7",
+      "pos": 101,
+      "ref": "A",
+      "alt": "G",
+      "zygosity": "heterozygous",
+      "phase_set": "syn-phase-1",
+      "haplotype": "syn-hap-1",
+      "annotation": {
+        "quality": 96,
+        "consequence": 90,
+        "orthogonal": 80,
+        "gene_disease": 85
+      }
+    },
+    {
+      "allele_id": "syn-allele-002",
+      "gene": "SYNGENE1",
+      "chrom": "chr7",
+      "pos": 202,
+      "ref": "C",
+      "alt": "T",
+      "zygosity": "heterozygous",
+      "phase_set": "syn-phase-1",
+      "haplotype": "syn-hap-2",
+      "annotation": {
+        "quality": 94,
+        "consequence": 88,
+        "orthogonal": 78,
+        "gene_disease": 85
+      }
+    },
+    {
+      "allele_id": "syn-allele-003",
+      "gene": "SYNGENE2",
+      "chrom": "chr11",
+      "pos": 303,
+      "ref": "G",
+      "alt": "A",
+      "zygosity": "homozygous",
+      "phase_set": null,
+      "haplotype": null,
+      "annotation": {
+        "quality": 99,
+        "consequence": 92,
+        "orthogonal": 15,
+        "gene_disease": 20
+      }
+    },
+    {
+      "allele_id": "syn-allele-004",
+      "gene": "SYNGENE3",
+      "chrom": "chr3",
+      "pos": 404,
+      "ref": "T",
+      "alt": "C",
+      "zygosity": "heterozygous",
+      "phase_set": null,
+      "haplotype": null,
+      "annotation": {
+        "quality": 76,
+        "consequence": 60,
+        "orthogonal": 99,
+        "gene_disease": 30
+      }
+    },
+    {
+      "allele_id": "syn-allele-005",
+      "gene": "SYNGENE4",
+      "chrom": "chrX",
+      "pos": 505,
+      "ref": "A",
+      "alt": "C",
+      "zygosity": "hemizygous",
+      "phase_set": null,
+      "haplotype": null,
+      "annotation": {
+        "quality": 85,
+        "consequence": 78,
+        "orthogonal": 70,
+        "gene_disease": 55
+      }
+    }
+  ],
+  "phenotype": {
+    "terms": ["SYNPHENO1", "SYNPHENO2"],
+    "gene_similarity": {
+      "SYNGENE1": 92,
+      "SYNGENE2": 12,
+      "SYNGENE3": 100,
+      "SYNGENE4": 65
+    }
+  }
+}

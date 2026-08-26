@@ -1,0 +1,17 @@
+{
+  "schema": "mva-public-release-quarantine/v1",
+  "artifacts": [
+    {
+      "role": "track1_submission_csv",
+      "path": "submissions/track1/josephmayo_track1_bub1b_pair.csv",
+      "status": "released",
+      "sha256": "26f1d11485449a51b278134ac5bb6b794c6593b5040f7208f052acc6f60c8490"
+    },
+    {
+      "role": "track1_methods_report",
+      "path": "reports/josephmayo_track1_report.md",
+      "status": "released",
+      "sha256": "83c66f1f3ca6be4bc1e81ac0255ef85988869fb022cd55b4b448d3a1cb7f7046"
+    }
+  ]
+}

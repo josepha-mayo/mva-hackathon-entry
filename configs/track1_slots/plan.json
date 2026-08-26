@@ -1,0 +1,15 @@
+{
+  "schema": "mva.track1-slot-plan/v1",
+  "policy": {
+    "frozen_before_first_submission": true,
+    "adaptive_leaderboard_revision_prohibited": true
+  },
+  "config_files": [
+    "01-full-public-auto.json",
+    "02-minus-phenotype.json",
+    "03-novel-gene-mask.json",
+    "04-exomiser-baseline.json",
+    "05-vcf-only.json",
+    "06-no-comphet-pairing.json"
+  ]
+}

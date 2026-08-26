@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mva/track1-reference-ledger.schema.json",
+  "title": "MVA Track 1 public-reference lock",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "ledger_id", "champion_public_only", "resources"],
+  "properties": {
+    "schema": {"const": "mva.track1-reference-ledger/v1"},
+    "ledger_id": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"},
+    "champion_public_only": {"const": true},
+    "resources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/resource"}
+    }
+  },
+  "$defs": {
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resource_id", "name", "source_scope", "release", "release_date",
+        "retrieved_at_utc", "source_url", "license_id", "license_url", "sha256",
+        "immutable_revision", "purpose", "use_mode", "hosted_api_used",
+        "challenge_controlled", "model_slots", "redistribution_notes",
+        "attribution_notes"
+      ],
+      "properties": {
+        "resource_id": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"},
+        "name": {"type": "string", "minLength": 1, "maxLength": 256},
+        "source_scope": {"const": "public"},
+        "release": {"type": "string", "minLength": 1, "maxLength": 256},
+        "release_date": {"type": "string", "format": "date"},
+        "retrieved_at_utc": {"type": "string", "format": "date-time"},
+        "source_url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "license_id": {"type": "string", "minLength": 1, "maxLength": 128},
+        "license_url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "immutable_revision": {"type": ["string", "null"], "minLength": 1, "maxLength": 256},
+        "purpose": {"type": "string", "minLength": 20, "maxLength": 2000},
+        "use_mode": {"const": "local_offline"},
+        "hosted_api_used": {"const": false},
+        "challenge_controlled": {"const": false},
+        "model_slots": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["S1", "S2", "S3", "S4", "S5", "S6"]}
+        },
+        "redistribution_notes": {"type": "string", "minLength": 10, "maxLength": 2000},
+        "attribution_notes": {"type": "string", "minLength": 10, "maxLength": 2000}
+      },
+      "anyOf": [
+        {"required": ["sha256"], "properties": {"sha256": {"type": "string"}}},
+        {"required": ["immutable_revision"], "properties": {"immutable_revision": {"type": "string"}}}
+      ]
+    }
+  }
+}

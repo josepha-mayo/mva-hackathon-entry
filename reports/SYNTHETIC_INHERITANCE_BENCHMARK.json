@@ -1,0 +1,35 @@
+{
+  "bootstrap_iterations": 2000,
+  "cases": 600,
+  "compound_positive_cases": 200,
+  "compound_truth_recall": 1.0,
+  "compound_truth_recall_bootstrap_95_ci": [
+    1.0,
+    1.0
+  ],
+  "compound_truth_recovered": 200,
+  "confirmed_cis_leaks": 0,
+  "emitted_compound_candidates": 260,
+  "false_compound_candidates": 60,
+  "false_compound_fraction": 0.23076923076923078,
+  "fixture_distribution": {
+    "cases_with_unresolved_distractor_pair": 60,
+    "compound_trans_confirmed": 100,
+    "compound_unresolved": 100,
+    "confirmed_cis_negative": 100,
+    "homozygous_recessive": 100,
+    "mitochondrial": 100,
+    "x_linked": 100
+  },
+  "generator": "scripts/run_synthetic_inheritance_benchmark.py/v1",
+  "positive_cases": 500,
+  "schema": "mva-synthetic-inheritance-benchmark/v1",
+  "scope": "component-contract-only; not biological validation or diagnostic ranking",
+  "seed": 20260826,
+  "truth_recall": 1.0,
+  "truth_recall_bootstrap_95_ci": [
+    1.0,
+    1.0
+  ],
+  "truth_recovered": 500
+}

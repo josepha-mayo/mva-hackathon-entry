@@ -1,0 +1,55 @@
+{
+  "schema": "mva-phen2gene-development-contract/v1",
+  "scope": "public development only; historical comparator; not clinical validation",
+  "official_source": {
+    "repository": "https://github.com/WGLab/Phen2Gene",
+    "commit": "47ab30af0751ff4d2060e9bf241c0a758cd0d7a3",
+    "tree": "9000a260e6b0db22385e43097440fe911bfe3c04",
+    "license": "MIT License",
+    "paper": "https://doi.org/10.1093/nargab/lqaa032"
+  },
+  "knowledge_base": {
+    "release": "1.1.0",
+    "release_url": "https://github.com/WGLab/Phen2Gene/releases/tag/1.1.0",
+    "asset_url": "https://github.com/WGLab/Phen2Gene/releases/download/1.1.0/H2GKBs.zip",
+    "asset_bytes": 597808012,
+    "asset_sha256": "d4b9dafca83aafac17e49b6ed7fa949572dc11fa565ec082a38b0b2819aabee0",
+    "tree_sha256": "5e69f096ec1433633d7211bee4741cf66f64731a321883d2bba279d84e9702c2",
+    "file_count": 42777,
+    "uncompressed_bytes": 2028082850,
+    "knowledge_date": "January 2021",
+    "redistribution": "Do not redistribute the bundle without a separate rights review."
+  },
+  "public_input": {
+    "repository": "https://github.com/monarch-initiative/phenopacket-store",
+    "release": "0.1.27",
+    "release_url": "https://github.com/monarch-initiative/phenopacket-store/releases/tag/0.1.27",
+    "tag_commit": "3f3619800b2c949f8bfb457a122346c2fae7e482",
+    "archive_url": "https://github.com/monarch-initiative/phenopacket-store/releases/download/0.1.27/all_phenopackets.zip",
+    "archive_bytes": 19431098,
+    "archive_sha256": "d0c70005bb09b87035087516252b6b539fbc0415be7c664b73c9cde7eedf205a",
+    "license": "BSD 3-Clause License",
+    "selector_sha256": "84f8a7811d0f85678c45475093151ab40b0b2b6939437b369ac1355b485ce7e5",
+    "case_count": 64,
+    "unique_gene_count": 64,
+    "split_salt_segments": [
+      "mva",
+      "pps",
+      "0.1.27",
+      "v1"
+    ],
+    "uppercase_first_two_salt_segments": true,
+    "development_basis_points": 6000,
+    "calibration_basis_points": 2000,
+    "test_basis_points": 2000
+  },
+  "evaluation": {
+    "weight_model": "sk",
+    "minimum_positive_hpo_terms": 2,
+    "candidate_gene_list": null,
+    "negative_hpo_policy": "omit excluded terms because Phen2Gene accepts positive terms only",
+    "bootstrap_seed": 20260826,
+    "bootstrap_replicates": 2000,
+    "rank_semantics": "one-based ordered result position with pessimistic tie-end sensitivity"
+  }
+}
