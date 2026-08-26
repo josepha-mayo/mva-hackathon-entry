@@ -1,0 +1,73 @@
+{
+  "artifacts": [
+    {
+      "path": "reports/josephmayo_track2_report.md",
+      "role": "track2_report",
+      "sha256": "b0fb7ddeacd01dbc2e2e6ffe1a80fabd7099ebefea74c59aa9781820cfbfb620"
+    },
+    {
+      "path": "reports/josephmayo_track2_pitch_script.md",
+      "role": "track2_pitch_script",
+      "sha256": "768bccfe64dd6fedc203dc9f45387f0585bfe29c5fa1e32595911a23ce5e7e33"
+    },
+    {
+      "path": "configs/track2-generation-selection-benchmark.json",
+      "role": "benchmark_config",
+      "sha256": "9b45ca5a0e7a5414349a92ee464da17a9a0f544629cdedf1116c534032d81dbe"
+    },
+    {
+      "path": "src/mva_hackathon/generation_selection.py",
+      "role": "benchmark_source",
+      "sha256": "7ed361f62aaa954fb64e0b3db12e100bd8dcbc52eb561e504da18b5e4ddbd666"
+    },
+    {
+      "path": "scripts/run_generation_selection_benchmark.py",
+      "role": "benchmark_runner",
+      "sha256": "b9519f0c50f7eb39feee843492e1abab0bd5ae1a880920f630217d15b7c6b341"
+    },
+    {
+      "path": "tests/test_generation_selection.py",
+      "role": "benchmark_test",
+      "sha256": "88b4ef5d9471c6bce5ca2e25bf9c0c96ce12c4dacc9b1698180d340a8778a23b"
+    },
+    {
+      "path": "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json",
+      "role": "benchmark_receipt",
+      "sha256": "7fcf47064419ffdd2515f6910b696e8307ccf23980f460eec81851c22d4d38be"
+    },
+    {
+      "path": "src/mva_hackathon/reproducibility.py",
+      "role": "integrity_source",
+      "sha256": "92e229d3d1dc74a2522885020883620f981ab745ab25769c35ad97392b50b5f4"
+    },
+    {
+      "path": "scripts/verify_track2_reproducibility.py",
+      "role": "integrity_runner",
+      "sha256": "1ab5a97d32764df47fb5410f765ec2e966f2de67eff169809dd2124852ea0820"
+    },
+    {
+      "path": "tests/test_reproducibility.py",
+      "role": "integrity_test",
+      "sha256": "3d735d5fac89c0f29d3e7e52772a0298b01b2baade8317f7da7364724d5600ff"
+    },
+    {
+      "path": "scripts/create_track2_reproducibility_manifest.py",
+      "role": "manifest_builder",
+      "sha256": "7baa54d639a5a8a668a786733f76ca0c61cf8087696a5b657a0c175633d1ef6b"
+    },
+    {
+      "path": "pyproject.toml",
+      "role": "python_contract",
+      "sha256": "be3267235cb5fc5ad6d93af6c55b80fac9de8c7b176d112a0dd48d88e22f3877"
+    }
+  ],
+  "commands": {
+    "benchmark": "python scripts/run_generation_selection_benchmark.py --config configs/track2-generation-selection-benchmark.json --output <new-path>",
+    "integrity": "python scripts/verify_track2_reproducibility.py .",
+    "manifest": "python scripts/create_track2_reproducibility_manifest.py . --source-commit <40-hex>",
+    "privacy": "python scripts/privacy_gate.py .",
+    "tests": "python -m unittest discover -s tests -v"
+  },
+  "schema": "mva-track2-reproducibility/v2",
+  "source_commit": "f73bc570b66d9a0a7c5be29b93b41765079fb87a"
+}

@@ -1,0 +1,3601 @@
+{
+  "acceptance": {
+    "maximum_absolute_log_ratio_bias": 0.2,
+    "maximum_false_generation_wilson_upper": 0.05,
+    "maximum_invalid_fraction_wilson_upper": 0.2,
+    "minimum_component_sensitivity_wilson_lower": 0.7,
+    "minimum_component_specificity_wilson_lower": 0.95,
+    "minimum_expected_flag_set_wilson_lower": 0.65,
+    "minimum_generation_detection_wilson_lower": 0.8,
+    "minimum_interval_coverage_wilson_lower": 0.9
+  },
+  "calibration_design": {
+    "arm_drift_audits": "separate blinded arm-specific positive, negative, and division checks trigger fail-closed QC and are not used to recalibrate",
+    "shared_panel_role": "one reusable external truth-labeled panel sampled once per synthetic study and used for both-arm correction; it is not regenerated per arm or comparison",
+    "truth_establishment": "reference labels are assumed established independently of treatment assignment and blinded to the benchmark analyst"
+  },
+  "claim_boundary": "Paired fixed-cohort first-attempt aggregate-count stress test only; pre-division death is inseparable from other non-completion, later daughter outcomes are secondary, and this is not a timestamped lineage model, biological validation, or efficacy evidence.",
+  "design": {
+    "arm_division_audit_events": 250,
+    "arm_event_audit_errors": 250,
+    "arm_event_audit_nonerrors": 2000,
+    "clone_count_per_arm": 6,
+    "clones_per_edit_event": 2,
+    "edit_events": 3,
+    "highest_inferential_unit": "edit_event",
+    "interval_method": "paired edit-event log-ratio interval with predeclared small-sample multiplier",
+    "observation_opportunities_per_run": 250,
+    "planned_observation_opportunities_per_arm": 4500,
+    "primary_estimands": [
+      "conditional error per completed first division",
+      "error-bearing completed first division per enrolled founder"
+    ],
+    "runs_per_clone": 3,
+    "shared_division_reference_events": 400,
+    "shared_event_reference_errors": 300,
+    "shared_event_reference_nonerrors": 750
+  },
+  "heterogeneity": {
+    "arm_well_sd": 0.04,
+    "clone_sd": 0.08,
+    "clone_treatment_sd": 0.04,
+    "edit_event_sd": 0.12,
+    "edit_treatment_sd": 0.06,
+    "run_sd": 0.05
+  },
+  "local_alternative_power_curve": [
+    {
+      "generation_detection_rate": 0.611,
+      "generation_detection_wilson_lower": 0.580413655582,
+      "generation_detection_wilson_upper": 0.640736804034,
+      "mean_realized_generation_ratio": 0.623521837124,
+      "name": "local_generation_ratio_0_625"
+    },
+    {
+      "generation_detection_rate": 0.414,
+      "generation_detection_wilson_lower": 0.383857881641,
+      "generation_detection_wilson_upper": 0.444800320819,
+      "mean_realized_generation_ratio": 0.687895362459,
+      "name": "local_generation_ratio_0_6875"
+    },
+    {
+      "generation_detection_rate": 0.231,
+      "generation_detection_wilson_lower": 0.205936463914,
+      "generation_detection_wilson_upper": 0.258122332151,
+      "mean_realized_generation_ratio": 0.748932086134,
+      "name": "local_generation_ratio_0_75"
+    }
+  ],
+  "monte_carlo_replicates_per_scenario": 1000,
+  "runtime_receipt": {
+    "canonical_command": "python scripts/run_generation_selection_benchmark.py --config configs/track2-generation-selection-benchmark.json --output <new-path>",
+    "config_sha256": "9b45ca5a0e7a5414349a92ee464da17a9a0f544629cdedf1116c534032d81dbe",
+    "git_source_commit": "f73bc570b66d9a0a7c5be29b93b41765079fb87a",
+    "git_tracked_worktree_clean": true,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_implementation": "CPython",
+    "python_version": "3.12.13",
+    "runner_sha256": "b9519f0c50f7eb39feee843492e1abab0bd5ae1a880920f630217d15b7c6b341",
+    "source_sha256": "7ed361f62aaa954fb64e0b3db12e100bd8dcbc52eb561e504da18b5e4ddbd666",
+    "test_sha256": "88b4ef5d9471c6bce5ca2e25bf9c0c96ce12c4dacc9b1698180d340a8778a23b"
+  },
+  "scenarios": [
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.001,
+          "successes": 1,
+          "total": 1000,
+          "wilson_lower": 0.000176546370626,
+          "wilson_upper": 0.00564255859796
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.000135804534604,
+          "coverage_wilson_lower": 0.944852006792,
+          "coverage_wilson_upper": 0.969635028918,
+          "interval_coverage": 0.959,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00001680773,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.000154162303812,
+          "coverage_wilson_lower": 0.92797665185,
+          "coverage_wilson_upper": 0.956625186615,
+          "interval_coverage": 0.944,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999378766736,
+          "valid_replicates": 1000
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.000289966838416,
+          "coverage_wilson_lower": 0.931325383163,
+          "coverage_wilson_upper": 0.959253494751,
+          "interval_coverage": 0.947,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999361969725,
+          "valid_replicates": 1000
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.00132544652209,
+          "coverage_wilson_lower": 0.917994490687,
+          "coverage_wilson_upper": 0.948676229431,
+          "interval_coverage": 0.935,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00047933265,
+          "valid_replicates": 1000
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.0037963998235,
+          "coverage_wilson_lower": 0.942580996156,
+          "coverage_wilson_upper": 0.967921346588,
+          "interval_coverage": 0.957,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00026431038,
+          "valid_replicates": 1000
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.999,
+        "successes": 999,
+        "total": 1000,
+        "wilson_lower": 0.994357441402,
+        "wilson_upper": 0.999823453629
+      },
+      "expected_flags": [],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": 0.00564255859796,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "no_change",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.942231075697,
+          "treatment_event_audit_sensitivity": 0.902390438247,
+          "treatment_event_audit_specificity": 0.994252873563,
+          "vehicle_division_audit_detection": 0.958167330677,
+          "vehicle_event_audit_sensitivity": 0.870517928287,
+          "vehicle_event_audit_specificity": 0.992753623188
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.97345795509,
+            "ratio": 1.00419683002,
+            "reason": null,
+            "upper": 1.03590634619
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.983368700315,
+            "ratio": 1.00072452682,
+            "reason": null,
+            "upper": 1.01838667252
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.702079503443,
+            "ratio": 0.956253401507,
+            "reason": null,
+            "upper": 1.30244589595
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.707479683189,
+            "ratio": 0.955561071886,
+            "reason": null,
+            "upper": 1.29063347514
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 0.467014281082,
+            "ratio": 0.765172131858,
+            "reason": null,
+            "upper": 1.25368412721
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 0.89364870855,
+            "ratio": 0.986556707865,
+            "reason": null,
+            "upper": 1.08912386771
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": false,
+          "informative_followup_bias": false
+        },
+        "interpretation": "no_detectable_component",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": false,
+          "division_completion_equivalent": true,
+          "founder_error_bearing_completion_reduction": false,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": false
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.001,
+          "successes": 1,
+          "total": 1000,
+          "wilson_lower": 0.000176546370626,
+          "wilson_upper": 0.00564255859796
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.906,
+          "successes": 906,
+          "total": 1000,
+          "wilson_lower": 0.886326845683,
+          "wilson_upper": 0.922565826426
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 6.79052712359e-06,
+          "coverage_wilson_lower": 0.926862932341,
+          "coverage_wilson_upper": 0.955746559641,
+          "interval_coverage": 0.943,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00002349364,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.0355473940423,
+          "coverage_wilson_lower": 0.938060061918,
+          "coverage_wilson_upper": 0.964472894894,
+          "interval_coverage": 0.953,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.375780506232,
+          "valid_replicates": 1000
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.0355541845694,
+          "coverage_wilson_lower": 0.933564513655,
+          "coverage_wilson_upper": 0.960999057225,
+          "interval_coverage": 0.949,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.375771677989,
+          "valid_replicates": 1000
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.00344648852077,
+          "coverage_wilson_lower": 0.943933399622,
+          "coverage_wilson_upper": 0.969349736868,
+          "interval_coverage": 0.958463136033,
+          "invalid_fraction": 0.037,
+          "invalid_fraction_wilson_upper": 0.0505823974821,
+          "mean_realized_truth_ratio": 1.00010297476,
+          "valid_replicates": 963
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.0155983576683,
+          "coverage_wilson_lower": 0.935768487767,
+          "coverage_wilson_upper": 0.963139067878,
+          "interval_coverage": 0.951244813278,
+          "invalid_fraction": 0.036,
+          "invalid_fraction_wilson_upper": 0.0494356604672,
+          "mean_realized_truth_ratio": 0.999507404251,
+          "valid_replicates": 964
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.905,
+        "successes": 905,
+        "total": 1000,
+        "wilson_lower": 0.885245560206,
+        "wilson_upper": 0.921654765421
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.037,
+        "successes": 37,
+        "total": 1000,
+        "wilson_lower": 0.0269611808756,
+        "wilson_upper": 0.0505823974821
+      },
+      "false_generation_wilson_upper": null,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "fewer_new_errors_strong",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.942231075697,
+          "treatment_event_audit_sensitivity": 0.882470119522,
+          "treatment_event_audit_specificity": 0.995252373813,
+          "vehicle_division_audit_detection": 0.942231075697,
+          "vehicle_event_audit_sensitivity": 0.902390438247,
+          "vehicle_event_audit_specificity": 0.993753123438
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.995737007489,
+            "ratio": 0.997407028846,
+            "reason": null,
+            "upper": 0.999079851114
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.996065232592,
+            "ratio": 1.00650914317,
+            "reason": null,
+            "upper": 1.01706255989
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.316892228348,
+            "ratio": 0.382400262933,
+            "reason": null,
+            "upper": 0.461450133548
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.312574099128,
+            "ratio": 0.379927261992,
+            "reason": null,
+            "upper": 0.46179361888
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 0.607933608502,
+            "ratio": 0.992699983603,
+            "reason": null,
+            "upper": 1.62098828501
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 0.584839285181,
+            "ratio": 1.00773997657,
+            "reason": null,
+            "upper": 1.73644261954
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": true,
+          "informative_followup_bias": false
+        },
+        "interpretation": "generation_reduction_without_detected_configured_confound",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": true,
+          "conditional_generation_reduction": true,
+          "division_completion_equivalent": true,
+          "founder_error_bearing_completion_reduction": true,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": true
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.231,
+          "successes": 231,
+          "total": 1000,
+          "wilson_lower": 0.205936463914,
+          "wilson_upper": 0.258122332151
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.000138036636338,
+          "coverage_wilson_lower": 0.93693391135,
+          "coverage_wilson_upper": 0.963606698979,
+          "interval_coverage": 0.952,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00009169299,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.00548859195297,
+          "coverage_wilson_lower": 0.934686179756,
+          "coverage_wilson_upper": 0.961869737607,
+          "interval_coverage": 0.95,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.749000757954,
+          "valid_replicates": 1000
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.00535055531664,
+          "coverage_wilson_lower": 0.94144821085,
+          "coverage_wilson_upper": 0.967061785412,
+          "interval_coverage": 0.956,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.748932086134,
+          "valid_replicates": 1000
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.00367198900714,
+          "coverage_wilson_lower": 0.921311939687,
+          "coverage_wilson_upper": 0.95133581988,
+          "interval_coverage": 0.938,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999311257629,
+          "valid_replicates": 1000
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.00103574461878,
+          "coverage_wilson_lower": 0.94713068958,
+          "coverage_wilson_upper": 0.971341039096,
+          "interval_coverage": 0.961,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.99988476769,
+          "valid_replicates": 1000
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.231,
+        "successes": 231,
+        "total": 1000,
+        "wilson_lower": 0.205936463914,
+        "wilson_upper": 0.258122332151
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": null,
+      "gate": "power_curve",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "local_generation_ratio_0_75",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.946215139442,
+          "treatment_event_audit_sensitivity": 0.874501992032,
+          "treatment_event_audit_specificity": 0.996751624188,
+          "vehicle_division_audit_detection": 0.954183266932,
+          "vehicle_event_audit_sensitivity": 0.886454183267,
+          "vehicle_event_audit_specificity": 0.995752123938
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.964549064231,
+            "ratio": 1.00252160932,
+            "reason": null,
+            "upper": 1.04198906454
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.925545015252,
+            "ratio": 1.00395471545,
+            "reason": null,
+            "upper": 1.0890070759
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.589289559055,
+            "ratio": 0.727691261529,
+            "reason": null,
+            "upper": 0.898598259495
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.545522960334,
+            "ratio": 0.724824785749,
+            "reason": null,
+            "upper": 0.963059317822
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 0.799585404407,
+            "ratio": 1.136152058,
+            "reason": null,
+            "upper": 1.61438852159
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 0.766873836152,
+            "ratio": 1.03446543999,
+            "reason": null,
+            "upper": 1.39542998613
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": true,
+          "informative_followup_bias": false
+        },
+        "interpretation": "generation_reduction_without_detected_configured_confound",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": true,
+          "conditional_generation_reduction": true,
+          "division_completion_equivalent": true,
+          "founder_error_bearing_completion_reduction": true,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": true
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.414,
+          "successes": 414,
+          "total": 1000,
+          "wilson_lower": 0.383857881641,
+          "wilson_upper": 0.444800320819
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.000143965632988,
+          "coverage_wilson_lower": 0.944852006792,
+          "coverage_wilson_upper": 0.969635028918,
+          "interval_coverage": 0.959,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00009423361,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.0102076242336,
+          "coverage_wilson_lower": 0.948273079669,
+          "coverage_wilson_upper": 0.972190995491,
+          "interval_coverage": 0.962,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.687960185323,
+          "valid_replicates": 1000
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.0100636586006,
+          "coverage_wilson_lower": 0.950564339533,
+          "coverage_wilson_upper": 0.973884428593,
+          "interval_coverage": 0.964,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.687895362459,
+          "valid_replicates": 1000
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.00088007057295,
+          "coverage_wilson_lower": 0.933564513655,
+          "coverage_wilson_upper": 0.960999057225,
+          "interval_coverage": 0.949,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999884131343,
+          "valid_replicates": 1000
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.0031514968466,
+          "coverage_wilson_lower": 0.924639097229,
+          "coverage_wilson_upper": 0.953985701787,
+          "interval_coverage": 0.941,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00017931598,
+          "valid_replicates": 1000
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.414,
+        "successes": 414,
+        "total": 1000,
+        "wilson_lower": 0.383857881641,
+        "wilson_upper": 0.444800320819
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": null,
+      "gate": "power_curve",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "local_generation_ratio_0_6875",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.946215139442,
+          "treatment_event_audit_sensitivity": 0.922310756972,
+          "treatment_event_audit_specificity": 0.996751624188,
+          "vehicle_division_audit_detection": 0.954183266932,
+          "vehicle_event_audit_sensitivity": 0.902390438247,
+          "vehicle_event_audit_specificity": 0.995252373813
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.972409801683,
+            "ratio": 0.990393160379,
+            "reason": null,
+            "upper": 1.00870909613
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.977624987918,
+            "ratio": 1.0199389524,
+            "reason": null,
+            "upper": 1.0640843672
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.575471110362,
+            "ratio": 0.741355803499,
+            "reason": null,
+            "upper": 0.95505824269
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.565286051716,
+            "ratio": 0.726862918366,
+            "reason": null,
+            "upper": 0.934623630801
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 0.669691580319,
+            "ratio": 0.841181193921,
+            "reason": null,
+            "upper": 1.0565845858
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 0.914853084389,
+            "ratio": 1.0068163842,
+            "reason": null,
+            "upper": 1.10802406286
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": true,
+          "informative_followup_bias": false
+        },
+        "interpretation": "generation_reduction_without_detected_configured_confound",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": true,
+          "conditional_generation_reduction": true,
+          "division_completion_equivalent": true,
+          "founder_error_bearing_completion_reduction": true,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": true
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.611,
+          "successes": 611,
+          "total": 1000,
+          "wilson_lower": 0.580413655582,
+          "wilson_upper": 0.640736804034
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.00015084320266,
+          "coverage_wilson_lower": 0.935809298493,
+          "coverage_wilson_upper": 0.962738965353,
+          "interval_coverage": 0.951,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999968899389,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.00812657085174,
+          "coverage_wilson_lower": 0.945990355879,
+          "coverage_wilson_upper": 0.970489026315,
+          "interval_coverage": 0.96,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.623502445214,
+          "valid_replicates": 1000
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.0082774140544,
+          "coverage_wilson_lower": 0.944852006792,
+          "coverage_wilson_upper": 0.969635028918,
+          "interval_coverage": 0.959,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.623521837124,
+          "valid_replicates": 1000
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.000368755857178,
+          "coverage_wilson_lower": 0.940317162064,
+          "coverage_wilson_upper": 0.966200487714,
+          "interval_coverage": 0.955,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00001286275,
+          "valid_replicates": 1000
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.0040106883537,
+          "coverage_wilson_lower": 0.940317162064,
+          "coverage_wilson_upper": 0.966200487714,
+          "interval_coverage": 0.955,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.99961538789,
+          "valid_replicates": 1000
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.611,
+        "successes": 611,
+        "total": 1000,
+        "wilson_lower": 0.580413655582,
+        "wilson_upper": 0.640736804034
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": null,
+      "gate": "power_curve",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "local_generation_ratio_0_625",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.950199203187,
+          "treatment_event_audit_sensitivity": 0.902390438247,
+          "treatment_event_audit_specificity": 0.994752623688,
+          "vehicle_division_audit_detection": 0.934262948207,
+          "vehicle_event_audit_sensitivity": 0.882470119522,
+          "vehicle_event_audit_specificity": 0.994252873563
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.990907294745,
+            "ratio": 1.00722826401,
+            "reason": null,
+            "upper": 1.0238180516
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.949710861292,
+            "ratio": 1.00155026188,
+            "reason": null,
+            "upper": 1.0562192852
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.48370161594,
+            "ratio": 0.630699730977,
+            "reason": null,
+            "upper": 0.82237093602
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.465461192696,
+            "ratio": 0.629723494651,
+            "reason": null,
+            "upper": 0.851954332472
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 0.677424133973,
+            "ratio": 0.976148128581,
+            "reason": null,
+            "upper": 1.40660056403
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 0.82599289743,
+            "ratio": 1.05965579162,
+            "reason": null,
+            "upper": 1.35941894925
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": true,
+          "informative_followup_bias": false
+        },
+        "interpretation": "generation_reduction_without_detected_configured_confound",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": true,
+          "conditional_generation_reduction": true,
+          "division_completion_equivalent": true,
+          "founder_error_bearing_completion_reduction": true,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": true
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.962,
+          "successes": 962,
+          "total": 1000,
+          "wilson_lower": 0.948273079669,
+          "wilson_upper": 0.972190995491
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.000611709719348,
+          "coverage_wilson_lower": 0.940317162064,
+          "coverage_wilson_upper": 0.966200487714,
+          "interval_coverage": 0.955,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999939124398,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.00328434276784,
+          "coverage_wilson_lower": 0.939187796058,
+          "coverage_wilson_upper": 0.965337507237,
+          "interval_coverage": 0.954,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00047605776,
+          "valid_replicates": 1000
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.00389605248719,
+          "coverage_wilson_lower": 0.94144821085,
+          "coverage_wilson_upper": 0.967061785412,
+          "interval_coverage": 0.956,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00053696605,
+          "valid_replicates": 1000
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.00466615144703,
+          "coverage_wilson_lower": 0.926862932341,
+          "coverage_wilson_upper": 0.955746559641,
+          "interval_coverage": 0.943,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00015900239,
+          "valid_replicates": 1000
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.0384844722151,
+          "coverage_wilson_lower": 0.938060061918,
+          "coverage_wilson_upper": 0.964472894894,
+          "interval_coverage": 0.953,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.417517114615,
+          "valid_replicates": 1000
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.962,
+        "successes": 962,
+        "total": 1000,
+        "wilson_lower": 0.948273079669,
+        "wilson_upper": 0.972190995491
+      },
+      "expected_flags": [
+        "error_daughter_pruning"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": 0.00382675848556,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "error_daughter_pruning",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.938247011952,
+          "treatment_event_audit_sensitivity": 0.906374501992,
+          "treatment_event_audit_specificity": 0.993753123438,
+          "vehicle_division_audit_detection": 0.966135458167,
+          "vehicle_event_audit_sensitivity": 0.894422310757,
+          "vehicle_event_audit_specificity": 0.996751624188
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.975025719892,
+            "ratio": 0.990441244118,
+            "reason": null,
+            "upper": 1.00610049359
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.979323717543,
+            "ratio": 0.996400278242,
+            "reason": null,
+            "upper": 1.01377460455
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.694437459685,
+            "ratio": 1.08699645974,
+            "reason": null,
+            "upper": 1.70146539046
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.685322625917,
+            "ratio": 1.09092348073,
+            "reason": null,
+            "upper": 1.73657485657
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 0.92394280474,
+            "ratio": 0.970484868838,
+            "reason": null,
+            "upper": 1.0193714111
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 0.299943933858,
+            "ratio": 0.370110469347,
+            "reason": null,
+            "upper": 0.456691214782
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": true,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": false,
+          "informative_followup_bias": false
+        },
+        "interpretation": "mixed_components",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": false,
+          "division_completion_equivalent": true,
+          "founder_error_bearing_completion_reduction": false,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": false
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.835,
+          "successes": 835,
+          "total": 1000,
+          "wilson_lower": 0.81072075167,
+          "wilson_upper": 0.856715320144
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.001,
+          "successes": 1,
+          "total": 1000,
+          "wilson_lower": 0.000176546370626,
+          "wilson_upper": 0.00564255859796
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.00037060264395,
+          "coverage_wilson_lower": 0.952864809755,
+          "coverage_wilson_upper": 0.975568651337,
+          "interval_coverage": 0.966,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999912252588,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.000287380765319,
+          "coverage_wilson_lower": 0.939187796058,
+          "coverage_wilson_upper": 0.965337507237,
+          "interval_coverage": 0.954,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999607208301,
+          "valid_replicates": 1000
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.000657983409269,
+          "coverage_wilson_lower": 0.938060061918,
+          "coverage_wilson_upper": 0.964472894894,
+          "interval_coverage": 0.953,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999694928944,
+          "valid_replicates": 1000
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.00241396948668,
+          "coverage_wilson_lower": 0.942580996156,
+          "coverage_wilson_upper": 0.967921346588,
+          "interval_coverage": 0.957,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999548515475,
+          "valid_replicates": 1000
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.00559090599947,
+          "coverage_wilson_lower": 0.952864809755,
+          "coverage_wilson_upper": 0.975568651337,
+          "interval_coverage": 0.966,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.3669933782,
+          "valid_replicates": 1000
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.834,
+        "successes": 834,
+        "total": 1000,
+        "wilson_lower": 0.809669197162,
+        "wilson_upper": 0.855774528169
+      },
+      "expected_flags": [
+        "error_daughter_preservation"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": 0.00564255859796,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "error_daughter_preservation",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.962151394422,
+          "treatment_event_audit_sensitivity": 0.930278884462,
+          "treatment_event_audit_specificity": 0.996251874063,
+          "vehicle_division_audit_detection": 0.922310756972,
+          "vehicle_event_audit_sensitivity": 0.906374501992,
+          "vehicle_event_audit_specificity": 0.997251374313
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.984112743453,
+            "ratio": 1.00389885615,
+            "reason": null,
+            "upper": 1.02408277921
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.977536235453,
+            "ratio": 0.999456071851,
+            "reason": null,
+            "upper": 1.02186742888
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.7325174164,
+            "ratio": 0.884060433855,
+            "reason": null,
+            "upper": 1.06695463235
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.716844246354,
+            "ratio": 0.884541560909,
+            "reason": null,
+            "upper": 1.09146969785
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 0.696045076467,
+            "ratio": 1.08973283801,
+            "reason": null,
+            "upper": 1.70609303676
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 1.16523212918,
+            "ratio": 1.3310343427,
+            "reason": null,
+            "upper": 1.52042874298
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": true,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": false,
+          "informative_followup_bias": false
+        },
+        "interpretation": "mixed_components",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": false,
+          "division_completion_equivalent": true,
+          "founder_error_bearing_completion_reduction": false,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": false
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.999,
+          "successes": 999,
+          "total": 1000,
+          "wilson_lower": 0.994357441402,
+          "wilson_upper": 0.999823453629
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.001,
+          "successes": 1,
+          "total": 1000,
+          "wilson_lower": 0.000176546370626,
+          "wilson_upper": 0.00564255859796
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.000972337461338,
+          "coverage_wilson_lower": 0.985621684534,
+          "coverage_wilson_upper": 0.996605131599,
+          "interval_coverage": 0.993,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.587106690741,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.00159496063265,
+          "coverage_wilson_lower": 0.940317162064,
+          "coverage_wilson_upper": 0.966200487714,
+          "interval_coverage": 0.955,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.587071608318,
+          "valid_replicates": 1000
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.000622623171309,
+          "coverage_wilson_lower": 0.93693391135,
+          "coverage_wilson_upper": 0.963606698979,
+          "interval_coverage": 0.952,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999940245233,
+          "valid_replicates": 1000
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.00776758519816,
+          "coverage_wilson_lower": 0.934621402292,
+          "coverage_wilson_upper": 0.961831364088,
+          "interval_coverage": 0.94994994995,
+          "invalid_fraction": 0.001,
+          "invalid_fraction_wilson_upper": 0.00564255859796,
+          "mean_realized_truth_ratio": 1.00087630463,
+          "valid_replicates": 999
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.00215294350134,
+          "coverage_wilson_lower": 0.934621402292,
+          "coverage_wilson_upper": 0.961831364088,
+          "interval_coverage": 0.94994994995,
+          "invalid_fraction": 0.001,
+          "invalid_fraction_wilson_upper": 0.00564255859796,
+          "mean_realized_truth_ratio": 1.00009849386,
+          "valid_replicates": 999
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.998,
+        "successes": 998,
+        "total": 1000,
+        "wilson_lower": 0.992737192137,
+        "wilson_upper": 0.999451356412
+      },
+      "expected_flags": [
+        "cytostasis"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.001,
+        "successes": 1,
+        "total": 1000,
+        "wilson_lower": 0.000176546370626,
+        "wilson_upper": 0.00564255859796
+      },
+      "false_generation_wilson_upper": 0.00382675848556,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "generic_cytostasis",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.938247011952,
+          "treatment_event_audit_sensitivity": 0.918326693227,
+          "treatment_event_audit_specificity": 0.994252873563,
+          "vehicle_division_audit_detection": 0.970119521912,
+          "vehicle_event_audit_sensitivity": 0.902390438247,
+          "vehicle_event_audit_specificity": 0.997251374313
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.975538592626,
+            "ratio": 0.987170799824,
+            "reason": null,
+            "upper": 0.99894170809
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.534150972285,
+            "ratio": 0.608538037969,
+            "reason": null,
+            "upper": 0.693284413714
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.368348267808,
+            "ratio": 0.630532476679,
+            "reason": null,
+            "upper": 1.07933507198
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.561617289485,
+            "ratio": 1.03614307954,
+            "reason": null,
+            "upper": 1.91160867263
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 0.809376356244,
+            "ratio": 1.05080609032,
+            "reason": null,
+            "upper": 1.36425215652
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 0.699034114746,
+            "ratio": 1.02142753972,
+            "reason": null,
+            "upper": 1.49250830093
+          }
+        },
+        "flags": {
+          "cytostasis": true,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": false,
+          "informative_followup_bias": false
+        },
+        "interpretation": "mixed_components",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": false,
+          "division_completion_equivalent": false,
+          "founder_error_bearing_completion_reduction": false,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": false
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.001,
+          "successes": 1,
+          "total": 1000,
+          "wilson_lower": 0.000176546370626,
+          "wilson_upper": 0.00564255859796
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 1.0,
+          "successes": 1000,
+          "total": 1000,
+          "wilson_lower": 0.996173241514,
+          "wilson_upper": 1.0
+        },
+        "generation_reduction": {
+          "rate": 0.001,
+          "successes": 1,
+          "total": 1000,
+          "wilson_lower": 0.000176546370626,
+          "wilson_upper": 0.00564255859796
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.000247267276619,
+          "coverage_wilson_lower": 0.938060061918,
+          "coverage_wilson_upper": 0.964472894894,
+          "interval_coverage": 0.953,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00001534719,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.00655780560118,
+          "coverage_wilson_lower": 0.935809298493,
+          "coverage_wilson_upper": 0.962738965353,
+          "interval_coverage": 0.951,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999702717935,
+          "valid_replicates": 1000
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.00631053832457,
+          "coverage_wilson_lower": 0.939187796058,
+          "coverage_wilson_upper": 0.965337507237,
+          "interval_coverage": 0.954,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.999687375545,
+          "valid_replicates": 1000
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.00402660247383,
+          "coverage_wilson_lower": 0.945990355879,
+          "coverage_wilson_upper": 0.970489026315,
+          "interval_coverage": 0.96,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 4.98441051086,
+          "valid_replicates": 1000
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.00156631791421,
+          "coverage_wilson_lower": 0.949417602518,
+          "coverage_wilson_upper": 0.973038819124,
+          "interval_coverage": 0.963,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 1.00171278908,
+          "valid_replicates": 1000
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.998,
+        "successes": 998,
+        "total": 1000,
+        "wilson_lower": 0.992737192137,
+        "wilson_upper": 0.999451356412
+      },
+      "expected_flags": [
+        "general_toxicity"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": 0.00564255859796,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "generic_toxicity",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.950199203187,
+          "treatment_event_audit_sensitivity": 0.882470119522,
+          "treatment_event_audit_specificity": 0.996251874063,
+          "vehicle_division_audit_detection": 0.942231075697,
+          "vehicle_event_audit_sensitivity": 0.870517928287,
+          "vehicle_event_audit_specificity": 0.992753623188
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.982250900367,
+            "ratio": 1.00229551539,
+            "reason": null,
+            "upper": 1.02274917723
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.953120871471,
+            "ratio": 0.9849358111,
+            "reason": null,
+            "upper": 1.01781272557
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.844429142319,
+            "ratio": 0.944210773213,
+            "reason": null,
+            "upper": 1.0557830605
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.838663294107,
+            "ratio": 0.958652089377,
+            "reason": null,
+            "upper": 1.09580785868
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 2.91434883053,
+            "ratio": 5.28245342778,
+            "reason": null,
+            "upper": 9.57480241362
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 0.718628769813,
+            "ratio": 0.992189270227,
+            "reason": null,
+            "upper": 1.3698860793
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": true,
+          "generation_reduction": false,
+          "informative_followup_bias": false
+        },
+        "interpretation": "mixed_components",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": false,
+          "division_completion_equivalent": true,
+          "founder_error_bearing_completion_reduction": false,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": false
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.148,
+          "successes": 148,
+          "total": 1000,
+          "wilson_lower": 0.127338988676,
+          "wilson_upper": 0.171355049297
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.09,
+          "successes": 90,
+          "total": 1000,
+          "wilson_lower": 0.0737961493151,
+          "wilson_upper": 0.109341792643
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.141,
+          "successes": 141,
+          "total": 1000,
+          "wilson_lower": 0.120801126705,
+          "wilson_upper": 0.163946485888
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.000564037827308,
+          "coverage_wilson_lower": 0.984293665469,
+          "coverage_wilson_upper": 0.995940804181,
+          "interval_coverage": 0.992,
+          "invalid_fraction": 0.0,
+          "invalid_fraction_wilson_upper": 0.00382675848556,
+          "mean_realized_truth_ratio": 0.587872761722,
+          "valid_replicates": 1000
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.0591569084181,
+          "coverage_wilson_lower": 0.944797274146,
+          "coverage_wilson_upper": 0.969604490893,
+          "interval_coverage": 0.958958958959,
+          "invalid_fraction": 0.001,
+          "invalid_fraction_wilson_upper": 0.00564255859796,
+          "mean_realized_truth_ratio": 0.220601329609,
+          "valid_replicates": 999
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.0585722957636,
+          "coverage_wilson_lower": 0.940257947175,
+          "coverage_wilson_upper": 0.966166485127,
+          "interval_coverage": 0.954954954955,
+          "invalid_fraction": 0.001,
+          "invalid_fraction_wilson_upper": 0.00564255859796,
+          "mean_realized_truth_ratio": 0.375253530991,
+          "valid_replicates": 999
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.0105959871187,
+          "coverage_wilson_lower": 0.902079375498,
+          "coverage_wilson_upper": 0.973788506546,
+          "interval_coverage": 0.948717948718,
+          "invalid_fraction": 0.844,
+          "invalid_fraction_wilson_upper": 0.865168684611,
+          "mean_realized_truth_ratio": 0.999820854843,
+          "valid_replicates": 156
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.0534717407393,
+          "coverage_wilson_lower": 0.896969256025,
+          "coverage_wilson_upper": 0.972358535115,
+          "interval_coverage": 0.945945945946,
+          "invalid_fraction": 0.852,
+          "invalid_fraction_wilson_upper": 0.872661011324,
+          "mean_realized_truth_ratio": 0.367430009069,
+          "valid_replicates": 148
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.852,
+        "successes": 852,
+        "total": 1000,
+        "wilson_lower": 0.828644950703,
+        "wilson_upper": 0.872661011324
+      },
+      "expected_flags": [],
+      "fail_closed_insufficient_information": {
+        "rate": 0.852,
+        "successes": 852,
+        "total": 1000,
+        "wilson_lower": 0.828644950703,
+        "wilson_upper": 0.872661011324
+      },
+      "false_generation_wilson_upper": 0.163946485888,
+      "gate": "fail_closed",
+      "measurement_invalid": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "name": "mixed_generation_selection_cytostasis",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.934262948207,
+          "treatment_event_audit_sensitivity": 0.890438247012,
+          "treatment_event_audit_specificity": 0.993253373313,
+          "vehicle_division_audit_detection": 0.942231075697,
+          "vehicle_event_audit_sensitivity": 0.926294820717,
+          "vehicle_event_audit_specificity": 0.994752623688
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "reason": null
+          },
+          "generation_rate": {
+            "estimable": true,
+            "reason": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "reason": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "reason": null
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.954448738731,
+            "ratio": 0.998530303398,
+            "reason": null,
+            "upper": 1.04464779128
+          },
+          "division_completion": {
+            "estimable": true,
+            "lower": 0.476186349215,
+            "ratio": 0.629737823441,
+            "reason": null,
+            "upper": 0.832803642788
+          },
+          "founder_error_bearing_completion": {
+            "estimable": true,
+            "lower": 0.147858897102,
+            "ratio": 0.25945322049,
+            "reason": null,
+            "upper": 0.455271714736
+          },
+          "generation_rate": {
+            "estimable": true,
+            "lower": 0.244932528859,
+            "ratio": 0.412001964678,
+            "reason": null,
+            "upper": 0.693030116047
+          },
+          "nonerror_daughter_death": {
+            "estimable": true,
+            "lower": 0.742412017337,
+            "ratio": 0.981490713775,
+            "reason": null,
+            "upper": 1.29755984377
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": true,
+            "lower": 0.2175770449,
+            "ratio": 0.484804552872,
+            "reason": null,
+            "upper": 1.0802401264
+          }
+        },
+        "flags": {
+          "cytostasis": true,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": true,
+          "informative_followup_bias": false
+        },
+        "interpretation": "generation_signal_with_unresolved_competing_completion",
+        "status": {
+          "all_core_estimable": true,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": true,
+          "division_completion_equivalent": false,
+          "founder_error_bearing_completion_reduction": true,
+          "measurement_valid": true,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": true
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 1.0,
+          "successes": 1000,
+          "total": 1000,
+          "wilson_lower": 0.996173241514,
+          "wilson_upper": 1.0
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 0.999989371627,
+          "valid_replicates": 0
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 0.999506331845,
+          "valid_replicates": 0
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 0.999516955085,
+          "valid_replicates": 0
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 1.00016822475,
+          "valid_replicates": 0
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 1.00024303499,
+          "valid_replicates": 0
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 1.0,
+        "successes": 1000,
+        "total": 1000,
+        "wilson_lower": 0.996173241514,
+        "wilson_upper": 1.0
+      },
+      "expected_flags": [
+        "event_detection_bias"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": 0.00382675848556,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 1.0,
+        "successes": 1000,
+        "total": 1000,
+        "wilson_lower": 0.996173241514,
+        "wilson_upper": 1.0
+      },
+      "name": "event_detection_bias",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.938247011952,
+          "treatment_event_audit_sensitivity": 0.567729083665,
+          "treatment_event_audit_specificity": 0.996251874063,
+          "vehicle_division_audit_detection": 0.950199203187,
+          "vehicle_event_audit_sensitivity": 0.902390438247,
+          "vehicle_event_audit_specificity": 0.995252373813
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "founder_error_bearing_completion": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "generation_rate": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "nonerror_daughter_death": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.991944454162,
+            "ratio": 0.995748199672,
+            "reason": null,
+            "upper": 0.99956653116
+          },
+          "division_completion": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "generation_rate": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": true,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": false,
+          "informative_followup_bias": false
+        },
+        "interpretation": "measurement_invalid",
+        "status": {
+          "all_core_estimable": false,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": false,
+          "division_completion_equivalent": false,
+          "founder_error_bearing_completion_reduction": false,
+          "measurement_valid": false,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": false
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.992,
+          "successes": 992,
+          "total": 1000,
+          "wilson_lower": 0.984293665469,
+          "wilson_upper": 0.995940804181
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.00110409352657,
+          "coverage_wilson_lower": 0.529111817787,
+          "coverage_wilson_upper": 0.97758250855,
+          "interval_coverage": 0.875,
+          "invalid_fraction": 0.992,
+          "invalid_fraction_wilson_upper": 0.995940804181,
+          "mean_realized_truth_ratio": 1.00003393659,
+          "valid_replicates": 8
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.346739111523,
+          "coverage_wilson_lower": 0.136844285824,
+          "coverage_wilson_upper": 0.694257605397,
+          "interval_coverage": 0.375,
+          "invalid_fraction": 0.992,
+          "invalid_fraction_wilson_upper": 0.995940804181,
+          "mean_realized_truth_ratio": 0.999916916902,
+          "valid_replicates": 8
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.34784320505,
+          "coverage_wilson_lower": 0.136844285824,
+          "coverage_wilson_upper": 0.694257605397,
+          "interval_coverage": 0.375,
+          "invalid_fraction": 0.992,
+          "invalid_fraction_wilson_upper": 0.995940804181,
+          "mean_realized_truth_ratio": 0.99988298428,
+          "valid_replicates": 8
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": 0.0555224068803,
+          "coverage_wilson_lower": 0.529111817787,
+          "coverage_wilson_upper": 0.97758250855,
+          "interval_coverage": 0.875,
+          "invalid_fraction": 0.992,
+          "invalid_fraction_wilson_upper": 0.995940804181,
+          "mean_realized_truth_ratio": 1.00050437574,
+          "valid_replicates": 8
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": 0.0820698052546,
+          "coverage_wilson_lower": 0.529111817787,
+          "coverage_wilson_upper": 0.97758250855,
+          "interval_coverage": 0.875,
+          "invalid_fraction": 0.992,
+          "invalid_fraction_wilson_upper": 0.995940804181,
+          "mean_realized_truth_ratio": 0.999785680456,
+          "valid_replicates": 8
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.992,
+        "successes": 992,
+        "total": 1000,
+        "wilson_lower": 0.984293665469,
+        "wilson_upper": 0.995940804181
+      },
+      "expected_flags": [
+        "event_specificity_bias"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": 0.00382675848556,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 0.992,
+        "successes": 992,
+        "total": 1000,
+        "wilson_lower": 0.984293665469,
+        "wilson_upper": 0.995940804181
+      },
+      "name": "event_specificity_bias",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.946215139442,
+          "treatment_event_audit_sensitivity": 0.894422310757,
+          "treatment_event_audit_specificity": 0.964267866067,
+          "vehicle_division_audit_detection": 0.942231075697,
+          "vehicle_event_audit_sensitivity": 0.882470119522,
+          "vehicle_event_audit_specificity": 0.994752623688
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "founder_error_bearing_completion": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "generation_rate": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "nonerror_daughter_death": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.967678580442,
+            "ratio": 0.996764913575,
+            "reason": null,
+            "upper": 1.02672551921
+          },
+          "division_completion": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "generation_rate": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": true,
+          "general_toxicity": false,
+          "generation_reduction": false,
+          "informative_followup_bias": false
+        },
+        "interpretation": "measurement_invalid",
+        "status": {
+          "all_core_estimable": false,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": false,
+          "division_completion_equivalent": false,
+          "founder_error_bearing_completion_reduction": false,
+          "measurement_valid": false,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": false
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 1.0,
+          "successes": 1000,
+          "total": 1000,
+          "wilson_lower": 0.996173241514,
+          "wilson_upper": 1.0
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "informative_followup_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 0.999990636686,
+          "valid_replicates": 0
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 0.999910399514,
+          "valid_replicates": 0
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 0.999919762076,
+          "valid_replicates": 0
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 1.00049055626,
+          "valid_replicates": 0
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 0.999980861268,
+          "valid_replicates": 0
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 1.0,
+        "successes": 1000,
+        "total": 1000,
+        "wilson_lower": 0.996173241514,
+        "wilson_upper": 1.0
+      },
+      "expected_flags": [
+        "division_detection_bias"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.0,
+        "successes": 0,
+        "total": 1000,
+        "wilson_lower": 2.16840434497e-19,
+        "wilson_upper": 0.00382675848556
+      },
+      "false_generation_wilson_upper": 0.00382675848556,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 1.0,
+        "successes": 1000,
+        "total": 1000,
+        "wilson_lower": 0.996173241514,
+        "wilson_upper": 1.0
+      },
+      "name": "division_detection_bias",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.599601593625,
+          "treatment_event_audit_sensitivity": 0.918326693227,
+          "treatment_event_audit_specificity": 0.993253373313,
+          "vehicle_division_audit_detection": 0.962151394422,
+          "vehicle_event_audit_sensitivity": 0.906374501992,
+          "vehicle_event_audit_specificity": 0.994252873563
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "founder_error_bearing_completion": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "generation_rate": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "nonerror_daughter_death": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.977108331327,
+            "ratio": 1.00824566189,
+            "reason": null,
+            "upper": 1.04037524002
+          },
+          "division_completion": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "generation_rate": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": true,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": false,
+          "informative_followup_bias": false
+        },
+        "interpretation": "measurement_invalid",
+        "status": {
+          "all_core_estimable": false,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": false,
+          "division_completion_equivalent": false,
+          "founder_error_bearing_completion_reduction": false,
+          "measurement_valid": false,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": false
+        }
+      }
+    },
+    {
+      "component_detection": {
+        "cytostasis": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "division_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_preservation": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "error_daughter_pruning": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_detection_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "event_specificity_bias": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "general_toxicity": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "generation_reduction": {
+          "rate": 0.0,
+          "successes": 0,
+          "total": 1000,
+          "wilson_lower": 2.16840434497e-19,
+          "wilson_upper": 0.00382675848556
+        },
+        "informative_followup_bias": {
+          "rate": 0.999,
+          "successes": 999,
+          "total": 1000,
+          "wilson_lower": 0.994357441402,
+          "wilson_upper": 0.999823453629
+        }
+      },
+      "estimands": {
+        "division_completion": {
+          "absolute_log_ratio_bias": 0.0158231008557,
+          "coverage_wilson_lower": 0.206549314377,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": 1.0,
+          "invalid_fraction": 0.999,
+          "invalid_fraction_wilson_upper": 0.999823453629,
+          "mean_realized_truth_ratio": 1.00013576312,
+          "valid_replicates": 1
+        },
+        "founder_error_bearing_completion": {
+          "absolute_log_ratio_bias": 0.217493841524,
+          "coverage_wilson_lower": 0.206549314377,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": 1.0,
+          "invalid_fraction": 0.999,
+          "invalid_fraction_wilson_upper": 0.999823453629,
+          "mean_realized_truth_ratio": 1.00073661482,
+          "valid_replicates": 1
+        },
+        "generation_rate": {
+          "absolute_log_ratio_bias": 0.23331694238,
+          "coverage_wilson_lower": 0.206549314377,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": 1.0,
+          "invalid_fraction": 0.999,
+          "invalid_fraction_wilson_upper": 0.999823453629,
+          "mean_realized_truth_ratio": 1.00060077013,
+          "valid_replicates": 1
+        },
+        "nonerror_daughter_death": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 1.00016418782,
+          "valid_replicates": 0
+        },
+        "relative_error_daughter_reproduction": {
+          "absolute_log_ratio_bias": null,
+          "coverage_wilson_lower": 0.0,
+          "coverage_wilson_upper": 1.0,
+          "interval_coverage": null,
+          "invalid_fraction": 1.0,
+          "invalid_fraction_wilson_upper": 1.0,
+          "mean_realized_truth_ratio": 1.00013845502,
+          "valid_replicates": 0
+        }
+      },
+      "exact_expected_flag_set": {
+        "rate": 0.999,
+        "successes": 999,
+        "total": 1000,
+        "wilson_lower": 0.994357441402,
+        "wilson_upper": 0.999823453629
+      },
+      "expected_flags": [
+        "informative_followup_bias"
+      ],
+      "fail_closed_insufficient_information": {
+        "rate": 0.001,
+        "successes": 1,
+        "total": 1000,
+        "wilson_lower": 0.000176546370626,
+        "wilson_upper": 0.00564255859796
+      },
+      "false_generation_wilson_upper": 0.00382675848556,
+      "gate": "required",
+      "measurement_invalid": {
+        "rate": 0.999,
+        "successes": 999,
+        "total": 1000,
+        "wilson_lower": 0.994357441402,
+        "wilson_upper": 0.999823453629
+      },
+      "name": "informative_followup_bias",
+      "passed": true,
+      "representative_observed_analysis": {
+        "calibration": {
+          "shared_division_detection": 0.943890274314,
+          "shared_event_sensitivity": 0.882059800664,
+          "shared_event_specificity": 0.992676431425,
+          "treatment_division_audit_detection": 0.962151394422,
+          "treatment_event_audit_sensitivity": 0.890438247012,
+          "treatment_event_audit_specificity": 0.991754122939,
+          "vehicle_division_audit_detection": 0.934262948207,
+          "vehicle_event_audit_sensitivity": 0.866533864542,
+          "vehicle_event_audit_specificity": 0.997251374313
+        },
+        "estimability": {
+          "division_completion": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "founder_error_bearing_completion": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "generation_rate": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "nonerror_daughter_death": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": false,
+            "reason": "arm-specific measurement QC failed"
+          }
+        },
+        "estimates": {
+          "daughter_followup": {
+            "estimable": true,
+            "lower": 0.752984950322,
+            "ratio": 0.804403654703,
+            "reason": null,
+            "upper": 0.859333562275
+          },
+          "division_completion": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "founder_error_bearing_completion": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "generation_rate": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "nonerror_daughter_death": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          },
+          "relative_error_daughter_reproduction": {
+            "estimable": false,
+            "lower": null,
+            "ratio": null,
+            "reason": "arm-specific measurement QC failed",
+            "upper": null
+          }
+        },
+        "flags": {
+          "cytostasis": false,
+          "division_detection_bias": false,
+          "error_daughter_preservation": false,
+          "error_daughter_pruning": false,
+          "event_detection_bias": false,
+          "event_specificity_bias": false,
+          "general_toxicity": false,
+          "generation_reduction": false,
+          "informative_followup_bias": true
+        },
+        "interpretation": "measurement_invalid",
+        "status": {
+          "all_core_estimable": false,
+          "clean_generation_signal": false,
+          "conditional_generation_reduction": false,
+          "division_completion_equivalent": false,
+          "founder_error_bearing_completion_reduction": false,
+          "measurement_valid": false,
+          "primary_cohort_boundary": "pre-division death is not separable from other non-completion",
+          "primary_cohort_outcome_model": "fixed cohort; first attempt is no-completion/death, completed-no-error, or completed-error",
+          "primary_generation_concordant": false
+        }
+      }
+    }
+  ],
+  "schema": "mva-generation-selection-benchmark/v3",
+  "seed": 17032026,
+  "summary": {
+    "acceptance_passed": true,
+    "all_passed": true,
+    "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
+    "minimum_required_generation_detection_wilson_lower": 0.886326845683,
+    "passed": 14,
+    "total": 14
+  },
+  "synthetic_only": true,
+  "thresholds": {
+    "confidence_multiplier": 4.30265272991,
+    "division_detection_bias_ratio": 0.8,
+    "division_equivalence_lower_ratio": 0.8,
+    "division_equivalence_upper_ratio": 1.25,
+    "division_reduction_ratio": 0.75,
+    "event_detection_bias_ratio": 0.8,
+    "event_false_positive_increase_ratio": 2.0,
+    "followup_bias_ratio": 0.85,
+    "generation_reduction_ratio": 0.75,
+    "minimum_calibration_youden": 0.75,
+    "minimum_detected_divisions_per_edit_event": 500,
+    "minimum_event_negative_followed_per_edit_event": 500,
+    "minimum_event_positive_followed_per_edit_event": 40,
+    "minimum_posterior_separation": 0.5,
+    "selection_increase_ratio": 1.25,
+    "selection_reduction_ratio": 0.75,
+    "toxicity_increase_ratio": 2.0
+  },
+  "total_simulated_vehicle_treatment_comparisons": 14000,
+  "unmodeled_measurement_boundaries": [
+    "daughter reproduced/died/other label misclassification is not generated, corrected, or audited; those labels are assumed adjudicated in this benchmark",
+    "outcome-dependent missingness engineered to preserve identical arm-level marginal follow-up is not identifiable from these aggregate sufficient statistics"
+  ]
+}

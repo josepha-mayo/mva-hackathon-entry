@@ -28,8 +28,8 @@
     {
       "role": "track2_reproducibility_manifest",
       "path": "release/track2-reproducibility.json",
-      "status": "planned",
-      "sha256": null
+      "status": "released",
+      "sha256": "f4dfd9af049968cbce543d905a0900594bfa3b5fa9fe013c0ca1d49b6e286850"
     }
   ]
 }
