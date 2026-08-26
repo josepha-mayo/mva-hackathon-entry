@@ -14,3 +14,4 @@
 /scripts/create_track2_reproducibility_manifest.py text eol=lf
 /release/track2-reproducibility.json text eol=lf
 /pyproject.toml text eol=lf
+/templates/synthetic_evidence_artifact.txt text eol=lf
