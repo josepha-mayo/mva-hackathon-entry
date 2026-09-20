@@ -278,6 +278,7 @@ def _snapshot(
                 "n_false_paths_blocked_from_advancing": families,
                 "n_false_path": families,
                 "save_path_reachable": true_opened == 1,
+                "structure_ranking_checkpoint_ready": False,
             },
             "registered_gates": gate_list,
             "metrics": _metrics(scenario_rows, ranking_rows),
@@ -652,33 +653,20 @@ class MethodDeltaTests(unittest.TestCase):
 
     def test_freeze_pointers_match_bound_hashes_without_reading_report_text(self) -> None:
         pointers = freeze_pointers(ROOT)
-        # Reviewed divergence: the symmetric arm-drift QC repair changed the
-        # two freeze-bound generation-selection files, and the
-        # freeze/reproducibility hardening changed three more; every other
-        # bound artifact must still match its pinned hash.
-        self.assertFalse(pointers["passed"])
+        # The release manifest is minted at the release source commit and binds
+        # that commit's artifact bytes exactly, so every bound artifact matches
+        # its pinned hash on a clean release tree.
+        self.assertTrue(pointers["passed"])
         mismatched = {
             item["path"]
             for item in pointers["artifacts"]
             if not item["matched"]
         }
-        self.assertEqual(
-            mismatched,
-            {
-                "src/mva_hackathon/generation_selection.py",
-                "tests/test_generation_selection.py",
-                "src/mva_hackathon/reproducibility.py",
-                "scripts/verify_track2_reproducibility.py",
-                "scripts/run_generation_selection_benchmark.py",
-                "scripts/create_track2_reproducibility_manifest.py",
-                "tests/test_reproducibility.py",
-                "pyproject.toml",
-            },
-        )
+        self.assertEqual(mismatched, set())
         self.assertGreaterEqual(pointers["n_artifacts_checked"], 10)
         self.assertEqual(
             pointers["source_commit"],
-            "f73bc570b66d9a0a7c5be29b93b41765079fb87a",
+            "0284e40cc821c0b8741c2bec6297c5aaaa46d48d",
         )
 
     def test_living_method_pointers_reject_hard_link_aliases(self) -> None:
@@ -1603,33 +1591,21 @@ class MethodDeltaTests(unittest.TestCase):
             pointers = freeze_pointers(root)
             self.assertFalse(pointers["passed"])
 
-    def test_live_snapshot_reports_reviewed_freeze_divergence(self) -> None:
+    def test_live_snapshot_verifies_frozen_release_bytes(self) -> None:
         current = snapshot_method(ROOT)
         comparison = compare_method_delta(current)
         self.assertTrue(current["invariants"]["true_path_opens"]["passed"])
         self.assertTrue(current["invariants"]["public_confirmation_holds"]["passed"])
-        # Reviewed divergence: the symmetric arm-drift QC repair changed two
-        # freeze-bound files, and the freeze/reproducibility hardening changed
-        # three more; the manifest still binds their frozen bytes.
+        # The release manifest is minted at the release source commit, so
+        # every freeze-bound artifact matches its pinned hash on the release
+        # tree.
         mismatched = {
             item["path"]
             for item in freeze_pointers(ROOT)["artifacts"]
             if not item["matched"]
         }
-        self.assertEqual(
-            mismatched,
-            {
-                "src/mva_hackathon/generation_selection.py",
-                "tests/test_generation_selection.py",
-                "src/mva_hackathon/reproducibility.py",
-                "scripts/verify_track2_reproducibility.py",
-                "scripts/run_generation_selection_benchmark.py",
-                "scripts/create_track2_reproducibility_manifest.py",
-                "tests/test_reproducibility.py",
-                "pyproject.toml",
-            },
-        )
-        self.assertFalse(
+        self.assertEqual(mismatched, set())
+        self.assertTrue(
             current["invariants"]["freeze_bytes_untouched"]["passed"]
         )
         self.assertTrue(current["invariants"]["living_method_surface_bound"]["passed"])
@@ -1645,8 +1621,8 @@ class MethodDeltaTests(unittest.TestCase):
             bound_paths,
         )
         self.assertNotIn("reports/TRACK2_SESSION_HANDOFF.md", bound_paths)
-        self.assertEqual(comparison["verdict"], "invalid")
-        self.assertEqual(comparison["reason"], "invariants_failed")
+        self.assertEqual(comparison["verdict"], "better")
+        self.assertEqual(comparison["reason"], "nested_method_beyond_freeze")
         self.assertEqual(len(current["snapshot_id"]), len("sha256:") + 64)
         self.assertEqual(
             comparison["current_snapshot_sha256"], snapshot_sha256(current)
@@ -1735,9 +1711,9 @@ class MethodDeltaTests(unittest.TestCase):
             if row["scenario_id"] == "event_negative_daughter_viability"
         )
         self.assertEqual(viability_row["family_id"], "competing_risk.fitter_daughters")
-        self.assertEqual(comparison["reviewer"]["reviewer_verdict"], "invalid")
-        self.assertEqual(comparison["reviewer"]["reason"], "invariants_failed")
-        self.assertFalse(comparison["reviewer"]["agreed"])
+        self.assertEqual(comparison["reviewer"]["reviewer_verdict"], "agree_better")
+        self.assertEqual(comparison["reviewer"]["reason"], "script_and_reviewer_agree")
+        self.assertTrue(comparison["reviewer"]["agreed"])
 
 
 if __name__ == "__main__":

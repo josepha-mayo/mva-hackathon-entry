@@ -1274,6 +1274,9 @@ def snapshot_method(
             ),
             "n_false_path": suite.get("n_false_path"),
             "save_path_reachable": suite.get("save_path_reachable"),
+            "structure_ranking_checkpoint_ready": (
+                (suite.get("structure_ranking") or {}).get("checkpoint_ready")
+            ),
         },
     }
     return seal_snapshot(snapshot, parent_snapshot_id=parent_snapshot_id)
@@ -1361,11 +1364,12 @@ def _invariants_pass(snapshot: Mapping[str, Any]) -> bool:
             and row.get("correct") is True
             for row in ranking_cases
         ),
-        "ranking_cannot_open_checkpoint": isinstance(scenarios, list)
+        "ranking_cannot_open_checkpoint": isinstance(save_path, Mapping)
+        and save_path.get("structure_ranking_checkpoint_ready") is False
+        and isinstance(scenarios, list)
         and any(
             isinstance(row, Mapping)
             and row.get("scenario_id") == "ranking_cannot_open_checkpoint"
-            and row.get("blocked_by") == "structure_ranking"
             and row.get("blocked_from_advancing") is True
             and row.get("opened") is False
             for row in scenarios

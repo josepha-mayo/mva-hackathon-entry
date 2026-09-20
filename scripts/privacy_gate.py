@@ -183,7 +183,9 @@ OPERATIONAL_RECEIPT_PATH_ALLOWLIST = frozenset(
 # identifier cannot hide inside the exemption.
 POLICY_SOURCE_SELF_TOKENS = frozenset(
     {
-        "A0", "A1", "ALPHA", "ARMS", "B10", "B11", "B12", "B13", "B14",
+        "A0", "A1", "A-Z0", "A-Z0-", "ALPHA", "ARMS", "B10", "B11", "B12",
+        "B13",
+        "B14",
         "BCF", "BLE001", "BUB1B", "BUB1B-", "BUBR1", "CLASSIFICATIONS",
         "COMMANDS", "CRAM", "E402", "END", "ENDMDL", "ESTIMANDS", "G418",
         "GO", "GPT-5", "HMAC-SHA256", "L737", "METHODS", "MITOCHONDRIAL",
@@ -623,12 +625,12 @@ BIOLOGICAL_CONTEXT_PATTERNS = (
 )
 EXACT_BIOLOGICAL_IDENTIFIER_PATTERNS = {
     "HGVS-like variant": re.compile(
-        r"(?<![A-Za-z0-9_])(?:c|g|m|n|p|r)\.\s*"
+        r"(?<![A-Za-z0-9_])(?:c|g|m|n|p|r)\s*\.\s*"
         r"(?:[A-Za-z][a-z]{2}|[-*?0-9])[^\s`,;)]*\d[^\s`,;)]*"
     ),
-    "dbSNP-like identifier": re.compile(r"\brs\s*\d{3,}\b", re.IGNORECASE),
+    "dbSNP-like identifier": re.compile(r"\brs\s*\d{3,}[a-z]*\b", re.IGNORECASE),
     "ClinVar accession": re.compile(
-        r"\b(?:VCV|RCV|SCV)\s*\d{6,}(?:\.\d+)?\b", re.IGNORECASE
+        r"\b(?:VCV|RCV|SCV)\s*\d{6,}(?:\.\d+)?[a-z]*\b", re.IGNORECASE
     ),
     "subject identifier": re.compile(
         r"(?i)\b(?:proband|subject|donor|participant|patient)"
@@ -637,18 +639,19 @@ EXACT_BIOLOGICAL_IDENTIFIER_PATTERNS = {
         r"(?:id|no|num(?:ber)?|#)[\s_.:/#-]*[A-Za-z]{0,3}\d[A-Za-z0-9-]*"
         r"|[-_:/#][\s_.:/#-]*[A-Za-z]{0,3}\d[A-Za-z0-9-]*"
         r"|[A-Za-z]{0,3}\d{2,}[A-Za-z0-9-]*"
+        r"|(?=[A-Za-z0-9-]*\d)[A-Za-z0-9]+(?:-[A-Za-z0-9]+){2,}"
         r")\b"
     ),
     "genomic coordinate": re.compile(
-        r"\b(?:chr)?(?:[1-9]|1\d|2[0-2]|X|Y|M|MT):\s*\d{4,}\b",
+        r"\b(?:chr)?(?:[1-9]|1\d|2[0-2]|X|Y|M|MT)\s*:\s*\d{4,}[a-z]*\b",
         re.IGNORECASE,
     ),
     "RefSeq/Ensembl accession": re.compile(
-        r"\b(?:N[MRXCGPW]_|X[MR]_|ENST|ENSP|ENSG)\s*\d{3,}(?:\.\d+)?\b",
+        r"\b(?:N[MRXCGPW]_|X[MR]_|ENST|ENSP|ENSG)\s*\d{3,}(?:\.\d+)?[a-z]*\b",
         re.IGNORECASE,
     ),
     "HGNC/OMIM accession": re.compile(
-        r"\b(?:HGNC|OMIM|MIM)[:#]?\s*\d{4,}\b",
+        r"\b(?:HGNC|OMIM|MIM)[:#]?\s*\d{4,}[a-z]*\b",
         re.IGNORECASE,
     ),
 }
@@ -1138,26 +1141,14 @@ def _validate_release_manifest(
     return provisional, []
 
 
-_SCAN_VIEW_SUFFIX = re.compile(r"\((?:unescaped|base64)\)$")
-
-
-def _scan_view_base(relative: PurePosixPath) -> PurePosixPath:
-    """Path a decoded view (``file(unescaped)``/``file(base64)``) belongs to.
-
-    Allowance and self-policy state attach to the underlying file, not to the
-    decoded view derived from it; a ``%XX`` escape or base64 run must not strip
-    the file's reviewed-path exemptions.
-    """
-    return PurePosixPath(_SCAN_VIEW_SUFFIX.sub("", relative.as_posix()))
-
-
 def _public_identifier_allowed(identifier: str, relative: PurePosixPath) -> bool:
     if identifier.startswith("SYN"):
         return True
     if identifier in PUBLIC_TECHNICAL_IDENTIFIER_ALLOWLIST:
         return True
-    base = _scan_view_base(relative)
-    if identifier in PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST.get(base, frozenset()):
+    if identifier in PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST.get(
+        relative, frozenset()
+    ):
         return True
     if re.fullmatch(r"(?:[A-Z0-9]-[A-Z0-9]){2,}", identifier):
         return True
@@ -1170,13 +1161,13 @@ def _inspect_publication_text(
     source: str,
     *,
     allow_released_biology: bool = False,
+    view_label: str = "",
 ) -> list[str]:
-    base_relative = _scan_view_base(relative)
-    self_policy = base_relative in PUBLICATION_POLICY_PATH_ALLOWLIST
-    self_receipt = base_relative in OPERATIONAL_RECEIPT_PATH_ALLOWLIST
+    self_policy = relative in PUBLICATION_POLICY_PATH_ALLOWLIST
+    self_receipt = relative in OPERATIONAL_RECEIPT_PATH_ALLOWLIST
 
     issues: list[str] = []
-    prefix = f"{source}: {relative.as_posix()}"
+    prefix = f"{source}: {relative.as_posix()}{view_label}"
     if not allow_released_biology:
         identifiers: set[str] = set()
         identifiers.update(QUOTED_UPPER_IDENTIFIER_PATTERN.findall(text))
@@ -1197,9 +1188,13 @@ def _inspect_publication_text(
                     identifier = _SUBJECT_IDENTIFIER_PORTION.sub(
                         "", match.group(0)
                     )
+                    # A role word asserting a real subject can only be
+                    # discharged by the declared SYN namespace — technical
+                    # tokens and shape exemptions must not turn a
+                    # "subject <token>" assertion into an allowlisted one.
                     if not (
                         _public_identifier_allowed(match.group(0), relative)
-                        or _public_identifier_allowed(identifier, relative)
+                        or identifier.startswith("SYN")
                     ):
                         issues.append(f"{label}: {prefix}")
                         break
@@ -1220,21 +1215,120 @@ def _inspect_publication_text(
     return issues
 
 
+_PAYLOAD_MAX_DEPTH = 3
+
+# Token shapes that explain a long base64-alphabet run without an embedded
+# payload: alphabetic runs and UPPER_SNAKE constants (with ``=`` edges picked
+# up by whitespace-compacted code merges), hex digests, kebab-case
+# identifiers, and path/expression tokens with clean ``+``/``.``/``/``
+# separators. A decode from one of these is entropy-random gibberish, so
+# binary payload evidence is suppressed for them — but any predominantly
+# printable decode is still scanned for identifiers.
+_BASE64_BENIGN_TOKEN = re.compile(
+    r"(?:[A-Za-z0-9_-]*[+./][A-Za-z0-9_-]*)+={0,3}"
+    r"|={0,3}[A-Za-z]+={0,3}"
+    r"|={0,3}[A-Z0-9_]+={0,3}"
+    r"|[0-9a-fA-F]+={0,3}"
+    r"|[A-Za-z0-9_]+(?:-[A-Za-z0-9_]+)+={0,3}"
+    r"\Z"
+)
+
+
+def _unescape_text(text: str) -> str:
+    """Decode consumer-layer escapes to a fixed point (bounded iterations).
+
+    JSON ``\\uXXXX``, URL ``%XX``, and HTML entities all decode to ordinary
+    text at read time, and each layer can wrap another — ``%2556`` decodes to
+    ``%56`` which decodes to ``V``. Three passes cover double-encoded
+    payloads; a fourth would only matter to deliberately deeper nesting.
+    """
+
+    out = text
+    for _ in range(3):
+        if "\\u" not in out and "%" not in out and "&" not in out:
+            break
+        decoded = re.sub(
+            r"\\u([0-9a-fA-F]{4})",
+            lambda match: chr(int(match.group(1), 16)),
+            out,
+        )
+        decoded = urllib.parse.unquote(decoded)
+        decoded = html.unescape(decoded)
+        if decoded == out:
+            break
+        out = decoded
+    return out
+
+
+def _b64_decode_token(token: str) -> bytes | None:
+    """Padding-tolerant base64 decode; None when the token is not base64."""
+
+    core = token.strip("=").translate(str.maketrans("-_", "+/"))
+    if not core:
+        return None
+    core += "=" * (-len(core) % 4)
+    try:
+        return base64.b64decode(core, validate=True)
+    except ValueError:
+        return None
+
+
+def _printable_fraction(decoded: bytes) -> float:
+    if not decoded:
+        return 0.0
+    printable = sum(
+        1 for byte in decoded if 0x20 <= byte <= 0x7E or byte in (0x09, 0x0A, 0x0D)
+    )
+    return printable / len(decoded)
+
+
+def _printable_payload_text(decoded: bytes) -> str | None:
+    """Decode bytes to predominantly-printable text, or None.
+
+    Valid UTF-8 is measured per character so non-ASCII text (``é``) does not
+    masquerade as binary; invalid UTF-8 falls back to the ASCII byte count.
+    """
+
+    if not decoded or len(decoded) > MAX_PUBLIC_BYTES:
+        return None
+    try:
+        text = decoded.decode("utf-8")
+    except UnicodeDecodeError:
+        if _printable_fraction(decoded) < 0.9:
+            return None
+        return decoded.decode("utf-8", errors="ignore")
+    printable = sum(1 for char in text if char.isprintable() or char in "\t\n\r")
+    if not text or printable / len(text) < 0.9:
+        return None
+    return text
+
+
+def _has_magic_signature(decoded: bytes) -> bool:
+    return any(
+        signature in decoded
+        for signature, _label in MAGIC_SIGNATURES
+        if any(byte > 0x7E or byte < 0x09 for byte in signature)
+    )
+
+
 def _inspect_payload_text(
     relative: PurePosixPath,
     text: str,
     source: str,
     *,
     allow_released_biology: bool = False,
+    view_label: str = "",
+    _depth: int = 0,
 ) -> list[str]:
-    """Full detector set for payloads outside the file-content path — decoded
-    base64 runs, unescaped text, and Git commit/tag messages. Secrets,
+    """Full detector set for text payloads — file content, decoded base64
+    runs, unescaped text, and Git commit/tag messages. Secrets,
     controlled-payload markers, and phenotype bundles apply here just as they
     do to raw file text; a released artifact's declared biology allowance
-    extends to payloads embedded inside it."""
+    extends to payloads embedded inside it. Decoded views recurse so a
+    payload cannot hide one layer under another."""
 
     issues: list[str] = []
-    prefix = f"{source}: {relative.as_posix()}"
+    prefix = f"{source}: {relative.as_posix()}{view_label}"
     for label, pattern in SECRET_PATTERNS.items():
         if pattern.search(text):
             issues.append(f"{label} pattern: {prefix}")
@@ -1252,8 +1346,89 @@ def _inspect_payload_text(
             folded,
             source,
             allow_released_biology=allow_released_biology,
+            view_label=view_label,
         )
     )
+    if _depth >= _PAYLOAD_MAX_DEPTH:
+        return issues
+
+    seen_tokens: set[str] = set()
+    haystacks = [(text, False)]
+    compact = re.sub(r"[\s,]+", "", text)
+    if compact != text:
+        haystacks.append((compact, True))
+    for haystack, compacted in haystacks:
+        for token in _BASE64_RUN.findall(haystack):
+            if token in seen_tokens:
+                continue
+            seen_tokens.add(token)
+            decoded = _b64_decode_token(token)
+            if decoded is None or len(decoded) > MAX_PUBLIC_BYTES:
+                continue
+            payload_text = _printable_payload_text(decoded)
+            if payload_text is not None:
+                issues.extend(
+                    _inspect_payload_text(
+                        relative,
+                        payload_text,
+                        source,
+                        allow_released_biology=allow_released_biology,
+                        view_label=view_label + "(base64)",
+                        _depth=_depth + 1,
+                    )
+                )
+                continue
+            # Binary-looking decode: readable runs inside still take the
+            # precise-identifier pass, and the payload itself flags only when
+            # the token lacks a benign source shape — constants, digests, and
+            # path tokens decode to entropy-random gibberish by chance.
+            run_labels: set[str] = set()
+            for run in re.findall(rb"[ -~]{6,}", decoded):
+                run_text = run.decode("ascii")
+                for label, pattern in EXACT_BIOLOGICAL_IDENTIFIER_PATTERNS.items():
+                    if pattern.search(run_text):
+                        run_labels.add(label)
+            for label in sorted(run_labels):
+                issues.append(f"base64-embedded {label}: {prefix}")
+            if _BASE64_BENIGN_TOKEN.fullmatch(token):
+                continue
+            # The raw view keeps the \x00 and embedded-magic tripwires. The
+            # compacted view glues prose/code words into fake tokens whose
+            # decode is entropy-random — a two-byte magic appears mid-decode
+            # by chance, so compacted evidence requires the decode to begin
+            # with a magic signature or to carry NULs amid mostly-readable
+            # text (a deliberate payload shape, not merge gibberish).
+            if compacted:
+                binary_hit = (
+                    any(
+                        decoded.startswith(signature)
+                        for signature, _label in MAGIC_SIGNATURES
+                    )
+                    or (
+                        b"\x00" in decoded
+                        and _printable_fraction(decoded) >= 0.5
+                    )
+                )
+            else:
+                binary_hit = _has_magic_signature(decoded) or b"\x00" in decoded
+            if binary_hit:
+                issues.append(
+                    "base64-embedded binary payload requiring offline review: "
+                    + prefix
+                )
+
+    unescaped = _unescape_text(text)
+    if unescaped != text:
+        issues.extend(
+            _inspect_payload_text(
+                relative,
+                unescaped,
+                source,
+                allow_released_biology=allow_released_biology,
+                view_label=view_label + "(unescaped)",
+                _depth=_depth + 1,
+            )
+        )
     return issues
 
 
@@ -1270,7 +1445,7 @@ def _inspect_path_identifiers(
     prefix = f"{source}: {relative.as_posix()}"
     stems = [relative.stem] + [PurePosixPath(part).stem for part in relative.parts[:-1]]
     for stem in stems:
-        folded = _scan_fold(stem)
+        folded = _scan_fold(_unescape_text(stem))
         identifiers = set(QUOTED_UPPER_IDENTIFIER_PATTERN.findall(folded))
         identifiers.update(GENE_LIKE_TOKEN_PATTERN.findall(folded))
         for pattern in BIOLOGICAL_CONTEXT_PATTERNS:
@@ -1347,115 +1522,10 @@ def _inspect_bytes(
             + prefix
         )
         return issues
-    folded_text = _scan_fold(text)
-    for label, pattern in SECRET_PATTERNS.items():
-        if pattern.search(text):
-            issues.append(f"{label} pattern: {prefix}")
-    for label, pattern in CONTROLLED_TEXT_PATTERNS.items():
-        if pattern.search(text):
-            issues.append(f"{label}: {prefix}")
-    if len(set(HPO_PATTERN.findall(folded_text))) >= 3:
-        issues.append(f"possible subject phenotype bundle (3+ HPO terms): {prefix}")
-
-    base64_haystacks = [(text, False)]
-    compact = "".join(text.split())
-    if compact != text:
-        base64_haystacks.append((compact, True))
-    seen_tokens: set[str] = set()
-    for haystack, compacted in base64_haystacks:
-        for token in _BASE64_RUN.findall(haystack):
-            if token in seen_tokens:
-                continue
-            seen_tokens.add(token)
-            # A genuine >=24-char payload virtually always mixes both cases
-            # and digits (~96% alphabet coverage); single-shape tokens are
-            # code constants, identifiers, paths, or hex digests rather than
-            # embedded payloads, so decoding them only flags arbitrary text.
-            if not (
-                re.search(r"[a-z]", token)
-                and re.search(r"[A-Z]", token)
-                and re.search(r"\d", token)
-            ):
-                continue
-            # A token composed only of word characters split into clean
-            # dot/slash-delimited segments is a path or dotted identifier
-            # (``reports/TRACK2_PROGRAM_GATES``), not a payload blob. A real
-            # payload could mimic this shape, but without decoding it is
-            # indistinguishable from a path to any static scan — documented
-            # residual.
-            if re.fullmatch(
-                r"[A-Za-z0-9_-]+(?:[./][A-Za-z0-9_-]+)+", token
-            ):
-                continue
-            try:
-                decoded = base64.b64decode(
-                    token.translate(str.maketrans("-_", "+/")),
-                    validate=True,
-                )
-            except ValueError:
-                continue
-            if not decoded or len(decoded) > MAX_PUBLIC_BYTES:
-                continue
-            has_magic = any(
-                signature in decoded
-                for signature, _label in MAGIC_SIGNATURES
-                if any(byte > 0x7E or byte < 0x09 for byte in signature)
-            )
-            # Whitespace-compaction glues ordinary prose/code words into
-            # fake tokens whose decode is entropy-random — \x00 appears by
-            # chance at any decode length, so the compacted view requires a
-            # real magic signature. The raw view keeps the \x00 tripwire.
-            if has_magic or (b"\x00" in decoded and not compacted):
-                issues.append(
-                    "base64-embedded binary payload requiring offline review: "
-                    + prefix
-                )
-                continue
-            # A decode that is not predominantly printable text has no text
-            # to scan — merged prose/code decodes land ~20-45% printable
-            # while an embedded text payload is ~fully printable.
-            printable = sum(
-                1
-                for byte in decoded
-                if 0x20 <= byte <= 0x7E or byte in (0x09, 0x0A, 0x0D)
-            )
-            if printable / len(decoded) < 0.9:
-                continue
-            issues.extend(
-                _inspect_payload_text(
-                    PurePosixPath(relative.as_posix() + "(base64)"),
-                    decoded.decode("utf-8", errors="ignore"),
-                    source,
-                    allow_released_biology=released_role in RELEASE_BIOLOGY_ROLES,
-                )
-            )
-
-    # Consumer-layer escapes can hide identifiers from the raw-bytes scan:
-    # JSON \uXXXX, URL %XX, and HTML numeric entities all decode to ordinary
-    # text at read time. Scan the decoded view too when it differs.
-    unescaped = text
-    if "\\u" in unescaped or "%" in unescaped or "&#" in unescaped:
-        unescaped = re.sub(
-            r"\\u([0-9a-fA-F]{4})",
-            lambda match: chr(int(match.group(1), 16)),
-            unescaped,
-        )
-        unescaped = urllib.parse.unquote(unescaped)
-        unescaped = html.unescape(unescaped)
-    if unescaped != text:
-        issues.extend(
-            _inspect_payload_text(
-                PurePosixPath(relative.as_posix() + "(unescaped)"),
-                unescaped,
-                source,
-                allow_released_biology=released_role in RELEASE_BIOLOGY_ROLES,
-            )
-        )
-
     issues.extend(
-        _inspect_publication_text(
+        _inspect_payload_text(
             relative,
-            folded_text,
+            text,
             source,
             allow_released_biology=released_role in RELEASE_BIOLOGY_ROLES,
         )
