@@ -89,6 +89,12 @@ class ReferenceLedgerTests(unittest.TestCase):
             ReferenceResource.from_dict(
                 resource(source_url="https://token@example.org/reference/v1")
             )
+        with self.assertRaisesRegex(ReferenceLedgerError, "local paths"):
+            ReferenceResource.from_dict(
+                resource(purpose="Mirrored /controlled/cohort-42/proband.vcf.gz")
+            )
+        clean = resource(purpose="Fold A / B comparison of the public build")
+        ReferenceResource.from_dict(clean)
 
     def test_model_slots_are_strict(self) -> None:
         with self.assertRaisesRegex(ReferenceLedgerError, "model_slots"):
@@ -97,6 +103,23 @@ class ReferenceLedgerTests(unittest.TestCase):
     def test_duplicate_resource_ids_are_rejected(self) -> None:
         with self.assertRaisesRegex(ReferenceLedgerError, "duplicate"):
             ReferenceLedger.from_dict(ledger(resources=[resource(), resource()]))
+
+    def test_duplicate_digests_cannot_bind_two_entries(self) -> None:
+        shared = resource()
+        other = resource(resource_id="syn-resource-two")
+        other["sha256"] = shared["sha256"]
+        with self.assertRaisesRegex(ReferenceLedgerError, "duplicate sha256"):
+            ReferenceLedger.from_dict(ledger(resources=[shared, other]))
+
+    def test_loader_rejects_non_finite_numbers(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "ledger.json"
+            path.write_text('{"schema": NaN}', encoding="utf-8")
+            with self.assertRaisesRegex(ReferenceLedgerError, "non-finite"):
+                load_reference_ledger(path)
+            path.write_text('{"schema": 1e400}', encoding="utf-8")
+            with self.assertRaisesRegex(ReferenceLedgerError, "non-finite"):
+                load_reference_ledger(path)
 
     def test_loader_rejects_duplicate_json_keys(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

@@ -1,0 +1,129 @@
+{
+  "schema": "mva-track2-clone-safety/v2",
+  "privacy_class": "synthetic",
+  "purpose": "Synthetic observed-label clone-safety decision nested under edit event, clone, and run. This is a software example, not a real-study outcome.",
+  "synthetic_only": true,
+  "claim_boundary": "Observed-label clone-safety software contract only; higher absolute event-positive daughter reproduction, disproportionate event-positive versus event-negative reproduction, or event-negative daughter death above the configured ratio is a stop, not a rescue. Observed labels do not establish true genotype, mechanism, treatment safety, efficacy, or clinical benefit.",
+  "ratio_stop": 1.25,
+  "death_ratio_stop": 2.0,
+  "minimum_resolved": 8,
+  "status": "stop",
+  "program_effect": "stop",
+  "clone_safety_stop": true,
+  "advancement_blocked": true,
+  "source_fingerprint": "31ec127c56c74dd26cc197be6385430a5986a1d284b8c42e539c86b68d06bf09",
+  "nests": [
+    {
+      "edit_event_id": "syn-event-1",
+      "clone_id": "syn-clone-1",
+      "run_id": "syn-run-1",
+      "vehicle_positive_divisions": 5,
+      "treatment_positive_divisions": 5,
+      "vehicle_followed": 10,
+      "vehicle_reproduced": 4,
+      "treatment_followed": 10,
+      "treatment_reproduced": 4,
+      "vehicle_rate": 0.4,
+      "treatment_rate": 0.4,
+      "ratio": 1.0,
+      "ratio_unbounded": false,
+      "vehicle_negative_followed": 10,
+      "vehicle_negative_reproduced": 8,
+      "vehicle_negative_died": 1,
+      "treatment_negative_followed": 10,
+      "treatment_negative_reproduced": 8,
+      "treatment_negative_died": 1,
+      "vehicle_negative_reproduction_rate": 0.8,
+      "treatment_negative_reproduction_rate": 0.8,
+      "vehicle_negative_death_rate": 0.1,
+      "treatment_negative_death_rate": 0.1,
+      "relative_positive_negative_reproduction_ratio": 1.0,
+      "relative_reproduction_ratio_unbounded": false,
+      "negative_death_ratio": 1.0,
+      "negative_death_ratio_unbounded": false,
+      "checks": [
+        {
+          "name": "error_daughter_reproduction",
+          "status": "pass",
+          "reason": "within_ratio",
+          "ratio": 1.0,
+          "unbounded": false
+        },
+        {
+          "name": "relative_positive_negative_reproduction",
+          "status": "pass",
+          "reason": "within_ratio",
+          "ratio": 1.0,
+          "unbounded": false
+        },
+        {
+          "name": "event_negative_daughter_death",
+          "status": "pass",
+          "reason": "within_ratio",
+          "ratio": 1.0,
+          "unbounded": false
+        }
+      ],
+      "status": "pass",
+      "reason": "within_configured_ratios",
+      "positive_followup_complete": true,
+      "negative_followup_symmetric": true
+    },
+    {
+      "edit_event_id": "syn-event-1",
+      "clone_id": "syn-clone-2",
+      "run_id": "syn-run-1",
+      "vehicle_positive_divisions": 5,
+      "treatment_positive_divisions": 5,
+      "vehicle_followed": 10,
+      "vehicle_reproduced": 4,
+      "treatment_followed": 10,
+      "treatment_reproduced": 8,
+      "vehicle_rate": 0.4,
+      "treatment_rate": 0.8,
+      "ratio": 2.0,
+      "ratio_unbounded": false,
+      "vehicle_negative_followed": 10,
+      "vehicle_negative_reproduced": 8,
+      "vehicle_negative_died": 1,
+      "treatment_negative_followed": 10,
+      "treatment_negative_reproduced": 8,
+      "treatment_negative_died": 1,
+      "vehicle_negative_reproduction_rate": 0.8,
+      "treatment_negative_reproduction_rate": 0.8,
+      "vehicle_negative_death_rate": 0.1,
+      "treatment_negative_death_rate": 0.1,
+      "relative_positive_negative_reproduction_ratio": 2.0,
+      "relative_reproduction_ratio_unbounded": false,
+      "negative_death_ratio": 1.0,
+      "negative_death_ratio_unbounded": false,
+      "checks": [
+        {
+          "name": "error_daughter_reproduction",
+          "status": "stop",
+          "reason": "error_daughter_reproduction_ratio",
+          "ratio": 2.0,
+          "unbounded": false
+        },
+        {
+          "name": "relative_positive_negative_reproduction",
+          "status": "stop",
+          "reason": "relative_error_daughter_preservation_ratio",
+          "ratio": 2.0,
+          "unbounded": false
+        },
+        {
+          "name": "event_negative_daughter_death",
+          "status": "pass",
+          "reason": "within_ratio",
+          "ratio": 1.0,
+          "unbounded": false
+        }
+      ],
+      "status": "stop",
+      "reason": "error_daughter_reproduction_ratio",
+      "positive_followup_complete": true,
+      "negative_followup_symmetric": true
+    }
+  ]
+}

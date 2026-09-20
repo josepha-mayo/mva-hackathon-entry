@@ -38,7 +38,7 @@ def main() -> int:
         parser.error("output already exists; refusing to overwrite")
     arguments.output.parent.mkdir(parents=True, exist_ok=True)
     arguments.output.write_text(
-        json.dumps(result, indent=2, sort_keys=True) + "\n",
+        json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n",
         encoding="utf-8",
         newline="\n",
     )

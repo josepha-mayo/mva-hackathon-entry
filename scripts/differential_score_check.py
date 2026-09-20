@@ -34,6 +34,20 @@ def git_commit(path: Path) -> str | None:
     return completed.stdout.strip() if completed.returncode == 0 else None
 
 
+def git_file_is_clean(path: Path) -> bool:
+    """True when the evaluator file has no uncommitted working-tree changes.
+
+    A matching HEAD does not certify file bytes — a dirty checkout can still
+    differ from the expected commit.
+    """
+
+    completed = subprocess.run(
+        ["git", "-C", str(path.parent), "status", "--porcelain", "--", path.name],
+        stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=False,
+    )
+    return completed.returncode == 0 and not completed.stdout.strip()
+
+
 def synthetic_variant(index: int) -> Variant:
     bases = (("A", "C"), ("C", "G"), ("G", "T"), ("T", "A"))
     ref, alt = bases[index % len(bases)]
@@ -43,18 +57,31 @@ def synthetic_variant(index: int) -> Variant:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--official-evaluation", type=Path, required=True)
-    parser.add_argument("--expected-commit")
+    parser.add_argument(
+        "--expected-commit",
+        required=True,
+        help="Expected HEAD commit of the official evaluator checkout",
+    )
     parser.add_argument("--cases", type=int, default=10_000)
     parser.add_argument("--seed", type=int, default=20_260_826)
     args = parser.parse_args()
+    if args.cases < 1_000:
+        print(
+            "NO-GO: fewer than 1,000 differential cases cannot certify the "
+            "evaluator match"
+        )
+        return 2
 
     path = args.official_evaluation.resolve()
     if not path.is_file():
         print("NO-GO: official evaluation.py was not found")
         return 2
     commit = git_commit(path)
-    if args.expected_commit and commit != args.expected_commit:
+    if commit != args.expected_commit:
         print("NO-GO: official evaluator checkout is not at the expected commit")
+        return 3
+    if not git_file_is_clean(path):
+        print("NO-GO: official evaluator file has uncommitted changes")
         return 3
     official = load_official(path)
     rng = random.Random(args.seed)

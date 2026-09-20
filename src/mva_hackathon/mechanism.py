@@ -9,8 +9,10 @@ relevance as separate facts.
 
 from __future__ import annotations
 
+import hashlib
+import json
 import re
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from enum import Enum
 from itertools import groupby
 from typing import Iterable
@@ -290,7 +292,7 @@ class VariantGeneEvidence:
     gene: str
     strict_pathogenic: bool
     review_stars: int
-    conflicting: bool = False
+    conflicting: bool
 
     def __post_init__(self) -> None:
         evidence_id = _validated_token(self.evidence_id, "evidence_id")
@@ -351,6 +353,9 @@ class MechanismAssessment:
     strict_pathogenic_anchor_count: int
     condition_relevance: ConditionRelevance
     eligible_for_strict_pair_lane: bool
+    # Canonical SHA-256 over the exact input tuple (candidate, effects, rule,
+    # evidence, condition evidence) — the verdict is bound to its inputs.
+    assessment_input_sha256: str
 
 
 _FIT_PRIORITY = {
@@ -366,9 +371,13 @@ def _gene_matched_anchor_count(
 ) -> int:
     candidate_keys = set(candidate.variant_keys)
     anchored_keys: set[VariantKey] = set()
+    identifiers: set[str] = set()
     for index, item in enumerate(evidence):
         if not isinstance(item, VariantGeneEvidence):
             raise MechanismInputError(f"evidence {index} must be VariantGeneEvidence")
+        if item.evidence_id in identifiers:
+            raise MechanismInputError("variant evidence identifiers must be unique")
+        identifiers.add(item.evidence_id)
         if (
             item.gene == candidate.gene
             and item.variant_key in candidate_keys
@@ -402,6 +411,34 @@ def _condition_relevance(
     return next(iter(observations))
 
 
+def _assessment_input_sha256(
+    candidate: InheritanceCandidate,
+    effects: Iterable[AlleleTranscriptEffects],
+    rule: DiseaseMechanismRule,
+    evidence: Iterable[VariantGeneEvidence],
+    condition_evidence: Iterable[DiseaseConditionEvidence],
+) -> str:
+    def _rows(rows: Iterable[object]) -> list[str]:
+        return sorted(
+            json.dumps(asdict(row), sort_keys=True, default=str)
+            for row in rows
+        )
+
+    material = json.dumps(
+        {
+            "candidate": asdict(candidate),
+            "effects": _rows(effects),
+            "rule": asdict(rule),
+            "evidence": _rows(evidence),
+            "condition_evidence": _rows(condition_evidence),
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+        default=str,
+    )
+    return hashlib.sha256(material.encode("utf-8")).hexdigest()
+
+
 def _base_assessment(
     candidate: InheritanceCandidate,
     rule: DiseaseMechanismRule,
@@ -411,6 +448,7 @@ def _base_assessment(
     shared: tuple[str, ...] = (),
     supporting: tuple[str, ...] = (),
     anchor_count: int = 0,
+    input_sha256: str = "",
 ) -> MechanismAssessment:
     phase = candidate.phase_state
     if phase not in {PhaseState.TRANS_CONFIRMED, PhaseState.UNRESOLVED}:
@@ -421,6 +459,8 @@ def _base_assessment(
     eligible = (
         fit is MechanismFit.STRICT_TWO_ALLELE_LOF_MATCH
         and phase is PhaseState.TRANS_CONFIRMED
+        and condition_relevance is ConditionRelevance.MATCHED
+        and anchor_count > 0
     )
     return MechanismAssessment(
         gene=candidate.gene,
@@ -433,6 +473,7 @@ def _base_assessment(
         strict_pathogenic_anchor_count=anchor_count,
         condition_relevance=condition_relevance,
         eligible_for_strict_pair_lane=eligible,
+        assessment_input_sha256=input_sha256,
     )
 
 
@@ -457,8 +498,21 @@ def assess_mechanism_pair(
     if not isinstance(rule, DiseaseMechanismRule):
         raise MechanismInputError("rule must be a DiseaseMechanismRule")
 
-    anchor_count = _gene_matched_anchor_count(candidate, evidence)
-    condition = _condition_relevance(rule, condition_evidence)
+    effect_rows = tuple(effects)
+    evidence_rows = tuple(evidence)
+    condition_rows = tuple(condition_evidence)
+    # Unbounded caller-supplied rows are a resource-exhaustion surface.
+    if (
+        len(effect_rows) > 10_000
+        or len(evidence_rows) > 10_000
+        or len(condition_rows) > 10_000
+    ):
+        raise MechanismInputError("mechanism inputs exceed the row ceiling")
+    anchor_count = _gene_matched_anchor_count(candidate, evidence_rows)
+    condition = _condition_relevance(rule, condition_rows)
+    input_fingerprint = _assessment_input_sha256(
+        candidate, effect_rows, rule, evidence_rows, condition_rows
+    )
     if rule.gene != candidate.gene:
         return _base_assessment(
             candidate,
@@ -466,6 +520,7 @@ def assess_mechanism_pair(
             MechanismFit.GENE_RULE_MISMATCH,
             condition,
             anchor_count=anchor_count,
+            input_sha256=input_fingerprint,
         )
 
     first, second = candidate.alleles
@@ -476,9 +531,9 @@ def assess_mechanism_pair(
             MechanismFit.LOCUS_MISMATCH,
             condition,
             anchor_count=anchor_count,
+            input_sha256=input_fingerprint,
         )
 
-    effect_rows = tuple(effects)
     if any(not isinstance(row, AlleleTranscriptEffects) for row in effect_rows):
         raise MechanismInputError("effects must contain AlleleTranscriptEffects values")
     by_key: dict[VariantKey, AlleleTranscriptEffects] = {}
@@ -500,6 +555,7 @@ def assess_mechanism_pair(
             MechanismFit.NO_SHARED_TRANSCRIPT,
             condition,
             anchor_count=anchor_count,
+            input_sha256=input_fingerprint,
         )
     if rule.mechanism is not RuleMechanism.LOSS_OF_FUNCTION:
         return _base_assessment(
@@ -509,6 +565,7 @@ def assess_mechanism_pair(
             condition,
             shared=shared,
             anchor_count=anchor_count,
+            input_sha256=input_fingerprint,
         )
 
     per_transcript: dict[str, MechanismFit] = {}
@@ -536,6 +593,7 @@ def assess_mechanism_pair(
         shared=shared,
         supporting=supporting,
         anchor_count=anchor_count,
+        input_sha256=input_fingerprint,
     )
 
 

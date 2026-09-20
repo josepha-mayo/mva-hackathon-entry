@@ -1,0 +1,152 @@
+{
+  "checkpoint_ready": false,
+  "claim_boundary": "One static coordinate model can prioritize experiments only; distances and contact overlap are not mutant structure, energetics, function, pathogenicity, target engagement, efficacy, safety, or clinical benefit.",
+  "coordinate_only": true,
+  "direct_geometry_from_target": [
+    {
+      "ca_distance_angstrom": 3.0,
+      "minimum_heavy_atom_distance_angstrom": 1.0,
+      "residue": 20,
+      "residue_name": "SYN"
+    },
+    {
+      "ca_distance_angstrom": 10.0,
+      "minimum_heavy_atom_distance_angstrom": 7.566,
+      "residue": 30,
+      "residue_name": "SYN"
+    }
+  ],
+  "input": {
+    "chain": "A",
+    "scope": "one caller-supplied PDB model; selected ATOM chain",
+    "sha256": "36a80d4dfd998c8a57cc52466dc2b6c354f0a570356b6693fea767277b6e6cb3",
+    "source_name": "coordinate_model.synthetic.pdb"
+  },
+  "interpretation_boundary": [
+    "The B-factor field is reported without assuming whether it is an experimental B-factor or a predicted-model confidence score.",
+    "Neighborhood overlap compares absolute residue identifiers after the declared sequence-separation filter.",
+    "A close or overlapping neighborhood can prioritize an experiment but cannot transfer another residue's phenotype.",
+    "One static coordinate model can prioritize experiments only; distances and contact overlap are not mutant structure, energetics, function, pathogenicity, target engagement, efficacy, safety, or clinical benefit."
+  ],
+  "neighborhood_overlap_with_target": [
+    {
+      "nonlocal_ca_shell_overlap": {
+        "intersection": [
+          40
+        ],
+        "intersection_count": 1,
+        "jaccard": 0.333333,
+        "union_count": 3
+      },
+      "nonlocal_sidechain_contact_overlap": {
+        "intersection": [
+          40
+        ],
+        "intersection_count": 1,
+        "jaccard": 0.333333,
+        "union_count": 3
+      },
+      "residue": 20,
+      "residue_name": "SYN"
+    },
+    {
+      "nonlocal_ca_shell_overlap": {
+        "intersection": [],
+        "intersection_count": 0,
+        "jaccard": 0.0,
+        "union_count": 2
+      },
+      "nonlocal_sidechain_contact_overlap": {
+        "intersection": [],
+        "intersection_count": 0,
+        "jaccard": 0.0,
+        "union_count": 2
+      },
+      "residue": 30,
+      "residue_name": "SYN"
+    }
+  ],
+  "parameters": {
+    "ca_shell_threshold_angstrom": 6.0,
+    "comparator_residues": [
+      20,
+      30
+    ],
+    "nonlocal_sequence_separation_minimum": 3,
+    "polar_proximity_threshold_angstrom": 1.5,
+    "sidechain_contact_threshold_angstrom": 1.5,
+    "target_residue": 10
+  },
+  "probe_eligible": false,
+  "residue_summaries": [
+    {
+      "ca_shell_residues": [
+        20,
+        40
+      ],
+      "mean_b_factor_field": 90.0,
+      "nonlocal_ca_shell_residues": [
+        20,
+        40
+      ],
+      "nonlocal_sidechain_contact_residues": [
+        20,
+        40
+      ],
+      "residue": 10,
+      "residue_name": "SYN",
+      "sidechain_contact_residues": [
+        20,
+        40
+      ]
+    },
+    {
+      "ca_shell_residues": [
+        10,
+        40
+      ],
+      "mean_b_factor_field": 80.0,
+      "nonlocal_ca_shell_residues": [
+        10,
+        40
+      ],
+      "nonlocal_sidechain_contact_residues": [
+        10,
+        40
+      ],
+      "residue": 20,
+      "residue_name": "SYN",
+      "sidechain_contact_residues": [
+        10,
+        40
+      ]
+    },
+    {
+      "ca_shell_residues": [],
+      "mean_b_factor_field": 70.0,
+      "nonlocal_ca_shell_residues": [],
+      "nonlocal_sidechain_contact_residues": [],
+      "residue": 30,
+      "residue_name": "SYN",
+      "sidechain_contact_residues": []
+    }
+  ],
+  "schema": "mva-track2-coordinate-geometry/v1",
+  "script_version": "1.0.0",
+  "target_polar_atom_proximities": [
+    {
+      "distance_angstrom": 1.0,
+      "other_atom": "SYNX",
+      "other_residue": 20,
+      "other_residue_name": "SYN",
+      "target_atom": "SYNX"
+    },
+    {
+      "distance_angstrom": 1.0,
+      "other_atom": "SYNX",
+      "other_residue": 40,
+      "other_residue_name": "SYN",
+      "target_atom": "SYNX"
+    }
+  ]
+}

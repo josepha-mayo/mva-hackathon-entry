@@ -1,0 +1,34 @@
+{
+  "schema": "mva-track2-structure-ranking/v1",
+  "privacy_class": "synthetic",
+  "purpose": "Identifier-free geometry ranking. Predicted stability cannot stand in for an exact-allele assay. Ranking cannot make checkpoint-ready true.",
+  "synthetic_only": true,
+  "method": "geometry",
+  "used_as_function": false,
+  "residues": [
+    {
+      "residue_id": "syn-residue-exact",
+      "role": "exact",
+      "plddt": 90.0,
+      "rsa": 0.12,
+      "polar_contacts": 4,
+      "claimed_as_exact": true
+    },
+    {
+      "residue_id": "syn-residue-analog",
+      "role": "analog_unstable",
+      "plddt": 88.0,
+      "rsa": 0.1,
+      "polar_contacts": 3,
+      "claimed_as_exact": false
+    },
+    {
+      "residue_id": "syn-residue-benign",
+      "role": "nearby_benign",
+      "plddt": 91.0,
+      "rsa": 0.45,
+      "polar_contacts": 1,
+      "claimed_as_exact": false
+    }
+  ]
+}

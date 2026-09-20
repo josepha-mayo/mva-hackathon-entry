@@ -1,0 +1,642 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/mva/track2_sample_stewardship.schema.json",
+  "title": "Synthetic Track 2 sample-stewardship plan v17",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "synthetic_only", "inventory", "completed", "assays"],
+  "properties": {
+    "schema": {"const": "mva.track2-sample-stewardship/v17"},
+    "synthetic_only": {"const": true},
+    "inventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "renewable_nonparticipant",
+        "participant_discovery",
+        "participant_held_out",
+        "independent_site"
+      ],
+      "properties": {
+        "renewable_nonparticipant": {"$ref": "#/$defs/resourceVector"},
+        "participant_discovery": {"$ref": "#/$defs/resourceVector"},
+        "participant_held_out": {"$ref": "#/$defs/resourceVector"},
+        "independent_site": {"$ref": "#/$defs/resourceVector"}
+      }
+    },
+    "completed": {
+      "type": "object",
+      "propertyNames": {"pattern": "^syn-[a-z0-9][a-z0-9-]*$"},
+      "additionalProperties": {"$ref": "#/$defs/completionReceipt"}
+    },
+    "assays": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/assay"}
+    }
+  },
+  "$defs": {
+    "resourceVector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dna_aliquots",
+        "rna_aliquots",
+        "viable_cell_equivalents",
+        "population_doublings",
+        "edit_event_families"
+      ],
+      "properties": {
+        "dna_aliquots": {"type": "integer", "minimum": 0},
+        "rna_aliquots": {"type": "integer", "minimum": 0},
+        "viable_cell_equivalents": {"type": "integer", "minimum": 0},
+        "population_doublings": {"type": "integer", "minimum": 0},
+        "edit_event_families": {"type": "integer", "minimum": 0}
+      }
+    },
+    "stringSet": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "action": {
+      "enum": [
+        "reject_condition",
+        "revise_mechanism",
+        "advance_to_a1",
+        "participant_branch_no_hit",
+        "advance_to_context_qualification",
+        "advance_to_native_lineage",
+        "record_mechanism_only",
+        "held_out_confirmation",
+        "independent_replication",
+        "stop_unsafe",
+        "hold_invalid"
+      ]
+    },
+    "outcomeActions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["positive", "negative", "invalid"],
+      "properties": {
+        "positive": {"$ref": "#/$defs/action"},
+        "negative": {"$ref": "#/$defs/action"},
+        "invalid": {"const": "hold_invalid"}
+      }
+    },
+    "contextQualification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "postnatal_lineage_rationale_id",
+        "architecture_preserving_context_id",
+        "paired_2d_comparison_id",
+        "same_context_correction_id",
+        "same_context_recreation_id",
+        "receipt_identity_id",
+        "mitotic_context_class",
+        "transformation_state"
+      ],
+      "properties": {
+        "postnatal_lineage_rationale_id": {"$ref": "#/$defs/opaqueId"},
+        "architecture_preserving_context_id": {"$ref": "#/$defs/opaqueId"},
+        "paired_2d_comparison_id": {"$ref": "#/$defs/opaqueId"},
+        "same_context_correction_id": {"$ref": "#/$defs/opaqueId"},
+        "same_context_recreation_id": {"$ref": "#/$defs/opaqueId"},
+        "receipt_identity_id": {
+          "type": "string",
+          "pattern": "^syn-receipt-[a-z0-9][a-z0-9-]*$"
+        },
+        "mitotic_context_class": {
+          "enum": [
+            "epithelial_architecture_dependent",
+            "lineage_intrinsic_mitotic"
+          ]
+        },
+        "transformation_state": {"const": "primary_finite"}
+      }
+    },
+    "correctionCore": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "measured_exposure_id": {"$ref": "#/$defs/opaqueId"},
+        "valid_controls_id": {"$ref": "#/$defs/opaqueId"},
+        "locked_function_id": {"$ref": "#/$defs/opaqueId"},
+        "same_background_correction_id": {"$ref": "#/$defs/opaqueId"},
+        "same_background_recreation_id": {"$ref": "#/$defs/opaqueId"},
+        "genotype_harm_counterscreen_id": {"$ref": "#/$defs/opaqueId"},
+        "correction_signature_separation_id": {"$ref": "#/$defs/opaqueId"}
+      }
+    },
+    "sharedCorrectionCore": {
+      "allOf": [
+        {"$ref": "#/$defs/correctionCore"},
+        {
+          "required": [
+            "measured_exposure_id",
+            "valid_controls_id",
+            "locked_function_id",
+            "same_background_correction_id",
+            "same_background_recreation_id",
+            "genotype_harm_counterscreen_id"
+          ],
+          "not": {"required": ["correction_signature_separation_id"]}
+        }
+      ]
+    },
+    "phenotypeCorrectionCore": {
+      "allOf": [
+        {"$ref": "#/$defs/correctionCore"},
+        {
+          "required": [
+            "measured_exposure_id",
+            "valid_controls_id",
+            "locked_function_id",
+            "same_background_correction_id",
+            "same_background_recreation_id",
+            "genotype_harm_counterscreen_id",
+            "correction_signature_separation_id"
+          ]
+        }
+      ]
+    },
+    "a1Lock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "measured_exposure_id",
+        "valid_controls_id",
+        "participant_context_id",
+        "locked_function_id",
+        "short_term_viability_id"
+      ],
+      "properties": {
+        "measured_exposure_id": {"$ref": "#/$defs/opaqueId"},
+        "valid_controls_id": {"$ref": "#/$defs/opaqueId"},
+        "participant_context_id": {"$ref": "#/$defs/opaqueId"},
+        "locked_function_id": {"$ref": "#/$defs/opaqueId"},
+        "short_term_viability_id": {"$ref": "#/$defs/opaqueId"}
+      }
+    },
+    "lineageLock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_fidelity_id",
+        "completion_equivalence_id",
+        "clone_safety_id"
+      ],
+      "properties": {
+        "native_fidelity_id": {"$ref": "#/$defs/opaqueId"},
+        "completion_equivalence_id": {"$ref": "#/$defs/opaqueId"},
+        "clone_safety_id": {"$ref": "#/$defs/opaqueId"}
+      }
+    },
+    "heldOutLock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frozen_exposure_id",
+        "frozen_endpoint_id",
+        "frozen_margin_id",
+        "blinded_execution_id"
+      ],
+      "properties": {
+        "frozen_exposure_id": {"$ref": "#/$defs/opaqueId"},
+        "frozen_endpoint_id": {"$ref": "#/$defs/opaqueId"},
+        "frozen_margin_id": {"$ref": "#/$defs/opaqueId"},
+        "blinded_execution_id": {"$ref": "#/$defs/opaqueId"}
+      }
+    },
+    "replicationLock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frozen_exposure_id",
+        "frozen_endpoint_id",
+        "frozen_margin_id",
+        "frozen_protocol_id",
+        "frozen_analysis_id",
+        "common_reference_transfer_qc_id"
+      ],
+      "properties": {
+        "frozen_exposure_id": {"$ref": "#/$defs/opaqueId"},
+        "frozen_endpoint_id": {"$ref": "#/$defs/opaqueId"},
+        "frozen_margin_id": {"$ref": "#/$defs/opaqueId"},
+        "frozen_protocol_id": {"$ref": "#/$defs/opaqueId"},
+        "frozen_analysis_id": {"$ref": "#/$defs/opaqueId"},
+        "common_reference_transfer_qc_id": {"$ref": "#/$defs/opaqueId"}
+      }
+    },
+    "completionReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "assay_contract_sha256",
+        "outcome",
+        "outcome_action",
+        "partition",
+        "resource_debit",
+        "receipt_sha256"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string",
+          "pattern": "^syn-completion-[a-z0-9][a-z0-9-]*$"
+        },
+        "assay_contract_sha256": {"$ref": "#/$defs/sha256"},
+        "outcome": {"enum": ["positive", "negative", "invalid"]},
+        "outcome_action": {"$ref": "#/$defs/action"},
+        "partition": {
+          "enum": [
+            "renewable_nonparticipant",
+            "participant_discovery",
+            "participant_held_out",
+            "independent_site"
+          ]
+        },
+        "resource_debit": {"$ref": "#/$defs/resourceVector"},
+        "promotion_evidence": {"$ref": "#/$defs/promotionEvidence"},
+        "receipt_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "promotionEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "analytic_transfer_result_sha256",
+        "site2_blinding_state",
+        "site2_blinding_id",
+        "site2_blinding_evidence_sha256",
+        "discovery_event_family_ids",
+        "replication_event_family_ids",
+        "discovery_site_id",
+        "replication_site_id"
+      ],
+      "properties": {
+        "analytic_transfer_result_sha256": {"$ref": "#/$defs/sha256"},
+        "site2_blinding_state": {"const": "blinded"},
+        "site2_blinding_id": {"$ref": "#/$defs/opaqueId"},
+        "site2_blinding_evidence_sha256": {"$ref": "#/$defs/sha256"},
+        "discovery_event_family_ids": {"$ref": "#/$defs/opaqueIdSet"},
+        "replication_event_family_ids": {"$ref": "#/$defs/opaqueIdSet"},
+        "discovery_site_id": {"$ref": "#/$defs/opaqueId"},
+        "replication_site_id": {"$ref": "#/$defs/opaqueId"}
+      }
+    },
+    "opaqueId": {
+      "type": "string",
+      "pattern": "^syn-[a-z0-9][a-z0-9-]*$"
+    },
+    "opaqueIdSet": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/opaqueId"},
+      "uniqueItems": true
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "assay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assay_id",
+        "stage",
+        "partition",
+        "discovery_lane",
+        "destructive",
+        "consumption",
+        "prerequisites",
+        "decision_changes",
+        "validity_requirements",
+        "outcome_actions"
+      ],
+      "properties": {
+        "assay_id": {"$ref": "#/$defs/opaqueId"},
+        "stage": {"enum": ["A0", "A1", "TIER_B", "HELD_OUT", "REPLICATION"]},
+        "partition": {
+          "enum": [
+            "renewable_nonparticipant",
+            "participant_discovery",
+            "participant_held_out",
+            "independent_site"
+          ]
+        },
+        "discovery_lane": {
+          "enum": ["targeted_hypothesis", "correction_trained_phenotypic"]
+        },
+        "consent_state": {
+          "enum": ["consented", "not_consented", "withdrawn", "not_applicable"]
+        },
+        "destructive": {"type": "boolean"},
+        "consumption": {"$ref": "#/$defs/resourceVector"},
+        "prerequisites": {"$ref": "#/$defs/stringSet"},
+        "decision_changes": {
+          "allOf": [{"$ref": "#/$defs/stringSet"}, {"minItems": 1}]
+        },
+        "validity_requirements": {"$ref": "#/$defs/stringSet"},
+        "independence_requirements": {"$ref": "#/$defs/stringSet"},
+        "context_qualification": {"$ref": "#/$defs/contextQualification"},
+        "correction_core": {"$ref": "#/$defs/correctionCore"},
+        "a1_lock": {"$ref": "#/$defs/a1Lock"},
+        "held_out_lock": {"$ref": "#/$defs/heldOutLock"},
+        "replication_lock": {"$ref": "#/$defs/replicationLock"},
+        "lineage_lock": {"$ref": "#/$defs/lineageLock"},
+        "outcome_actions": {"$ref": "#/$defs/outcomeActions"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"stage": {"const": "A0"}}, "required": ["stage"]},
+          "then": {
+            "required": ["correction_core"],
+            "not": {"required": ["context_qualification"]},
+            "properties": {
+              "partition": {"const": "renewable_nonparticipant"},
+              "prerequisites": {"maxItems": 0},
+              "outcome_actions": {
+                "properties": {
+                  "positive": {"const": "advance_to_a1"},
+                  "negative": {
+                    "enum": ["reject_condition", "revise_mechanism", "stop_unsafe"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {"const": "A0"},
+              "discovery_lane": {"const": "targeted_hypothesis"}
+            },
+            "required": ["stage", "discovery_lane"]
+          },
+          "then": {
+            "properties": {"correction_core": {"$ref": "#/$defs/sharedCorrectionCore"}}
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {"const": "A0"},
+              "discovery_lane": {"const": "correction_trained_phenotypic"}
+            },
+            "required": ["stage", "discovery_lane"]
+          },
+          "then": {
+            "properties": {
+              "correction_core": {"$ref": "#/$defs/phenotypeCorrectionCore"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {"enum": ["A1", "TIER_B", "HELD_OUT", "REPLICATION"]}
+            },
+            "required": ["stage"]
+          },
+          "then": {"not": {"required": ["correction_core"]}}
+        },
+        {
+          "if": {"properties": {"stage": {"const": "A1"}}, "required": ["stage"]},
+          "then": {
+            "required": ["a1_lock"],
+            "not": {"required": ["context_qualification"]},
+            "properties": {
+              "partition": {"const": "participant_discovery"},
+              "outcome_actions": {
+                "properties": {
+                  "positive": {"const": "advance_to_context_qualification"},
+                  "negative": {"const": "participant_branch_no_hit"}
+                }
+              },
+              "validity_requirements": {
+                "allOf": [
+                  {"contains": {"const": "measured_exposure"}},
+                  {"contains": {"const": "valid_controls"}},
+                  {"contains": {"const": "participant_context"}},
+                  {"contains": {"const": "locked_function"}},
+                  {"contains": {"const": "short_term_viability_completion"}}
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {"properties": {"stage": {"const": "TIER_B"}}, "required": ["stage"]},
+          "then": {
+            "properties": {"partition": {"const": "participant_discovery"}},
+            "oneOf": [
+              {
+                "required": ["context_qualification"],
+                "not": {"required": ["lineage_lock"]},
+                "properties": {
+                  "outcome_actions": {
+                    "properties": {
+                      "positive": {"const": "advance_to_native_lineage"},
+                      "negative": {"const": "record_mechanism_only"}
+                    }
+                  },
+                  "validity_requirements": {
+                    "allOf": [
+                      {"contains": {"const": "postnatal_lineage_rationale"}},
+                      {"contains": {"const": "nontransformed_proliferative_context"}},
+                      {"contains": {"const": "paired_2d_comparison"}},
+                      {"contains": {"const": "same_context_correction_rescue"}},
+                      {"contains": {"const": "same_context_reciprocal_recreation"}},
+                      {"contains": {"const": "opaque_context_receipt_identity"}}
+                    ]
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "context_qualification": {
+                          "properties": {
+                            "mitotic_context_class": {
+                              "const": "epithelial_architecture_dependent"
+                            }
+                          },
+                          "required": ["mitotic_context_class"]
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "validity_requirements": {
+                          "allOf": [
+                            {
+                              "contains": {
+                                "const": "architecture_preserving_context"
+                              }
+                            },
+                            {
+                              "not": {
+                                "contains": {
+                                  "const": "lineage_intrinsic_mitotic_context"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "context_qualification": {
+                          "properties": {
+                            "mitotic_context_class": {
+                              "const": "lineage_intrinsic_mitotic"
+                            }
+                          },
+                          "required": ["mitotic_context_class"]
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "validity_requirements": {
+                          "allOf": [
+                            {
+                              "contains": {
+                                "const": "lineage_intrinsic_mitotic_context"
+                              }
+                            },
+                            {
+                              "not": {
+                                "contains": {
+                                  "const": "architecture_preserving_context"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "required": ["lineage_lock"],
+                "not": {"required": ["context_qualification"]},
+                "properties": {
+                  "outcome_actions": {
+                    "properties": {
+                      "positive": {"const": "held_out_confirmation"},
+                      "negative": {"const": "reject_condition"}
+                    }
+                  },
+                  "validity_requirements": {
+                    "allOf": [
+                      {"contains": {"const": "native_fidelity"}},
+                      {"contains": {"const": "completion_equivalence"}},
+                      {"contains": {"const": "clone_safety"}}
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {"properties": {"stage": {"const": "HELD_OUT"}}, "required": ["stage"]},
+          "then": {
+            "required": ["held_out_lock"],
+            "not": {"required": ["context_qualification"]},
+            "properties": {
+              "partition": {"const": "participant_held_out"},
+              "outcome_actions": {
+                "properties": {
+                  "positive": {"const": "independent_replication"},
+                  "negative": {"const": "reject_condition"}
+                }
+              },
+              "validity_requirements": {
+                "allOf": [
+                  {"contains": {"const": "frozen_endpoint"}},
+                  {"contains": {"const": "frozen_margin"}},
+                  {"contains": {"const": "blinded_execution"}}
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {"enum": ["A0", "A1", "TIER_B", "REPLICATION"]}
+            },
+            "required": ["stage"]
+          },
+          "then": {"not": {"required": ["held_out_lock"]}}
+        },
+        {
+          "if": {"properties": {"stage": {"const": "REPLICATION"}}, "required": ["stage"]},
+          "then": {
+            "required": ["independence_requirements", "replication_lock"],
+            "not": {"required": ["context_qualification"]},
+            "properties": {
+              "partition": {"const": "independent_site"},
+              "outcome_actions": {
+                "properties": {
+                  "positive": {"const": "independent_replication"},
+                  "negative": {"const": "reject_condition"}
+                }
+              },
+              "independence_requirements": {
+                "allOf": [
+                  {"contains": {"const": "different_site"}},
+                  {"contains": {"const": "nonoverlapping_edit_event_families"}},
+                  {"contains": {"const": "frozen_exposure"}},
+                  {"contains": {"const": "frozen_endpoint"}},
+                  {"contains": {"const": "frozen_margin"}},
+                  {"contains": {"const": "frozen_protocol"}},
+                  {"contains": {"const": "frozen_analysis"}},
+                  {"contains": {"const": "blinded_site2"}},
+                  {"contains": {"const": "common_reference_transfer_qc"}}
+                ]
+              }
+            }
+          },
+          "else": {"not": {"required": ["independence_requirements"]}}
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {"enum": ["A0", "A1", "TIER_B", "HELD_OUT"]}
+            },
+            "required": ["stage"]
+          },
+          "then": {"not": {"required": ["replication_lock"]}}
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {"enum": ["A0", "A1", "HELD_OUT", "REPLICATION"]}
+            },
+            "required": ["stage"]
+          },
+          "then": {"not": {"required": ["lineage_lock"]}}
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {"enum": ["A0", "TIER_B", "HELD_OUT", "REPLICATION"]}
+            },
+            "required": ["stage"]
+          },
+          "then": {"not": {"required": ["a1_lock"]}}
+        }
+      ]
+    }
+  }
+}

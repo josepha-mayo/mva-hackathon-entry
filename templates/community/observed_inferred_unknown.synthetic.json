@@ -1,0 +1,179 @@
+{
+  "schema": "mva.community-observed-inferred-unknown/v1",
+  "privacy_class": "synthetic",
+  "purpose": "Table-like synthetic causal-chain links. Status labels are not interchangeable.",
+  "declared_overall_strength": "experiment_to_run",
+  "declared_probe_is_medicine": false,
+  "status_vocabulary": [
+    "observed",
+    "inferred",
+    "unknown",
+    "hypothesis",
+    "synthetic_test",
+    "planned_experiment"
+  ],
+  "links": [
+    {
+      "link_id": "syn-link-calls-present",
+      "hypothesis_role": "other",
+      "statement": "Both synthetic alleles are present in the fixture call set.",
+      "status": "observed",
+      "supports": "a two-allele research candidate in this fixture",
+      "does_not_support": "orthogonal confirmation, germline origin, or phase"
+    },
+    {
+      "link_id": "syn-link-orthogonal-confirm",
+      "hypothesis_role": "confirmation",
+      "statement": "Both synthetic alleles are orthogonally confirmed on a second aliquot with both strands counted.",
+      "status": "unknown",
+      "supports": "nothing until a confirmation record is filled from approved material",
+      "does_not_support": "a child's confirmation or a medicine claim"
+    },
+    {
+      "link_id": "syn-link-stop-class",
+      "hypothesis_role": "other",
+      "statement": "The stop-class synthetic allele is loss-of-function compatible on its annotated transcript.",
+      "status": "inferred",
+      "supports": "a testable null-class model",
+      "does_not_support": "measured transcript depletion in a person"
+    },
+    {
+      "link_id": "syn-link-phase",
+      "hypothesis_role": "pair",
+      "statement": "Trans configuration of the two synthetic alleles must be established from an approved phase record.",
+      "status": "unknown",
+      "supports": "nothing until a phase record is filled from approved data",
+      "does_not_support": "a compound-heterozygous claim",
+      "watches": [
+        "syn-link-orthogonal-confirm"
+      ]
+    },
+    {
+      "link_id": "syn-link-transcript",
+      "hypothesis_role": "transcript",
+      "statement": "Stop-class RNA is depleted and missense RNA is expressed in the tested cells.",
+      "status": "unknown",
+      "supports": "nothing until a transcript record is filled from approved material",
+      "does_not_support": "a missense abundance assay or a child's RNA result",
+      "watches": [
+        "syn-link-phase"
+      ]
+    },
+    {
+      "link_id": "syn-link-missense-stability",
+      "hypothesis_role": "stability",
+      "statement": "The missense synthetic allele lowers abundance or half-life of the full-length product.",
+      "status": "hypothesis",
+      "supports": "a stability assay on the exact synthetic allele",
+      "does_not_support": "drug responsiveness, analog-allele proof, or clinical benefit",
+      "watches": [
+        "syn-link-transcript"
+      ]
+    },
+    {
+      "link_id": "syn-link-probe",
+      "hypothesis_role": "probe",
+      "statement": "A chaperone-style probe can raise functional product from the missense allele under an exposure gate.",
+      "status": "hypothesis",
+      "supports": "an exposure-gated ex-vivo experiment after pair and stability gates",
+      "does_not_support": "administration, dose, organ-size rescue, or clinical benefit",
+      "watches": [
+        "syn-link-missense-stability"
+      ]
+    },
+    {
+      "link_id": "syn-link-count-schema",
+      "hypothesis_role": "other",
+      "statement": "Aggregate first-attempt counts can be mapped onto the public observed-run field names.",
+      "status": "synthetic_test",
+      "supports": "schema composition and fail-closed count rules",
+      "does_not_support": "imaging accuracy or biological rescue"
+    },
+    {
+      "link_id": "syn-link-segregation",
+      "hypothesis_role": "endpoint",
+      "statement": "The synthetic compound genotype increases first-division segregation errors versus the exact-corrected row; rescue is declared only within 2-fold of the exact-corrected level.",
+      "status": "planned_experiment",
+      "supports": "a predeclared imaging and statistics handoff",
+      "does_not_support": "a completed functional result",
+      "watches": [
+        "syn-link-probe"
+      ],
+      "spec": {
+        "measurement": "first-division segregation error rate",
+        "control_arm": "exact-corrected",
+        "treatment_arm": "probe-treated compound genotype",
+        "rescue_bound": 2.0,
+        "blinded": true
+      }
+    },
+    {
+      "link_id": "syn-link-falsifier",
+      "hypothesis_role": "falsifier",
+      "statement": "Under the predeclared rule: if missense RNA is absent, exact correction does not return the endpoint to within 2-fold of baseline, competing cytostasis or clone selection rises, batch drift or probe interference or aggregation accounts for the gain, or error-line daughters become fitter, the chaperone-style pair program stops.",
+      "status": "planned_experiment",
+      "supports": "a predeclared kill rule for the probe hypothesis",
+      "does_not_support": "a completed negative result or a medicine claim",
+      "watches": [
+        "syn-link-segregation"
+      ],
+      "bound": 2.0
+    },
+    {
+      "link_id": "syn-link-alternative",
+      "hypothesis_role": "alternative",
+      "statement": "Competing death and selection in the error pool would masquerade as rescue in the first-division generation count; batch drift and dye interference are shared confounds.",
+      "status": "planned_experiment",
+      "supports": "a predeclared competing explanation that must be excluded",
+      "does_not_support": "a completed alternative mechanism or a medicine claim",
+      "watches": [
+        "syn-link-segregation"
+      ]
+    },
+    {
+      "link_id": "syn-link-positive-control",
+      "hypothesis_role": "positive_control",
+      "statement": "Wild-type and exact-corrected rows must keep checkpoint function under the same imaging protocol.",
+      "status": "planned_experiment",
+      "supports": "a predeclared positive control that must remain intact",
+      "does_not_support": "a completed control result or a medicine claim",
+      "watches": [
+        "syn-link-segregation"
+      ]
+    },
+    {
+      "link_id": "syn-link-negative-control",
+      "hypothesis_role": "negative_control",
+      "statement": "Vehicle-treated compound-genotype rows must keep the predeclared error rate under the same imaging protocol.",
+      "status": "planned_experiment",
+      "supports": "a predeclared negative control that must remain intact",
+      "does_not_support": "a completed control result or a medicine claim",
+      "watches": [
+        "syn-link-segregation"
+      ]
+    },
+    {
+      "link_id": "syn-link-multiplicity",
+      "hypothesis_role": "multiplicity",
+      "statement": "A predeclared hierarchical gatekeeping rule at alpha 0.05 controls familywise error across candidate probes and endpoints; no probe claims rescue on multiplicity-uncontrolled evidence.",
+      "status": "planned_experiment",
+      "supports": "a predeclared multiplicity control rule",
+      "does_not_support": "a completed multiplicity-adjusted result or a medicine claim",
+      "watches": [
+        "syn-link-probe",
+        "syn-link-segregation"
+      ]
+    },
+    {
+      "link_id": "syn-link-counterscreen",
+      "hypothesis_role": "counterscreen",
+      "statement": "A predeclared orthogonal counterscreen panel tests each candidate for promiscuous aggregation, autofluorescence, and membrane-interference artifacts before any rescue claim.",
+      "status": "planned_experiment",
+      "supports": "a predeclared orthogonal artifact counterscreen",
+      "does_not_support": "a completed counterscreen result or a medicine claim",
+      "watches": [
+        "syn-link-probe"
+      ]
+    }
+  ]
+}

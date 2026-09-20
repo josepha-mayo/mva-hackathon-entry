@@ -25,7 +25,7 @@ def file_sha256(path: Path) -> str:
 
 
 def write_json(path: Path, value: object) -> None:
-    path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n", encoding="utf-8")
 
 
 def git(repo: Path, *args: str) -> str:
@@ -90,7 +90,7 @@ class SyntheticPhen2GeneFixture:
             ]
         }
         with zipfile.ZipFile(self.phenopacket_archive, "w") as archive:
-            archive.writestr("synthetic/case.json", json.dumps(packet))
+            archive.writestr("synthetic/case.json", json.dumps(packet, allow_nan=False))
 
         self.salt_segments = ["mva", "pps", "0.1.27", "v1"]
         self.development_identifier = self._identifier_for("development")
@@ -201,7 +201,7 @@ class Phen2GeneDevelopmentAdapterTests(unittest.TestCase):
             self.assertEqual(result["safety"]["heldout_test_cases_read"], 0)
             self.assertEqual(result["safety"]["controlled_patient_files_read"], 0)
             self.assertEqual(result["safety"]["case_identifiers_written"], 0)
-            serialized = json.dumps(result, sort_keys=True)
+            serialized = json.dumps(result, sort_keys=True, allow_nan=False)
             self.assertNotIn(str(fixture.root), serialized)
             self.assertNotIn(fixture.development_identifier, serialized)
             self.assertNotIn("SYNTRUTH", serialized)
@@ -253,6 +253,43 @@ class Phen2GeneDevelopmentAdapterTests(unittest.TestCase):
             output.write_text("{}\n", encoding="utf-8")
             with self.assertRaisesRegex(adapter.AdapterInputError, "overwrite"):
                 fixture.run()
+
+    def test_malformed_hpo_feature_fails_closed(self) -> None:
+        for bad in (
+            {"phenotypicFeatures": [{"type": {"id": " HP:0000001"}}]},
+            {"phenotypicFeatures": [{"type": {"id": "HP:abc"}}]},
+            {"phenotypicFeatures": [{"type": "HP:0000001"}]},
+            {"phenotypicFeatures": ["HP:0000001"]},
+        ):
+            with self.subTest(bad=bad):
+                with self.assertRaisesRegex(
+                    adapter.AdapterInputError, "malformed HPO id|not an object"
+                ):
+                    adapter.packet_hpo(bad)
+
+    def test_zero_case_or_gene_count_fails_closed(self) -> None:
+        config = {
+            "schema": adapter.CONFIG_SCHEMA,
+            "scope": "public development only",
+            "public_input": {
+                "split_salt_segments": ["mva", "pps", "0.1.27", "v1"],
+                "uppercase_first_two_salt_segments": True,
+                "development_basis_points": 6000,
+                "calibration_basis_points": 2000,
+                "test_basis_points": 2000,
+                "case_count": 0,
+                "unique_gene_count": 0,
+            },
+            "evaluation": {
+                "candidate_gene_list": None,
+                "negative_hpo_policy": (
+                    "omit excluded terms because Phen2Gene accepts "
+                    "positive terms only"
+                ),
+            },
+        }
+        with self.assertRaisesRegex(adapter.AdapterInputError, "case_count"):
+            adapter._validate_config(config)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,12 @@
+{
+  "schema": "mva.community-replication-decision/v1",
+  "privacy_class": "synthetic",
+  "purpose": "Independent-site decision fixture. Not a real-study outcome.",
+  "site_id": "syn-site-01",
+  "originating_site_id": "syn-site-origin",
+  "endpoints_concordant": false,
+  "clone_safety_stop": false,
+  "exposure_gate_passed": true,
+  "decision": "hold",
+  "rationale": "Synthetic example: measured exposure passed, clone-safety did not stop, but co-primary endpoints were not concordant, so the program holds pending a protocol revision. This is not a treatment decision."
+}

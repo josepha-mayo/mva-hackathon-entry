@@ -1,0 +1,3358 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mva:track2-candidate-ledger:v7",
+  "title": "MVA Track 2 candidate evidence ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "ledger_id",
+    "purpose",
+    "search_protocol",
+    "entries"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mva.track2-candidate-ledger/v7"
+    },
+    "ledger_id": {
+      "$ref": "#/$defs/opaqueId"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000
+    },
+    "search_protocol": {
+      "$ref": "#/$defs/searchProtocol"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/candidateEntry"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "not": {
+        "properties": {
+          "entries": {
+            "type": "array",
+            "minContains": 2,
+            "contains": {
+              "type": "object",
+              "properties": {
+                "advancement_state": {
+                  "const": "active_lead"
+                }
+              },
+              "required": [
+                "advancement_state"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "not": {
+        "properties": {
+          "entries": {
+            "type": "array",
+            "minContains": 2,
+            "contains": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "const": "lead"
+                }
+              },
+              "required": [
+                "role"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "opaqueId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$",
+      "maxLength": 128
+    },
+    "nullableOpaqueId": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/opaqueId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sha256Fingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nullableSha256Fingerprint": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/sha256Fingerprint"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "site2BlindingState": {
+      "enum": [
+        "not_attempted",
+        "blinded",
+        "unblinded",
+        "not_applicable"
+      ]
+    },
+    "nullableText": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "nullableSourceVersion": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "nullableUnit": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "isoDate": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "axisAssessment": {
+      "enum": [
+        "positive",
+        "negative",
+        "not_assessable"
+      ]
+    },
+    "parentSourceClass": {
+      "enum": [
+        "public_database",
+        "public_literature",
+        "public_ontology",
+        "public_software",
+        "synthetic_fixture",
+        "controlled_source",
+        "manual_review",
+        "official_label"
+      ]
+    },
+    "rescueGateState": {
+      "enum": [
+        "pass",
+        "fail",
+        "not_attempted",
+        "not_applicable"
+      ]
+    },
+    "rescueGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "correction_rescue",
+        "reciprocal_recreation",
+        "branch_opened",
+        "exposure_validity",
+        "proximal_engagement",
+        "correction_like_function",
+        "native_fidelity",
+        "completion_equivalence",
+        "clone_safety",
+        "analysis_lock_and_multiplicity",
+        "discovery_confirmation_separation",
+        "matched_control_and_retained_domain_safety",
+        "therapeutic_context_and_architecture_lineage",
+        "analytic_transfer_pass",
+        "biological_replication_pass",
+        "blinded_replication_execution",
+        "independent_replication",
+        "replication_provenance"
+      ],
+      "properties": {
+        "correction_rescue": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "reciprocal_recreation": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "branch_opened": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "exposure_validity": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "proximal_engagement": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "correction_like_function": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "native_fidelity": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "completion_equivalence": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "clone_safety": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "analysis_lock_and_multiplicity": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "discovery_confirmation_separation": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "matched_control_and_retained_domain_safety": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "therapeutic_context_and_architecture_lineage": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "analytic_transfer_pass": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "biological_replication_pass": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "blinded_replication_execution": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "independent_replication": {
+          "$ref": "#/$defs/rescueGateState"
+        },
+        "replication_provenance": {
+          "$ref": "#/$defs/rescueGateState"
+        }
+      }
+    },
+    "opaqueIdArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/opaqueId"
+      }
+    },
+    "replicationDesign": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "discovery_site_id",
+        "replication_site_id",
+        "discovery_edit_event_family_ids",
+        "replication_edit_event_family_ids",
+        "frozen_protocol_identity_id",
+        "frozen_exposure_identity_id",
+        "frozen_endpoint_identity_id",
+        "frozen_margin_identity_id",
+        "frozen_analysis_identity_id",
+        "analytic_transfer_result_sha256",
+        "site2_blinding_state",
+        "site2_blinding_evidence_sha256"
+      ],
+      "properties": {
+        "discovery_site_id": {
+          "$ref": "#/$defs/nullableOpaqueId"
+        },
+        "replication_site_id": {
+          "$ref": "#/$defs/nullableOpaqueId"
+        },
+        "discovery_edit_event_family_ids": {
+          "$ref": "#/$defs/opaqueIdArray"
+        },
+        "replication_edit_event_family_ids": {
+          "$ref": "#/$defs/opaqueIdArray"
+        },
+        "frozen_protocol_identity_id": {
+          "$ref": "#/$defs/nullableOpaqueId"
+        },
+        "frozen_exposure_identity_id": {
+          "$ref": "#/$defs/nullableOpaqueId"
+        },
+        "frozen_endpoint_identity_id": {
+          "$ref": "#/$defs/nullableOpaqueId"
+        },
+        "frozen_margin_identity_id": {
+          "$ref": "#/$defs/nullableOpaqueId"
+        },
+        "frozen_analysis_identity_id": {
+          "$ref": "#/$defs/nullableOpaqueId"
+        },
+        "analytic_transfer_result_sha256": {
+          "$ref": "#/$defs/nullableSha256Fingerprint"
+        },
+        "site2_blinding_state": {
+          "$ref": "#/$defs/site2BlindingState"
+        },
+        "site2_blinding_evidence_sha256": {
+          "$ref": "#/$defs/nullableSha256Fingerprint"
+        }
+      }
+    },
+    "sampleStewardshipPromotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "held_out_assay_id",
+        "replication_assay_id",
+        "held_out_receipt_id",
+        "replication_receipt_id",
+        "held_out_receipt_sha256",
+        "replication_receipt_sha256",
+        "sample_plan_sha256"
+      ],
+      "properties": {
+        "held_out_assay_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "replication_assay_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "held_out_receipt_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "replication_receipt_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "held_out_receipt_sha256": {
+          "$ref": "#/$defs/sha256Fingerprint"
+        },
+        "replication_receipt_sha256": {
+          "$ref": "#/$defs/sha256Fingerprint"
+        },
+        "sample_plan_sha256": {
+          "$ref": "#/$defs/sha256Fingerprint"
+        }
+      }
+    },
+    "plannedReplicationDesign": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/replicationDesign"
+        },
+        {
+          "properties": {
+            "discovery_site_id": {
+              "$ref": "#/$defs/opaqueId"
+            },
+            "replication_site_id": {
+              "$ref": "#/$defs/opaqueId"
+            },
+            "discovery_edit_event_family_ids": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/opaqueIdArray"
+                },
+                {
+                  "minItems": 1
+                }
+              ]
+            },
+            "replication_edit_event_family_ids": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/opaqueIdArray"
+                },
+                {
+                  "minItems": 1
+                }
+              ]
+            },
+            "frozen_protocol_identity_id": {
+              "$ref": "#/$defs/opaqueId"
+            },
+            "frozen_exposure_identity_id": {
+              "$ref": "#/$defs/opaqueId"
+            },
+            "frozen_endpoint_identity_id": {
+              "$ref": "#/$defs/opaqueId"
+            },
+            "frozen_margin_identity_id": {
+              "$ref": "#/$defs/opaqueId"
+            },
+            "frozen_analysis_identity_id": {
+              "$ref": "#/$defs/opaqueId"
+            }
+          }
+        }
+      ]
+    },
+    "pendingReplicationEvidenceDesign": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/plannedReplicationDesign"
+        },
+        {
+          "properties": {
+            "analytic_transfer_result_sha256": {
+              "type": "null"
+            },
+            "site2_blinding_state": {
+              "const": "not_attempted"
+            },
+            "site2_blinding_evidence_sha256": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "receiptBoundAnalyticTransferDesign": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/plannedReplicationDesign"
+        },
+        {
+          "properties": {
+            "analytic_transfer_result_sha256": {
+              "$ref": "#/$defs/sha256Fingerprint"
+            }
+          }
+        }
+      ]
+    },
+    "receiptBoundBlindedReplicationDesign": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/receiptBoundAnalyticTransferDesign"
+        },
+        {
+          "properties": {
+            "site2_blinding_state": {
+              "const": "blinded"
+            },
+            "site2_blinding_evidence_sha256": {
+              "$ref": "#/$defs/sha256Fingerprint"
+            }
+          }
+        }
+      ]
+    },
+    "uniqueTextArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2000
+      }
+    },
+    "searchProtocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_id",
+        "searched_on",
+        "query_axes",
+        "exclusion_axes",
+        "notes"
+      ],
+      "properties": {
+        "protocol_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "searched_on": {
+          "$ref": "#/$defs/isoDate"
+        },
+        "query_axes": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/uniqueTextArray"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        },
+        "exclusion_axes": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/uniqueTextArray"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2000
+        }
+      }
+    },
+    "candidateEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "role",
+        "experimental_priority",
+        "program_gate",
+        "claim",
+        "privacy_class",
+        "direction",
+        "assessment_status",
+        "decision_effect",
+        "advancement_state",
+        "functional_hit_state",
+        "screen_context",
+        "no_hit_basis",
+        "translation_state",
+        "discovery_lane",
+        "therapeutic_context",
+        "architecture_lineage_state",
+        "mitotic_context_class",
+        "transformation_state",
+        "rescue_gates",
+        "replication_design",
+        "sample_stewardship_promotion",
+        "source_class",
+        "source_identifier",
+        "source_version",
+        "source_url",
+        "search_date",
+        "model_system",
+        "nominal_concentration_uM",
+        "exposure_class",
+        "direct_target_evidence",
+        "exact_allele_evidence",
+        "checkpoint_evidence",
+        "human_pd_evidence",
+        "pediatric_information",
+        "oncology_risk",
+        "regulatory_eligibility",
+        "result",
+        "unit",
+        "independent_replication",
+        "uncertainty",
+        "counterevidence",
+        "limitations",
+        "not_assessable_reason",
+        "causal_distance_score"
+      ],
+      "properties": {
+        "candidate_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "role": {
+          "enum": [
+            "lead",
+            "comparator",
+            "challenger",
+            "mechanistic_control",
+            "no_go"
+          ]
+        },
+        "experimental_priority": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "program_gate": {
+          "enum": [
+            "confirmation",
+            "phase",
+            "rna",
+            "allelic_series",
+            "stability",
+            "exposure",
+            "segregation",
+            "oncology",
+            "regulatory"
+          ]
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2000
+        },
+        "privacy_class": {
+          "enum": [
+            "public",
+            "synthetic",
+            "controlled"
+          ]
+        },
+        "direction": {
+          "enum": [
+            "supports",
+            "contradicts",
+            "neutral"
+          ]
+        },
+        "assessment_status": {
+          "enum": [
+            "positive",
+            "negative",
+            "not_assessable"
+          ]
+        },
+        "decision_effect": {
+          "enum": [
+            "promote",
+            "demote",
+            "exclude",
+            "retain",
+            "no_change",
+            "defer"
+          ]
+        },
+        "advancement_state": {
+          "enum": [
+            "conditional_hold",
+            "rejected",
+            "comparator_only",
+            "not_assessable",
+            "active_lead"
+          ]
+        },
+        "functional_hit_state": {
+          "enum": [
+            "not_tested",
+            "no_hit",
+            "full_phenocopy_pending_replication",
+            "graded_partial_hit",
+            "mechanism_discordant_hit",
+            "mixed_or_unsafe",
+            "replicated_full_phenocopy"
+          ]
+        },
+        "screen_context": {
+          "enum": [
+            "renewable_nonparticipant_a0",
+            "minimal_participant_a1",
+            "participant_lineage_tier_b"
+          ]
+        },
+        "no_hit_basis": {
+          "enum": [
+            "not_applicable",
+            "valid_a0_negative",
+            "valid_participant_negative",
+            "insufficient_material",
+            "failed_controls",
+            "unmeasured_exposure",
+            "screen_failure"
+          ]
+        },
+        "translation_state": {
+          "enum": [
+            "mechanism_only",
+            "context_qualified",
+            "preclinical_replication_ready"
+          ]
+        },
+        "discovery_lane": {
+          "enum": [
+            "targeted_hypothesis",
+            "correction_trained_phenotypic"
+          ]
+        },
+        "therapeutic_context": {
+          "enum": [
+            "renewable_2d_surrogate",
+            "postnatal_nontransformed_proliferative",
+            "not_assessable"
+          ]
+        },
+        "architecture_lineage_state": {
+          "enum": [
+            "reduced_2d_surrogate",
+            "architecture_preserving",
+            "lineage_intrinsic_mitotic",
+            "not_assessable"
+          ]
+        },
+        "mitotic_context_class": {
+          "enum": [
+            "epithelial_architecture_dependent",
+            "lineage_intrinsic_mitotic",
+            "not_assessable"
+          ]
+        },
+        "transformation_state": {
+          "enum": [
+            "primary_finite",
+            "renewable_nontransformed_isogenic",
+            "immortalized_or_transformed",
+            "reprogrammed",
+            "not_assessable"
+          ]
+        },
+        "rescue_gates": {
+          "$ref": "#/$defs/rescueGates"
+        },
+        "replication_design": {
+          "$ref": "#/$defs/replicationDesign"
+        },
+        "source_class": {
+          "enum": [
+            "public_database",
+            "public_literature",
+            "public_ontology",
+            "public_software",
+            "synthetic_fixture",
+            "controlled_source",
+            "derived_evidence",
+            "manual_review",
+            "official_label"
+          ]
+        },
+        "parent_source_class": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/parentSourceClass"
+            }
+          ]
+        },
+        "source_identifier": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "source_version": {
+          "$ref": "#/$defs/nullableSourceVersion"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^https://",
+              "maxLength": 2000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "search_date": {
+          "$ref": "#/$defs/isoDate"
+        },
+        "model_system": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "nominal_concentration_uM": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "exposure_class": {
+          "enum": [
+            "leq_2um",
+            "candidate_specific_plausible",
+            "exploratory_5um",
+            "nontranslational_high",
+            "not_assessable"
+          ]
+        },
+        "direct_target_evidence": {
+          "$ref": "#/$defs/axisAssessment"
+        },
+        "exact_allele_evidence": {
+          "$ref": "#/$defs/axisAssessment"
+        },
+        "checkpoint_evidence": {
+          "$ref": "#/$defs/axisAssessment"
+        },
+        "human_pd_evidence": {
+          "$ref": "#/$defs/axisAssessment"
+        },
+        "pediatric_information": {
+          "enum": [
+            "present",
+            "absent",
+            "not_assessable"
+          ]
+        },
+        "oncology_risk": {
+          "enum": [
+            "stop",
+            "caution",
+            "not_assessable"
+          ]
+        },
+        "regulatory_eligibility": {
+          "enum": [
+            "current",
+            "mixed_or_restricted",
+            "expired_or_absent",
+            "not_assessable"
+          ]
+        },
+        "result": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "unit": {
+          "$ref": "#/$defs/nullableUnit"
+        },
+        "independent_replication": {
+          "enum": [
+            "replicated",
+            "not_replicated",
+            "not_attempted",
+            "not_applicable",
+            "not_assessable"
+          ]
+        },
+        "uncertainty": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2000
+        },
+        "counterevidence": {
+          "$ref": "#/$defs/uniqueTextArray"
+        },
+        "limitations": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/uniqueTextArray"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        },
+        "not_assessable_reason": {
+          "$ref": "#/$defs/nullableText"
+        },
+        "causal_distance_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "sample_stewardship_promotion": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sampleStewardshipPromotion"
+            }
+          ]
+        },
+        "parent_candidate_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "assessment_status": {
+                "const": "not_assessable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "direction": {
+                "const": "neutral"
+              },
+              "result": {
+                "type": "null"
+              },
+              "unit": {
+                "type": "null"
+              },
+              "independent_replication": {
+                "const": "not_assessable"
+              },
+              "decision_effect": {
+                "enum": [
+                  "defer",
+                  "no_change"
+                ]
+              },
+              "not_assessable_reason": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 2000
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "result": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              },
+              "not_assessable_reason": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "role": {
+                "const": "lead"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "enum": [
+                  "active_lead",
+                  "conditional_hold"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advancement_state": {
+                "enum": [
+                  "conditional_hold",
+                  "active_lead"
+                ]
+              }
+            },
+            "required": [
+              "advancement_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "enum": [
+                  "lead",
+                  "comparator",
+                  "challenger"
+                ]
+              },
+              "assessment_status": {
+                "const": "positive"
+              },
+              "direction": {
+                "const": "supports"
+              },
+              "decision_effect": {
+                "enum": [
+                  "promote",
+                  "retain",
+                  "no_change",
+                  "defer"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advancement_state": {
+                "const": "active_lead"
+              }
+            },
+            "required": [
+              "advancement_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "const": "lead"
+              },
+              "assessment_status": {
+                "const": "positive"
+              },
+              "direction": {
+                "const": "supports"
+              },
+              "decision_effect": {
+                "enum": [
+                  "promote",
+                  "retain"
+                ]
+              },
+              "functional_hit_state": {
+                "const": "replicated_full_phenocopy"
+              },
+              "translation_state": {
+                "const": "preclinical_replication_ready"
+              },
+              "screen_context": {
+                "const": "participant_lineage_tier_b"
+              },
+              "therapeutic_context": {
+                "const": "postnatal_nontransformed_proliferative"
+              },
+              "transformation_state": {
+                "const": "primary_finite"
+              },
+              "mitotic_context_class": {
+                "enum": [
+                  "epithelial_architecture_dependent",
+                  "lineage_intrinsic_mitotic"
+                ]
+              },
+              "architecture_lineage_state": {
+                "enum": [
+                  "architecture_preserving",
+                  "lineage_intrinsic_mitotic"
+                ]
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "program_gate": {
+                "enum": [
+                  "segregation",
+                  "oncology"
+                ]
+              },
+              "oncology_risk": {
+                "const": "caution"
+              },
+              "pediatric_information": {
+                "const": "present"
+              },
+              "regulatory_eligibility": {
+                "enum": [
+                  "current",
+                  "mixed_or_restricted"
+                ]
+              },
+              "exposure_class": {
+                "enum": [
+                  "leq_2um",
+                  "candidate_specific_plausible"
+                ]
+              },
+              "independent_replication": {
+                "const": "replicated"
+              },
+              "replication_design": {
+                "$ref": "#/$defs/receiptBoundBlindedReplicationDesign"
+              },
+              "rescue_gates": {
+                "properties": {
+                  "correction_rescue": {
+                    "const": "pass"
+                  },
+                  "reciprocal_recreation": {
+                    "const": "pass"
+                  },
+                  "branch_opened": {
+                    "const": "pass"
+                  },
+                  "exposure_validity": {
+                    "const": "pass"
+                  },
+                  "proximal_engagement": {
+                    "const": "pass"
+                  },
+                  "correction_like_function": {
+                    "const": "pass"
+                  },
+                  "native_fidelity": {
+                    "const": "pass"
+                  },
+                  "completion_equivalence": {
+                    "const": "pass"
+                  },
+                  "clone_safety": {
+                    "const": "pass"
+                  },
+                  "analysis_lock_and_multiplicity": {
+                    "const": "pass"
+                  },
+                  "discovery_confirmation_separation": {
+                    "const": "pass"
+                  },
+                  "matched_control_and_retained_domain_safety": {
+                    "const": "pass"
+                  },
+                  "therapeutic_context_and_architecture_lineage": {
+                    "const": "pass"
+                  },
+                  "analytic_transfer_pass": {
+                    "const": "pass"
+                  },
+                  "biological_replication_pass": {
+                    "const": "pass"
+                  },
+                  "blinded_replication_execution": {
+                    "const": "pass"
+                  },
+                  "independent_replication": {
+                    "const": "pass"
+                  },
+                  "replication_provenance": {
+                    "const": "pass"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "enum": [
+                  "graded_partial_hit",
+                  "mechanism_discordant_hit",
+                  "full_phenocopy_pending_replication",
+                  "replicated_full_phenocopy"
+                ]
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "enum": [
+                  "conditional_hold",
+                  "active_lead"
+                ]
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "decision_effect": {
+                "enum": [
+                  "promote",
+                  "retain"
+                ]
+              },
+              "no_hit_basis": {
+                "const": "not_applicable"
+              },
+              "program_gate": {
+                "enum": [
+                  "exposure",
+                  "segregation",
+                  "oncology",
+                  "regulatory"
+                ]
+              },
+              "replication_design": {
+                "$ref": "#/$defs/plannedReplicationDesign"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "enum": [
+                  "graded_partial_hit",
+                  "mechanism_discordant_hit"
+                ]
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "const": "conditional_hold"
+              },
+              "independent_replication": {
+                "const": "not_attempted"
+              },
+              "replication_design": {
+                "$ref": "#/$defs/pendingReplicationEvidenceDesign"
+              },
+              "rescue_gates": {
+                "properties": {
+                  "correction_rescue": {
+                    "const": "pass"
+                  },
+                  "reciprocal_recreation": {
+                    "const": "pass"
+                  },
+                  "branch_opened": {
+                    "const": "pass"
+                  },
+                  "exposure_validity": {
+                    "const": "pass"
+                  },
+                  "correction_like_function": {
+                    "const": "pass"
+                  },
+                  "native_fidelity": {
+                    "const": "pass"
+                  },
+                  "completion_equivalence": {
+                    "const": "pass"
+                  },
+                  "clone_safety": {
+                    "const": "pass"
+                  },
+                  "analysis_lock_and_multiplicity": {
+                    "const": "pass"
+                  },
+                  "discovery_confirmation_separation": {
+                    "const": "pass"
+                  },
+                  "matched_control_and_retained_domain_safety": {
+                    "const": "pass"
+                  },
+                  "analytic_transfer_pass": {
+                    "const": "not_attempted"
+                  },
+                  "biological_replication_pass": {
+                    "const": "not_attempted"
+                  },
+                  "blinded_replication_execution": {
+                    "const": "not_attempted"
+                  },
+                  "independent_replication": {
+                    "const": "not_attempted"
+                  },
+                  "replication_provenance": {
+                    "const": "not_attempted"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "const": "graded_partial_hit"
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "proximal_engagement": {
+                    "const": "pass"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "const": "mechanism_discordant_hit"
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "proximal_engagement": {
+                    "enum": [
+                      "fail",
+                      "not_attempted"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "const": "full_phenocopy_pending_replication"
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "const": "conditional_hold"
+              },
+              "translation_state": {
+                "const": "preclinical_replication_ready"
+              },
+              "independent_replication": {
+                "const": "not_attempted"
+              },
+              "replication_design": {
+                "$ref": "#/$defs/pendingReplicationEvidenceDesign"
+              },
+              "rescue_gates": {
+                "properties": {
+                  "correction_rescue": {
+                    "const": "pass"
+                  },
+                  "reciprocal_recreation": {
+                    "const": "pass"
+                  },
+                  "branch_opened": {
+                    "const": "pass"
+                  },
+                  "exposure_validity": {
+                    "const": "pass"
+                  },
+                  "proximal_engagement": {
+                    "const": "pass"
+                  },
+                  "correction_like_function": {
+                    "const": "pass"
+                  },
+                  "native_fidelity": {
+                    "const": "pass"
+                  },
+                  "completion_equivalence": {
+                    "const": "pass"
+                  },
+                  "clone_safety": {
+                    "const": "pass"
+                  },
+                  "analysis_lock_and_multiplicity": {
+                    "const": "pass"
+                  },
+                  "discovery_confirmation_separation": {
+                    "const": "pass"
+                  },
+                  "matched_control_and_retained_domain_safety": {
+                    "const": "pass"
+                  },
+                  "therapeutic_context_and_architecture_lineage": {
+                    "const": "pass"
+                  },
+                  "analytic_transfer_pass": {
+                    "const": "not_attempted"
+                  },
+                  "biological_replication_pass": {
+                    "const": "not_attempted"
+                  },
+                  "blinded_replication_execution": {
+                    "const": "not_attempted"
+                  },
+                  "independent_replication": {
+                    "const": "not_attempted"
+                  },
+                  "replication_provenance": {
+                    "const": "not_attempted"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "therapeutic_context": {
+                    "const": "renewable_2d_surrogate"
+                  }
+                },
+                "required": [
+                  "therapeutic_context"
+                ]
+              },
+              {
+                "properties": {
+                  "architecture_lineage_state": {
+                    "const": "reduced_2d_surrogate"
+                  }
+                },
+                "required": [
+                  "architecture_lineage_state"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "translation_state": {
+                "const": "mechanism_only"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "translation_state": {
+                "enum": [
+                  "context_qualified",
+                  "preclinical_replication_ready"
+                ]
+              }
+            },
+            "required": [
+              "translation_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "screen_context": {
+                "enum": [
+                  "minimal_participant_a1",
+                  "participant_lineage_tier_b"
+                ]
+              },
+              "therapeutic_context": {
+                "const": "postnatal_nontransformed_proliferative"
+              },
+              "transformation_state": {
+                "const": "primary_finite"
+              },
+              "mitotic_context_class": {
+                "enum": [
+                  "epithelial_architecture_dependent",
+                  "lineage_intrinsic_mitotic"
+                ]
+              },
+              "architecture_lineage_state": {
+                "enum": [
+                  "architecture_preserving",
+                  "lineage_intrinsic_mitotic"
+                ]
+              },
+              "rescue_gates": {
+                "properties": {
+                  "therapeutic_context_and_architecture_lineage": {
+                    "const": "pass"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "translation_state": {
+                "enum": [
+                  "context_qualified",
+                  "preclinical_replication_ready"
+                ]
+              },
+              "mitotic_context_class": {
+                "const": "epithelial_architecture_dependent"
+              }
+            },
+            "required": [
+              "translation_state",
+              "mitotic_context_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "architecture_lineage_state": {
+                "const": "architecture_preserving"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "translation_state": {
+                "enum": [
+                  "context_qualified",
+                  "preclinical_replication_ready"
+                ]
+              },
+              "mitotic_context_class": {
+                "const": "lineage_intrinsic_mitotic"
+              }
+            },
+            "required": [
+              "translation_state",
+              "mitotic_context_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "architecture_lineage_state": {
+                "const": "lineage_intrinsic_mitotic"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transformation_state": {
+                "enum": [
+                  "immortalized_or_transformed",
+                  "reprogrammed"
+                ]
+              }
+            },
+            "required": [
+              "transformation_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "translation_state": {
+                "const": "mechanism_only"
+              },
+              "therapeutic_context": {
+                "not": {
+                  "const": "postnatal_nontransformed_proliferative"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "translation_state": {
+                "const": "preclinical_replication_ready"
+              }
+            },
+            "required": [
+              "translation_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "screen_context": {
+                "const": "participant_lineage_tier_b"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "const": "replicated_full_phenocopy"
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "translation_state": {
+                "const": "preclinical_replication_ready"
+              },
+              "independent_replication": {
+                "const": "replicated"
+              },
+              "replication_design": {
+                "$ref": "#/$defs/receiptBoundBlindedReplicationDesign"
+              },
+              "rescue_gates": {
+                "properties": {
+                  "correction_rescue": {
+                    "const": "pass"
+                  },
+                  "reciprocal_recreation": {
+                    "const": "pass"
+                  },
+                  "branch_opened": {
+                    "const": "pass"
+                  },
+                  "exposure_validity": {
+                    "const": "pass"
+                  },
+                  "proximal_engagement": {
+                    "const": "pass"
+                  },
+                  "correction_like_function": {
+                    "const": "pass"
+                  },
+                  "native_fidelity": {
+                    "const": "pass"
+                  },
+                  "completion_equivalence": {
+                    "const": "pass"
+                  },
+                  "clone_safety": {
+                    "const": "pass"
+                  },
+                  "analysis_lock_and_multiplicity": {
+                    "const": "pass"
+                  },
+                  "discovery_confirmation_separation": {
+                    "const": "pass"
+                  },
+                  "matched_control_and_retained_domain_safety": {
+                    "const": "pass"
+                  },
+                  "therapeutic_context_and_architecture_lineage": {
+                    "const": "pass"
+                  },
+                  "analytic_transfer_pass": {
+                    "const": "pass"
+                  },
+                  "biological_replication_pass": {
+                    "const": "pass"
+                  },
+                  "blinded_replication_execution": {
+                    "const": "pass"
+                  },
+                  "independent_replication": {
+                    "const": "pass"
+                  },
+                  "replication_provenance": {
+                    "const": "pass"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "analytic_transfer_pass": {
+                    "enum": [
+                      "pass",
+                      "fail"
+                    ]
+                  }
+                },
+                "required": [
+                  "analytic_transfer_pass"
+                ]
+              }
+            },
+            "required": [
+              "rescue_gates"
+            ]
+          },
+          "then": {
+            "properties": {
+              "replication_design": {
+                "$ref": "#/$defs/receiptBoundAnalyticTransferDesign"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "analytic_transfer_pass": {
+                    "enum": [
+                      "not_attempted",
+                      "not_applicable"
+                    ]
+                  }
+                },
+                "required": [
+                  "analytic_transfer_pass"
+                ]
+              }
+            },
+            "required": [
+              "rescue_gates"
+            ]
+          },
+          "then": {
+            "properties": {
+              "replication_design": {
+                "properties": {
+                  "analytic_transfer_result_sha256": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "blinded_replication_execution": {
+                    "const": "pass"
+                  }
+                },
+                "required": [
+                  "blinded_replication_execution"
+                ]
+              }
+            },
+            "required": [
+              "rescue_gates"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "analytic_transfer_pass": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "replication_design": {
+                "$ref": "#/$defs/receiptBoundBlindedReplicationDesign"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "blinded_replication_execution": {
+                    "const": "fail"
+                  }
+                },
+                "required": [
+                  "blinded_replication_execution"
+                ]
+              }
+            },
+            "required": [
+              "rescue_gates"
+            ]
+          },
+          "then": {
+            "properties": {
+              "replication_design": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/plannedReplicationDesign"
+                  },
+                  {
+                    "properties": {
+                      "site2_blinding_state": {
+                        "const": "unblinded"
+                      },
+                      "site2_blinding_evidence_sha256": {
+                        "$ref": "#/$defs/sha256Fingerprint"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "blinded_replication_execution": {
+                    "const": "not_attempted"
+                  }
+                },
+                "required": [
+                  "blinded_replication_execution"
+                ]
+              }
+            },
+            "required": [
+              "rescue_gates"
+            ]
+          },
+          "then": {
+            "properties": {
+              "replication_design": {
+                "properties": {
+                  "site2_blinding_state": {
+                    "const": "not_attempted"
+                  },
+                  "site2_blinding_evidence_sha256": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "blinded_replication_execution": {
+                    "const": "not_applicable"
+                  }
+                },
+                "required": [
+                  "blinded_replication_execution"
+                ]
+              }
+            },
+            "required": [
+              "rescue_gates"
+            ]
+          },
+          "then": {
+            "properties": {
+              "replication_design": {
+                "properties": {
+                  "site2_blinding_state": {
+                    "const": "not_applicable"
+                  },
+                  "site2_blinding_evidence_sha256": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "biological_replication_pass": {
+                    "enum": [
+                      "pass",
+                      "fail"
+                    ]
+                  }
+                },
+                "required": [
+                  "biological_replication_pass"
+                ]
+              }
+            },
+            "required": [
+              "rescue_gates"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "analytic_transfer_pass": {
+                    "enum": [
+                      "pass",
+                      "fail"
+                    ]
+                  },
+                  "blinded_replication_execution": {
+                    "enum": [
+                      "pass",
+                      "fail"
+                    ]
+                  }
+                }
+              },
+              "replication_design": {
+                "$ref": "#/$defs/plannedReplicationDesign"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "biological_replication_pass": {
+                    "const": "pass"
+                  }
+                },
+                "required": [
+                  "biological_replication_pass"
+                ]
+              }
+            },
+            "required": [
+              "rescue_gates"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rescue_gates": {
+                "properties": {
+                  "analytic_transfer_pass": {
+                    "const": "pass"
+                  },
+                  "blinded_replication_execution": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "replication_design": {
+                "$ref": "#/$defs/receiptBoundBlindedReplicationDesign"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "rescue_gates": {
+                    "properties": {
+                      "independent_replication": {
+                        "const": "pass"
+                      }
+                    },
+                    "required": [
+                      "independent_replication"
+                    ]
+                  }
+                },
+                "required": [
+                  "rescue_gates"
+                ]
+              },
+              {
+                "properties": {
+                  "rescue_gates": {
+                    "properties": {
+                      "replication_provenance": {
+                        "const": "pass"
+                      }
+                    },
+                    "required": [
+                      "replication_provenance"
+                    ]
+                  }
+                },
+                "required": [
+                  "rescue_gates"
+                ]
+              },
+              {
+                "properties": {
+                  "independent_replication": {
+                    "const": "replicated"
+                  }
+                },
+                "required": [
+                  "independent_replication"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "independent_replication": {
+                "const": "replicated"
+              },
+              "rescue_gates": {
+                "properties": {
+                  "analytic_transfer_pass": {
+                    "const": "pass"
+                  },
+                  "biological_replication_pass": {
+                    "const": "pass"
+                  },
+                  "blinded_replication_execution": {
+                    "const": "pass"
+                  },
+                  "independent_replication": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "replication_design": {
+                "$ref": "#/$defs/receiptBoundBlindedReplicationDesign"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "const": "mixed_or_unsafe"
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "enum": [
+                  "rejected",
+                  "comparator_only",
+                  "not_assessable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "const": "no_hit"
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "assessment_status": {
+                "const": "negative"
+              },
+              "direction": {
+                "const": "contradicts"
+              },
+              "decision_effect": {
+                "enum": [
+                  "demote",
+                  "exclude",
+                  "no_change"
+                ]
+              },
+              "advancement_state": {
+                "enum": [
+                  "rejected",
+                  "comparator_only",
+                  "not_assessable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "const": "no_hit"
+              },
+              "screen_context": {
+                "const": "renewable_nonparticipant_a0"
+              }
+            },
+            "required": [
+              "functional_hit_state",
+              "screen_context"
+            ]
+          },
+          "then": {
+            "properties": {
+              "no_hit_basis": {
+                "const": "valid_a0_negative"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "const": "no_hit"
+              },
+              "screen_context": {
+                "enum": [
+                  "minimal_participant_a1",
+                  "participant_lineage_tier_b"
+                ]
+              }
+            },
+            "required": [
+              "functional_hit_state",
+              "screen_context"
+            ]
+          },
+          "then": {
+            "properties": {
+              "no_hit_basis": {
+                "const": "valid_participant_negative"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "not": {
+                  "const": "no_hit"
+                }
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "no_hit_basis": {
+                "enum": [
+                  "not_applicable",
+                  "insufficient_material",
+                  "failed_controls",
+                  "unmeasured_exposure",
+                  "screen_failure"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "role": {
+                "const": "lead"
+              },
+              "direct_target_evidence": {
+                "const": "positive"
+              }
+            },
+            "required": [
+              "role",
+              "direct_target_evidence"
+            ]
+          },
+          "then": {
+            "properties": {
+              "exact_allele_evidence": {
+                "const": "positive"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "role": {
+                "const": "no_go"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "const": "rejected"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "decision_effect": {
+                "const": "exclude"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "const": "rejected"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "oncology_risk": {
+                "const": "stop"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "enum": [
+                  "rejected",
+                  "comparator_only",
+                  "not_assessable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "oncology_risk": {
+                "const": "not_assessable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "enum": [
+                  "rejected",
+                  "comparator_only",
+                  "not_assessable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "regulatory_eligibility": {
+                "const": "expired_or_absent"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "enum": [
+                  "rejected",
+                  "comparator_only",
+                  "not_assessable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "exposure_class": {
+                "const": "nontranslational_high"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "enum": [
+                  "rejected",
+                  "comparator_only",
+                  "not_assessable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "exposure_class": {
+                "const": "not_assessable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "nominal_concentration_uM": {
+                "type": "null"
+              },
+              "advancement_state": {
+                "enum": [
+                  "rejected",
+                  "comparator_only",
+                  "not_assessable"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "exposure_class": {
+                "const": "leq_2um"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "nominal_concentration_uM": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "exposure_class": {
+                "const": "exploratory_5um"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "nominal_concentration_uM": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 5
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "exposure_class": {
+                "const": "candidate_specific_plausible"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "nominal_concentration_uM": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 1000
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "exposure_class": {
+                "const": "nontranslational_high"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "nominal_concentration_uM": {
+                "type": "number",
+                "exclusiveMinimum": 5
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "enum": [
+                  "public_database",
+                  "public_literature",
+                  "public_ontology",
+                  "public_software"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source_url": {
+                "type": "string",
+                "pattern": "^https://"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "official_label"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source_url": {
+                "type": "string",
+                "pattern": "^https://"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "enum": [
+                  "public_software",
+                  "official_label"
+                ]
+              }
+            },
+            "required": [
+              "source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "not": {
+                  "const": "lead"
+                }
+              },
+              "advancement_state": {
+                "not": {
+                  "enum": [
+                    "active_lead",
+                    "conditional_hold"
+                  ]
+                }
+              },
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "enum": [
+                  "public_software",
+                  "public_database",
+                  "public_ontology"
+                ]
+              }
+            },
+            "required": [
+              "source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "not": {
+                  "enum": [
+                    "lead",
+                    "comparator",
+                    "challenger"
+                  ]
+                }
+              },
+              "advancement_state": {
+                "not": {
+                  "enum": [
+                    "active_lead",
+                    "conditional_hold"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "derived_evidence"
+              }
+            },
+            "required": [
+              "source_class"
+            ]
+          },
+          "then": {
+            "required": [
+              "parent_source_class"
+            ],
+            "properties": {
+              "parent_source_class": {
+                "$ref": "#/$defs/parentSourceClass"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "parent_source_class": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "derived_evidence"
+              },
+              "parent_source_class": {
+                "enum": [
+                  "public_software",
+                  "official_label"
+                ]
+              }
+            },
+            "required": [
+              "source_class",
+              "parent_source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "not": {
+                  "const": "lead"
+                }
+              },
+              "advancement_state": {
+                "not": {
+                  "enum": [
+                    "active_lead",
+                    "conditional_hold"
+                  ]
+                }
+              },
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "derived_evidence"
+              },
+              "parent_source_class": {
+                "enum": [
+                  "public_software",
+                  "public_database",
+                  "public_ontology"
+                ]
+              }
+            },
+            "required": [
+              "source_class",
+              "parent_source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "not": {
+                  "enum": [
+                    "lead",
+                    "comparator",
+                    "challenger"
+                  ]
+                }
+              },
+              "advancement_state": {
+                "not": {
+                  "enum": [
+                    "active_lead",
+                    "conditional_hold"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "derived_evidence"
+              },
+              "parent_source_class": {
+                "enum": [
+                  "public_database",
+                  "public_literature",
+                  "public_ontology",
+                  "public_software"
+                ]
+              }
+            },
+            "required": [
+              "source_class",
+              "parent_source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_url": {
+                "type": "string",
+                "pattern": "^https://"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "derived_evidence"
+              },
+              "parent_source_class": {
+                "const": "official_label"
+              }
+            },
+            "required": [
+              "source_class",
+              "parent_source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_url": {
+                "type": "string",
+                "pattern": "^https://"
+              }
+            }
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "privacy_class": {
+                "enum": [
+                  "public",
+                  "synthetic"
+                ]
+              },
+              "source_class": {
+                "const": "derived_evidence"
+              },
+              "parent_source_class": {
+                "const": "controlled_source"
+              }
+            },
+            "required": [
+              "privacy_class",
+              "source_class",
+              "parent_source_class"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "decision_effect": {
+                "const": "promote"
+              }
+            },
+            "required": [
+              "decision_effect"
+            ]
+          },
+          "then": {
+            "properties": {
+              "advancement_state": {
+                "enum": [
+                  "active_lead",
+                  "conditional_hold"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "privacy_class": {
+                "enum": [
+                  "public",
+                  "synthetic"
+                ]
+              },
+              "source_class": {
+                "const": "controlled_source"
+              }
+            },
+            "required": [
+              "privacy_class",
+              "source_class"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "synthetic_fixture"
+              }
+            },
+            "required": [
+              "source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "privacy_class": {
+                "const": "synthetic"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "enum": [
+                  "public_software",
+                  "public_database",
+                  "public_ontology",
+                  "public_literature",
+                  "official_label"
+                ]
+              }
+            },
+            "required": [
+              "source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "privacy_class": {
+                "const": "public"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "derived_evidence"
+              },
+              "parent_source_class": {
+                "const": "synthetic_fixture"
+              }
+            },
+            "required": [
+              "source_class",
+              "parent_source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "privacy_class": {
+                "const": "synthetic"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_class": {
+                "const": "derived_evidence"
+              },
+              "parent_source_class": {
+                "enum": [
+                  "public_software",
+                  "public_database",
+                  "public_ontology",
+                  "public_literature",
+                  "official_label"
+                ]
+              }
+            },
+            "required": [
+              "source_class",
+              "parent_source_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "privacy_class": {
+                "const": "public"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "functional_hit_state": {
+                "const": "replicated_full_phenocopy"
+              }
+            },
+            "required": [
+              "functional_hit_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "sample_stewardship_promotion": {
+                "$ref": "#/$defs/sampleStewardshipPromotion"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "sample_stewardship_promotion": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "const": "positive"
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "const": "positive"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "const": "positive"
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "const": "positive"
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "const": "positive"
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "const": "positive"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "const": "positive"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "human_pd_evidence": {
+                "const": "positive"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "const": "positive"
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "human_pd_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 3
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "const": "positive"
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "human_pd_evidence": {
+                "const": "positive"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 3
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "const": "positive"
+              },
+              "exact_allele_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "human_pd_evidence": {
+                "const": "positive"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 3
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "not": {
+                  "const": "positive"
+                }
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "human_pd_evidence": {
+                "const": "positive"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 3
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "direct_target_evidence": {
+                "const": "positive"
+              },
+              "exact_allele_evidence": {
+                "const": "positive"
+              },
+              "checkpoint_evidence": {
+                "const": "positive"
+              },
+              "human_pd_evidence": {
+                "const": "positive"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "causal_distance_score": {
+                "const": 4
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

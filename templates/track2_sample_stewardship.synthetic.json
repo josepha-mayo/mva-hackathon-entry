@@ -1,0 +1,535 @@
+{
+  "schema": "mva.track2-sample-stewardship/v17",
+  "synthetic_only": true,
+  "inventory": {
+    "renewable_nonparticipant": {
+      "dna_aliquots": 100,
+      "rna_aliquots": 100,
+      "viable_cell_equivalents": 100000000,
+      "population_doublings": 100,
+      "edit_event_families": 20
+    },
+    "participant_discovery": {
+      "dna_aliquots": 4,
+      "rna_aliquots": 4,
+      "viable_cell_equivalents": 1000000,
+      "population_doublings": 8,
+      "edit_event_families": 3
+    },
+    "participant_held_out": {
+      "dna_aliquots": 2,
+      "rna_aliquots": 2,
+      "viable_cell_equivalents": 500000,
+      "population_doublings": 4,
+      "edit_event_families": 2
+    },
+    "independent_site": {
+      "dna_aliquots": 2,
+      "rna_aliquots": 2,
+      "viable_cell_equivalents": 500000,
+      "population_doublings": 4,
+      "edit_event_families": 2
+    }
+  },
+  "completed": {},
+  "assays": [
+    {
+      "assay_id": "syn-a0-targeted",
+      "stage": "A0",
+      "partition": "renewable_nonparticipant",
+      "discovery_lane": "targeted_hypothesis",
+      "destructive": false,
+      "consumption": {
+        "dna_aliquots": 0,
+        "rna_aliquots": 1,
+        "viable_cell_equivalents": 10000,
+        "population_doublings": 1,
+        "edit_event_families": 0
+      },
+      "prerequisites": [],
+      "decision_changes": [
+        "advance_or_reject_targeted_condition"
+      ],
+      "validity_requirements": [
+        "measured_exposure",
+        "valid_controls",
+        "locked_function",
+        "same_background_correction_rescue",
+        "same_background_reciprocal_recreation",
+        "genotype_harm_counterscreen"
+      ],
+      "outcome_actions": {
+        "positive": "advance_to_a1",
+        "negative": "revise_mechanism",
+        "invalid": "hold_invalid"
+      },
+      "correction_core": {
+        "measured_exposure_id": "syn-a0-targeted-exposure",
+        "valid_controls_id": "syn-a0-targeted-controls",
+        "locked_function_id": "syn-a0-targeted-locked-function",
+        "same_background_correction_id": "syn-a0-targeted-correction",
+        "same_background_recreation_id": "syn-a0-targeted-recreation",
+        "genotype_harm_counterscreen_id": "syn-a0-targeted-harm-screen"
+      },
+      "consent_state": "not_applicable"
+    },
+    {
+      "assay_id": "syn-a0-phenotype",
+      "stage": "A0",
+      "partition": "renewable_nonparticipant",
+      "discovery_lane": "correction_trained_phenotypic",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 0,
+        "rna_aliquots": 2,
+        "viable_cell_equivalents": 20000,
+        "population_doublings": 2,
+        "edit_event_families": 0
+      },
+      "prerequisites": [],
+      "decision_changes": [
+        "advance_or_reject_phenotype_condition"
+      ],
+      "validity_requirements": [
+        "correction_signature_separation",
+        "genotype_harm_counterscreen",
+        "measured_exposure",
+        "valid_controls",
+        "locked_function",
+        "same_background_correction_rescue",
+        "same_background_reciprocal_recreation"
+      ],
+      "outcome_actions": {
+        "positive": "advance_to_a1",
+        "negative": "reject_condition",
+        "invalid": "hold_invalid"
+      },
+      "correction_core": {
+        "measured_exposure_id": "syn-a0-phenotype-exposure",
+        "valid_controls_id": "syn-a0-phenotype-controls",
+        "locked_function_id": "syn-a0-phenotype-locked-function",
+        "same_background_correction_id": "syn-a0-phenotype-correction",
+        "same_background_recreation_id": "syn-a0-phenotype-recreation",
+        "genotype_harm_counterscreen_id": "syn-a0-phenotype-harm-screen",
+        "correction_signature_separation_id": "syn-a0-phenotype-signature"
+      },
+      "consent_state": "not_applicable"
+    },
+    {
+      "assay_id": "syn-a1-targeted-bridge",
+      "stage": "A1",
+      "partition": "participant_discovery",
+      "discovery_lane": "targeted_hypothesis",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 0,
+        "rna_aliquots": 1,
+        "viable_cell_equivalents": 100000,
+        "population_doublings": 1,
+        "edit_event_families": 1
+      },
+      "prerequisites": [
+        "syn-a0-targeted"
+      ],
+      "decision_changes": [
+        "open_targeted_context_or_record_valid_no_hit"
+      ],
+      "validity_requirements": [
+        "measured_exposure",
+        "valid_controls",
+        "participant_context",
+        "locked_function",
+        "short_term_viability_completion"
+      ],
+      "a1_lock": {
+        "measured_exposure_id": "syn-a1-targeted-exposure",
+        "valid_controls_id": "syn-a1-targeted-controls",
+        "participant_context_id": "syn-a1-targeted-participant-context",
+        "locked_function_id": "syn-a1-targeted-locked-function",
+        "short_term_viability_id": "syn-a1-targeted-viability"
+      },
+      "outcome_actions": {
+        "positive": "advance_to_context_qualification",
+        "negative": "participant_branch_no_hit",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    },
+    {
+      "assay_id": "syn-a1-phenotype-bridge",
+      "stage": "A1",
+      "partition": "participant_discovery",
+      "discovery_lane": "correction_trained_phenotypic",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 0,
+        "rna_aliquots": 1,
+        "viable_cell_equivalents": 100000,
+        "population_doublings": 1,
+        "edit_event_families": 1
+      },
+      "prerequisites": [
+        "syn-a0-phenotype"
+      ],
+      "decision_changes": [
+        "open_phenotype_context_or_record_valid_no_hit"
+      ],
+      "validity_requirements": [
+        "measured_exposure",
+        "valid_controls",
+        "participant_context",
+        "locked_function",
+        "short_term_viability_completion"
+      ],
+      "a1_lock": {
+        "measured_exposure_id": "syn-a1-phenotype-exposure",
+        "valid_controls_id": "syn-a1-phenotype-controls",
+        "participant_context_id": "syn-a1-phenotype-participant-context",
+        "locked_function_id": "syn-a1-phenotype-locked-function",
+        "short_term_viability_id": "syn-a1-phenotype-viability"
+      },
+      "outcome_actions": {
+        "positive": "advance_to_context_qualification",
+        "negative": "participant_branch_no_hit",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    },
+    {
+      "assay_id": "syn-tier-b-targeted-context",
+      "stage": "TIER_B",
+      "partition": "participant_discovery",
+      "discovery_lane": "targeted_hypothesis",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 0,
+        "rna_aliquots": 0,
+        "viable_cell_equivalents": 150000,
+        "population_doublings": 1,
+        "edit_event_families": 0
+      },
+      "prerequisites": [
+        "syn-a1-targeted-bridge"
+      ],
+      "decision_changes": [
+        "qualify_targeted_postnatal_context"
+      ],
+      "validity_requirements": [
+        "postnatal_lineage_rationale",
+        "nontransformed_proliferative_context",
+        "architecture_preserving_context",
+        "paired_2d_comparison",
+        "same_context_correction_rescue",
+        "same_context_reciprocal_recreation",
+        "opaque_context_receipt_identity"
+      ],
+      "context_qualification": {
+        "postnatal_lineage_rationale_id": "syn-rationale-targeted-postnatal",
+        "architecture_preserving_context_id": "syn-context-targeted-architecture",
+        "paired_2d_comparison_id": "syn-context-targeted-paired-2d",
+        "same_context_correction_id": "syn-reference-targeted-correction",
+        "same_context_recreation_id": "syn-reference-targeted-recreation",
+        "receipt_identity_id": "syn-receipt-targeted-context",
+        "mitotic_context_class": "epithelial_architecture_dependent",
+        "transformation_state": "primary_finite"
+      },
+      "outcome_actions": {
+        "positive": "advance_to_native_lineage",
+        "negative": "record_mechanism_only",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    },
+    {
+      "assay_id": "syn-tier-b-phenotype-context",
+      "stage": "TIER_B",
+      "partition": "participant_discovery",
+      "discovery_lane": "correction_trained_phenotypic",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 0,
+        "rna_aliquots": 0,
+        "viable_cell_equivalents": 150000,
+        "population_doublings": 1,
+        "edit_event_families": 0
+      },
+      "prerequisites": [
+        "syn-a1-phenotype-bridge"
+      ],
+      "decision_changes": [
+        "qualify_phenotype_postnatal_context"
+      ],
+      "validity_requirements": [
+        "postnatal_lineage_rationale",
+        "nontransformed_proliferative_context",
+        "architecture_preserving_context",
+        "paired_2d_comparison",
+        "same_context_correction_rescue",
+        "same_context_reciprocal_recreation",
+        "opaque_context_receipt_identity"
+      ],
+      "context_qualification": {
+        "postnatal_lineage_rationale_id": "syn-rationale-phenotype-postnatal",
+        "architecture_preserving_context_id": "syn-context-phenotype-architecture",
+        "paired_2d_comparison_id": "syn-context-phenotype-paired-2d",
+        "same_context_correction_id": "syn-reference-phenotype-correction",
+        "same_context_recreation_id": "syn-reference-phenotype-recreation",
+        "receipt_identity_id": "syn-receipt-phenotype-context",
+        "mitotic_context_class": "epithelial_architecture_dependent",
+        "transformation_state": "primary_finite"
+      },
+      "outcome_actions": {
+        "positive": "advance_to_native_lineage",
+        "negative": "record_mechanism_only",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    },
+    {
+      "assay_id": "syn-tier-b-targeted-lineage",
+      "stage": "TIER_B",
+      "partition": "participant_discovery",
+      "discovery_lane": "targeted_hypothesis",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 1,
+        "rna_aliquots": 0,
+        "viable_cell_equivalents": 500000,
+        "population_doublings": 3,
+        "edit_event_families": 2
+      },
+      "prerequisites": [
+        "syn-tier-b-targeted-context"
+      ],
+      "decision_changes": [
+        "classify_targeted_native_lineage_rescue"
+      ],
+      "validity_requirements": [
+        "native_fidelity",
+        "completion_equivalence",
+        "clone_safety"
+      ],
+      "lineage_lock": {
+        "native_fidelity_id": "syn-lineage-targeted-native-fidelity",
+        "completion_equivalence_id": "syn-lineage-targeted-completion",
+        "clone_safety_id": "syn-lineage-targeted-clone-safety"
+      },
+      "outcome_actions": {
+        "positive": "held_out_confirmation",
+        "negative": "reject_condition",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    },
+    {
+      "assay_id": "syn-tier-b-phenotype-lineage",
+      "stage": "TIER_B",
+      "partition": "participant_discovery",
+      "discovery_lane": "correction_trained_phenotypic",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 1,
+        "rna_aliquots": 0,
+        "viable_cell_equivalents": 500000,
+        "population_doublings": 3,
+        "edit_event_families": 2
+      },
+      "prerequisites": [
+        "syn-tier-b-phenotype-context"
+      ],
+      "decision_changes": [
+        "classify_phenotype_native_lineage_rescue"
+      ],
+      "validity_requirements": [
+        "native_fidelity",
+        "completion_equivalence",
+        "clone_safety"
+      ],
+      "lineage_lock": {
+        "native_fidelity_id": "syn-lineage-phenotype-native-fidelity",
+        "completion_equivalence_id": "syn-lineage-phenotype-completion",
+        "clone_safety_id": "syn-lineage-phenotype-clone-safety"
+      },
+      "outcome_actions": {
+        "positive": "held_out_confirmation",
+        "negative": "reject_condition",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    },
+    {
+      "assay_id": "syn-held-out-targeted",
+      "stage": "HELD_OUT",
+      "partition": "participant_held_out",
+      "discovery_lane": "targeted_hypothesis",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 1,
+        "rna_aliquots": 0,
+        "viable_cell_equivalents": 250000,
+        "population_doublings": 2,
+        "edit_event_families": 1
+      },
+      "prerequisites": [
+        "syn-tier-b-targeted-lineage"
+      ],
+      "decision_changes": [
+        "qualify_targeted_independent_replication"
+      ],
+      "validity_requirements": [
+        "frozen_exposure",
+        "frozen_endpoint",
+        "frozen_margin",
+        "blinded_execution"
+      ],
+      "held_out_lock": {
+        "frozen_exposure_id": "syn-held-out-targeted-frozen-exposure",
+        "frozen_endpoint_id": "syn-held-out-targeted-frozen-endpoint",
+        "frozen_margin_id": "syn-held-out-targeted-frozen-margin",
+        "blinded_execution_id": "syn-held-out-targeted-blinded-execution"
+      },
+      "outcome_actions": {
+        "positive": "independent_replication",
+        "negative": "reject_condition",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    },
+    {
+      "assay_id": "syn-held-out-phenotype",
+      "stage": "HELD_OUT",
+      "partition": "participant_held_out",
+      "discovery_lane": "correction_trained_phenotypic",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 1,
+        "rna_aliquots": 0,
+        "viable_cell_equivalents": 250000,
+        "population_doublings": 2,
+        "edit_event_families": 1
+      },
+      "prerequisites": [
+        "syn-tier-b-phenotype-lineage"
+      ],
+      "decision_changes": [
+        "qualify_phenotype_independent_replication"
+      ],
+      "validity_requirements": [
+        "frozen_exposure",
+        "frozen_endpoint",
+        "frozen_margin",
+        "blinded_execution"
+      ],
+      "held_out_lock": {
+        "frozen_exposure_id": "syn-held-out-phenotype-frozen-exposure",
+        "frozen_endpoint_id": "syn-held-out-phenotype-frozen-endpoint",
+        "frozen_margin_id": "syn-held-out-phenotype-frozen-margin",
+        "blinded_execution_id": "syn-held-out-phenotype-blinded-execution"
+      },
+      "outcome_actions": {
+        "positive": "independent_replication",
+        "negative": "reject_condition",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    },
+    {
+      "assay_id": "syn-replication-targeted",
+      "stage": "REPLICATION",
+      "partition": "independent_site",
+      "discovery_lane": "targeted_hypothesis",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 1,
+        "rna_aliquots": 0,
+        "viable_cell_equivalents": 250000,
+        "population_doublings": 2,
+        "edit_event_families": 1
+      },
+      "prerequisites": [
+        "syn-held-out-targeted"
+      ],
+      "decision_changes": [
+        "replicate_or_reject_targeted_hit"
+      ],
+      "validity_requirements": [
+        "analytic_transfer",
+        "biological_replication"
+      ],
+      "independence_requirements": [
+        "different_site",
+        "nonoverlapping_edit_event_families",
+        "frozen_exposure",
+        "frozen_endpoint",
+        "frozen_margin",
+        "frozen_protocol",
+        "frozen_analysis",
+        "blinded_site2",
+        "common_reference_transfer_qc"
+      ],
+      "replication_lock": {
+        "frozen_exposure_id": "syn-held-out-targeted-frozen-exposure",
+        "frozen_endpoint_id": "syn-held-out-targeted-frozen-endpoint",
+        "frozen_margin_id": "syn-held-out-targeted-frozen-margin",
+        "frozen_protocol_id": "syn-replication-targeted-frozen-protocol",
+        "frozen_analysis_id": "syn-replication-targeted-frozen-analysis",
+        "common_reference_transfer_qc_id": "syn-replication-targeted-transfer-qc"
+      },
+      "outcome_actions": {
+        "positive": "independent_replication",
+        "negative": "reject_condition",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    },
+    {
+      "assay_id": "syn-replication-phenotype",
+      "stage": "REPLICATION",
+      "partition": "independent_site",
+      "discovery_lane": "correction_trained_phenotypic",
+      "destructive": true,
+      "consumption": {
+        "dna_aliquots": 1,
+        "rna_aliquots": 0,
+        "viable_cell_equivalents": 250000,
+        "population_doublings": 2,
+        "edit_event_families": 1
+      },
+      "prerequisites": [
+        "syn-held-out-phenotype"
+      ],
+      "decision_changes": [
+        "replicate_or_reject_phenotype_hit"
+      ],
+      "validity_requirements": [
+        "analytic_transfer",
+        "biological_replication"
+      ],
+      "independence_requirements": [
+        "different_site",
+        "nonoverlapping_edit_event_families",
+        "frozen_exposure",
+        "frozen_endpoint",
+        "frozen_margin",
+        "frozen_protocol",
+        "frozen_analysis",
+        "blinded_site2",
+        "common_reference_transfer_qc"
+      ],
+      "replication_lock": {
+        "frozen_exposure_id": "syn-held-out-phenotype-frozen-exposure",
+        "frozen_endpoint_id": "syn-held-out-phenotype-frozen-endpoint",
+        "frozen_margin_id": "syn-held-out-phenotype-frozen-margin",
+        "frozen_protocol_id": "syn-replication-phenotype-frozen-protocol",
+        "frozen_analysis_id": "syn-replication-phenotype-frozen-analysis",
+        "common_reference_transfer_qc_id": "syn-replication-phenotype-transfer-qc"
+      },
+      "outcome_actions": {
+        "positive": "independent_replication",
+        "negative": "reject_condition",
+        "invalid": "hold_invalid"
+      },
+      "consent_state": "consented"
+    }
+  ]
+}

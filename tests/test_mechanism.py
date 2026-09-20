@@ -152,10 +152,117 @@ class MechanismCoreTests(unittest.TestCase):
     def test_two_lof_effects_on_one_shared_transcript_pass(self) -> None:
         candidate = generated_pair()
 
-        result = assess_mechanism_pair(candidate, strict_effect_rows(candidate), lof_rule())
+        result = assess_mechanism_pair(
+            candidate,
+            strict_effect_rows(candidate),
+            lof_rule(),
+            (
+                VariantGeneEvidence(
+                    "SYN-EVIDENCE-ANCHOR",
+                    candidate.variant_keys[0],
+                    GENE,
+                    strict_pathogenic=True,
+                    review_stars=3,
+                    conflicting=False,
+                ),
+            ),
+            (
+                DiseaseConditionEvidence(
+                    "SYN-CONDITION-MATCH",
+                    "SYN-RULE-1",
+                    ConditionRelevance.MATCHED,
+                ),
+            ),
+        )
 
         self.assertIs(result.fit, MechanismFit.STRICT_TWO_ALLELE_LOF_MATCH)
         self.assertTrue(result.eligible_for_strict_pair_lane)
+
+    def test_assessment_is_fingerprint_bound_to_its_inputs(self) -> None:
+        candidate = generated_pair()
+        first = assess_mechanism_pair(
+            candidate, strict_effect_rows(candidate), lof_rule()
+        )
+        second = assess_mechanism_pair(
+            candidate, strict_effect_rows(candidate), lof_rule()
+        )
+        self.assertEqual(first.assessment_input_sha256, second.assessment_input_sha256)
+        self.assertRegex(first.assessment_input_sha256, r"^[0-9a-f]{64}$")
+
+        tampered = assess_mechanism_pair(
+            candidate,
+            strict_effect_rows(candidate),
+            lof_rule(),
+            (
+                VariantGeneEvidence(
+                    "SYN-EVIDENCE-ANCHOR",
+                    candidate.variant_keys[0],
+                    GENE,
+                    strict_pathogenic=True,
+                    review_stars=3,
+                    conflicting=False,
+                ),
+            ),
+        )
+        self.assertNotEqual(
+            first.assessment_input_sha256, tampered.assessment_input_sha256
+        )
+
+    def test_strict_lane_requires_a_pathogenic_anchor(self) -> None:
+        candidate = generated_pair()
+
+        result = assess_mechanism_pair(
+            candidate,
+            strict_effect_rows(candidate),
+            lof_rule(),
+            (),
+            (
+                DiseaseConditionEvidence(
+                    "SYN-CONDITION-MATCH",
+                    "SYN-RULE-1",
+                    ConditionRelevance.MATCHED,
+                ),
+            ),
+        )
+
+        self.assertIs(result.fit, MechanismFit.STRICT_TWO_ALLELE_LOF_MATCH)
+        self.assertFalse(result.eligible_for_strict_pair_lane)
+
+    def test_unassessed_or_conflicting_condition_never_enters_strict_lane(self) -> None:
+        candidate = generated_pair()
+
+        unassessed = assess_mechanism_pair(
+            candidate, strict_effect_rows(candidate), lof_rule()
+        )
+        conflicting = assess_mechanism_pair(
+            candidate,
+            strict_effect_rows(candidate),
+            lof_rule(),
+            (),
+            (
+                DiseaseConditionEvidence(
+                    "SYN-CONDITION-A", "SYN-RULE-1", ConditionRelevance.MATCHED
+                ),
+                DiseaseConditionEvidence(
+                    "SYN-CONDITION-B", "SYN-RULE-1", ConditionRelevance.MISMATCHED
+                ),
+            ),
+        )
+        mismatched = assess_mechanism_pair(
+            candidate,
+            strict_effect_rows(candidate),
+            lof_rule(),
+            (),
+            (
+                DiseaseConditionEvidence(
+                    "SYN-CONDITION-C", "SYN-RULE-1", ConditionRelevance.MISMATCHED
+                ),
+            ),
+        )
+
+        self.assertFalse(unassessed.eligible_for_strict_pair_lane)
+        self.assertFalse(conflicting.eligible_for_strict_pair_lane)
+        self.assertFalse(mismatched.eligible_for_strict_pair_lane)
 
     def test_disjoint_transcripts_are_an_explicit_reject(self) -> None:
         candidate = generated_pair()
@@ -194,6 +301,7 @@ class MechanismCoreTests(unittest.TestCase):
             "SYNOTHER",
             strict_pathogenic=True,
             review_stars=3,
+            conflicting=False,
         )
         correct_gene = VariantGeneEvidence(
             "SYN-EVIDENCE-RIGHT",
@@ -201,6 +309,7 @@ class MechanismCoreTests(unittest.TestCase):
             GENE,
             strict_pathogenic=True,
             review_stars=3,
+            conflicting=False,
         )
 
         result = assess_mechanism_pair(
@@ -212,6 +321,32 @@ class MechanismCoreTests(unittest.TestCase):
 
         self.assertEqual(result.strict_pathogenic_anchor_count, 1)
 
+    def test_duplicate_evidence_ids_are_rejected(self) -> None:
+        candidate = generated_pair()
+        first = VariantGeneEvidence(
+            "SYN-EVIDENCE-DUP",
+            candidate.variant_keys[0],
+            GENE,
+            strict_pathogenic=True,
+            review_stars=3,
+            conflicting=False,
+        )
+        second = VariantGeneEvidence(
+            "SYN-EVIDENCE-DUP",
+            candidate.variant_keys[1],
+            GENE,
+            strict_pathogenic=True,
+            review_stars=3,
+            conflicting=False,
+        )
+        with self.assertRaisesRegex(MechanismInputError, "unique"):
+            assess_mechanism_pair(
+                candidate,
+                strict_effect_rows(candidate),
+                lof_rule(),
+                (first, second),
+            )
+
     def test_disease_condition_relevance_is_separate_from_variant_gene_match(self) -> None:
         candidate = generated_pair()
         anchor = VariantGeneEvidence(
@@ -220,6 +355,7 @@ class MechanismCoreTests(unittest.TestCase):
             GENE,
             strict_pathogenic=True,
             review_stars=3,
+            conflicting=False,
         )
 
         unassessed = assess_mechanism_pair(

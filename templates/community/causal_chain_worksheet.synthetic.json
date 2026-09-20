@@ -1,0 +1,106 @@
+{
+  "schema": "mva.community-causal-chain-worksheet/v1",
+  "privacy_class": "synthetic",
+  "declared_next_gate_id": "syn-gate-confirm",
+  "purpose": "Ordered synthetic gates from confirmation through oncology counterscreen. owner_lab values are generic roles, not named institutions.",
+  "owner_lab_roles": [
+    "clinical_genetics",
+    "editing",
+    "proteomics",
+    "imaging",
+    "statistics",
+    "oncology"
+  ],
+  "gates": [
+    {
+      "order": 1,
+      "gate_id": "syn-gate-confirm",
+      "name": "orthogonal confirmation and identity",
+      "owner_lab": "clinical_genetics",
+      "handoff": "confirmation_record.synthetic.json",
+      "advance_when": "both synthetic alleles confirm on a second aliquot and specimen identity is resolved",
+      "stop_when": "confirmation or identity fails"
+    },
+    {
+      "order": 2,
+      "gate_id": "syn-gate-phase",
+      "name": "direct phase",
+      "owner_lab": "clinical_genetics",
+      "handoff": "phase_record.synthetic.json",
+      "advance_when": "decision is trans_confirmed under the molecule and dropout rules",
+      "stop_when": "decision is cis_confirmed; unresolved keeps variant biology only"
+    },
+    {
+      "order": 3,
+      "gate_id": "syn-gate-transcript",
+      "name": "allele-specific transcript fate",
+      "owner_lab": "editing",
+      "handoff": "transcript_record.synthetic.json",
+      "advance_when": "the stop-class model is either supported or explicitly revised",
+      "stop_when": "assay controls fail"
+    },
+    {
+      "order": 4,
+      "gate_id": "syn-gate-isogenic",
+      "name": "isogenic allelic series",
+      "owner_lab": "editing",
+      "handoff": null,
+      "advance_when": "wt, missense, stop, compound, exact_corrected, and recreated_missense rows exist with identity and karyotype checks",
+      "stop_when": "unexplained aneuploid or mixed clones cannot be replaced"
+    },
+    {
+      "order": 5,
+      "gate_id": "syn-gate-stability",
+      "name": "abundance and half-life",
+      "owner_lab": "proteomics",
+      "handoff": "allele_function_scorecard.synthetic.json",
+      "advance_when": "the missense row supports a prespecified cellular basal stability defect",
+      "stop_when": "the missense row is negative or not_assessable for both abundance and half_life"
+    },
+    {
+      "order": 6,
+      "gate_id": "syn-gate-exposure",
+      "name": "measured culture exposure",
+      "owner_lab": "proteomics",
+      "handoff": "measured_exposure_table.synthetic.json",
+      "advance_when": "unbound medium and intracellular parent are reported at the nominal window",
+      "stop_when": "the only signal sits outside the predeclared exposure window"
+    },
+    {
+      "order": 7,
+      "gate_id": "syn-gate-segregation",
+      "name": "checkpoint and first-division error",
+      "owner_lab": "imaging",
+      "handoff": "blinded_count_table.synthetic.json",
+      "advance_when": "blinded counts are complete for vehicle and treatment across three edit events",
+      "stop_when": "a failed positive control invalidates the run"
+    },
+    {
+      "order": 8,
+      "gate_id": "syn-gate-generation",
+      "name": "generation versus selection",
+      "owner_lab": "statistics",
+      "handoff": "lineage_count_table.synthetic.json",
+      "advance_when": "computed co-primary generation endpoints are concordant under the pediatric completion band across at least three edit events",
+      "stop_when": "bulk composition changes without a generation signal, or information is insufficient"
+    },
+    {
+      "order": 9,
+      "gate_id": "syn-gate-oncology",
+      "name": "oncology counterscreen",
+      "owner_lab": "oncology",
+      "handoff": "clone_safety_table.synthetic.json",
+      "advance_when": "no prespecified clone-fitness or therapy-protection hazard is present",
+      "stop_when": "abnormal-clone retention or therapy protection rises"
+    },
+    {
+      "order": 10,
+      "gate_id": "syn-gate-replication",
+      "name": "independent-site replication",
+      "owner_lab": "statistics",
+      "handoff": "replication_decision.synthetic.json",
+      "advance_when": "decision is advance after computed concordance, exposure, clone-safety, and a different originating site",
+      "stop_when": "decision is stop; hold waits for a protocol revision"
+    }
+  ]
+}

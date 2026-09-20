@@ -8,6 +8,7 @@ modality or evidence and therefore cannot silently become a negative.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import re
@@ -434,6 +435,10 @@ class EvidenceEntry:
             raise EvidenceLedgerError(
                 "artifact_path and artifact_sha256 must be both null or both populated"
             )
+        if self.assessment_status == "positive" and self.artifact_path is None:
+            raise EvidenceLedgerError(
+                "a positive assessment requires a backing artifact (artifact_path + artifact_sha256)"
+            )
         if (self.reviewer is None) != (self.reviewed_at is None):
             raise EvidenceLedgerError(
                 "reviewer and reviewed_at must be both null or both populated"
@@ -446,6 +451,32 @@ class EvidenceEntry:
         ):
             raise EvidenceLedgerError(
                 "public or synthetic entries cannot label a controlled source"
+            )
+        if (
+            self.source_class == "synthetic_fixture"
+            and self.privacy_class != "synthetic"
+        ):
+            raise EvidenceLedgerError(
+                "synthetic fixture evidence requires the synthetic privacy class"
+            )
+        if self.source_class.startswith("public_") and self.privacy_class == "synthetic":
+            raise EvidenceLedgerError(
+                "public source classes cannot carry the synthetic privacy class"
+            )
+        if (
+            self.source_class == "manual_review"
+            and self.assessment_status != "not_assessable"
+            and (self.reviewer is None or self.reviewed_at is None)
+        ):
+            raise EvidenceLedgerError(
+                "assessed manual_review evidence requires a reviewer and reviewed_at"
+            )
+        if (
+            self.assessment_status != "not_assessable"
+            and self.direction == "neutral"
+        ):
+            raise EvidenceLedgerError(
+                "assessed evidence cannot carry a neutral direction"
             )
 
         if self.assessment_status == "not_assessable":
@@ -484,6 +515,25 @@ class EvidenceEntry:
             if self.not_assessable_reason is not None:
                 raise EvidenceLedgerError(
                     "assessed evidence must set not_assessable_reason to null"
+                )
+            # Status must agree with direction and decision effect — a
+            # positive result cannot contradict or exclude, and a negative
+            # result cannot promote the candidate it assessed.
+            if self.assessment_status == "positive":
+                if self.direction != "supports":
+                    raise EvidenceLedgerError(
+                        "positive evidence cannot carry a non-supporting direction"
+                    )
+                if self.decision_effect in {"demote", "exclude"}:
+                    raise EvidenceLedgerError(
+                        "positive evidence cannot demote or exclude"
+                    )
+            if (
+                self.assessment_status == "negative"
+                and self.decision_effect == "promote"
+            ):
+                raise EvidenceLedgerError(
+                    "negative evidence cannot promote"
                 )
 
     def to_dict(self) -> dict[str, Any]:
@@ -568,6 +618,14 @@ class EvidenceLedger:
             raise EvidenceLedgerError(
                 "entries: duplicate evidence_id values are forbidden"
             )
+        if any(
+            entry.source_class == "derived_evidence" for entry in converted
+        ) and all(
+            entry.source_class == "derived_evidence" for entry in converted
+        ):
+            raise EvidenceLedgerError(
+                "derived_evidence entries require a realized non-derived source"
+            )
         object.__setattr__(self, "entries", converted)
 
     def to_dict(self) -> dict[str, Any]:
@@ -595,12 +653,72 @@ class EvidenceLedger:
         )
 
 
+def canonical_evidence_ledger_bytes(ledger: EvidenceLedger | Mapping[str, Any]) -> bytes:
+    """Deterministic canonical serialization; rejects NaN/Infinity."""
+
+    normalized = (
+        ledger if isinstance(ledger, EvidenceLedger) else EvidenceLedger.from_dict(ledger)
+    )
+    return json.dumps(
+        normalized.to_dict(),
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    ).encode("utf-8")
+
+
+def _verify_artifact_bytes(ledger: EvidenceLedger, artifact_root: Path) -> None:
+    root = Path(artifact_root).resolve()
+    for entry in ledger.entries:
+        if entry.artifact_path is None:
+            if entry.artifact_sha256 is not None:
+                raise EvidenceLedgerError(
+                    "artifact digest declared without an artifact path"
+                )
+            continue
+        if entry.artifact_sha256 is None:
+            raise EvidenceLedgerError(
+                f"artifact path declared without a digest: {entry.artifact_path!r}"
+            )
+        relative = PurePosixPath(entry.artifact_path)
+        if (
+            relative.is_absolute()
+            or ".." in relative.parts
+            or not relative.parts
+        ):
+            raise EvidenceLedgerError(
+                f"artifact path escapes the artifact root: {entry.artifact_path!r}"
+            )
+        candidate = root.joinpath(*relative.parts)
+        resolved = candidate.resolve()
+        if resolved != candidate.absolute() and root not in resolved.parents:
+            raise EvidenceLedgerError(
+                f"artifact path escapes the artifact root: {entry.artifact_path!r}"
+            )
+        if candidate.is_symlink() or not candidate.is_file():
+            raise EvidenceLedgerError(
+                f"artifact is not a regular file: {entry.artifact_path!r}"
+            )
+        observed = "sha256:" + hashlib.sha256(candidate.read_bytes()).hexdigest()
+        if observed != entry.artifact_sha256:
+            raise EvidenceLedgerError(
+                f"artifact digest mismatch for {entry.artifact_path!r}"
+            )
+
+
 def validate_evidence_ledger(
     value: EvidenceLedger | Mapping[str, Any],
     *,
     public_only: bool = False,
+    artifact_root: str | Path | None = None,
 ) -> EvidenceLedger:
-    """Validate and return an immutable ledger, optionally public-only."""
+    """Validate and return an immutable ledger, optionally public-only.
+
+    When ``artifact_root`` is supplied, every entry's ``artifact_path`` must
+    resolve to a regular file beneath that root and its bytes must hash to the
+    declared ``artifact_sha256``.
+    """
 
     ledger = (
         value if isinstance(value, EvidenceLedger) else EvidenceLedger.from_dict(value)
@@ -618,6 +736,8 @@ def validate_evidence_ledger(
                 "public ledger contains forbidden privacy classes: "
                 + ", ".join(forbidden)
             )
+    if artifact_root is not None:
+        _verify_artifact_bytes(ledger, Path(artifact_root))
     return ledger
 
 
@@ -630,8 +750,22 @@ def _strict_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def _reject_json_constant(value: str) -> None:
+    raise EvidenceLedgerError(f"non-finite JSON number: {value}")
+
+
+def _finite_json_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise EvidenceLedgerError(f"non-finite JSON number: {value}")
+    return parsed
+
+
 def load_evidence_ledger(
-    path: str | Path, *, public_only: bool = False
+    path: str | Path,
+    *,
+    public_only: bool = False,
+    artifact_root: str | Path | None = None,
 ) -> EvidenceLedger:
     """Load UTF-8 JSON with duplicate-key, size, schema, and privacy checks."""
 
@@ -641,9 +775,18 @@ def load_evidence_ledger(
         raise EvidenceLedgerError("evidence ledger exceeds the 1 MiB limit")
     try:
         decoded = payload.decode("utf-8")
-        value = json.loads(decoded, object_pairs_hook=_strict_object)
+        value = json.loads(
+            decoded,
+            object_pairs_hook=_strict_object,
+            parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
+        )
     except UnicodeDecodeError as exc:
         raise EvidenceLedgerError("evidence ledger is not valid UTF-8") from exc
     except json.JSONDecodeError as exc:
         raise EvidenceLedgerError("evidence ledger is not valid JSON") from exc
-    return validate_evidence_ledger(value, public_only=public_only)
+    except RecursionError as exc:
+        raise EvidenceLedgerError("evidence ledger is nested too deeply") from exc
+    return validate_evidence_ledger(
+        value, public_only=public_only, artifact_root=artifact_root
+    )

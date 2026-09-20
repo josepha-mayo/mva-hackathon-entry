@@ -14,7 +14,7 @@ Public entries cover several broad intervention classes. This repository records
 | Aneuploid-cell vulnerability | Is an apparent benefit actually selective toxicity or cell-cycle arrest? |
 | Cancer milieu | Does the perturbation protect premalignant or transformed clones? |
 
-A winning report should not be a longer drug list. It should resolve the two alleles separately, predeclare exposures and failure gates, and show why a candidate can improve mitotic fidelity without protecting premalignant clones.
+A winning report should not be a longer drug list. It should resolve the two alleles separately, predeclare exposures and failure gates, and show why a candidate can improve mitotic fidelity without protecting premalignant clones. Analog, nearby, or species-model function cannot stand in for exact-allele wet evidence. Geometry ranking or a computational predictor cannot stand in for an assay. Unmatched or ectopic specimens cannot stand in for an endogenous assay-matched defect. Exact correction plus reciprocal recreation define the rescue signature before medicine results are unblinded.
 
 The entry should complement existing community research with an allele-class causal chain and a governed cell-validation plan, not imply ownership of broader screening strategies.
 
@@ -60,6 +60,26 @@ Required experiment: isogenic wild-type, each single synthetic allele, compound 
 - Genotoxic drugs or DNA-damage amplifiers, especially for replication/cohesion mechanisms.
 - Any perturbation whose apparent benefit is explained by arresting division or selectively killing aneuploid cells.
 - Any proposal whose required current regulatory eligibility is not independently verified from an authoritative source.
+- Analog, nearby, homolog, or species-model function claimed as exact-allele evidence.
+- Geometry ranking, FoldX, AlphaMissense, docking, an in-silico pathogenicity score, ESM, REVEL, MAVE, or another computational predictor claimed as a functional assay.
+- Population frequency, conservation, or ClinVar assertion claimed as exact-allele function.
+- A public software catalog, ranking engine, or predictor object claimed as positive exact-allele, checkpoint, direct-target, or human-PD evidence, as a lead or conditional-hold row, or as a screened pharmacologic comparator or challenger.
+- A public database or ontology record claimed as a lead, comparator, challenger, or conditional-hold row.
+- A derived_evidence row claimed as a screened pharmacologic candidate or causal-axis mint without inheriting its parent source occupancy and mint bans.
+- Public-database or ontology proof wording claimed as exact-allele function.
+- Public-literature proof wording claimed as exact-allele function.
+- An official medicine label claimed as positive exact-allele, checkpoint, direct-target, or human-PD evidence, or as a lead or conditional-hold row.
+- A parked comparator-only ledger row claimed as a promote decision.
+- A demoted ledger row claimed as a remaining conditional probe.
+- A mechanistic-control or no-go ledger row claimed as a remaining conditional probe.
+- A challenger or comparator claimed as the active lead.
+- Two labeled leads on one ledger.
+- A synthetic fixture labeled as public evidence, or a public catalog, label, database, ontology, or literature row labeled as synthetic.
+- An oncology-stop, unassessed-oncology, unassessed-exposure, expired-eligibility, or nontranslational-high ledger row claimed as a remaining conditional probe.
+- Absent or unassessed pediatric information claimed as displacement-eligible or as an active lead.
+- A mixed-or-unsafe functional hit claimed as a remaining conditional probe.
+- A no-go or exclude ledger row claimed as anything other than rejected.
+- Unmatched-line or ectopic/transgene assays claimed as endogenous assay-matched defects.
 
 ## Factorial rescue design
 
@@ -78,7 +98,7 @@ Only then test a stop-allele strategy plus a missense-stabilization strategy. Th
 
 - **Scientific rigor (35%):** allele-specific causal graph, current regulatory verification, exposure bridge, negative controls, and predeclared no-go thresholds.
 - **Potential impact (25%):** a decisive experiment that could rule a strategy in or out quickly, plus immediately useful pharmacology contraindications.
-- **Innovation (25%):** dual-allele rescue rather than downstream symptom buffering, with direct protein-function and clone-safety coupling.
+- **Innovation (25%):** dual-allele rescue rather than downstream symptom buffering, with direct protein-function and clone-safety coupling, plus a false-rescue firewall that refuses analog-as-exact, ranking-as-assay, and unmatched/ectopic specimens.
 - **Scalability (15%):** a reusable null-plus-hypomorph rescue framework for other recessive rare diseases.
 
 ## Immediate next evidence tasks
@@ -86,5 +106,5 @@ Only then test a stop-allele strategy plus a missense-stabilization strategy. Th
 1. Verify the private alleles and transcript context independently without copying identifiers into the public branch.
 2. Verify every proposed perturbation's current regulatory status and systemic exposure from authoritative sources; reject it if the challenge criterion is not met.
 3. Quantify free exposure against the concentration required for the proposed mechanism.
-4. Search primary literature for direct target stabilization or functional-rescue evidence without using participant outputs as pipeline inputs.
-5. Build a private evidence matrix with source, model, concentration, direction, contradiction, and go/no-go fields; export only a separately reviewed, identifier-free public summary.
+4. Search primary literature for direct target stabilization or functional-rescue evidence without using participant outputs as pipeline inputs. A 2026-09-10 in-window refresh against public `track2-candidate-search-v3` found no primary exact-allele wet assay. Analog, unmatched, frequency, ClinVar, ranking, and off-target trial records remain non-assays. Keep analog records analog. Do not treat a desktop ranking as function. Do not restage gated6 from a negative search. Public protocol `searched_on` is now 2026-09-10. Remainder of 2026-09-07 to 2026-09-20 may idle unless a later exact-allele wet paper appears. Biology-named queries stay in the private memo.
+5. Build a private evidence matrix with source, model, concentration, direction, contradiction, and go/no-go fields; export only a separately reviewed, identifier-free public summary. Rerun the private ledger after every search and keep the lead conditional.

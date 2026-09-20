@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mva:track2-method-delta:v2",
+  "title": "MVA Track 2 hardened method-delta snapshot, comparison, or receipt",
+  "oneOf": [
+    {"$ref": "#/$defs/snapshot"},
+    {"$ref": "#/$defs/comparison"},
+    {"$ref": "#/$defs/receipt"}
+  ],
+  "$defs": {
+    "content_id": {
+      "type": "string",
+      "minLength": 71,
+      "maxLength": 71,
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "claim_boundary": {
+      "const": "Method-delta software comparison only; a better verdict is not a rescued child, not a survival percentage, and not an upload."
+    },
+    "declared_time": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "string", "format": "date-time", "pattern": "Z$"}
+      ]
+    },
+    "chronology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recorded_at",
+        "exposure_started_at",
+        "timestamp_authenticity",
+        "exposure_boundary",
+        "exposure_boundary_authenticity"
+      ],
+      "properties": {
+        "recorded_at": {"$ref": "#/$defs/declared_time"},
+        "exposure_started_at": {"$ref": "#/$defs/declared_time"},
+        "timestamp_authenticity": {"const": "not_established"},
+        "exposure_boundary": {
+          "enum": ["not_established", "declared_pre_exposure", "declared_not_pre_exposure"]
+        },
+        "exposure_boundary_authenticity": {"const": "not_established"}
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "not": {
+        "anyOf": [
+          {"required": ["n_independent_families_killed"]},
+          {"required": ["n_holdout_killed"]},
+          {"required": ["holdout_missing"]}
+        ]
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "not": {"required": ["killed"]}
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema", "record_kind", "snapshot_id", "parent_snapshot_id",
+        "synthetic_only", "claim_boundary", "chronology"
+      ],
+      "properties": {
+        "schema": {"const": "mva-track2-method-delta/v2"},
+        "record_kind": {"const": "snapshot"},
+        "snapshot_id": {"$ref": "#/$defs/content_id"},
+        "parent_snapshot_id": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/content_id"}]
+        },
+        "synthetic_only": {"const": true},
+        "claim_boundary": {"$ref": "#/$defs/claim_boundary"},
+        "chronology": {"$ref": "#/$defs/chronology"},
+        "freeze_pointers": {"type": "object"},
+        "freeze_integrity": {"type": "object"},
+        "living_method_integrity": {"type": "object"},
+        "capability_envelope": {"type": "array"},
+        "invariants": {
+          "type": "object",
+          "propertyNames": {"not": {"const": "holdout_families_still_killed"}}
+        },
+        "registered_gates": {"type": "array", "items": {"type": "string"}},
+        "metrics": {"$ref": "#/$defs/metrics"},
+        "scenarios": {"type": "array", "items": {"$ref": "#/$defs/scenario"}},
+        "ranking_cases": {"type": "array"},
+        "public_toolkit": {"type": "object"},
+        "save_path": {
+          "type": "object",
+          "not": {"required": ["n_false_path_killed"]}
+        }
+      }
+    },
+    "legacy_snapshot": {
+      "type": "object",
+      "required": [
+        "schema", "record_kind", "snapshot_id", "parent_snapshot_id",
+        "synthetic_only", "claim_boundary"
+      ],
+      "properties": {
+        "schema": {"const": "mva-track2-method-delta/v1"},
+        "record_kind": {"const": "snapshot"},
+        "snapshot_id": {"$ref": "#/$defs/content_id"},
+        "parent_snapshot_id": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/content_id"}]
+        },
+        "synthetic_only": {"const": true},
+        "claim_boundary": {"type": "string"}
+      }
+    },
+    "previous_snapshot": {
+      "oneOf": [{"$ref": "#/$defs/snapshot"}, {"$ref": "#/$defs/legacy_snapshot"}]
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema", "record_kind", "comparison_id", "snapshot_id",
+        "parent_snapshot_id", "current_snapshot_sha256", "previous_snapshot_sha256",
+        "previous_snapshot_schema", "previous_linkage_status", "synthetic_only",
+        "claim_boundary", "compared_to", "verdict", "reason", "invariants_passed",
+        "deltas", "current_metrics", "internal_synthetic_proxies", "external_outcomes",
+        "internal_joint_verdict", "reviewer"
+      ],
+      "properties": {
+        "schema": {"const": "mva-track2-method-delta/v2"},
+        "record_kind": {"const": "comparison"},
+        "comparison_id": {"$ref": "#/$defs/content_id"},
+        "snapshot_id": {"$ref": "#/$defs/content_id"},
+        "parent_snapshot_id": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/content_id"}]
+        },
+        "current_snapshot_sha256": {"$ref": "#/$defs/sha256"},
+        "previous_snapshot_sha256": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]
+        },
+        "previous_snapshot_schema": {
+          "oneOf": [
+            {"type": "null"},
+            {"enum": ["mva-track2-method-delta/v1", "mva-track2-method-delta/v2"]}
+          ]
+        },
+        "previous_linkage_status": {
+          "enum": ["not_applicable", "legacy_snapshot_content_only", "immediate_snapshot_supplied_and_bound"]
+        },
+        "synthetic_only": {"const": true},
+        "claim_boundary": {"$ref": "#/$defs/claim_boundary"},
+        "compared_to": {"enum": ["freeze_envelope", "previous_snapshot"]},
+        "verdict": {"enum": ["better", "worse", "complex_not_better", "invalid"]},
+        "reason": {"type": "string", "minLength": 1},
+        "invariants_passed": {"type": "boolean"},
+        "deltas": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "n_independent_families_blocked_from_advancing",
+            "mean_culture_remaining", "ranking_accuracy", "n_true_opened"
+          ],
+          "properties": {
+            "n_independent_families_blocked_from_advancing": {"type": "integer"},
+            "mean_culture_remaining": {"type": "number"},
+            "ranking_accuracy": {"type": "number"},
+            "n_true_opened": {"type": "integer"}
+          }
+        },
+        "current_metrics": {"$ref": "#/$defs/metrics"},
+        "internal_synthetic_proxies": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "earlier_or_broader_false_path_blocking", "method_contract_usable", "joint_better"
+          ],
+          "properties": {
+            "earlier_or_broader_false_path_blocking": {"type": "boolean"},
+            "method_contract_usable": {"type": "boolean"},
+            "joint_better": {"type": "boolean"}
+          }
+        },
+        "external_outcomes": {
+          "const": {"child_benefit": "not_established", "competition_prize": "not_established"}
+        },
+        "internal_joint_verdict": {
+          "enum": ["better", "worse", "complex_not_better", "invalid"]
+        },
+        "reviewer": {"type": "object"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"parent_snapshot_id": {"type": "null"}},
+            "required": ["parent_snapshot_id"]
+          },
+          "then": {
+            "properties": {
+              "previous_snapshot_sha256": {"type": "null"},
+              "previous_snapshot_schema": {"type": "null"},
+              "previous_linkage_status": {"const": "not_applicable"},
+              "compared_to": {"const": "freeze_envelope"}
+            }
+          },
+          "else": {
+            "properties": {
+              "previous_snapshot_sha256": {"$ref": "#/$defs/sha256"},
+              "previous_snapshot_schema": {
+                "enum": ["mva-track2-method-delta/v1", "mva-track2-method-delta/v2"]
+              },
+              "compared_to": {"const": "previous_snapshot"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"previous_snapshot_schema": {"const": "mva-track2-method-delta/v1"}},
+            "required": ["previous_snapshot_schema"]
+          },
+          "then": {
+            "properties": {"previous_linkage_status": {"const": "legacy_snapshot_content_only"}}
+          }
+        },
+        {
+          "if": {
+            "properties": {"previous_snapshot_schema": {"const": "mva-track2-method-delta/v2"}},
+            "required": ["previous_snapshot_schema"]
+          },
+          "then": {
+            "properties": {"previous_linkage_status": {"const": "immediate_snapshot_supplied_and_bound"}}
+          }
+        }
+      ]
+    },
+    "external_anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "authenticity", "whole_reseal_resistance", "requirement"],
+      "properties": {
+        "target": {"const": "receipt_id"},
+        "authenticity": {"const": "not_established"},
+        "whole_reseal_resistance": {"const": "requires_independent_external_anchor"},
+        "requirement": {
+          "const": "This content address detects changes only when receipt_id is retained or independently anchored outside this receipt. A malicious whole-reseal can create a different internally valid receipt and is not prevented locally."
+        }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema", "record_kind", "receipt_id", "snapshot", "previous_snapshot",
+        "comparison", "external_anchor"
+      ],
+      "properties": {
+        "schema": {"const": "mva-track2-method-delta/v2"},
+        "record_kind": {"const": "receipt"},
+        "receipt_id": {"$ref": "#/$defs/content_id"},
+        "snapshot": {"$ref": "#/$defs/snapshot"},
+        "previous_snapshot": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/previous_snapshot"}]
+        },
+        "comparison": {"$ref": "#/$defs/comparison"},
+        "external_anchor": {"$ref": "#/$defs/external_anchor"}
+      }
+    }
+  }
+}

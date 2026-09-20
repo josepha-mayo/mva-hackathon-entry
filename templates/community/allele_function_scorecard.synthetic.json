@@ -1,0 +1,351 @@
+{
+  "schema": "mva.community-allele-function-scorecard/v1",
+  "privacy_class": "synthetic",
+  "purpose": "Synthetic genotype scorecard. assessment_status is for a prespecified defect claim: positive means the defect claim was supported, negative means it was not, not_assessable means the assay was not valid for that row. assay_class wet is a filled lab handoff in this fixture, not a computational substitute. condition_class basal means the defect or reversal was present without imposed extrinsic stress; disease mitotic failure is not imposed extrinsic stress. system_class cellular means the defect or reversal was present in cells; a purified-protein thermal shift is not a cellular hypomorph and cannot satisfy genetic reversal. expression_class endogenous means the protein came from the edited locus; a transgene, cDNA, or overexpression row cannot mint a hypomorph or satisfy genetic reversal. specimen_class assay_matched means the assay used the confirmed genotype line; an unmatched line cannot mint a hypomorph. exact_corrected allele_specificity exact means the reversal used the exact allele; analog, homolog, or nearby cannot reverse an exact missense defect. recreated_missense allele_specificity exact means restoration used the exact allele; analog, homolog, nearby, or unlabeled cannot restore an exact missense defect.",
+  "endpoints": [
+    "abundance",
+    "half_life",
+    "localization",
+    "checkpoint",
+    "first_division_error"
+  ],
+  "rows": [
+    {
+      "genotype_id": "syn-wt",
+      "genotype_class": "wt",
+      "assessments": [
+        {
+          "endpoint": "abundance",
+          "assessment_status": "negative",
+          "assay_class": "wet"
+        },
+        {
+          "endpoint": "half_life",
+          "assessment_status": "negative",
+          "assay_class": "wet"
+        },
+        {
+          "endpoint": "localization",
+          "assessment_status": "negative",
+          "assay_class": "wet"
+        },
+        {
+          "endpoint": "checkpoint",
+          "assessment_status": "negative",
+          "assay_class": "wet"
+        },
+        {
+          "endpoint": "first_division_error",
+          "assessment_status": "negative",
+          "assay_class": "wet"
+        }
+      ]
+    },
+    {
+      "genotype_id": "syn-missense",
+      "genotype_class": "missense",
+      "allele_specificity": "exact",
+      "assessments": [
+        {
+          "endpoint": "abundance",
+          "assessment_status": "positive",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "half_life",
+          "assessment_status": "positive",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "localization",
+          "assessment_status": "negative",
+          "assay_class": "wet"
+        },
+        {
+          "endpoint": "checkpoint",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        },
+        {
+          "endpoint": "first_division_error",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        }
+      ]
+    },
+    {
+      "genotype_id": "syn-stop",
+      "genotype_class": "stop",
+      "assessments": [
+        {
+          "endpoint": "abundance",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        },
+        {
+          "endpoint": "half_life",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        },
+        {
+          "endpoint": "localization",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        },
+        {
+          "endpoint": "checkpoint",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        },
+        {
+          "endpoint": "first_division_error",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        }
+      ]
+    },
+    {
+      "genotype_id": "syn-missense-carrier",
+      "genotype_class": "missense_carrier",
+      "allele_specificity": "exact",
+      "assessments": [
+        {
+          "endpoint": "abundance",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        },
+        {
+          "endpoint": "half_life",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        },
+        {
+          "endpoint": "localization",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "checkpoint",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "first_division_error",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        }
+      ]
+    },
+    {
+      "genotype_id": "syn-missense-at-abundance",
+      "genotype_class": "missense_at_abundance",
+      "allele_specificity": "exact",
+      "assessments": [
+        {
+          "endpoint": "abundance",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "ectopic",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "half_life",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        },
+        {
+          "endpoint": "localization",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "ectopic",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "checkpoint",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "ectopic",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "first_division_error",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "ectopic",
+          "specimen_class": "assay_matched"
+        }
+      ]
+    },
+    {
+      "genotype_id": "syn-compound",
+      "genotype_class": "compound",
+      "assessments": [
+        {
+          "endpoint": "abundance",
+          "assessment_status": "positive",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "half_life",
+          "assessment_status": "positive",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "localization",
+          "assessment_status": "positive",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "checkpoint",
+          "assessment_status": "positive",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "first_division_error",
+          "assessment_status": "positive",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        }
+      ]
+    },
+    {
+      "genotype_id": "syn-exact-corrected",
+      "genotype_class": "exact_corrected",
+      "allele_specificity": "exact",
+      "assessments": [
+        {
+          "endpoint": "abundance",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "half_life",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "localization",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "checkpoint",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "first_division_error",
+          "assessment_status": "negative",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        }
+      ]
+    },
+    {
+      "genotype_id": "syn-recreated-missense",
+      "genotype_class": "recreated_missense",
+      "allele_specificity": "exact",
+      "assessments": [
+        {
+          "endpoint": "abundance",
+          "assessment_status": "positive",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "half_life",
+          "assessment_status": "positive",
+          "assay_class": "wet",
+          "condition_class": "basal",
+          "system_class": "cellular",
+          "expression_class": "endogenous",
+          "specimen_class": "assay_matched"
+        },
+        {
+          "endpoint": "localization",
+          "assessment_status": "negative",
+          "assay_class": "wet"
+        },
+        {
+          "endpoint": "checkpoint",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        },
+        {
+          "endpoint": "first_division_error",
+          "assessment_status": "not_assessable",
+          "assay_class": "unlabeled"
+        }
+      ]
+    }
+  ]
+}

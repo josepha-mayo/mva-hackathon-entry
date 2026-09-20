@@ -80,6 +80,7 @@ def main() -> int:
         return 4
 
     total = 0
+    expected_sizes: dict[str, int] = {}
     for role, filename in MINIMUM_FILES:
         try:
             url = hf_hub_url(
@@ -94,6 +95,7 @@ def main() -> int:
             return 5
         size = metadata.size
         if size is not None:
+            expected_sizes[filename] = size
             total += size
         print(f"- {role}: {format_bytes(size)}")
     print(f"Pinned minimum plan: 4 artifacts, {format_bytes(total)}")
@@ -134,6 +136,15 @@ def main() -> int:
             )
             if not downloaded.resolve().is_relative_to(staging.resolve()):
                 raise RuntimeError("download escaped the private staging directory")
+            observed_size = downloaded.stat().st_size
+            if observed_size <= 0:
+                raise RuntimeError(f"{role} downloaded as an empty payload")
+            expected_size = expected_sizes.get(filename)
+            if expected_size is not None and observed_size != expected_size:
+                raise RuntimeError(
+                    f"{role} size mismatch: expected {expected_size}, "
+                    f"observed {observed_size}"
+                )
             artifact = {
                 "role": role,
                 "path": downloaded.relative_to(staging).as_posix(),
@@ -145,7 +156,7 @@ def main() -> int:
             cast_artifacts.append(artifact)
             print(f"downloaded and hashed: {role}")
         (staging / "provenance.private.json").write_text(
-            json.dumps(manifest, indent=2) + "\n", encoding="utf-8",
+            json.dumps(manifest, indent=2, allow_nan=False) + "\n", encoding="utf-8",
         )
         staging.replace(final)
     except Exception as exc:

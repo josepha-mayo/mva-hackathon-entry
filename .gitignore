@@ -74,3 +74,6 @@ build/
 Thumbs.db
 .idea/
 .vscode/
+
+# Private audit/working material must never enter the publishable repository.
+work/

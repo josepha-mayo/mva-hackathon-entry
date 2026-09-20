@@ -204,6 +204,10 @@ class InheritanceCandidateTests(unittest.TestCase):
         self.assertIn(ReasonCode.HETEROPLASMIC_ALLELE, candidates[0].reason_codes)
         self.assertIn(ReasonCode.HOMOPLASMIC_ALLELE, candidates[1].reason_codes)
 
+    def test_mitochondrial_locus_rejects_nuclear_zygosity(self) -> None:
+        wrong = allele(300, gene="SYNMT-NUC", chrom="chrM", zygosity="heterozygous")
+        self.assertEqual(tuple(generate_inheritance_candidates([wrong])), ())
+
     def test_output_is_identical_for_every_input_permutation(self) -> None:
         records = [
             allele(300, gene="SYN2"),
@@ -214,17 +218,22 @@ class InheritanceCandidateTests(unittest.TestCase):
         for permutation in itertools.permutations(records):
             self.assertEqual(generate_inheritance_candidates(permutation), expected)
 
-    def test_identical_duplicate_is_deduplicated_and_richer_phase_is_merged(self) -> None:
-        plain = allele(100)
+    def test_identical_duplicate_is_deduplicated(self) -> None:
         phased = allele(100, phase_set="p", haplotype="1")
         mate = allele(200, ref="C", alt="T", phase_set="p", haplotype="2")
 
-        candidates = generate_inheritance_candidates([plain, phased, mate, plain])
+        candidates = generate_inheritance_candidates([phased, mate, phased])
         compounds = [row for row in candidates if row.model is InheritanceModel.COMPOUND_HETEROZYGOUS]
 
         self.assertEqual(len(compounds), 1)
         self.assertIs(compounds[0].phase_state, PhaseState.TRANS_CONFIRMED)
         self.assertEqual(len([row for row in candidates if row.model is InheritanceModel.DOMINANT]), 2)
+
+    def test_phase_enrichment_via_duplicate_is_rejected(self) -> None:
+        plain = allele(100)
+        phased = allele(100, phase_set="p", haplotype="1")
+        with self.assertRaisesRegex(InheritanceInputError, "conflicting phase_set"):
+            generate_inheritance_candidates([plain, phased])
 
     def test_conflicting_duplicate_metadata_fails_closed(self) -> None:
         het = allele(100, zygosity="heterozygous")
@@ -253,6 +262,43 @@ class InheritanceCandidateTests(unittest.TestCase):
         records = (record for record in [allele(100), allele(200, ref="C", alt="T")])
         self.assertEqual(len(generate_inheritance_candidates(records)), 3)
         self.assertEqual(generate_inheritance_candidates([]), ())
+
+    def test_handbuilt_compound_candidate_requires_heterozygous_alleles(self) -> None:
+        from mva_hackathon.inheritance import InheritanceCandidate
+
+        with self.assertRaises(InheritanceInputError):
+            InheritanceCandidate(
+                gene="SYN1",
+                model=InheritanceModel.COMPOUND_HETEROZYGOUS,
+                alleles=(
+                    allele(100, zygosity=Zygosity.HOMOZYGOUS),
+                    allele(200, ref="C", alt="T"),
+                ),
+                locus_class=LocusClass.AUTOSOMAL,
+                phase_state=PhaseState.TRANS_CONFIRMED,
+                reason_codes=(
+                    ReasonCode.AUTOSOMAL_LOCUS,
+                    ReasonCode.SAME_GENE,
+                    ReasonCode.TWO_HETEROZYGOUS_ALLELES,
+                    ReasonCode.PHASE_TRANS_CONFIRMED,
+                ),
+            )
+
+    def test_handbuilt_candidate_locus_class_must_match_alleles(self) -> None:
+        from mva_hackathon.inheritance import InheritanceCandidate
+
+        with self.assertRaises(InheritanceInputError):
+            InheritanceCandidate(
+                gene="SYN1",
+                model=InheritanceModel.DOMINANT,
+                alleles=(allele(100, chrom="chrX"),),
+                locus_class=LocusClass.AUTOSOMAL,
+                phase_state=None,
+                reason_codes=(
+                    ReasonCode.AUTOSOMAL_LOCUS,
+                    ReasonCode.HETEROZYGOUS_ALLELE,
+                ),
+            )
 
 
 if __name__ == "__main__":

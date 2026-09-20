@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import ipaddress
 import json
+import math
 import re
 import unicodedata
 from dataclasses import dataclass
@@ -22,7 +24,10 @@ _FLOATING_RELEASE = re.compile(
     r"^(?:latest|current|head|main|master|trunk|rolling|unversioned|unknown|n/?a)$",
     re.IGNORECASE,
 )
-_PRIVATE_PATH = re.compile(r"(?:^[A-Za-z]:[\\/]|\\|file:/{1,3}|(?:^|/)users/)", re.IGNORECASE)
+_PRIVATE_PATH = re.compile(
+    r"(?:^[A-Za-z]:[\\/]|\\|file:/{1,3}|(?:^|/)users/|(?:^|[\s\"'])/[^\s/])",
+    re.IGNORECASE,
+)
 
 
 class ReferenceLedgerError(ValueError):
@@ -71,6 +76,33 @@ def _timestamp(value: Any) -> str:
     return value
 
 
+def _private_host(hostname: str) -> bool:
+    # Strip a zone index (fe80::1%eth0) before classification — a link-local
+    # literal with a zone must still be classified as link-local.
+    lowered = hostname.strip("[]").lower().split("%", 1)[0]
+    if lowered in {"localhost", "localhost.localdomain"} or lowered.endswith(
+        ".localhost"
+    ):
+        return True
+    try:
+        address = ipaddress.ip_address(lowered)
+    except ValueError:
+        # A numeric-looking host that ipaddress cannot parse (0177.0.0.1,
+        # 0x7f.0.0.1) can still resolve to a private address downstream —
+        # treat it as private rather than trusting the failure.
+        if re.fullmatch(r"[0-9a-fx.]+", lowered):
+            return True
+        return False
+    return (
+        address.is_private
+        or address.is_loopback
+        or address.is_link_local
+        or address.is_reserved
+        or address.is_multicast
+        or address.is_unspecified
+    )
+
+
 def _https_url(value: Any, field: str) -> str:
     value = _text(value, field, maximum=2_048)
     parsed = urlsplit(value)
@@ -84,6 +116,10 @@ def _https_url(value: Any, field: str) -> str:
     ):
         raise ReferenceLedgerError(
             f"{field}: expected an HTTPS URL without credentials, query, or fragment"
+        )
+    if parsed.hostname is None or _private_host(parsed.hostname):
+        raise ReferenceLedgerError(
+            f"{field}: host must be a public address, not loopback or private"
         )
     return value
 
@@ -236,6 +272,11 @@ class ReferenceLedger:
         identifiers = [item.resource_id for item in resources]
         if len(set(identifiers)) != len(identifiers):
             raise ReferenceLedgerError("resources: duplicate resource_id values are forbidden")
+        digests = [item.sha256 for item in resources if item.sha256 is not None]
+        if len(set(digests)) != len(digests):
+            raise ReferenceLedgerError(
+                "resources: duplicate sha256 digests cannot bind two entries"
+            )
         if any(item.source_scope != "public" for item in resources):
             raise ReferenceLedgerError("champion ledger cannot contain proprietary resources")
         object.__setattr__(self, "resources", resources)
@@ -271,14 +312,32 @@ def _strict_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def _reject_json_constant(value: str) -> None:
+    raise ReferenceLedgerError(f"non-finite JSON number: {value}")
+
+
+def _finite_json_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise ReferenceLedgerError(f"non-finite JSON number: {value}")
+    return parsed
+
+
 def load_reference_ledger(path: str | Path) -> ReferenceLedger:
     payload = Path(path).read_bytes()
     if len(payload) > MAX_LEDGER_BYTES:
         raise ReferenceLedgerError("reference ledger exceeds 1 MiB")
     try:
-        value = json.loads(payload.decode("utf-8"), object_pairs_hook=_strict_object)
+        value = json.loads(
+            payload.decode("utf-8"),
+            object_pairs_hook=_strict_object,
+            parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
+        )
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise ReferenceLedgerError("reference ledger is not strict UTF-8 JSON") from exc
+    except RecursionError as exc:
+        raise ReferenceLedgerError("reference ledger JSON is nested too deeply") from exc
     return ReferenceLedger.from_dict(value)
 
 

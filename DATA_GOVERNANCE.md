@@ -56,6 +56,8 @@ controlled-payload, phenotype-bundle, operational-receipt, path, size, and magic
 checks remain active. Copies, malformed declarations, surplus artifacts, and
 staged or historical blobs without their corresponding manifest fail closed.
 
+The frozen v3 manifest retains exactly those five roles. A future v4 freeze may add the fixed candidate-ledger and ranking-receipt paths described in `reports/TRACK2_CANDIDATE_RELEASE_CONTRACT.md`; the pair must share one status, the ranking must be exactly recomputed from the digest-checked canonical ledger, and a released Track 2 report must name both exact digests in its canonical binding lines. The scanner rehashes the bytes it actually inspects before granting any narrow exception. The v4 capability is inactive until a deliberately reviewed manifest replaces v3; it does not authorize staging, publication, or submission.
+
 ## Deletion
 
 Challenge close is currently scheduled for 2026-10-24 23:59 UTC. The rules require deletion within 30 days from all local and remote environments and email confirmation to the organizers. Two official pages currently name different confirmation addresses (`RarediseaserealkidMVAhackathon2026@synapse.org` and `MVAHackathon2026@synapse.org`); obtain written clarification or notify both. Before deletion, resolve and verify every exact target path; do not use broad recursive globs or home/workspace roots.

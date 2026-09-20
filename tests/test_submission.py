@@ -200,6 +200,15 @@ class SubmissionTests(unittest.TestCase):
         with self.assertRaisesRegex(SubmissionError, "BOM"):
             load_predictions(path)
 
+    def test_oversized_submission_is_rejected_before_parsing(self) -> None:
+        payload = b"A" * (1024 * 1024 + 1)
+        with self.assertRaisesRegex(SubmissionError, "byte ceiling"):
+            load_predictions_bytes(payload)
+
+    def test_oversized_allele_cell_is_rejected(self) -> None:
+        with self.assertRaisesRegex(SubmissionError, "length ceiling"):
+            load_predictions(self.write_rows([self.row(ref_1="A" * 10_001)]))
+
     def test_in_memory_validator_uses_the_same_contract(self) -> None:
         path = self.write_rows([self.row()])
         self.assertEqual(load_predictions_bytes(path.read_bytes()), load_predictions(path))
@@ -238,6 +247,40 @@ class SubmissionTests(unittest.TestCase):
         path = self.write_text(",".join(REQUIRED_FIELDS) + "\n" + ",".join(values + ["extra"]) + "\n")
         with self.assertRaisesRegex(SubmissionError, "surplus"):
             load_predictions(path)
+
+    def test_missing_trailing_notes_cell_is_rejected(self) -> None:
+        row = self.row()
+        values = [str(row[field]) for field in REQUIRED_FIELDS[:-1]]
+        path = self.write_text(",".join(REQUIRED_FIELDS) + "\n" + ",".join(values) + "\n")
+        with self.assertRaisesRegex(SubmissionError, "missing CSV fields"):
+            load_predictions(path)
+
+    def test_zero_width_prefixed_formula_note_is_rejected(self) -> None:
+        with self.assertRaisesRegex(SubmissionError, "control characters"):
+            load_predictions(
+                self.write_rows([self.row(notes="​=SUM(A1:A9)")])
+            )
+
+    def test_bidi_override_in_notes_is_rejected(self) -> None:
+        with self.assertRaisesRegex(SubmissionError, "control characters"):
+            load_predictions(
+                self.write_rows([self.row(notes="benign ‮txet")])
+            )
+
+    def test_in_field_bom_in_notes_is_rejected(self) -> None:
+        with self.assertRaisesRegex(SubmissionError, "control characters"):
+            load_predictions(
+                self.write_rows([self.row(notes="﻿=1+1")])
+            )
+
+    def test_overflowing_epcr_literal_is_rejected(self) -> None:
+        with self.assertRaisesRegex(SubmissionError, r"must be in \(0, 1\]"):
+            load_predictions(
+                self.write_text(
+                    ",".join(REQUIRED_FIELDS) + "\n"
+                    "PROBAND01,chr7,101001,A,G,chr7,101249,C,T,1e1000,primary,x\n"
+                )
+            )
 
     def test_secondary_findings_must_be_last(self) -> None:
         first = self.row(epcr=0.9, finding_type="secondary")

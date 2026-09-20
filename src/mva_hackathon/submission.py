@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import io
 import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -39,7 +40,14 @@ _GRCH38_LENGTHS = {
 }
 _REF_ALLELE = re.compile(r"^[ACGTN]+$", re.IGNORECASE)
 _ALT_ALLELE = re.compile(r"^(?:[ACGTN]+|\*|<[A-Z0-9:_-]+>)$", re.IGNORECASE)
-_CONTROL_CHARACTERS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+MAX_SUBMISSION_BYTES = 1024 * 1024
+MAX_ALLELE_LENGTH = 10_000
+_CONTROL_CHARACTERS = re.compile(r"[\x00-\x1f\x7f]")
+_FORBIDDEN_CATEGORIES = frozenset({"Cc", "Cf", "Cs", "Co", "Cn"})
+
+
+def _has_forbidden_characters(text: str) -> bool:
+    return any(unicodedata.category(char) in _FORBIDDEN_CATEGORIES for char in text)
 
 
 class SubmissionError(ValueError):
@@ -58,6 +66,10 @@ class Prediction:
 
 def _variant(chrom: str, pos: str, ref: str, alt: str, *, row: int) -> Variant:
     chrom = chrom.strip()
+    # Bound cell length before upper-casing or regex work — an oversized
+    # allele cell must be rejected before it can consume memory.
+    if len(ref) > MAX_ALLELE_LENGTH or len(alt) > MAX_ALLELE_LENGTH:
+        raise SubmissionError(f"row {row}: allele cell exceeds the length ceiling")
     ref = ref.strip().upper()
     alt = alt.strip().upper()
     if chrom not in _CHROMOSOMES:
@@ -84,6 +96,8 @@ def load_predictions_bytes(data: bytes) -> list[Prediction]:
 
     if data[:3] == b"\xef\xbb\xbf":
         raise SubmissionError("UTF-8 BOM is unsafe: the official scorer treats it as part of the first header")
+    if len(data) > MAX_SUBMISSION_BYTES:
+        raise SubmissionError("submission CSV exceeds the byte ceiling")
     try:
         text = data.decode("utf-8")
     except UnicodeDecodeError as exc:
@@ -111,6 +125,13 @@ def load_predictions_bytes(data: bytes) -> list[Prediction]:
         for row_number, row in enumerate(reader, start=2):
             if None in row:
                 raise SubmissionError(f"row {row_number}: surplus CSV fields")
+            missing_cells = [
+                field for field in REQUIRED_FIELDS if row[field] is None
+            ]
+            if missing_cells:
+                raise SubmissionError(
+                    f"row {row_number}: missing CSV fields {missing_cells}"
+                )
             if len(predictions) >= 10:
                 raise SubmissionError("at most 10 candidate rows are accepted")
             proband_id = (row["proband_id"] or "").strip()
@@ -143,7 +164,7 @@ def load_predictions_bytes(data: bytes) -> list[Prediction]:
 
             try:
                 epcr = float((row["epcr"] or "").strip())
-            except ValueError as exc:
+            except (ValueError, OverflowError) as exc:
                 raise SubmissionError(f"row {row_number}: EPCR is not numeric") from exc
             if not 0 < epcr <= 1:
                 raise SubmissionError(f"row {row_number}: EPCR must be in (0, 1]")
@@ -166,7 +187,7 @@ def load_predictions_bytes(data: bytes) -> list[Prediction]:
             notes = (row["notes"] or "").strip()
             if len(notes) > 1_000:
                 raise SubmissionError(f"row {row_number}: notes exceed the 1000-character project limit")
-            if _CONTROL_CHARACTERS.search(notes):
+            if _CONTROL_CHARACTERS.search(notes) or _has_forbidden_characters(notes):
                 raise SubmissionError(f"row {row_number}: notes contain control characters")
             if notes.startswith(("=", "+", "-", "@")):
                 raise SubmissionError(f"row {row_number}: notes begin with a spreadsheet-formula character")
@@ -190,4 +211,10 @@ def load_predictions_bytes(data: bytes) -> list[Prediction]:
 def load_predictions(path: str | Path) -> list[Prediction]:
     """Load one-proband predictions and enforce the live challenge schema."""
 
-    return load_predictions_bytes(Path(path).read_bytes())
+    # Bounded read — stat-then-read races a file swap and materializes an
+    # oversized file before the limit is applied.
+    with Path(path).open("rb") as handle:
+        data = handle.read(MAX_SUBMISSION_BYTES + 1)
+    if len(data) > MAX_SUBMISSION_BYTES:
+        raise SubmissionError("submission exceeds the byte ceiling")
+    return load_predictions_bytes(data)

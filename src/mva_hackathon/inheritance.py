@@ -150,7 +150,7 @@ def _normalize_chromosome(value: str) -> str:
         chrom = "chrM"
     elif token.upper() in {"X", "Y"}:
         chrom = f"chr{token.upper()}"
-    elif token.isdigit() and 1 <= int(token) <= 22:
+    elif token.isdigit() and len(token) <= 2 and 1 <= int(token) <= 22:
         chrom = f"chr{int(token)}"
     else:
         raise InheritanceInputError("chrom must identify GRCh38 chr1..chr22, chrX, chrY, or chrM")
@@ -263,6 +263,12 @@ class InheritanceCandidate:
         if model is InheritanceModel.COMPOUND_HETEROZYGOUS:
             if len(alleles) != 2:
                 raise InheritanceInputError("compound-heterozygous candidates require two alleles")
+            if any(
+                allele.zygosity is not Zygosity.HETEROZYGOUS for allele in alleles
+            ):
+                raise InheritanceInputError(
+                    "compound-heterozygous candidates require heterozygous alleles"
+                )
             if phase_state not in {PhaseState.TRANS_CONFIRMED, PhaseState.UNRESOLVED}:
                 raise InheritanceInputError("compound candidate phase must be trans_confirmed or unresolved")
         else:
@@ -270,6 +276,10 @@ class InheritanceCandidate:
                 raise InheritanceInputError("non-compound candidates require one allele")
             if phase_state is not None:
                 raise InheritanceInputError("single-allele candidates do not have a pair phase state")
+        if any(classify_locus(allele) is not locus_class for allele in alleles):
+            raise InheritanceInputError(
+                "candidate locus_class must match every allele's locus"
+            )
 
         if not isinstance(self.reason_codes, tuple) or not self.reason_codes:
             raise InheritanceInputError("candidate reason_codes must be a non-empty tuple")
@@ -349,16 +359,14 @@ def _merge_duplicate(first: AlleleRecord, second: AlleleRecord) -> AlleleRecord:
         raise InheritanceInputError(
             f"conflicting zygosity for duplicate {first.gene} {first.variant_key!r}"
         )
-    if first.phase_set and second.phase_set and first.phase_set != second.phase_set:
+    if first.phase_set != second.phase_set:
         raise InheritanceInputError(
             f"conflicting phase_set for duplicate {first.gene} {first.variant_key!r}"
         )
-    phase_set = first.phase_set or second.phase_set
-    if first.haplotype and second.haplotype and first.haplotype != second.haplotype:
+    if first.haplotype != second.haplotype:
         raise InheritanceInputError(
             f"conflicting haplotype for duplicate {first.gene} {first.variant_key!r}"
         )
-    haplotype = first.haplotype or second.haplotype
     return AlleleRecord(
         gene=first.gene,
         chrom=first.chrom,
@@ -366,8 +374,8 @@ def _merge_duplicate(first: AlleleRecord, second: AlleleRecord) -> AlleleRecord:
         ref=first.ref,
         alt=first.alt,
         zygosity=first.zygosity,
-        phase_set=phase_set,
-        haplotype=haplotype,
+        phase_set=first.phase_set,
+        haplotype=first.haplotype,
     )
 
 
@@ -425,6 +433,11 @@ def _single_candidate(allele: AlleleRecord) -> InheritanceCandidate | None:
             return None
         model = InheritanceModel.X_LINKED
     elif locus_class is LocusClass.MITOCHONDRIAL:
+        if allele.zygosity not in {
+            Zygosity.HETEROPLASMIC,
+            Zygosity.HOMOPLASMIC,
+        }:
+            return None
         model = InheritanceModel.MITOCHONDRIAL
     else:
         # Non-PAR Y candidates need a separate Y-linked model, outside this
@@ -455,7 +468,15 @@ def _compound_candidates(records: tuple[AlleleRecord, ...]) -> list[InheritanceC
         groups.setdefault((allele.gene, partition), []).append(allele)
 
     candidates: list[InheritanceCandidate] = []
+    # A record set can carry arbitrary heterozygous alleles per gene; without
+    # a cap the pair enumeration is quadratic and unbounded.
+    MAX_COMPOUND_PAIRS_PER_LOCUS = 256
     for (gene, partition), alleles in groups.items():
+        if len(alleles) * (len(alleles) - 1) // 2 > MAX_COMPOUND_PAIRS_PER_LOCUS:
+            raise InheritanceInputError(
+                f"{gene} carries more than {MAX_COMPOUND_PAIRS_PER_LOCUS} "
+                "candidate compound pairs — the enumeration is unbounded"
+            )
         for first, second in combinations(sorted(alleles, key=_allele_sort_key), 2):
             phase_state = pair_phase_state(first, second)
             if phase_state is PhaseState.CIS_CONFIRMED:

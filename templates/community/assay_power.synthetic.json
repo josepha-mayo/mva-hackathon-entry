@@ -1,0 +1,17 @@
+{
+  "schema": "mva.community-assay-power/v1",
+  "privacy_class": "synthetic",
+  "purpose": "Locked synthetic imaging-power plan matching three edit events, six clones, and 36 opportunities per clone. A locked plan is not a completed study and is not efficacy evidence.",
+  "locked": true,
+  "n_edit_events": 3,
+  "n_clones_per_event": 6,
+  "n_opportunities": 36,
+  "locked_vehicle_error_rate": 0.3333333333333333,
+  "locked_treatment_error_rate": 0.1111111111111111,
+  "locked_vehicle_completion_rate": 1.0,
+  "locked_treatment_completion_rate": 1.0,
+  "minimum_detection": 0.8,
+  "remaining_population_doublings": 8,
+  "endpoint_class": "generation",
+  "success_rule": "generation_drop"
+}

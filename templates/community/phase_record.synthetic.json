@@ -1,0 +1,33 @@
+{
+  "schema": "mva.community-phase-record/v1",
+  "privacy_class": "synthetic",
+  "purpose": "Gate-1 style synthetic phasing record. A computational haplotype caller or RNA-seq phase cannot stand in for spanning molecules or parental genotypes. Spanning molecules from an unmatched genotype line cannot stand in for the confirmed assay line. Not a real-case phase call.",
+  "gate_id": "syn-gate-phase",
+  "alleles": ["SYN-ALLELE-STOP", "SYN-ALLELE-MISSENSE"],
+  "interval_bp": 8400,
+  "guide_configurations": [
+    {
+      "config_id": "syn-guide-set-a",
+      "full_span_molecules": 44,
+      "strand_balance": 0.52,
+      "linkage_call": "trans"
+    },
+    {
+      "config_id": "syn-guide-set-b",
+      "full_span_molecules": 37,
+      "strand_balance": 0.47,
+      "linkage_call": "trans"
+    }
+  ],
+  "molecule_counts": {
+    "haplotype_a_full_span": 41,
+    "haplotype_b_full_span": 38,
+    "minimum_full_span_per_haplotype": 30
+  },
+  "decision": "trans_confirmed",
+  "phase_method": "molecule_spanning",
+  "phase_specimen": "assay_matched",
+  "confidence_bound": 0.84,
+  "allelic_dropout_criterion": "Call unresolved if either haplotype has fewer than 30 full-span molecules, if the two guide configurations disagree on linkage, or if recovered molecule counts are too unbalanced to exclude dropout.",
+  "notes": "Synthetic fixture only. Parental genotypes, when available through approved channels, are orthogonal evidence and do not replace this record."
+}

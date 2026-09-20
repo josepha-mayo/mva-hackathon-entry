@@ -16,6 +16,7 @@ import json
 import math
 import os
 import random
+import re
 import statistics
 import subprocess
 import sys
@@ -116,13 +117,19 @@ def summarize_ranks(
     return result
 
 
+_HPO_TERM_RE = re.compile(r"^HP:\d{7}$")
+
+
 def packet_hpo(packet: Dict[str, Any]) -> Tuple[List[str], List[str]]:
     positive: List[str] = []
     negative: List[str] = []
     for feature in packet.get("phenotypicFeatures", []):
-        term = feature.get("type", {}).get("id", "")
-        if not isinstance(term, str) or not term.startswith("HP:"):
-            continue
+        if not isinstance(feature, dict):
+            raise AdapterInputError("phenotypic feature is not an object")
+        type_field = feature.get("type")
+        term = type_field.get("id") if isinstance(type_field, dict) else None
+        if not isinstance(term, str) or not _HPO_TERM_RE.match(term):
+            raise AdapterInputError("phenotypic feature has a malformed HPO id")
         (negative if feature.get("excluded") is True else positive).append(term)
     return sorted(set(positive)), sorted(set(negative))
 
@@ -136,8 +143,8 @@ def knowledge_tree_receipt(root: Path) -> Dict[str, Any]:
 
     files: List[Path] = []
     for path in root.rglob("*"):
-        if path.is_symlink():
-            raise AdapterInputError("symbolic links are forbidden in the knowledge tree")
+        if path.is_symlink() or path.is_junction():
+            raise AdapterInputError("links or junctions are forbidden in the knowledge tree")
         if path.is_file():
             files.append(path)
     files.sort(key=lambda path: path.relative_to(root).as_posix())
@@ -162,9 +169,34 @@ def knowledge_tree_receipt(root: Path) -> Dict[str, Any]:
     }
 
 
+def _reject_duplicate_json_keys(pairs: List[Tuple[str, Any]]) -> Dict[str, Any]:
+    result: Dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise AdapterInputError(f"JSON input contains duplicate key: {key}")
+        result[key] = value
+    return result
+
+
+def _reject_json_constant(value: str) -> None:
+    raise AdapterInputError(f"JSON input contains non-finite number: {value}")
+
+
+def _finite_json_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise AdapterInputError(f"JSON input contains non-finite number: {value}")
+    return parsed
+
+
 def _checked_json(path: Path) -> Dict[str, Any]:
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
+        value = json.loads(
+            path.read_text(encoding="utf-8"),
+            object_pairs_hook=_reject_duplicate_json_keys,
+            parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
+        )
     except (OSError, json.JSONDecodeError) as exc:
         raise AdapterInputError("could not read a required JSON input") from exc
     if not isinstance(value, dict):
@@ -194,6 +226,14 @@ def _validate_config(config: Dict[str, Any]) -> None:
     ]
     if bounds != [6000, 2000, 2000] or sum(bounds) != 10_000:
         raise AdapterInputError("the sealed split proportions changed")
+    for count_field in ("case_count", "unique_gene_count"):
+        count = public_input.get(count_field)
+        if (
+            isinstance(count, bool)
+            or not isinstance(count, int)
+            or count < 1
+        ):
+            raise AdapterInputError(f"public_input {count_field} must be positive")
     evaluation = config.get("evaluation", {})
     if evaluation.get("candidate_gene_list") is not None:
         raise AdapterInputError("candidate-gene restriction must remain disabled")
@@ -380,8 +420,13 @@ def run_development_baseline(
         with zipfile.ZipFile(phenopacket_archive) as archive:
             for case in selector["cases"]:
                 try:
-                    packet = json.loads(archive.read(case["archive_path"]))
-                except (KeyError, json.JSONDecodeError) as exc:
+                    packet = json.loads(
+                        archive.read(case["archive_path"]).decode("utf-8"),
+                        object_pairs_hook=_reject_duplicate_json_keys,
+                        parse_constant=_reject_json_constant,
+                        parse_float=_finite_json_float,
+                    )
+                except (KeyError, UnicodeDecodeError, ValueError) as exc:
                     raise AdapterInputError(
                         "selected public development entry could not be read"
                     ) from exc
@@ -445,7 +490,7 @@ def run_development_baseline(
     receipt_digest = hashlib.sha256(
         json.dumps(
             case_receipts, sort_keys=True, separators=(",", ":")
-        ).encode("utf-8")
+        , allow_nan=False).encode("utf-8")
     ).hexdigest()
 
     core = {
@@ -480,7 +525,7 @@ def run_development_baseline(
         "case_receipt_sha256": receipt_digest,
     }
     core_sha256 = hashlib.sha256(
-        json.dumps(core, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        json.dumps(core, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
     ).hexdigest()
     result = {
         "schema": RESULT_SCHEMA,
@@ -518,7 +563,7 @@ def run_development_baseline(
     }
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("x", encoding="utf-8", newline="\n") as handle:
-        json.dump(result, handle, indent=2, sort_keys=True)
+        json.dump(result, handle, indent=2, sort_keys=True, allow_nan=False)
         handle.write("\n")
     return result
 
@@ -559,6 +604,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
                 "core_sha256": result["core_sha256"],
             },
             sort_keys=True,
+            allow_nan=False,
         )
     )
     return 0

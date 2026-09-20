@@ -15,6 +15,7 @@ import csv
 import hashlib
 import io
 import json
+import math
 import os
 import re
 import shutil
@@ -160,6 +161,17 @@ def _strict_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def _reject_json_constant(value: str) -> None:
+    raise SyntheticPipelineError(f"non-finite JSON number: {value}")
+
+
+def _finite_json_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise SyntheticPipelineError(f"non-finite JSON number: {value}")
+    return parsed
+
+
 def _exact_fields(value: Any, expected: set[str], *, location: str) -> Mapping[str, Any]:
     if not isinstance(value, Mapping) or set(value) != expected:
         raise SyntheticPipelineError(
@@ -273,10 +285,15 @@ def load_synthetic_bundle(path: str | Path) -> SyntheticBundle:
     if len(payload) > MAX_BUNDLE_BYTES:
         raise SyntheticPipelineError("synthetic bundle exceeds the 1 MiB limit")
     try:
-        value = json.loads(payload.decode("utf-8"), object_pairs_hook=_strict_object)
+        value = json.loads(
+            payload.decode("utf-8"),
+            object_pairs_hook=_strict_object,
+            parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
+        )
     except SyntheticPipelineError:
         raise
-    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+    except (UnicodeDecodeError, json.JSONDecodeError, RecursionError) as exc:
         raise SyntheticPipelineError("synthetic bundle is not valid UTF-8 JSON") from exc
 
     source = _exact_fields(
@@ -820,9 +837,23 @@ def _validate_report(value: Any, *, expected_rows: int) -> Mapping[str, Any]:
     return source
 
 
-def _stage_and_validate(output_dir: Path, payloads: Mapping[str, bytes]) -> None:
-    if output_dir.exists():
+def _stage_and_validate(
+    output_dir: Path,
+    payloads: Mapping[str, bytes],
+    *,
+    expected_digests: Mapping[str, str],
+) -> None:
+    # The digests we compare against must be real values — a caller that
+    # supplies None would let a None-digest ledger pass on None == None.
+    if any(
+        not isinstance(expected_digests.get(key), str)
+        for key in ("engine", "run", "config")
+    ):
+        raise SyntheticPipelineError("expected digests must be populated strings")
+    if output_dir.exists() or os.path.lexists(output_dir):
         raise SyntheticPipelineError("output directory already exists; overwrite is prohibited")
+    if output_dir.is_symlink():
+        raise SyntheticPipelineError("output directory must not be a symlink")
     output_dir.parent.mkdir(parents=True, exist_ok=True)
     staged = Path(
         tempfile.mkdtemp(prefix=f".{output_dir.name}.staging-", dir=output_dir.parent)
@@ -832,7 +863,14 @@ def _stage_and_validate(output_dir: Path, payloads: Mapping[str, bytes]) -> None
             (staged / name).write_bytes(payloads[name])
 
         predictions = load_predictions(staged / "submission.csv")
-        ledger = load_evidence_ledger(staged / "evidence-ledger.json", public_only=True)
+        # artifact_root forces every declared artifact_sha256 to be
+        # recomputed against the staged bytes — a forged ledger cannot
+        # claim a digest it did not produce.
+        ledger = load_evidence_ledger(
+            staged / "evidence-ledger.json",
+            public_only=True,
+            artifact_root=staged,
+        )
         observed_submission_digest = _sha256_bytes(payloads["submission.csv"])
         for entry in ledger.entries:
             if (
@@ -840,16 +878,69 @@ def _stage_and_validate(output_dir: Path, payloads: Mapping[str, bytes]) -> None
                 and entry.artifact_sha256 != observed_submission_digest
             ):
                 raise SyntheticPipelineError("evidence ledger submission digest mismatch")
+            if (
+                entry.tool_digest is not None
+                and entry.tool_digest != expected_digests["engine"]
+            ):
+                raise SyntheticPipelineError("evidence ledger tool digest mismatch")
+            if (
+                entry.run_digest is not None
+                and entry.run_digest != expected_digests["run"]
+            ):
+                raise SyntheticPipelineError("evidence ledger run digest mismatch")
+            if (
+                entry.config_digest is not None
+                and entry.config_digest != expected_digests["config"]
+            ):
+                raise SyntheticPipelineError("evidence ledger config digest mismatch")
+            # An assessed entry that omits tool/run/config digests is an
+            # unbound assertion: it could carry any claim without being
+            # tied to this engine, run, or config.
+            if entry.assessment_status != "not_assessable" and (
+                entry.tool_digest != expected_digests["engine"]
+                or entry.run_digest != expected_digests["run"]
+                or entry.config_digest != expected_digests["config"]
+            ):
+                raise SyntheticPipelineError(
+                    "assessed evidence entry lacks bound digests"
+                )
 
-        provenance_value = json.loads(
-            (staged / "provenance-runtime.json").read_text(encoding="utf-8"),
-            object_pairs_hook=_strict_object,
-        )
+        try:
+            provenance_value = json.loads(
+                (staged / "provenance-runtime.json").read_text(encoding="utf-8"),
+                object_pairs_hook=_strict_object,
+                parse_constant=_reject_json_constant,
+                parse_float=_finite_json_float,
+            )
+        except RecursionError as exc:
+            raise SyntheticPipelineError(
+                "provenance-runtime.json is nested too deeply"
+            ) from exc
         validate_public_manifest(provenance_value)
-        report_value = json.loads(
-            (staged / "report-input.json").read_text(encoding="utf-8"),
-            object_pairs_hook=_strict_object,
-        )
+        code = provenance_value.get("code")
+        if not isinstance(code, Mapping) or code.get("digest") != expected_digests["engine"]:
+            raise SyntheticPipelineError("provenance engine digest mismatch")
+        tools = provenance_value.get("tools")
+        if isinstance(tools, Mapping):
+            for tool_name, tool in tools.items():
+                if (
+                    isinstance(tool, Mapping)
+                    and tool.get("digest") != expected_digests["engine"]
+                ):
+                    raise SyntheticPipelineError(
+                        f"provenance tool digest mismatch for {tool_name}"
+                    )
+        try:
+            report_value = json.loads(
+                (staged / "report-input.json").read_text(encoding="utf-8"),
+                object_pairs_hook=_strict_object,
+                parse_constant=_reject_json_constant,
+                parse_float=_finite_json_float,
+            )
+        except RecursionError as exc:
+            raise SyntheticPipelineError(
+                "report-input.json is nested too deeply"
+            ) from exc
         _validate_report(report_value, expected_rows=len(predictions))
         if {path.name for path in staged.iterdir()} != set(OUTPUT_FILENAMES):
             raise SyntheticPipelineError("staging directory contains an unexpected artifact")
@@ -907,7 +998,15 @@ def run_synthetic_pipeline(
         "report-input.json": canonical_json_bytes(report) + b"\n",
     }
     destination = Path(output_dir).resolve()
-    _stage_and_validate(destination, payloads)
+    _stage_and_validate(
+        destination,
+        payloads,
+        expected_digests={
+            "engine": engine_digest,
+            "run": run_digest,
+            "config": config_digest,
+        },
+    )
     return PipelineRun(
         output_dir=destination,
         ranked_rows=len(ranked),

@@ -141,10 +141,13 @@ def main() -> int:
     )
     result["fixture_distribution"] = dict(sorted(distribution.items()))
     result["generator"] = "scripts/run_synthetic_inheritance_benchmark.py/v1"
-    payload = json.dumps(result, indent=2, sort_keys=True, allow_nan=True) + "\n"
+    payload = json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n"
     if args.output:
-        args.output.resolve().parent.mkdir(parents=True, exist_ok=True)
-        args.output.resolve().write_text(payload, encoding="utf-8", newline="\n")
+        resolved = args.output.resolve()
+        if resolved.exists():
+            parser.error("output already exists; refusing to overwrite")
+        resolved.parent.mkdir(parents=True, exist_ok=True)
+        resolved.write_text(payload, encoding="utf-8", newline="\n")
     else:
         print(payload, end="")
     return 0

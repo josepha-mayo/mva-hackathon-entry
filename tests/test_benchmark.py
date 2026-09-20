@@ -16,6 +16,19 @@ from mva_hackathon.benchmark import (
 from mva_hackathon.inheritance import AlleleRecord, InheritanceModel, PhaseState, Zygosity
 
 
+def _strict_object(pairs: list) -> dict:
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key {key!r}")
+        result[key] = value
+    return result
+
+
+def _reject_constant(value: str) -> None:
+    raise ValueError(f"non-finite JSON constant {value!r}")
+
+
 def allele(
     gene: str, pos: int, *, phase_set: str | None = None, haplotype: str | None = None,
     zygosity: Zygosity = Zygosity.HETEROZYGOUS,
@@ -26,9 +39,13 @@ def allele(
     )
 
 
-def positive_pair(case_id: str = "SYNCASE-1") -> SyntheticCase:
-    first = allele("SYNTRUTH", 10_001, phase_set="SYNPHASE1", haplotype="1")
-    second = allele("SYNTRUTH", 10_101, phase_set="SYNPHASE1", haplotype="2")
+def positive_pair(case_id: str = "SYNCASE-1", offset: int = 0) -> SyntheticCase:
+    first = allele(
+        "SYNTRUTH", 10_001 + offset, phase_set="SYNPHASE1", haplotype="1"
+    )
+    second = allele(
+        "SYNTRUTH", 10_101 + offset, phase_set="SYNPHASE1", haplotype="2"
+    )
     return SyntheticCase(
         case_id=case_id,
         records=(first, second),
@@ -105,7 +122,10 @@ class SyntheticBenchmarkTests(unittest.TestCase):
         self.assertTrue(math.isnan(result["compound_truth_recall"]))
 
     def test_bootstrap_is_deterministic(self) -> None:
-        cases = [positive_pair(f"SYNCASE-{index}") for index in range(5)]
+        cases = [
+            positive_pair(f"SYNCASE-{index}", offset=index * 1_000)
+            for index in range(5)
+        ]
         first = evaluate_synthetic_cases(cases, seed=7, bootstrap_iterations=100)
         second = evaluate_synthetic_cases(cases, seed=7, bootstrap_iterations=100)
         self.assertEqual(first, second)
@@ -130,6 +150,73 @@ class SyntheticBenchmarkTests(unittest.TestCase):
             evaluate_synthetic_cases([case, case], bootstrap_iterations=100)
         with self.assertRaisesRegex(BenchmarkInputError, "at least 100"):
             evaluate_synthetic_cases([case], bootstrap_iterations=99)
+        for bogus in (100.0, True, "200"):
+            with self.subTest(bootstrap_iterations=bogus):
+                with self.assertRaisesRegex(BenchmarkInputError, "integer"):
+                    evaluate_synthetic_cases([case], bootstrap_iterations=bogus)
+
+    def test_duplicate_case_content_cannot_pad_recall(self) -> None:
+        case = positive_pair()
+        twin = SyntheticCase("SYNCASE-TWIN", case.records, case.truth)
+        with self.assertRaisesRegex(BenchmarkInputError, "unique"):
+            evaluate_synthetic_cases([case, twin], bootstrap_iterations=100)
+
+    def test_reordered_case_content_cannot_pad_recall(self) -> None:
+        case = positive_pair()
+        twin = SyntheticCase(
+            "SYNCASE-TWIN", tuple(reversed(case.records)), case.truth
+        )
+        with self.assertRaisesRegex(BenchmarkInputError, "unique"):
+            evaluate_synthetic_cases([case, twin], bootstrap_iterations=100)
+
+    def test_bootstrap_iterations_above_ceiling_rejected(self) -> None:
+        with self.assertRaisesRegex(BenchmarkInputError, "ceiling"):
+            evaluate_synthetic_cases(
+                [positive_pair()], bootstrap_iterations=100_001
+            )
+
+
+class InheritanceBenchmarkCliTests(unittest.TestCase):
+    SCRIPT = (
+        Path(__file__).resolve().parents[1]
+        / "scripts"
+        / "run_synthetic_inheritance_benchmark.py"
+    )
+
+    def test_output_refuses_overwrite_and_serializes_finite(self) -> None:
+        import json
+        import subprocess
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "receipt.json"
+            command = [
+                sys.executable,
+                str(self.SCRIPT),
+                "--cases",
+                "120",
+                "--bootstrap-iterations",
+                "100",
+                "--output",
+                str(target),
+            ]
+            first = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(first.returncode, 0, first.stderr)
+            again = subprocess.run(command, capture_output=True, text=True)
+            self.assertNotEqual(again.returncode, 0)
+            self.assertIn("refusing to overwrite", again.stderr)
+            payload = target.read_text(encoding="utf-8")
+            self.assertNotIn("NaN", payload)
+            self.assertNotIn("Infinity", payload)
+            parsed = json.loads(
+                payload,
+                object_pairs_hook=_strict_object,
+                parse_constant=_reject_constant,
+            )
+            self.assertTrue(
+                math.isfinite(parsed["truth_recall"])
+                and math.isfinite(parsed["false_compound_candidates"])
+            )
 
 
 if __name__ == "__main__":

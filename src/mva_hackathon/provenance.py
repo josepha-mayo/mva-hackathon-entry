@@ -26,6 +26,10 @@ STAGE_SCHEMA = "mva.stage/v1"
 PUBLIC_MANIFEST_SCHEMA = "mva.public-provenance/v1"
 PRIVATE_MANIFEST_SCHEMA = "mva.private-provenance/v1"
 MAX_STAGE_RECORD_BYTES = 1024 * 1024
+# Canonical JSON is a denial-of-service surface: unbounded nesting can exhaust
+# the Python recursion limit and unbounded payloads exhaust memory.
+MAX_CANONICAL_DEPTH = 64
+MAX_CANONICAL_BYTES = 16 * 1024 * 1024
 
 _DIGEST = re.compile(r"^sha256:[0-9a-f]{64}$")
 _DIGEST_TOKEN = re.compile(r"(?i)(?<![0-9a-f])(?:sha256:)?[0-9a-f]{64}(?![0-9a-f])")
@@ -72,32 +76,47 @@ class PublicManifestError(ProvenanceError):
     """Raised when a value is unsafe for the public provenance manifest."""
 
 
-def _normalise_json(value: Any, *, location: str = "$") -> Any:
+def _normalise_json(value: Any, *, location: str = "$", depth: int = 0) -> Any:
     """Return a canonical JSON-domain value or reject ambiguous input."""
 
+    if depth > MAX_CANONICAL_DEPTH:
+        raise ProvenanceError(
+            f"{location}: JSON nesting exceeds the {MAX_CANONICAL_DEPTH}-level limit"
+        )
     if value is None or isinstance(value, bool) or isinstance(value, int):
         return value
     if isinstance(value, float):
         if not math.isfinite(value):
             raise ProvenanceError(f"{location}: non-finite numbers are not canonical JSON")
-        return value
+        # -0.0 == 0.0 but serializes differently; collapse the sign.
+        return 0.0 if value == 0.0 else value
     if isinstance(value, str):
+        if any(0xD800 <= ord(char) <= 0xDFFF for char in value):
+            raise ProvenanceError(
+                f"{location}: lone UTF-16 surrogates are forbidden"
+            )
         return unicodedata.normalize("NFC", value)
     if isinstance(value, Mapping):
         result: dict[str, Any] = {}
         for raw_key, raw_value in value.items():
             if not isinstance(raw_key, str):
                 raise ProvenanceError(f"{location}: JSON object keys must be strings")
+            if any(0xD800 <= ord(char) <= 0xDFFF for char in raw_key):
+                raise ProvenanceError(
+                    f"{location}: lone UTF-16 surrogates are forbidden"
+                )
             key = unicodedata.normalize("NFC", raw_key)
             if key in result:
                 raise ProvenanceError(
                     f"{location}: object keys collide after Unicode normalisation: {key!r}"
                 )
-            result[key] = _normalise_json(raw_value, location=f"{location}.{key}")
+            result[key] = _normalise_json(
+                raw_value, location=f"{location}.{key}", depth=depth + 1
+            )
         return result
     if isinstance(value, (list, tuple)):
         return [
-            _normalise_json(item, location=f"{location}[{index}]")
+            _normalise_json(item, location=f"{location}[{index}]", depth=depth + 1)
             for index, item in enumerate(value)
         ]
     raise ProvenanceError(
@@ -114,19 +133,53 @@ def canonical_json_bytes(value: Any) -> bytes:
     """
 
     normalised = _normalise_json(value)
-    return json.dumps(
+    payload = json.dumps(
         normalised,
         ensure_ascii=False,
         allow_nan=False,
         sort_keys=True,
         separators=(",", ":"),
     ).encode("utf-8")
+    if len(payload) > MAX_CANONICAL_BYTES:
+        raise ProvenanceError(
+            "canonical JSON exceeds the "
+            f"{MAX_CANONICAL_BYTES // (1024 * 1024)} MiB safety limit"
+        )
+    return payload
 
 
 def semantic_digest(value: Any) -> str:
     """Return a lower-case, algorithm-labelled SHA-256 semantic digest."""
 
     return "sha256:" + hashlib.sha256(canonical_json_bytes(value)).hexdigest()
+
+
+def receipt_sha256(record: Mapping[str, Any]) -> str:
+    """Self-integrity digest for a gate receipt.
+
+    Covers every field except ``receipt_sha256`` itself. A receipt carrying
+    this field is tamper-evident: mutating any field post-hoc invalidates it.
+    It is not an authenticity proof — a fabricated receipt can carry a valid
+    digest — but it binds the receipt to its as-computed form.
+    """
+
+    if not isinstance(record, Mapping):
+        raise ProvenanceError("receipt must be a mapping")
+    body = {key: value for key, value in record.items() if key != "receipt_sha256"}
+    return hashlib.sha256(canonical_json_bytes(body)).hexdigest()
+
+
+def receipt_sha256_ok(record: Mapping[str, Any]) -> bool:
+    """Return True when a receipt carries a valid self-integrity digest."""
+
+    if not isinstance(record, Mapping):
+        return False
+    declared = record.get("receipt_sha256")
+    if not isinstance(declared, str) or not re.fullmatch(
+        r"[0-9a-f]{64}", declared
+    ):
+        return False
+    return receipt_sha256(record) == declared
 
 
 def _require_digest(value: Any, *, location: str) -> str:
@@ -427,6 +480,17 @@ def _strict_json_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def _reject_json_constant(value: str) -> None:
+    raise ProvenanceError(f"non-finite JSON number: {value}")
+
+
+def _finite_json_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise ProvenanceError(f"non-finite JSON number: {value}")
+    return parsed
+
+
 def _stage_json_path(path: str | Path) -> Path:
     result = Path(path)
     if result.name != "stage.json":
@@ -473,17 +537,39 @@ def load_stage_record(path: str | Path) -> StageRecord:
         raise ProvenanceError("stage record exceeds the 1 MiB safety limit")
     try:
         decoded = payload.decode("utf-8")
-        value = json.loads(decoded, object_pairs_hook=_strict_json_object)
+        value = json.loads(
+            decoded,
+            object_pairs_hook=_strict_json_object,
+            parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
+        )
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise ProvenanceError("stage record is not valid UTF-8 JSON") from exc
+    except RecursionError as exc:
+        raise ProvenanceError(
+            "stage record JSON nesting exceeds the parser limit"
+        ) from exc
     return StageRecord.from_dict(value)
 
 
 def validate_resume(
     record_or_path: StageRecord | str | Path,
     expected: StageDigests | Mapping[str, Any],
+    *,
+    expected_stage: str | None = None,
+    prior_records: Sequence[StageRecord | str | Path] = (),
+    controlled_inputs: Mapping[str, Any] | None = None,
 ) -> StageRecord:
-    """Return the record only when every resume invariant still matches."""
+    """Return the record only when every resume invariant still matches.
+
+    ``expected_stage`` optionally binds the resume to a named stage so a
+    success record from a different stage with identical digests cannot be
+    replayed.  When ``prior_records`` are supplied, every digest declared in
+    the candidate record's ``digests.inputs`` must appear in the
+    ``output_digests`` of a prior successful record (or in
+    ``controlled_inputs`` when given), so a forged stage cannot claim inputs
+    no earlier stage produced.
+    """
 
     record = (
         record_or_path
@@ -497,6 +583,8 @@ def validate_resume(
         raise ResumeValidationError("resume rejected: prior stage did not succeed")
 
     mismatches: list[str] = []
+    if expected_stage is not None and record.stage != expected_stage:
+        mismatches.append("stage")
     if record.digests.code != expected_digests.code:
         mismatches.append("code")
     if record.digests.config != expected_digests.config:
@@ -509,17 +597,55 @@ def validate_resume(
         raise ResumeValidationError(
             "resume rejected: digest mismatch in " + ", ".join(mismatches)
         )
+
+    if prior_records or controlled_inputs is not None:
+        produced: set[str] = set()
+        for prior in prior_records:
+            prior_record = (
+                prior if isinstance(prior, StageRecord) else load_stage_record(prior)
+            )
+            if prior_record.status != "success":
+                raise ResumeValidationError(
+                    f"resume rejected: prior stage {prior_record.stage!r} did not succeed"
+                )
+            produced.update(prior_record.output_digests.values())
+        if controlled_inputs is not None:
+            for descriptor in controlled_inputs.values():
+                if isinstance(descriptor, Mapping):
+                    digest = descriptor.get("digest")
+                    if isinstance(digest, str):
+                        produced.add(digest)
+        unproduced = [
+            name
+            for name, digest in record.digests.inputs.items()
+            if digest not in produced
+        ]
+        if unproduced:
+            raise ResumeValidationError(
+                "resume rejected: inputs not produced by a prior stage or "
+                "controlled input: " + ", ".join(sorted(unproduced))
+            )
     return record
 
 
 def resume_is_valid(
     record_or_path: StageRecord | str | Path,
     expected: StageDigests | Mapping[str, Any],
+    *,
+    expected_stage: str | None = None,
+    prior_records: Sequence[StageRecord | str | Path] = (),
+    controlled_inputs: Mapping[str, Any] | None = None,
 ) -> bool:
     """Boolean convenience wrapper for fail-closed resume checks."""
 
     try:
-        validate_resume(record_or_path, expected)
+        validate_resume(
+            record_or_path,
+            expected,
+            expected_stage=expected_stage,
+            prior_records=prior_records,
+            controlled_inputs=controlled_inputs,
+        )
     except (OSError, ProvenanceError):
         return False
     return True

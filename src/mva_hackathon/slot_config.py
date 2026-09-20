@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 import unicodedata
 from dataclasses import dataclass
@@ -82,6 +83,17 @@ def _strict_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
             raise SlotConfigError(f"duplicate JSON key: {key!r}")
         result[key] = value
     return result
+
+
+def _reject_json_constant(value: str) -> None:
+    raise SlotConfigError(f"non-finite JSON number: {value}")
+
+
+def _finite_json_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise SlotConfigError(f"non-finite JSON number: {value}")
+    return parsed
 
 
 def _one_of(value: Any, allowed: set[str], *, field: str) -> str:
@@ -209,9 +221,12 @@ class SlotConfig:
 def load_slot_config(path: str | Path) -> SlotConfig:
     try:
         value = json.loads(
-            Path(path).read_text(encoding="utf-8"), object_pairs_hook=_strict_object
+            Path(path).read_text(encoding="utf-8"),
+            object_pairs_hook=_strict_object,
+            parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
         )
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, RecursionError) as exc:
         raise SlotConfigError("slot config is not readable UTF-8 JSON") from exc
     return SlotConfig.from_dict(value)
 
@@ -222,9 +237,12 @@ def load_slot_plan(path: str | Path) -> tuple[SlotConfig, ...]:
     source = Path(path).resolve()
     try:
         value = json.loads(
-            source.read_text(encoding="utf-8"), object_pairs_hook=_strict_object
+            source.read_text(encoding="utf-8"),
+            object_pairs_hook=_strict_object,
+            parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
         )
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, RecursionError) as exc:
         raise SlotConfigError("slot plan is not readable UTF-8 JSON") from exc
     expected = {"schema", "policy", "config_files"}
     if not isinstance(value, Mapping) or set(value) != expected:

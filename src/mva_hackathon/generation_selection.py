@@ -36,6 +36,7 @@ MEASUREMENT_FLAGS = (
     "event_specificity_bias",
     "division_detection_bias",
     "informative_followup_bias",
+    "arm_audit_underpowered",
 )
 COMPONENT_FLAGS = (*BIOLOGICAL_FLAGS, *MEASUREMENT_FLAGS)
 ESTIMANDS = (
@@ -46,6 +47,12 @@ ESTIMANDS = (
     "nonerror_daughter_death",
 )
 GATE_PROFILES = ("required", "power_curve", "fail_closed")
+# Resource ceilings: a malformed design or replicate count must not be able
+# to consume unbounded CPU or memory.
+MAX_DESIGN_FIELD = 1_000_000
+MAX_PLANNED_OPPORTUNITIES_PER_ARM = 10_000_000
+MAX_MONTE_CARLO_REPLICATES = 100_000
+MAX_TOTAL_SIMULATED_OPPORTUNITIES = 200_000_000
 
 
 class GenerationSelectionError(ValueError):
@@ -108,6 +115,13 @@ def _strict_json_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
 
 def _reject_json_constant(value: str) -> None:
     raise GenerationSelectionError(f"non-finite JSON number {value}")
+
+
+def _finite_json_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise GenerationSelectionError(f"non-finite JSON number {value}")
+    return parsed
 
 
 def _logit(value: float) -> float:
@@ -234,8 +248,16 @@ class StudyDesign:
                 field.name,
                 _positive_integer(getattr(self, field.name), field.name),
             )
+            if getattr(self, field.name) > MAX_DESIGN_FIELD:
+                raise GenerationSelectionError(
+                    f"{field.name} exceeds the design resource ceiling"
+                )
         if self.edit_events < 3:
             raise GenerationSelectionError("at least three edit events are required")
+        if self.planned_opportunities_per_arm > MAX_PLANNED_OPPORTUNITIES_PER_ARM:
+            raise GenerationSelectionError(
+                "planned observation opportunities exceed the resource ceiling"
+            )
 
     @property
     def clone_count(self) -> int:
@@ -351,12 +373,30 @@ class AnalysisThresholds:
             "generation_reduction_ratio",
             "selection_reduction_ratio",
             "division_reduction_ratio",
+        ):
+            if getattr(self, name) >= 1.0:
+                raise GenerationSelectionError(f"{name} must be below one")
+            # A reduction declared at a cutoff arbitrarily close to one is
+            # vacuous: any flat result would "reduce". A real rescue claim
+            # must demand at least a ten percent reduction.
+            if getattr(self, name) > 0.9:
+                raise GenerationSelectionError(
+                    f"{name} must be at most 0.9 to demand a real reduction"
+                )
+        for name in (
             "event_detection_bias_ratio",
             "division_detection_bias_ratio",
             "followup_bias_ratio",
         ):
             if getattr(self, name) >= 1.0:
                 raise GenerationSelectionError(f"{name} must be below one")
+            # These thresholds define a no-bias band [t, 1/t]; a cutoff near
+            # zero makes the band cover every outcome, so measurement bias
+            # could never be flagged.
+            if getattr(self, name) < 0.5:
+                raise GenerationSelectionError(
+                    f"{name} must be at least 0.5 to bound a real bias band"
+                )
         object.__setattr__(
             self,
             "division_equivalence_upper_ratio",
@@ -369,14 +409,30 @@ class AnalysisThresholds:
             raise GenerationSelectionError(
                 "division_equivalence_upper_ratio must exceed one"
             )
+        # An equivalence window wider than conventional bioequivalence
+        # bounds [0.8, 1.25] declares "no cytostasis" for almost any data.
+        if self.division_equivalence_upper_ratio > 1.25:
+            raise GenerationSelectionError(
+                "division_equivalence_upper_ratio must not exceed 1.25"
+            )
         if self.division_equivalence_lower_ratio >= 1.0:
             raise GenerationSelectionError(
                 "division_equivalence_lower_ratio must be below one"
+            )
+        if self.division_equivalence_lower_ratio < 0.8:
+            raise GenerationSelectionError(
+                "division_equivalence_lower_ratio must be at least 0.8"
             )
         for name in ("selection_increase_ratio", "toxicity_increase_ratio"):
             object.__setattr__(self, name, _positive_number(getattr(self, name), name))
             if getattr(self, name) <= 1.0:
                 raise GenerationSelectionError(f"{name} must exceed one")
+            # An increase cutoff arbitrarily close to one flags nothing — a
+            # competing-selection or toxicity signal must demand a real fold.
+            if getattr(self, name) < 1.1:
+                raise GenerationSelectionError(
+                    f"{name} must be at least 1.1 to detect real increases"
+                )
         object.__setattr__(
             self,
             "event_false_positive_increase_ratio",
@@ -389,17 +445,48 @@ class AnalysisThresholds:
             raise GenerationSelectionError(
                 "event_false_positive_increase_ratio must exceed one"
             )
-        for name in (
-            "minimum_detected_divisions_per_edit_event",
-            "minimum_event_positive_followed_per_edit_event",
-            "minimum_event_negative_followed_per_edit_event",
+        if self.event_false_positive_increase_ratio < 1.1:
+            raise GenerationSelectionError(
+                "event_false_positive_increase_ratio must be at least 1.1 "
+                "to detect real increases"
+            )
+        # A Youden floor of zero certifies a classifier that is no better
+        # than chance; the detector audit must demand real discrimination.
+        if self.minimum_calibration_youden < 0.5:
+            raise GenerationSelectionError(
+                "minimum_calibration_youden must be at least 0.5"
+            )
+        for name, floor in (
+            # A per-edit-event count floor of one is anecdotal evidence:
+            # "every event was followed" at n=1 certifies nothing.
+            ("minimum_detected_divisions_per_edit_event", 10),
+            ("minimum_event_positive_followed_per_edit_event", 6),
+            ("minimum_event_negative_followed_per_edit_event", 6),
         ):
             object.__setattr__(self, name, _positive_integer(getattr(self, name), name))
+            if getattr(self, name) < floor:
+                raise GenerationSelectionError(
+                    f"{name} must be at least {floor} to demand real evidence"
+                )
+        # A posterior-separation floor near zero accepts any latent split —
+        # the solver could declare an outcome with no evidence of
+        # separation. Demand a real margin.
+        if self.minimum_posterior_separation < 0.2:
+            raise GenerationSelectionError(
+                "minimum_posterior_separation must be at least 0.2"
+            )
         object.__setattr__(
             self,
             "confidence_multiplier",
             _positive_number(self.confidence_multiplier, "confidence_multiplier"),
         )
+        # A multiplier below 1.96 claims less than the conventional 95%
+        # large-sample half-width — it would collapse the interval onto the
+        # point estimate and let any direction "pass" its decision bound.
+        if self.confidence_multiplier < 1.96:
+            raise GenerationSelectionError(
+                "confidence_multiplier must be at least 1.96"
+            )
 
 
 @dataclasses.dataclass(frozen=True)
@@ -512,6 +599,12 @@ class ObservedRun:
     event_negative_daughters_followed: int
     event_negative_daughters_reproduced: int
     event_negative_daughters_died: int
+    event_positive_daughter_slots: int | None = None
+    event_negative_daughter_slots: int | None = None
+    event_positive_multipolar_divisions: int | None = None
+    pre_division_death: int = 0
+    no_division: int = 0
+    dropout_censored: int = 0
 
     def __post_init__(self) -> None:
         if self.arm not in ARM_NAMES:
@@ -528,18 +621,63 @@ class ObservedRun:
             "event_negative_daughters_followed",
             "event_negative_daughters_reproduced",
             "event_negative_daughters_died",
+            "pre_division_death",
+            "no_division",
+            "dropout_censored",
         ):
             _nonnegative_integer(getattr(self, name), name)
         if self.event_positive_divisions + self.event_negative_divisions != self.detected_divisions:
             raise GenerationSelectionError("event labels must partition detected divisions")
         if self.detected_divisions > self.opportunities:
             raise GenerationSelectionError("detected divisions exceed opportunities")
+        if (
+            self.detected_divisions
+            + self.pre_division_death
+            + self.no_division
+            + self.dropout_censored
+            > self.opportunities
+        ):
+            raise GenerationSelectionError(
+                "attributed outcomes exceed enrolled opportunities"
+            )
+        multipolar = self.event_positive_multipolar_divisions or 0
+        if self.event_positive_multipolar_divisions is not None:
+            _nonnegative_integer(
+                self.event_positive_multipolar_divisions,
+                "event_positive_multipolar_divisions",
+            )
+            if multipolar > self.event_positive_divisions:
+                raise GenerationSelectionError(
+                    "multipolar divisions cannot exceed event-positive divisions"
+                )
         for label in ("positive", "negative"):
             divisions = getattr(self, f"event_{label}_divisions")
             followed = getattr(self, f"event_{label}_daughters_followed")
             reproduced = getattr(self, f"event_{label}_daughters_reproduced")
             died = getattr(self, f"event_{label}_daughters_died")
-            if followed > 2 * divisions:
+            slots = getattr(self, f"event_{label}_daughter_slots")
+            bound = multipolar if label == "positive" else 0
+            if slots is None:
+                if bound:
+                    raise GenerationSelectionError(
+                        "declared multipolar divisions require declared daughter slots"
+                    )
+                slots = 2 * divisions
+            else:
+                _nonnegative_integer(slots, f"event_{label}_daughter_slots")
+                if slots < 2 * divisions + bound:
+                    raise GenerationSelectionError(
+                        "daughter slots cannot be fewer than two per division"
+                    )
+                if label == "negative" and slots > 2 * divisions:
+                    raise GenerationSelectionError(
+                        "clean divisions cannot produce more than two daughters"
+                    )
+                if slots > 2 * divisions + 2 * bound:
+                    raise GenerationSelectionError(
+                        "daughter slots exceed the multipolar bound"
+                    )
+            if followed > slots:
                 raise GenerationSelectionError("followed daughters exceed generated daughters")
             if reproduced + died > followed:
                 raise GenerationSelectionError("daughter outcomes are not mutually exclusive")
@@ -869,48 +1007,74 @@ def simulate_aggregate_study(
             expected_errors = row["expected_errors"]
             expected_nonerrors = expected_divisions - expected_errors
             arm_values[arm] = {
-                "generation": expected_errors / expected_divisions,
-                "division": expected_divisions / row["opportunities"],
-                "error_reproduction": row["error_reproduction"] / expected_errors,
-                "nonerror_reproduction": row["nonerror_reproduction"] / expected_nonerrors,
-                "nonerror_death": row["nonerror_death"] / expected_nonerrors,
+                "generation": (
+                    expected_errors / expected_divisions
+                    if expected_divisions
+                    else 0.0
+                ),
+                "division": (
+                    expected_divisions / row["opportunities"]
+                    if row["opportunities"]
+                    else 0.0
+                ),
+                "error_reproduction": (
+                    row["error_reproduction"] / expected_errors
+                    if expected_errors
+                    else 0.0
+                ),
+                "nonerror_reproduction": (
+                    row["nonerror_reproduction"] / expected_nonerrors
+                    if expected_nonerrors
+                    else 0.0
+                ),
+                "nonerror_death": (
+                    row["nonerror_death"] / expected_nonerrors
+                    if expected_nonerrors
+                    else 0.0
+                ),
             }
+        vehicle_generation = arm_values["vehicle"]["generation"]
         event_truth["generation_rate"].append(
-            arm_values["treatment"]["generation"]
-            / arm_values["vehicle"]["generation"]
+            arm_values["treatment"]["generation"] / vehicle_generation
+            if vehicle_generation
+            else math.inf
         )
-        treatment_founder_error = (
-            truth_accumulator[event_id]["treatment"]["expected_errors"]
-            / truth_accumulator[event_id]["treatment"]["opportunities"]
+        treatment_founder_error = _ratio(
+            truth_accumulator[event_id]["treatment"]["expected_errors"],
+            truth_accumulator[event_id]["treatment"]["opportunities"],
         )
-        vehicle_founder_error = (
-            truth_accumulator[event_id]["vehicle"]["expected_errors"]
-            / truth_accumulator[event_id]["vehicle"]["opportunities"]
+        vehicle_founder_error = _ratio(
+            truth_accumulator[event_id]["vehicle"]["expected_errors"],
+            truth_accumulator[event_id]["vehicle"]["opportunities"],
         )
         event_truth["founder_error_bearing_completion"].append(
-            treatment_founder_error / vehicle_founder_error
+            _ratio(treatment_founder_error, vehicle_founder_error)
         )
-        treatment_selection = (
-            arm_values["treatment"]["error_reproduction"]
-            / arm_values["treatment"]["nonerror_reproduction"]
+        treatment_selection = _ratio(
+            arm_values["treatment"]["error_reproduction"],
+            arm_values["treatment"]["nonerror_reproduction"],
         )
-        vehicle_selection = (
-            arm_values["vehicle"]["error_reproduction"]
-            / arm_values["vehicle"]["nonerror_reproduction"]
+        vehicle_selection = _ratio(
+            arm_values["vehicle"]["error_reproduction"],
+            arm_values["vehicle"]["nonerror_reproduction"],
         )
         event_truth["relative_error_daughter_reproduction"].append(
-            treatment_selection / vehicle_selection
+            _ratio(treatment_selection, vehicle_selection)
         )
         event_truth["division_completion"].append(
-            arm_values["treatment"]["division"]
-            / arm_values["vehicle"]["division"]
+            _ratio(
+                arm_values["treatment"]["division"],
+                arm_values["vehicle"]["division"],
+            )
         )
         event_truth["nonerror_daughter_death"].append(
-            arm_values["treatment"]["nonerror_death"]
-            / arm_values["vehicle"]["nonerror_death"]
+            _ratio(
+                arm_values["treatment"]["nonerror_death"],
+                arm_values["vehicle"]["nonerror_death"],
+            )
         )
     realized_ratios = {
-        name: math.exp(sum(math.log(value) for value in values) / len(values))
+        name: _geometric_mean(values)
         for name, values in event_truth.items()
     }
     observed = ObservedAggregateStudy(
@@ -940,6 +1104,8 @@ def _empty_counts() -> dict[str, int]:
         "negative_followed": 0,
         "negative_reproduced": 0,
         "negative_died": 0,
+        "positive_slots": 0,
+        "negative_slots": 0,
     }
 
 
@@ -969,6 +1135,16 @@ def _event_counts(
         row["negative_followed"] += run.event_negative_daughters_followed
         row["negative_reproduced"] += run.event_negative_daughters_reproduced
         row["negative_died"] += run.event_negative_daughters_died
+        row["positive_slots"] += (
+            run.event_positive_daughter_slots
+            if run.event_positive_daughter_slots is not None
+            else 2 * run.event_positive_divisions
+        )
+        row["negative_slots"] += (
+            run.event_negative_daughter_slots
+            if run.event_negative_daughter_slots is not None
+            else 2 * run.event_negative_divisions
+        )
     expected_runs = design.edit_events * design.clones_per_edit_event * design.runs_per_clone
     for arm in ARM_NAMES:
         if sum(1 for key in seen if key[0] == arm) != expected_runs:
@@ -1040,6 +1216,20 @@ def _solve_latent_outcomes(
     return (true_error, true_nonerror, None)
 
 
+def _ratio(numerator: float, denominator: float) -> float:
+    if denominator == 0:
+        return math.inf if numerator else 0.0
+    return numerator / denominator
+
+
+def _geometric_mean(values: list[float]) -> float:
+    if any(value <= 0 for value in values):
+        return 0.0
+    if any(math.isinf(value) for value in values):
+        return math.inf
+    return math.exp(sum(math.log(value) for value in values) / len(values))
+
+
 def _ratio_estimate(
     vehicle_values: list[float | None],
     treatment_values: list[float | None],
@@ -1051,7 +1241,8 @@ def _ratio_estimate(
     if len(vehicle_values) != len(treatment_values):
         raise GenerationSelectionError("paired event vectors must have equal length")
     if len(vehicle_values) < 3 or any(
-        value is None for value in (*vehicle_values, *treatment_values)
+        value is None or value <= 0
+        for value in (*vehicle_values, *treatment_values)
     ):
         return RatioEstimate(
             False, None, None, None, "fewer than three estimable edit events"
@@ -1143,7 +1334,7 @@ def analyze_observed_study(
                 target["founder_error"] = (
                     float(target["generation"]) * float(target["division"])
                 )
-            total_daughters = 2 * row["divisions"]
+            total_daughters = row["positive_slots"] + row["negative_slots"]
             target["followup"] = (
                 (row["positive_followed"] + row["negative_followed"])
                 / total_daughters
@@ -1156,6 +1347,12 @@ def analyze_observed_study(
                         generation_rate=generation,
                         sensitivity=sensitivity,
                         specificity=specificity,
+                        # Rates and floors are computed on followed
+                        # daughters: every followed daughter's fate is
+                        # accounted — reproduced, died, or alive at the
+                        # window end (the cytostasis outcome). The
+                        # unaccounted daughters are the unfollowed, and
+                        # they are already excluded from these counts.
                         positive_followed=row["positive_followed"],
                         positive_successes=row["positive_reproduced"],
                         negative_followed=row["negative_followed"],
@@ -1178,6 +1375,9 @@ def analyze_observed_study(
                     generation_rate=generation,
                     sensitivity=sensitivity,
                     specificity=specificity,
+                    # Same accounted-cohort denominators: a daughter
+                    # followed to the window end without an outcome is a
+                    # resolved observation, not a censored one.
                     positive_followed=row["positive_followed"],
                     positive_successes=row["positive_died"],
                     negative_followed=row["negative_followed"],
@@ -1253,11 +1453,11 @@ def analyze_observed_study(
     vehicle_audit = study.arm_audits["vehicle"]
     treatment_audit = study.arm_audits["treatment"]
     event_audit_ratio = treatment_audit.event_sensitivity / vehicle_audit.event_sensitivity
-    _vehicle_fpr_lower, vehicle_fpr_upper = _wilson(
+    vehicle_fpr_lower, vehicle_fpr_upper = _wilson(
         vehicle_audit.false_positive_reference_nonerrors,
         vehicle_audit.reference_nonerrors,
     )
-    treatment_fpr_lower, _treatment_fpr_upper = _wilson(
+    treatment_fpr_lower, treatment_fpr_upper = _wilson(
         treatment_audit.false_positive_reference_nonerrors,
         treatment_audit.reference_nonerrors,
     )
@@ -1267,14 +1467,20 @@ def analyze_observed_study(
     measurement_flags = {
         "event_detection_bias": (
             event_audit_ratio <= thresholds.event_detection_bias_ratio
+            or event_audit_ratio >= 1.0 / thresholds.event_detection_bias_ratio
         ),
         "event_specificity_bias": (
             treatment_fpr_lower
             >= thresholds.event_false_positive_increase_ratio
             * vehicle_fpr_upper
+            or vehicle_fpr_lower
+            >= thresholds.event_false_positive_increase_ratio
+            * treatment_fpr_upper
         ),
         "division_detection_bias": (
             division_audit_ratio <= thresholds.division_detection_bias_ratio
+            or division_audit_ratio
+            >= 1.0 / thresholds.division_detection_bias_ratio
         ),
         "informative_followup_bias": (
             followup.estimable
@@ -1282,6 +1488,12 @@ def analyze_observed_study(
             and followup.ratio <= thresholds.followup_bias_ratio
             and followup.upper is not None
             and followup.upper < 1.0
+        ),
+        "arm_audit_underpowered": any(
+            audit.reference_errors < design.arm_event_audit_errors
+            or audit.reference_nonerrors < design.arm_event_audit_nonerrors
+            or audit.reference_divisions < design.arm_division_audit_events
+            for audit in (vehicle_audit, treatment_audit)
         ),
     }
     measurement_invalid = any(measurement_flags.values())
@@ -1520,6 +1732,10 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
     replicates = _positive_integer(
         root["monte_carlo_replicates"], "monte_carlo_replicates"
     )
+    if replicates > MAX_MONTE_CARLO_REPLICATES:
+        raise GenerationSelectionError(
+            "monte_carlo_replicates exceeds the resource ceiling"
+        )
     design = _dataclass_from_dict(StudyDesign, root["design"], "design")
     heterogeneity = _dataclass_from_dict(
         Heterogeneity, root["heterogeneity"], "heterogeneity"
@@ -1580,6 +1796,33 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
         acceptance["maximum_invalid_fraction_wilson_upper"],
         "maximum_invalid_fraction_wilson_upper",
     )
+    # Vacuity bounds: a benchmark whose minimums can be 0 or whose maximums
+    # can be 1/huge accepts any outcome — a 'pass' would be vacuous. Floors
+    # are deliberately below the frozen config but above triviality.
+    for name, value in (
+        ("minimum_component_sensitivity_wilson_lower", minimum_sensitivity),
+        ("minimum_component_specificity_wilson_lower", minimum_specificity),
+        ("minimum_expected_flag_set_wilson_lower", minimum_flag_set),
+        ("minimum_interval_coverage_wilson_lower", minimum_coverage),
+        ("minimum_generation_detection_wilson_lower", minimum_generation),
+    ):
+        if value < 0.5:
+            raise GenerationSelectionError(
+                f"acceptance {name} cannot drop below 0.5 — a vacuous floor accepts any run"
+            )
+    for name, value in (
+        ("maximum_false_generation_wilson_upper", maximum_false_generation),
+        ("maximum_invalid_fraction_wilson_upper", maximum_invalid),
+    ):
+        if value > 0.5:
+            raise GenerationSelectionError(
+                f"acceptance {name} cannot exceed 0.5 — a vacuous ceiling accepts any run"
+            )
+    if maximum_bias > 1.0:
+        raise GenerationSelectionError(
+            "acceptance maximum_absolute_log_ratio_bias cannot exceed 1.0 — "
+            "an unbounded bias tolerance accepts any run"
+        )
 
     raw_scenarios = root["scenarios"]
     if not isinstance(raw_scenarios, list) or not raw_scenarios:
@@ -1640,6 +1883,13 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
         raise GenerationSelectionError(
             "at least one required G and one required non-G scenario are required"
         )
+    total_work = (
+        design.planned_opportunities_per_arm * replicates * len(parsed)
+    )
+    if total_work > MAX_TOTAL_SIMULATED_OPPORTUNITIES:
+        raise GenerationSelectionError(
+            "design times replicates exceeds the total simulation ceiling"
+        )
 
     rows: list[dict[str, Any]] = []
     shared_calibrations = [
@@ -1658,7 +1908,9 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
         estimable_counts = {name: 0 for name in ESTIMANDS}
         coverage_counts = {name: 0 for name in ESTIMANDS}
         log_error_sums = {name: 0.0 for name in ESTIMANDS}
+        log_error_counts = {name: 0 for name in ESTIMANDS}
         truth_log_sums = {name: 0.0 for name in ESTIMANDS}
+        truth_finite_counts = {name: 0 for name in ESTIMANDS}
         representative: dict[str, Any] | None = None
         for replicate in range(replicates):
             replicate_seed = seed + index * 10_000_000 + replicate
@@ -1695,7 +1947,17 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                 flag_counts[flag] += bool(analysis["flags"][flag])
             for estimand in ESTIMANDS:
                 truth = simulation.truth.ratios[estimand]
-                truth_log_sums[estimand] += math.log(truth)
+                # A realized truth of zero or infinity is non-estimable —
+                # logging it would poison the bias and truth aggregates
+                # with nan rather than excluding the replicate.
+                truth_finite = (
+                    isinstance(truth, (int, float))
+                    and math.isfinite(float(truth))
+                    and float(truth) > 0.0
+                )
+                if truth_finite:
+                    truth_finite_counts[estimand] += 1
+                    truth_log_sums[estimand] += math.log(float(truth))
                 estimate = analysis["estimates"][estimand]
                 if not estimate["estimable"]:
                     continue
@@ -1704,7 +1966,9 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                 coverage_counts[estimand] += (
                     float(estimate["lower"]) <= truth <= float(estimate["upper"])
                 )
-                log_error_sums[estimand] += math.log(ratio / truth)
+                if truth_finite and math.isfinite(ratio) and ratio > 0.0:
+                    log_error_sums[estimand] += math.log(ratio / float(truth))
+                    log_error_counts[estimand] += 1
 
         flag_summaries = {
             flag: _rate_summary(flag_counts[flag], replicates)
@@ -1725,14 +1989,27 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                 "valid_replicates": valid,
                 "invalid_fraction": invalid_summary["rate"],
                 "invalid_fraction_wilson_upper": invalid_summary["wilson_upper"],
+                # Bias is averaged only over replicates whose realized truth
+                # AND estimate were finite-positive — report that subset so
+                # selection-on-finite cannot hide inside the metric.
+                "bias_replicates": log_error_counts[estimand],
+                "nonfinite_truth_replicates": (
+                    replicates - truth_finite_counts[estimand]
+                ),
                 "interval_coverage": coverage_summary["rate"],
                 "coverage_wilson_lower": coverage_summary["wilson_lower"],
                 "coverage_wilson_upper": coverage_summary["wilson_upper"],
                 "absolute_log_ratio_bias": (
-                    abs(log_error_sums[estimand] / valid) if valid else None
+                    abs(log_error_sums[estimand] / log_error_counts[estimand])
+                    if log_error_counts[estimand]
+                    else None
                 ),
-                "mean_realized_truth_ratio": math.exp(
-                    truth_log_sums[estimand] / replicates
+                "mean_realized_truth_ratio": (
+                    math.exp(
+                        truth_log_sums[estimand] / truth_finite_counts[estimand]
+                    )
+                    if truth_finite_counts[estimand]
+                    else None
                 ),
             }
         expected_pass = all(
@@ -1928,8 +2205,9 @@ def load_and_run_benchmark(path: Path) -> dict[str, Any]:
             path.read_text(encoding="utf-8"),
             object_pairs_hook=_strict_json_object,
             parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
         )
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, RecursionError) as exc:
         raise GenerationSelectionError(f"cannot read benchmark config: {exc}") from exc
     if not isinstance(config, dict):
         raise GenerationSelectionError("benchmark config root must be an object")

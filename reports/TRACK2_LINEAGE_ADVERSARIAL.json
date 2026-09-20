@@ -1,0 +1,101 @@
+{
+  "all_passed": true,
+  "cases": [
+    {
+      "clean_generation_signal": true,
+      "interpretation": "generation_reduction_without_detected_configured_confound",
+      "name": "clean_generation",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "mixed_components",
+      "name": "pruning_only",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "mixed_components",
+      "name": "cytostasis",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "generation_signal_with_unresolved_competing_completion",
+      "name": "mixed_insufficient",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "measurement_invalid",
+      "name": "field_concentration",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "measurement_invalid",
+      "name": "one_clone_false_positive",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "measurement_invalid",
+      "name": "one_edit_event_false_positive",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "mixed_components",
+      "name": "toxic_pruning",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "mixed_components",
+      "name": "preservation",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "label_leakage",
+      "name": "label_leakage",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "measurement_invalid",
+      "name": "treatment_dependent_dropout",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "measurement_invalid",
+      "name": "unequal_followup",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": null,
+      "interpretation": null,
+      "name": "enroll_after_exposure",
+      "passed": true,
+      "reason": "exposure cannot start before enrollment"
+    }
+  ],
+  "claim_boundary": "Timestamped first-attempt competing-risk software contract only; pre-division death is labeled separately from other non-completion; this is not biological validation, mixed-effects clinical inference, or efficacy evidence.",
+  "n_cases": 13,
+  "passed": 13,
+  "schema": "mva-track2-lineage-study/v1",
+  "synthetic_only": true
+}

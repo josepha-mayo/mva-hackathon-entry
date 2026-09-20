@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import os
 import sys
 import tempfile
 import unittest
@@ -19,6 +20,13 @@ from mva_hackathon.freeze import (
     build_public_commitment_manifest,
     verify_manifest,
     write_manifest,
+)
+from mva_hackathon.community_pipeline import run_community_pipeline
+from mva_hackathon.provenance import receipt_sha256
+from mva_hackathon.save_path import (
+    _copy_toolkit,
+    _prepare_reachable,
+    declare_next_gate,
 )
 from mva_hackathon.submission import REQUIRED_FIELDS
 
@@ -64,6 +72,18 @@ class FreezeTests(unittest.TestCase):
         self.raw_without_commitment = self._private_file(
             "inputs/synthetic-index.bin", b"strictly synthetic index bytes"
         )
+        # The freeze receipt must be the real recomputed pipeline result over
+        # the bound toolkit — a self-digested fabrication no longer seals.
+        self.toolkit = _copy_toolkit(self.private)
+        _prepare_reachable(self.toolkit)
+        declare_next_gate(self.toolkit, "syn-gate-replication")
+        receipt = run_community_pipeline(self.toolkit)
+        self.program_receipt = self._private_file(
+            "inputs/program-receipt.json",
+            (
+                json.dumps(receipt, indent=2, allow_nan=False) + "\n"
+            ).encode("utf-8"),
+        )
 
     def _public_file(self, relative: str, payload: bytes) -> Path:
         path = self.public / relative
@@ -76,6 +96,22 @@ class FreezeTests(unittest.TestCase):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(payload)
         return path
+
+    @staticmethod
+    def _program_receipt_bytes(decision: str = "advance", *, stamp: bool = True) -> bytes:
+        receipt: dict[str, object] = {
+            "schema": "mva-track2-community-pipeline/v1",
+            "synthetic_only": True,
+            "decision": decision,
+            "blocked_by": None,
+            "block_reason": None,
+            "n_steps": 16,
+            "n_skipped": 0,
+            "steps": [],
+        }
+        if stamp:
+            receipt["receipt_sha256"] = receipt_sha256(receipt)
+        return json.dumps(receipt, indent=2, allow_nan=False).encode("utf-8") + b"\n"
 
     def csv(self, name: str, position: int) -> Path:
         path = self.public / "submissions" / name
@@ -133,6 +169,10 @@ class FreezeTests(unittest.TestCase):
         calibrations: dict[str, dict[str, str]] | None = None,
         champion_method_id: str | None = None,
         nonces: dict[str, bytes] | None = None,
+        official_space_commit: str = COMMIT,
+        track2_reproducibility: Path | None = None,
+        track2_root: Path | None = None,
+        git_root: Path | None = None,
     ) -> dict[str, object]:
         rationales = {
             path.name: f"Predeclared synthetic method represented by {path.name}."
@@ -175,7 +215,7 @@ class FreezeTests(unittest.TestCase):
         return build_manifest(
             files,
             rationales,
-            official_space_commit=COMMIT,
+            official_space_commit=official_space_commit,
             created_at_utc="2026-08-26T14:00:00+00:00",
             artifact_root=self.public,
             artifacts=artifacts or self.artifacts(),
@@ -191,10 +231,15 @@ class FreezeTests(unittest.TestCase):
             private_raw_paths={
                 "synthetic-input": self.raw,
                 "synthetic-index": self.raw_without_commitment,
+                "program-receipt": self.program_receipt,
             },
+            community_toolkit_root=self.toolkit,
             public_commitment_nonces=nonces
             if nonces is not None
             else {"synthetic-input": NONCE},
+            track2_reproducibility=track2_reproducibility,
+            track2_root=track2_root,
+            git_root=git_root,
         )
 
     def write_and_verify(self, manifest: dict[str, object]) -> Path:
@@ -304,7 +349,7 @@ class FreezeTests(unittest.TestCase):
     def test_public_projection_hides_path_raw_hash_and_nonce(self) -> None:
         manifest = self.manifest([self.csv("one.csv", 10_001)])
         public = build_public_commitment_manifest(manifest)
-        rendered = json.dumps(public, sort_keys=True)
+        rendered = json.dumps(public, sort_keys=True, allow_nan=False)
 
         self.assertEqual(public["schema"], PUBLIC_COMMITMENT_SCHEMA)
         self.assertEqual(len(public["commitments"]), 1)  # type: ignore[arg-type]
@@ -350,6 +395,51 @@ class FreezeTests(unittest.TestCase):
         with self.assertRaisesRegex(FreezeError, "private_raw_root is required"):
             verify_manifest(path, self.public)
 
+    def test_case_tampered_manifest_path_fails_verification(self) -> None:
+        path = self.write_and_verify(self.manifest([self.csv("one.csv", 10_001)]))
+        stored = json.loads(path.read_text(encoding="utf-8"))
+        entry = stored["artifacts"]["report"][0]
+        original = entry["path"]
+        tampered = original.upper()
+        if tampered == original:
+            tampered = original.capitalize()
+        entry["path"] = tampered
+        path.write_text(json.dumps(stored, allow_nan=False), encoding="utf-8")
+        probe = self.public / tampered
+        if not probe.exists():
+            self.skipTest("case-sensitive filesystem resolves the tampered path absent")
+        with self.assertRaisesRegex(FreezeError, "stored path does not match"):
+            verify_manifest(path, self.public, private_raw_root=self.private)
+
+    def test_hardlinked_public_files_cannot_hold_two_roles(self) -> None:
+        alias = self.public / "code" / "pipeline-alias.py"
+        alias.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            os.link(self.code, alias)
+        except OSError:
+            self.skipTest("hard links unavailable on this filesystem")
+        path = self.write_and_verify(self.manifest([self.csv("one.csv", 10_001)]))
+        stored = json.loads(path.read_text(encoding="utf-8"))
+        stored["artifacts"]["code"].insert(
+            0,
+            {
+                "path": "code/pipeline-alias.py",
+                "size_bytes": alias.stat().st_size,
+                "sha256": hashlib.sha256(alias.read_bytes()).hexdigest(),
+            },
+        )
+        path.write_text(json.dumps(stored, allow_nan=False), encoding="utf-8")
+        with self.assertRaisesRegex(FreezeError, "multiple frozen roles"):
+            verify_manifest(path, self.public, private_raw_root=self.private)
+
+    def test_non_finite_manifest_constant_fails_closed(self) -> None:
+        path = self.write_and_verify(self.manifest([self.csv("one.csv", 10_001)]))
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        text = json.dumps(raw, allow_nan=False)
+        path.write_text(text[:-1] + ',"extra": NaN}', encoding="utf-8")
+        with self.assertRaisesRegex(FreezeError, "unreadable"):
+            verify_manifest(path, self.public, private_raw_root=self.private)
+
     def test_tampered_upload_order_is_detected(self) -> None:
         files = [self.csv("one.csv", 10_001), self.csv("two.csv", 20_001)]
         manifest = self.manifest(files)
@@ -357,7 +447,7 @@ class FreezeTests(unittest.TestCase):
         write_manifest(path, manifest)
         stored = json.loads(path.read_text(encoding="utf-8"))
         stored["upload_order"].reverse()
-        path.write_text(json.dumps(stored), encoding="utf-8")
+        path.write_text(json.dumps(stored, allow_nan=False), encoding="utf-8")
         with self.assertRaisesRegex(FreezeError, "upload order is malformed|annotations changed"):
             verify_manifest(path, self.public, private_raw_root=self.private)
 
@@ -409,9 +499,33 @@ class FreezeTests(unittest.TestCase):
         write_manifest(path, manifest)
         stored = json.loads(path.read_text(encoding="utf-8"))
         stored["calibrations"][1]["method"] = "Tampered logistic calibration method"
-        path.write_text(json.dumps(stored), encoding="utf-8")
+        path.write_text(json.dumps(stored, allow_nan=False), encoding="utf-8")
         with self.assertRaisesRegex(FreezeError, "calibration identity changed"):
             verify_manifest(path, self.public, private_raw_root=self.private)
+
+    def test_sealing_refuses_a_tree_that_drifted_after_build(self) -> None:
+        manifest = self.manifest([self.csv("one.csv", 10_001)])
+        self.report.write_bytes(b"tampered after hashing\n")
+        with self.assertRaises(FreezeError):
+            write_manifest(
+                self.root / "freeze.json",
+                manifest,
+                artifact_root=self.public,
+                private_raw_root=self.private,
+            )
+        self.assertFalse((self.root / "freeze.json").exists())
+
+    def test_sealing_passes_when_the_tree_is_stable(self) -> None:
+        manifest = self.manifest([self.csv("one.csv", 10_001)])
+        path = self.root / "freeze.json"
+        write_manifest(
+            path,
+            manifest,
+            artifact_root=self.public,
+            private_raw_root=self.private,
+        )
+        self.assertTrue(path.exists())
+        verify_manifest(path, self.public, private_raw_root=self.private)
 
     def test_upload_order_must_start_with_predeclared_champion(self) -> None:
         files = [self.csv("one.csv", 10_001), self.csv("two.csv", 20_001)]
@@ -423,6 +537,104 @@ class FreezeTests(unittest.TestCase):
         del artifacts["reference"]
         with self.assertRaisesRegex(FreezeError, "missing=.*reference"):
             self.manifest([self.csv("one.csv", 10_001)], artifacts=artifacts)
+
+    def test_freeze_requires_an_advancing_program_receipt(self) -> None:
+        file = self.csv("one.csv", 10_001)
+        held = self._private_file(
+            "inputs/program-receipt.json",
+            self._program_receipt_bytes(decision="hold"),
+        )
+        self.program_receipt = held
+        with self.assertRaisesRegex(FreezeError, "did not advance"):
+            self.manifest([file])
+
+    def test_freeze_rejects_an_undigested_program_receipt(self) -> None:
+        file = self.csv("one.csv", 10_001)
+        self.program_receipt = self._private_file(
+            "inputs/program-receipt.json",
+            self._program_receipt_bytes(stamp=False),
+        )
+        with self.assertRaisesRegex(FreezeError, "self-integrity digest"):
+            self.manifest([file])
+
+    def test_freeze_rejects_a_fabricated_advancing_receipt(self) -> None:
+        # A self-digested "advance" receipt that the bound toolkit does not
+        # reproduce is a forgery — self-integrity is not authenticity.
+        file = self.csv("one.csv", 10_001)
+        self.program_receipt = self._private_file(
+            "inputs/program-receipt.json",
+            self._program_receipt_bytes(decision="advance"),
+        )
+        with self.assertRaisesRegex(
+            FreezeError, "does not match the bound community toolkit"
+        ):
+            self.manifest([file])
+
+    def test_freeze_rejects_a_toolkit_mismatched_receipt(self) -> None:
+        file = self.csv("one.csv", 10_001)
+        with tempfile.TemporaryDirectory() as other:
+            other_toolkit = _copy_toolkit(Path(other))
+            _prepare_reachable(other_toolkit)
+            declare_next_gate(other_toolkit, "syn-gate-replication")
+            evidence_path = (
+                other_toolkit / "observed_inferred_unknown.synthetic.json"
+            )
+            evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+            evidence["links"][0]["statement"] = (
+                "Rescue differs under treatment at generation resolution (edited)."
+            )
+            evidence_path.write_text(
+                json.dumps(evidence, indent=2, allow_nan=False), encoding="utf-8"
+            )
+            # Still advancing, but bound to a different toolkit — its receipt
+            # cannot seal this freeze.
+            other_receipt = run_community_pipeline(other_toolkit)
+            self.assertEqual(other_receipt["decision"], "advance")
+            self.program_receipt = self._private_file(
+                "inputs/program-receipt.json",
+                (
+                    json.dumps(other_receipt, indent=2, allow_nan=False) + "\n"
+                ).encode("utf-8"),
+            )
+            with self.assertRaisesRegex(
+                FreezeError, "does not match the bound community toolkit"
+            ):
+                self.manifest([file])
+
+    def test_freeze_rejects_a_missing_program_receipt(self) -> None:
+        file = self.csv("one.csv", 10_001)
+        with self.assertRaisesRegex(FreezeError, "program-receipt"):
+            build_manifest(
+                [file],
+                {file.name: "A sufficiently detailed synthetic method rationale."},
+                official_space_commit=COMMIT,
+                created_at_utc="2026-08-26T14:00:00+00:00",
+                artifact_root=self.public,
+                artifacts=self.artifacts(),
+                expected_ablations=[],
+                method_ids={file.name: "S1_CHAMPION"},
+                calibrations={
+                    "S1_CHAMPION": {
+                        "calibration_id": "synthetic-isotonic-v1",
+                        "method": "Isotonic regression on a synthetic benchmark",
+                        "config_artifact": "config/calibration.json",
+                        "benchmark_artifact": "benchmark/heldout.json",
+                    },
+                },
+                champion_method_id="S1_CHAMPION",
+                upload_order=[file.name],
+                private_raw_root=self.private,
+                private_raw_paths={"synthetic-input": self.raw},
+                community_toolkit_root=self.toolkit,
+            )
+
+    def test_zero_byte_artifact_cannot_satisfy_a_role(self) -> None:
+        file = self.csv("one.csv", 10_001)
+        empty = self._public_file("report/empty.md", b"")
+        artifacts = self.artifacts()
+        artifacts["report"] = [empty]
+        with self.assertRaisesRegex(FreezeError, "0-byte"):
+            self.manifest([file], artifacts=artifacts)
 
     def test_non_utc_freeze_timestamp_is_rejected(self) -> None:
         file = self.csv("one.csv", 10_001)
@@ -447,7 +659,11 @@ class FreezeTests(unittest.TestCase):
                 champion_method_id="S1_CHAMPION",
                 upload_order=[file.name],
                 private_raw_root=self.private,
-                private_raw_paths={"synthetic-input": self.raw},
+                private_raw_paths={
+                    "synthetic-input": self.raw,
+                    "program-receipt": self.program_receipt,
+                },
+                community_toolkit_root=self.toolkit,
             )
 
     def test_overwrite_is_rejected(self) -> None:
@@ -462,6 +678,321 @@ class FreezeTests(unittest.TestCase):
         path.write_text('{"schema":"mva-track1-freeze/v1"}', encoding="utf-8")
         with self.assertRaisesRegex(FreezeError, "unsupported"):
             verify_manifest(path, self.public, private_raw_root=self.private)
+
+    def test_hard_linked_evidence_files_cannot_fill_two_roles(self) -> None:
+        alias = self.public / "reference" / "aliased.txt"
+        try:
+            os.link(self.report, alias)
+        except (OSError, NotImplementedError):
+            self.skipTest("hard links unavailable on this filesystem")
+        artifacts = self.artifacts()
+        artifacts["reference"] = [alias]
+        with self.assertRaisesRegex(FreezeError, "hard-linked"):
+            self.manifest([self.csv("one.csv", 10_001)], artifacts=artifacts)
+
+    def test_hard_linked_csv_cannot_fill_two_slots(self) -> None:
+        first = self.csv("one.csv", 10_001)
+        second = self.public / "submissions" / "two.csv"
+        try:
+            os.link(first, second)
+        except (OSError, NotImplementedError):
+            self.skipTest("hard links unavailable on this filesystem")
+        with self.assertRaisesRegex(FreezeError, "hard-linked"):
+            self.manifest([first, second])
+
+    def test_hard_linked_csv_cannot_alias_an_evidence_artifact(self) -> None:
+        file = self.csv("one.csv", 10_001)
+        alias = self.public / "code" / "aliased.py"
+        try:
+            os.link(file, alias)
+        except (OSError, NotImplementedError):
+            self.skipTest("hard links unavailable on this filesystem")
+        artifacts = self.artifacts()
+        artifacts["code"] = [alias]
+        with self.assertRaisesRegex(FreezeError, "hard-linked"):
+            self.manifest([file], artifacts=artifacts)
+
+    def _track2_tree(self, commit: str) -> tuple[Path, Path]:
+        """Write a complete, valid Track 2 reproducibility tree to disk."""
+        from mva_hackathon.reproducibility import (
+            ARTIFACT_PATHS,
+            COMMANDS,
+            MANIFEST_PATH,
+            SCHEMA,
+        )
+
+        tree = self.root / "track2"
+        files = {
+            path: f"fixture:{role}\n".encode() for role, path in ARTIFACT_PATHS.items()
+        }
+        config = {
+            "schema": "mva-generation-selection-benchmark/v3",
+            "monte_carlo_replicates": 1000,
+            "scenarios": [{"name": f"scenario_{index}"} for index in range(14)],
+        }
+        files[ARTIFACT_PATHS["benchmark_config"]] = (
+            json.dumps(config, sort_keys=True, allow_nan=False) + "\n"
+        ).encode()
+        receipt = {
+            "runtime_receipt": {
+                "canonical_command": COMMANDS["benchmark"],
+                "config_sha256": hashlib.sha256(
+                    files[ARTIFACT_PATHS["benchmark_config"]]
+                ).hexdigest(),
+                "source_sha256": hashlib.sha256(
+                    files[ARTIFACT_PATHS["benchmark_source"]]
+                ).hexdigest(),
+                "runner_sha256": hashlib.sha256(
+                    files[ARTIFACT_PATHS["benchmark_runner"]]
+                ).hexdigest(),
+                "test_sha256": hashlib.sha256(
+                    files[ARTIFACT_PATHS["benchmark_test"]]
+                ).hexdigest(),
+                "git_source_commit": commit,
+                "git_tracked_worktree_clean": True,
+            },
+            "monte_carlo_replicates_per_scenario": 1000,
+            "scenarios": [
+                {"name": f"scenario_{index}", "passed": True}
+                for index in range(14)
+            ],
+            "summary": {
+                "acceptance_passed": True,
+                "all_passed": True,
+                "passed": 14,
+                "total": 14,
+            },
+            "total_simulated_vehicle_treatment_comparisons": 14000,
+        }
+        files[ARTIFACT_PATHS["benchmark_receipt"]] = (
+            json.dumps(receipt, sort_keys=True, allow_nan=False) + "\n"
+        ).encode()
+        for path, payload in files.items():
+            target = tree.joinpath(*path.parts)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(payload)
+        manifest = {
+            "schema": SCHEMA,
+            "source_commit": commit,
+            "commands": COMMANDS,
+            "artifacts": [
+                {
+                    "role": role,
+                    "path": path.as_posix(),
+                    "sha256": hashlib.sha256(files[path]).hexdigest(),
+                }
+                for role, path in ARTIFACT_PATHS.items()
+            ],
+        }
+        manifest_path = tree.joinpath(*MANIFEST_PATH.parts)
+        manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        manifest_path.write_bytes(
+            (json.dumps(manifest, sort_keys=True, allow_nan=False) + "\n").encode()
+        )
+        return tree, manifest_path
+
+    def test_track2_binding_builds_and_verifies(self) -> None:
+        tree, track2_manifest = self._track2_tree(COMMIT)
+        files = [self.csv("full.csv", 10_001)]
+        manifest = self.manifest(
+            files,
+            track2_reproducibility=track2_manifest,
+            track2_root=tree,
+        )
+        binding = manifest["track2_reproducibility"]
+        self.assertEqual(binding["source_commit"], COMMIT)  # type: ignore[index]
+        path = self.root / "freeze.json"
+        write_manifest(path, manifest)
+        verify_manifest(
+            path, self.public, private_raw_root=self.private, track2_root=tree
+        )
+
+    def test_track2_binding_rejects_commit_mismatch(self) -> None:
+        tree, track2_manifest = self._track2_tree("b" * 40)
+        with self.assertRaisesRegex(FreezeError, "source_commit"):
+            self.manifest(
+                [self.csv("one.csv", 10_001)],
+                track2_reproducibility=track2_manifest,
+                track2_root=tree,
+            )
+
+    def test_track2_binding_rejects_stale_manifest(self) -> None:
+        tree, track2_manifest = self._track2_tree(COMMIT)
+        from mva_hackathon.reproducibility import ARTIFACT_PATHS
+
+        tampered = tree.joinpath(*ARTIFACT_PATHS["track2_report"].parts)
+        tampered.write_bytes(tampered.read_bytes() + b"drift")
+        with self.assertRaisesRegex(FreezeError, "stale or invalid"):
+            self.manifest(
+                [self.csv("one.csv", 10_001)],
+                track2_reproducibility=track2_manifest,
+                track2_root=tree,
+            )
+
+    def test_track2_binding_requires_track2_root(self) -> None:
+        tree, track2_manifest = self._track2_tree(COMMIT)
+        with self.assertRaisesRegex(FreezeError, "track2_root is required"):
+            self.manifest(
+                [self.csv("one.csv", 10_001)],
+                track2_reproducibility=track2_manifest,
+            )
+
+    def test_verify_rejects_track2_root_without_binding(self) -> None:
+        tree, _ = self._track2_tree(COMMIT)
+        manifest = self.manifest([self.csv("one.csv", 10_001)])
+        path = self.root / "freeze.json"
+        write_manifest(path, manifest)
+        with self.assertRaisesRegex(FreezeError, "binds no"):
+            verify_manifest(
+                path, self.public, private_raw_root=self.private, track2_root=tree
+            )
+
+    def test_verify_rejects_binding_without_track2_root(self) -> None:
+        tree, track2_manifest = self._track2_tree(COMMIT)
+        manifest = self.manifest(
+            [self.csv("one.csv", 10_001)],
+            track2_reproducibility=track2_manifest,
+            track2_root=tree,
+        )
+        path = self.root / "freeze.json"
+        write_manifest(path, manifest)
+        with self.assertRaisesRegex(FreezeError, "without track2_root"):
+            verify_manifest(path, self.public, private_raw_root=self.private)
+
+    def test_verify_rejects_tampered_binding_digest(self) -> None:
+        tree, track2_manifest = self._track2_tree(COMMIT)
+        manifest = self.manifest(
+            [self.csv("one.csv", 10_001)],
+            track2_reproducibility=track2_manifest,
+            track2_root=tree,
+        )
+        manifest["track2_reproducibility"]["sha256"] = "0" * 64  # type: ignore[index]
+        path = self.root / "freeze.json"
+        write_manifest(path, manifest)
+        with self.assertRaisesRegex(FreezeError, "does not match"):
+            verify_manifest(
+                path, self.public, private_raw_root=self.private, track2_root=tree
+            )
+
+    def test_git_root_proves_commit_existence(self) -> None:
+        import subprocess
+
+        repo = Path(__file__).resolve().parents[1]
+        proc = subprocess.run(
+            ["git", "-C", str(repo), "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+        )
+        if proc.returncode != 0:
+            self.skipTest("repository has no Git HEAD")
+        commit = proc.stdout.strip()
+        tree, track2_manifest = self._track2_tree(commit)
+        manifest = self.manifest(
+            [self.csv("one.csv", 10_001)],
+            official_space_commit=commit,
+            track2_reproducibility=track2_manifest,
+            track2_root=tree,
+            git_root=repo,
+        )
+        path = self.root / "freeze.json"
+        write_manifest(path, manifest)
+        verify_manifest(
+            path,
+            self.public,
+            private_raw_root=self.private,
+            track2_root=tree,
+            git_root=repo,
+        )
+        with self.assertRaisesRegex(FreezeError, "does not resolve"):
+            self.manifest(
+                [self.csv("two.csv", 20_001)],
+                official_space_commit="0" * 40,
+                git_root=repo,
+            )
+
+    def test_write_manifest_seals_with_track2_and_git_roots(self) -> None:
+        import subprocess
+
+        repo = Path(__file__).resolve().parents[1]
+        proc = subprocess.run(
+            ["git", "-C", str(repo), "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+        )
+        if proc.returncode != 0:
+            self.skipTest("repository has no Git HEAD")
+        commit = proc.stdout.strip()
+        tree, track2_manifest = self._track2_tree(commit)
+        manifest = self.manifest(
+            [self.csv("one.csv", 10_001)],
+            official_space_commit=commit,
+            track2_reproducibility=track2_manifest,
+            track2_root=tree,
+            git_root=repo,
+        )
+        path = self.root / "freeze.json"
+        write_manifest(
+            path,
+            manifest,
+            artifact_root=self.public,
+            private_raw_root=self.private,
+            track2_root=tree,
+            git_root=repo,
+        )
+        self.assertTrue(path.is_file())
+
+    def test_write_manifest_rejects_roots_without_artifact_root(self) -> None:
+        tree, track2_manifest = self._track2_tree(COMMIT)
+        manifest = self.manifest(
+            [self.csv("one.csv", 10_001)],
+            track2_reproducibility=track2_manifest,
+            track2_root=tree,
+        )
+        with self.assertRaisesRegex(FreezeError, "require artifact_root"):
+            write_manifest(
+                self.root / "freeze.json",
+                manifest,
+                track2_root=tree,
+            )
+
+    def test_verify_detects_post_freeze_manifest_drift(self) -> None:
+        tree, track2_manifest = self._track2_tree(COMMIT)
+        manifest = self.manifest(
+            [self.csv("one.csv", 10_001)],
+            track2_reproducibility=track2_manifest,
+            track2_root=tree,
+        )
+        path = self.root / "freeze.json"
+        write_manifest(path, manifest)
+        track2_manifest.write_bytes(track2_manifest.read_bytes() + b" ")
+        with self.assertRaisesRegex(FreezeError, "does not match"):
+            verify_manifest(
+                path, self.public, private_raw_root=self.private, track2_root=tree
+            )
+
+    def test_public_projection_carries_the_track2_binding(self) -> None:
+        tree, track2_manifest = self._track2_tree(COMMIT)
+        manifest = self.manifest(
+            [self.csv("one.csv", 10_001)],
+            track2_reproducibility=track2_manifest,
+            track2_root=tree,
+        )
+        projection = build_public_commitment_manifest(manifest)
+        self.assertEqual(
+            projection["track2_reproducibility"],
+            manifest["track2_reproducibility"],
+        )
+        broken = dict(manifest)
+        broken["track2_reproducibility"] = {"path": "release/x.json"}
+        with self.assertRaisesRegex(FreezeError, "malformed"):
+            build_public_commitment_manifest(broken)
+        mismatched = dict(manifest)
+        mismatched["track2_reproducibility"] = {
+            **manifest["track2_reproducibility"],  # type: ignore[index]
+            "source_commit": "b" * 40,
+        }
+        with self.assertRaisesRegex(FreezeError, "does not match"):
+            build_public_commitment_manifest(mismatched)
 
 
 if __name__ == "__main__":

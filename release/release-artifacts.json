@@ -17,7 +17,7 @@
       "role": "track2_repositioning_report",
       "path": "reports/josephmayo_track2_report.md",
       "status": "released",
-      "sha256": "b0fb7ddeacd01dbc2e2e6ffe1a80fabd7099ebefea74c59aa9781820cfbfb620"
+      "sha256": "6ea418be7b4c2d5822e7243d7d8a82b169a91c1ad90cea39dccec57439a7614e"
     },
     {
       "role": "track2_pitch_script",
@@ -29,7 +29,7 @@
       "role": "track2_reproducibility_manifest",
       "path": "release/track2-reproducibility.json",
       "status": "released",
-      "sha256": "de9c2c55274e88dca00a87e7ce3fea163090dedc780c97dece483329a9af02a4"
+      "sha256": "1c01fdb2d78a4208a380227aea4ec733307b51deeb1adc04791f5a1bbb7b4800"
     }
   ]
 }

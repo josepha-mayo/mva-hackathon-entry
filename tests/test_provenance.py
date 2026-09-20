@@ -10,6 +10,8 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from mva_hackathon.provenance import (
+    MAX_CANONICAL_BYTES,
+    MAX_CANONICAL_DEPTH,
     PRIVATE_MANIFEST_SCHEMA,
     PUBLIC_MANIFEST_SCHEMA,
     STAGE_SCHEMA,
@@ -90,6 +92,30 @@ class ProvenanceTests(unittest.TestCase):
             semantic_digest({"unsafe": float("nan")})
         with self.assertRaisesRegex(ProvenanceError, "outside the canonical JSON domain"):
             semantic_digest({"not-json": {1, 2}})
+
+    def test_canonical_json_rejects_deep_nesting_and_huge_payloads(self) -> None:
+        deep: object = "leaf"
+        for _ in range(MAX_CANONICAL_DEPTH + 1):
+            deep = [deep]
+        with self.assertRaisesRegex(ProvenanceError, "nesting"):
+            canonical_json_bytes(deep)
+        within: object = "leaf"
+        for _ in range(MAX_CANONICAL_DEPTH):
+            within = [within]
+        self.assertTrue(canonical_json_bytes(within))
+        huge = {"payload": "x" * (MAX_CANONICAL_BYTES)}
+        with self.assertRaisesRegex(ProvenanceError, "MiB"):
+            canonical_json_bytes(huge)
+
+    def test_load_stage_record_rejects_deeply_nested_json(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory, "stage.json")
+            depth = 1200
+            path.write_text(
+                '{"a":' * depth + "1" + "}" * depth, encoding="utf-8"
+            )
+            with self.assertRaises(ProvenanceError):
+                load_stage_record(path)
 
     def test_success_stage_json_is_atomic_and_round_trips(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -212,6 +238,67 @@ class ProvenanceTests(unittest.TestCase):
                 self.success(),
                 {"code": digest("a"), "config": digest("b"), "tools": {}},
             )
+
+    def test_resume_can_be_pinned_to_a_named_stage(self) -> None:
+        record = self.success()
+        self.assertIs(
+            validate_resume(record, self.digests(), expected_stage="synthetic_qc"),
+            record,
+        )
+        with self.assertRaisesRegex(ResumeValidationError, "stage"):
+            validate_resume(record, self.digests(), expected_stage="other_stage")
+        self.assertFalse(
+            resume_is_valid(record, self.digests(), expected_stage="other_stage")
+        )
+
+    def test_resume_chain_requires_inputs_produced_by_prior_stages(self) -> None:
+        producer = StageRecord.success(
+            stage="upstream",
+            started_at="2026-08-26T11:00:00Z",
+            finished_at="2026-08-26T11:00:01Z",
+            command=["synthetic-tool"],
+            digests=self.digests(inputs={"controlled": digest("0")}),
+            semantic_validations={"schema_valid": True},
+            output_digests={"product": digest("d")},
+        )
+        record = self.success()
+        self.assertIs(
+            validate_resume(record, self.digests(), prior_records=[producer]),
+            record,
+        )
+        forged_input = self.success(
+            digests=self.digests(inputs={"synthetic-input": digest("7")})
+        )
+        expected = self.digests(inputs={"synthetic-input": digest("7")})
+        with self.assertRaisesRegex(ResumeValidationError, "not produced"):
+            validate_resume(
+                forged_input, expected, prior_records=[producer]
+            )
+        self.assertFalse(
+            resume_is_valid(forged_input, expected, prior_records=[producer])
+        )
+        controlled = {"synthetic-input": {"path": "x", "digest": digest("7")}}
+        self.assertIs(
+            validate_resume(
+                forged_input,
+                expected,
+                prior_records=[],
+                controlled_inputs=controlled,
+            ),
+            forged_input,
+        )
+        failed_prior = StageRecord.failure(
+            stage="upstream",
+            started_at="2026-08-26T11:00:00Z",
+            finished_at="2026-08-26T11:00:01Z",
+            exit_code=1,
+            command=["synthetic-tool"],
+            digests=self.digests(),
+            semantic_validations={"schema_valid": False},
+            error="failed",
+        )
+        with self.assertRaisesRegex(ResumeValidationError, "did not succeed"):
+            validate_resume(record, self.digests(), prior_records=[failed_prior])
 
     def test_public_and_private_manifests_have_disjoint_schemas(self) -> None:
         private = build_private_manifest(

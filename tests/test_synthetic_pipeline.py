@@ -127,13 +127,13 @@ class SyntheticPipelineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "bundle.json"
             source["alleles"][0]["gene"] = "".join(("R", "E", "A", "L", "1"))
-            path.write_text(json.dumps(source), encoding="utf-8")
+            path.write_text(json.dumps(source, allow_nan=False), encoding="utf-8")
             with self.assertRaisesRegex(SyntheticPipelineError, "SYN namespace"):
                 load_synthetic_bundle(path)
 
             source = json.loads(FIXTURE.read_text(encoding="utf-8"))
             source["unexpected"] = True
-            path.write_text(json.dumps(source), encoding="utf-8")
+            path.write_text(json.dumps(source, allow_nan=False), encoding="utf-8")
             with self.assertRaisesRegex(SyntheticPipelineError, "fields must be exactly"):
                 load_synthetic_bundle(path)
 

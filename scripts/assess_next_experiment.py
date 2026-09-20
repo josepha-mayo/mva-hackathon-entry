@@ -1,0 +1,80 @@
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import sys
+from pathlib import Path
+
+SOURCE_ROOT = Path(__file__).resolve().parents[1] / "src"
+if str(SOURCE_ROOT) not in sys.path:
+    sys.path.insert(0, str(SOURCE_ROOT))
+
+from mva_hackathon.next_experiment import (  # noqa: E402
+    NextExperimentError,
+    assess_next_experiment,
+)
+
+
+def _reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise NextExperimentError(f"duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
+def _reject_json_constant(value: str) -> None:
+    raise NextExperimentError(f"non-finite JSON number: {value}")
+
+
+def _finite_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise NextExperimentError(f"non-finite JSON number: {value}")
+    return parsed
+
+
+def _load_json(path: Path) -> object:
+    return json.loads(
+        path.read_text(encoding="utf-8"),
+        object_pairs_hook=_reject_duplicate_keys,
+        parse_constant=_reject_json_constant,
+        parse_float=_finite_float,
+    )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Rank the next wet measurement from a causal-chain worksheet."
+    )
+    parser.add_argument("--worksheet", required=True, type=Path)
+    parser.add_argument("--steps", type=Path)
+    parser.add_argument("--output", type=Path)
+    arguments = parser.parse_args()
+    try:
+        worksheet = _load_json(arguments.worksheet)
+        steps: list[object] = []
+        if arguments.steps is not None:
+            loaded = _load_json(arguments.steps)
+            if not isinstance(loaded, list):
+                parser.error("steps must be a JSON list")
+            steps = loaded
+        result = assess_next_experiment(worksheet, steps)
+    except (NextExperimentError, OSError, json.JSONDecodeError) as exc:
+        parser.error(str(exc))
+    except Exception as exc:  # noqa: BLE001 - normalize unexpected bugs
+        parser.error(f"unexpected error: {exc}")
+    encoded = json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n"
+    if arguments.output is not None:
+        if arguments.output.exists():
+            parser.error("output already exists; refusing to overwrite")
+        arguments.output.parent.mkdir(parents=True, exist_ok=True)
+        arguments.output.write_text(encoded, encoding="utf-8", newline="\n")
+    print(encoded, end="")
+    return 0 if result.get("program_effect") == "pass" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

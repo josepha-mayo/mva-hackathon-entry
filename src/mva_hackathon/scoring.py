@@ -8,9 +8,10 @@ strict ``Prediction`` objects produced by :mod:`mva_hackathon.submission`.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Iterable
 
-from .submission import Prediction, Variant
+from .submission import Prediction, SubmissionError, Variant
 
 RANK_POINT_TIERS = ((1, 100), (3, 50), (5, 25), (10, 10))
 
@@ -33,7 +34,33 @@ def _rank_points(rank: int) -> int:
 
 
 def score_rows(rows: Iterable[Prediction], true_variants: frozenset[Variant]) -> ScoreResult:
-    ranked = sorted(enumerate(rows), key=lambda item: (-item[1].epcr, item[0]))
+    ordered_rows = list(rows)
+    if not ordered_rows:
+        raise SubmissionError("no predictions supplied to score")
+    if not isinstance(true_variants, frozenset) or not true_variants:
+        raise SubmissionError("no truth variants supplied to score against")
+    for index, row in enumerate(ordered_rows, start=1):
+        if not isinstance(row.variants, frozenset):
+            raise SubmissionError(
+                f"prediction {index}: variants must be a frozenset"
+            )
+        if (
+            isinstance(row.epcr, bool)
+            or not isinstance(row.epcr, (int, float))
+            or not math.isfinite(row.epcr)
+            or not 0 < row.epcr <= 1
+        ):
+            raise SubmissionError(
+                f"prediction {index}: EPCR must be finite and in (0, 1]"
+            )
+    ranked = sorted(
+        enumerate(ordered_rows),
+        key=lambda item: (
+            -item[1].epcr,
+            tuple(sorted(item[1].variants)),
+            item[0],
+        ),
+    )
     predictions = [row for _, row in ranked]
 
     full_rank = next(

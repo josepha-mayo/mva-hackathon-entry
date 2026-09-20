@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import getpass
 import json
+import math
 import os
 import shutil
 import stat
@@ -30,8 +31,41 @@ class PreflightResult:
         return not self.issues
 
 
-def _powershell(script: str, env: dict[str, str]) -> tuple[int, str]:
+def _powershell_executable() -> str | None:
+    """Resolve a system PowerShell binary rather than trusting PATH order."""
+
+    candidates = [
+        Path(os.environ.get("ProgramFiles", r"C:\Program Files"))
+        / "PowerShell"
+        / "7"
+        / "pwsh.exe",
+        Path(os.environ.get("SystemRoot", r"C:\Windows"))
+        / "System32"
+        / "WindowsPowerShell"
+        / "v1.0"
+        / "powershell.exe",
+    ]
+    for candidate in candidates:
+        try:
+            if candidate.is_file() and not candidate.is_symlink():
+                return str(candidate)
+        except OSError:
+            continue
     executable = shutil.which("pwsh") or shutil.which("powershell")
+    if executable is None:
+        return None
+    resolved = Path(executable).resolve()
+    system_roots = (
+        Path(os.environ.get("SystemRoot", r"C:\Windows")).resolve(),
+        Path(os.environ.get("ProgramFiles", r"C:\Program Files")).resolve(),
+    )
+    if any(resolved.is_relative_to(root) for root in system_roots):
+        return str(resolved)
+    return None
+
+
+def _powershell(script: str, env: dict[str, str]) -> tuple[int, str]:
+    executable = _powershell_executable()
     if not executable:
         return 127, ""
     completed = subprocess.run(
@@ -47,13 +81,38 @@ def _powershell(script: str, env: dict[str, str]) -> tuple[int, str]:
     return completed.returncode, completed.stdout.strip()
 
 
+def _strict_object(pairs: list) -> dict:
+    result: dict = {}
+    for key, item in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key {key!r}")
+        result[key] = item
+    return result
+
+
+def _reject_constant(value: str) -> None:
+    raise ValueError(f"non-finite JSON constant {value!r}")
+
+
+def _finite_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise ValueError(f"non-finite JSON number {value!r}")
+    return parsed
+
+
 def _json_query(script: str, env: dict[str, str]) -> object | None:
     returncode, output = _powershell(script, env)
     if returncode != 0 or not output:
         return None
     try:
-        return json.loads(output)
-    except json.JSONDecodeError:
+        return json.loads(
+            output,
+            object_pairs_hook=_strict_object,
+            parse_constant=_reject_constant,
+            parse_float=_finite_float,
+        )
+    except (json.JSONDecodeError, ValueError):
         return None
 
 

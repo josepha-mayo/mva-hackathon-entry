@@ -1,0 +1,15 @@
+{
+  "schema": "mva.community-confirmation-record/v1",
+  "privacy_class": "synthetic",
+  "purpose": "Orthogonal confirmation handoff. Incomplete inputs cannot be ticked as both alleles observed. An RNA or RNA-derived library cannot confirm genomic genotype. Genomic DNA from an unmatched genotype line cannot stand in for the confirmed assay line. This is not a child's confirmation.",
+  "specimen_identity_resolved": false,
+  "second_aliquot": false,
+  "layout_complete": false,
+  "both_strands_counted": false,
+  "allele_1_status": "incomplete_inputs",
+  "allele_2_status": "incomplete_inputs",
+  "declared_status": "incomplete_inputs",
+  "producer": "unlinked",
+  "library_molecule": "unlabeled",
+  "confirmation_specimen": "unlabeled"
+}

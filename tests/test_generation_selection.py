@@ -182,7 +182,7 @@ class GenerationSelectionContractTests(unittest.TestCase):
     def test_config_is_strict_v3_and_has_no_oracle_invalid_list(self) -> None:
         config = _config()
         self.assertEqual(config["schema"], "mva-generation-selection-benchmark/v3")
-        self.assertNotIn("invalid_estimands", json.dumps(config))
+        self.assertNotIn("invalid_estimands", json.dumps(config, allow_nan=False))
         self.assertGreaterEqual(config["design"]["edit_events"], 3)
         self.assertTrue(
             any(
@@ -246,6 +246,49 @@ class GenerationSelectionContractTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(GenerationSelectionError, "duplicate"):
                 load_and_run_benchmark(path)
+
+    def test_near_vacuous_thresholds_are_rejected(self) -> None:
+        base = _config()["thresholds"]
+        vacuous = [
+            {"generation_reduction_ratio": 0.999},
+            {"selection_reduction_ratio": 0.99},
+            {"division_reduction_ratio": 0.9999},
+            {"selection_increase_ratio": 1.000001},
+            {"toxicity_increase_ratio": 1.000001},
+            {"event_false_positive_increase_ratio": 1.000001},
+            {"division_equivalence_lower_ratio": 1e-9},
+            {"division_equivalence_upper_ratio": 1e12},
+            {"event_detection_bias_ratio": 0.01},
+            {"division_detection_bias_ratio": 0.01},
+            {"followup_bias_ratio": 0.01},
+            {"confidence_multiplier": 1e-12},
+            {"confidence_multiplier": 1.0},
+            {"minimum_calibration_youden": 0.1},
+            {"minimum_detected_divisions_per_edit_event": 9},
+            {"minimum_event_positive_followed_per_edit_event": 5},
+            {"minimum_event_negative_followed_per_edit_event": 5},
+            {"minimum_posterior_separation": 0.19},
+        ]
+        for override in vacuous:
+            with self.subTest(override=override):
+                with self.assertRaises(GenerationSelectionError):
+                    AnalysisThresholds(**{**base, **override})
+
+    def test_design_and_replicate_resource_ceilings_are_enforced(self) -> None:
+        config = _config()
+        config["design"]["edit_events"] = 2_000_000
+        with self.assertRaises(GenerationSelectionError):
+            run_benchmark(config)
+
+        config = _config()
+        config["monte_carlo_replicates"] = 200_000
+        with self.assertRaises(GenerationSelectionError):
+            run_benchmark(config)
+
+        config = _config()
+        config["design"]["observation_opportunities_per_run"] = 1_000_000
+        with self.assertRaises(GenerationSelectionError):
+            run_benchmark(config)
 
 
 class GenerationSelectionGeneratorTests(unittest.TestCase):
@@ -388,6 +431,86 @@ class GenerationSelectionAnalysisTests(unittest.TestCase):
         self.assertIn("no-completion/death", shifted["status"]["primary_cohort_outcome_model"])
         self.assertIn("not separable", shifted["status"]["primary_cohort_boundary"])
 
+    def test_quiescent_followed_daughters_stay_in_the_accounted_cohort(
+        self,
+    ) -> None:
+        """A daughter followed to the window end without an outcome is a
+        resolved observation (alive, no division) — not unaccounted
+        progeny. Excluding her from the reproduction denominator
+        conditions the rate on decided fates (r/(r+d)) and biases the
+        relative estimand wherever arms have different quiescent
+        fractions."""
+        config = _config()
+        design = StudyDesign(
+            edit_events=3,
+            clones_per_edit_event=1,
+            runs_per_clone=1,
+            observation_opportunities_per_run=1000,
+            shared_event_reference_errors=1000,
+            shared_event_reference_nonerrors=1000,
+            shared_division_reference_events=1000,
+            arm_event_audit_errors=1000,
+            arm_event_audit_nonerrors=2000,
+            arm_division_audit_events=1000,
+        )
+        thresholds = dataclasses.replace(
+            AnalysisThresholds(**config["thresholds"]),
+            minimum_event_positive_followed_per_edit_event=20,
+        )
+        runs: list[ObservedRun] = []
+        for event in range(1, 4):
+            runs.append(
+                ObservedRun(
+                    arm="vehicle",
+                    edit_event_id=event,
+                    clone_id=event,
+                    run_id=1,
+                    opportunities=1000,
+                    detected_divisions=550,
+                    event_positive_divisions=50,
+                    event_negative_divisions=500,
+                    event_positive_daughters_followed=100,
+                    event_positive_daughters_reproduced=60,
+                    event_positive_daughters_died=10,
+                    event_negative_daughters_followed=1000,
+                    event_negative_daughters_reproduced=780,
+                    event_negative_daughters_died=50,
+                )
+            )
+            runs.append(
+                ObservedRun(
+                    arm="treatment",
+                    edit_event_id=event,
+                    clone_id=event,
+                    run_id=1,
+                    opportunities=1000,
+                    detected_divisions=550,
+                    event_positive_divisions=50,
+                    event_negative_divisions=500,
+                    event_positive_daughters_followed=100,
+                    event_positive_daughters_reproduced=60,
+                    event_positive_daughters_died=40,
+                    event_negative_daughters_followed=1000,
+                    event_negative_daughters_reproduced=780,
+                    event_negative_daughters_died=50,
+                )
+            )
+        study = ObservedAggregateStudy(
+            runs=tuple(runs),
+            shared_calibration=_perfect_calibration(),
+            arm_audits=_balanced_audits(),
+        )
+        result = analyze_observed_study(
+            study, design=design, thresholds=thresholds
+        )
+        estimate = result["estimates"]["relative_error_daughter_reproduction"]
+        self.assertTrue(estimate["estimable"])
+        # Marginal error-daughter reproduction is 0.60 in both arms; only
+        # the quiescent fraction differs. Conditioning on decided fates
+        # would shrink the ratio to ~0.70 and read a phantom pruning
+        # effect from a pure survival difference.
+        self.assertAlmostEqual(float(estimate["ratio"]), 1.0, delta=0.15)
+
     def test_weak_shared_calibration_and_low_information_fail_closed(self) -> None:
         study, design, thresholds = _fixed_cohort_study()
         weak = dataclasses.replace(
@@ -443,6 +566,41 @@ class GenerationSelectionAnalysisTests(unittest.TestCase):
                 result["estimates"][estimand]["reason"],
                 "arm-specific measurement QC failed",
             )
+
+    def test_vehicle_inflated_baseline_is_also_measurement_drift(self) -> None:
+        study, design, thresholds = _fixed_cohort_study()
+        biased = dataclasses.replace(
+            study,
+            arm_audits={
+                "vehicle": ArmAuditCounts(1000, 900, 1000, 100, 1000, 950),
+                "treatment": ArmAuditCounts(1000, 900, 1000, 5, 1000, 950),
+            },
+        )
+        result = analyze_observed_study(
+            biased, design=design, thresholds=thresholds
+        )
+        self.assertTrue(result["flags"]["event_specificity_bias"])
+        self.assertFalse(result["status"]["measurement_valid"])
+        self.assertFalse(result["status"]["clean_generation_signal"])
+        self.assertFalse(any(result["flags"][name] for name in BIOLOGICAL_FLAGS))
+
+    def test_underpowered_arm_audit_cannot_certify_clean(self) -> None:
+        study, design, thresholds = _fixed_cohort_study()
+        weak = dataclasses.replace(
+            study,
+            arm_audits={
+                "vehicle": ArmAuditCounts(1, 1, 1, 1, 1, 1),
+                "treatment": ArmAuditCounts(1, 1, 1, 0, 1, 1),
+            },
+        )
+        result = analyze_observed_study(
+            weak, design=design, thresholds=thresholds
+        )
+        self.assertTrue(result["flags"]["arm_audit_underpowered"])
+        self.assertFalse(result["status"]["measurement_valid"])
+        self.assertFalse(result["status"]["clean_generation_signal"])
+        self.assertEqual(result["interpretation"], "measurement_invalid")
+        self.assertFalse(any(result["flags"][name] for name in BIOLOGICAL_FLAGS))
 
     def test_duplicate_and_missing_runs_are_rejected(self) -> None:
         study, design, thresholds = _fixed_cohort_study()
@@ -564,7 +722,7 @@ class GenerationSelectionBenchmarkTests(unittest.TestCase):
                 row["representative_observed_analysis"]
                 for row in first["scenarios"]
             ]
-        )
+        , allow_nan=False)
         self.assertNotIn("realized_truth", payload)
         self.assertNotIn("generator", payload)
 

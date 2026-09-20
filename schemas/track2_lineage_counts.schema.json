@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mva:track2-lineage-counts:v1",
+  "title": "MVA Track 2 lineage-count export",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "study_id", "synthetic_only", "lock_state", "runs"],
+  "properties": {
+    "schema": {"const": "mva-track2-lineage-counts/v1"},
+    "privacy_class": {"const": "synthetic"},
+    "purpose": {"type": "string", "minLength": 20, "maxLength": 2000},
+    "study_id": {"$ref": "#/$defs/opaqueId"},
+    "allocation_id": {
+      "type": "string",
+      "minLength": 75,
+      "maxLength": 75,
+      "pattern": "^allocation-[0-9a-f]{64}$"
+    },
+    "synthetic_only": {"type": "boolean"},
+    "lock_state": {"enum": ["locked", "unlocked"]},
+    "blinded": {"type": "boolean"},
+    "forbidden_keys_absent": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "claim_boundary": {"type": "string", "minLength": 20, "maxLength": 2000},
+    "runs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/countRow"}
+    }
+  },
+  "$defs": {
+    "opaqueId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$",
+      "maxLength": 128
+    },
+    "countRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "arm",
+        "edit_event_id",
+        "clone_id",
+        "run_id",
+        "batch_id",
+        "functional_execution_id",
+        "exposure_support_record_id",
+        "exposure_profile_id",
+        "exposure_probe_id",
+        "exposure_started_at",
+        "endpoint_recorded_at",
+        "latest_enrolled_at",
+        "opportunities",
+        "detected_divisions",
+        "event_positive_divisions",
+        "event_negative_divisions",
+        "event_positive_daughters_followed",
+        "event_positive_daughters_reproduced",
+        "event_positive_daughters_died",
+        "event_negative_daughters_followed",
+        "event_negative_daughters_reproduced",
+        "event_negative_daughters_died"
+      ],
+      "properties": {
+        "arm": {"enum": ["vehicle", "treatment"]},
+        "edit_event_id": {"$ref": "#/$defs/opaqueId"},
+        "clone_id": {"$ref": "#/$defs/opaqueId"},
+        "run_id": {"$ref": "#/$defs/opaqueId"},
+        "batch_id": {"$ref": "#/$defs/opaqueId"},
+        "functional_execution_id": {"$ref": "#/$defs/opaqueId"},
+        "exposure_support_record_id": {"$ref": "#/$defs/opaqueId"},
+        "exposure_profile_id": {"$ref": "#/$defs/opaqueId"},
+        "exposure_probe_id": {"$ref": "#/$defs/opaqueId"},
+        "exposure_started_at": {"type": "string", "format": "date-time"},
+        "endpoint_recorded_at": {"type": ["string", "null"], "format": "date-time"},
+        "latest_enrolled_at": {"type": "string", "format": "date-time"},
+        "allocation_block_id": {"$ref": "#/$defs/opaqueId"},
+        "functional_assay_plate_id": {"$ref": "#/$defs/opaqueId"},
+        "plate_row": {"type": "integer", "minimum": 1},
+        "plate_column": {"type": "integer", "minimum": 1},
+        "dosing_order": {"type": "integer", "minimum": 1},
+        "acquisition_order": {"type": "integer", "minimum": 1},
+        "opportunities": {"type": "integer", "minimum": 0},
+        "detected_divisions": {"type": "integer", "minimum": 0},
+        "event_positive_divisions": {"type": "integer", "minimum": 0},
+        "event_negative_divisions": {"type": "integer", "minimum": 0},
+        "event_positive_daughters_followed": {"type": "integer", "minimum": 0},
+        "event_positive_daughters_reproduced": {"type": "integer", "minimum": 0},
+        "event_positive_daughters_died": {"type": "integer", "minimum": 0},
+        "event_negative_daughters_followed": {"type": "integer", "minimum": 0},
+        "event_negative_daughters_reproduced": {"type": "integer", "minimum": 0},
+        "event_negative_daughters_died": {"type": "integer", "minimum": 0},
+        "event_positive_daughter_slots": {"type": "integer", "minimum": 0},
+        "event_negative_daughter_slots": {"type": "integer", "minimum": 0},
+        "event_positive_multipolar_divisions": {"type": "integer", "minimum": 0},
+        "pre_division_death": {"type": "integer", "minimum": 0},
+        "no_division": {"type": "integer", "minimum": 0},
+        "dropout_censored": {"type": "integer", "minimum": 0}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"required": ["allocation_id"]},
+      "then": {
+        "properties": {
+          "runs": {
+            "items": {
+              "required": [
+                "allocation_block_id",
+                "functional_assay_plate_id",
+                "plate_row",
+                "plate_column",
+                "dosing_order",
+                "acquisition_order"
+              ]
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "runs": {
+            "items": {
+              "not": {
+                "anyOf": [
+                  {"required": ["allocation_block_id"]},
+                  {"required": ["functional_assay_plate_id"]},
+                  {"required": ["plate_row"]},
+                  {"required": ["plate_column"]},
+                  {"required": ["dosing_order"]},
+                  {"required": ["acquisition_order"]}
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

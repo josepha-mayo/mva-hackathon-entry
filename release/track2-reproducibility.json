@@ -3,7 +3,7 @@
     {
       "path": "reports/josephmayo_track2_report.md",
       "role": "track2_report",
-      "sha256": "b0fb7ddeacd01dbc2e2e6ffe1a80fabd7099ebefea74c59aa9781820cfbfb620"
+      "sha256": "6ea418be7b4c2d5822e7243d7d8a82b169a91c1ad90cea39dccec57439a7614e"
     },
     {
       "path": "reports/josephmayo_track2_pitch_script.md",
@@ -18,47 +18,227 @@
     {
       "path": "src/mva_hackathon/generation_selection.py",
       "role": "benchmark_source",
-      "sha256": "7ed361f62aaa954fb64e0b3db12e100bd8dcbc52eb561e504da18b5e4ddbd666"
+      "sha256": "5c7b4aaccba2120e5d7ba5821eca1a88924a9b2f83ac808680efc26d1878a2d7"
     },
     {
       "path": "scripts/run_generation_selection_benchmark.py",
       "role": "benchmark_runner",
-      "sha256": "b9519f0c50f7eb39feee843492e1abab0bd5ae1a880920f630217d15b7c6b341"
+      "sha256": "bd794bb80846726bf9f8afdf2ea75e6ede573054101a7bb90e08b7ca410cfdf3"
     },
     {
       "path": "tests/test_generation_selection.py",
       "role": "benchmark_test",
-      "sha256": "88b4ef5d9471c6bce5ca2e25bf9c0c96ce12c4dacc9b1698180d340a8778a23b"
+      "sha256": "6024f74f7d92bd8e528ca11d76911ad7cc43a2baf89255da2771aaaa7cd6bfaa"
     },
     {
       "path": "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json",
       "role": "benchmark_receipt",
-      "sha256": "7fcf47064419ffdd2515f6910b696e8307ccf23980f460eec81851c22d4d38be"
+      "sha256": "0cd719d1dcaa63d74bce12ab66ed57c88d47e21b7a1c2aec4546e9b50cf802bb"
     },
     {
       "path": "src/mva_hackathon/reproducibility.py",
       "role": "integrity_source",
-      "sha256": "92e229d3d1dc74a2522885020883620f981ab745ab25769c35ad97392b50b5f4"
+      "sha256": "7e048eef9f17281ef0a153f4641c5913a18ee2d0a81540ad1e5e0b18bd1a1b15"
     },
     {
       "path": "scripts/verify_track2_reproducibility.py",
       "role": "integrity_runner",
-      "sha256": "1ab5a97d32764df47fb5410f765ec2e966f2de67eff169809dd2124852ea0820"
+      "sha256": "4d2f011f9d8a01db5b91081fcb3c3e3136b90136794f54220e2d45ea8d44803f"
     },
     {
       "path": "tests/test_reproducibility.py",
       "role": "integrity_test",
-      "sha256": "3d735d5fac89c0f29d3e7e52772a0298b01b2baade8317f7da7364724d5600ff"
+      "sha256": "e6c3bc3495cc8a5c737a3a244f18885b38bef0c21f8ab77a5b734480aadf6629"
     },
     {
       "path": "scripts/create_track2_reproducibility_manifest.py",
       "role": "manifest_builder",
-      "sha256": "7baa54d639a5a8a668a786733f76ca0c61cf8087696a5b657a0c175633d1ef6b"
+      "sha256": "e406d468930c9f605d8d2e22fb57cc98d5dcf4fbb0f4820ad506b32716d84bfa"
     },
     {
       "path": "pyproject.toml",
       "role": "python_contract",
-      "sha256": "be3267235cb5fc5ad6d93af6c55b80fac9de8c7b176d112a0dd48d88e22f3877"
+      "sha256": "ba306a43aac0eac84b34af5a96d9a9d062dced897e64665fc0689695b678334a"
+    },
+    {
+      "path": "src/mva_hackathon/freeze.py",
+      "role": "freeze_source",
+      "sha256": "f7a08773f9526111e497799a1931abba48edf048dc6843ab7d9f384724649341"
+    },
+    {
+      "path": "scripts/privacy_gate.py",
+      "role": "privacy_gate",
+      "sha256": "5d2c053e44e754b7ed5a59ecba2711fae148ccf32abc0a5aefa378999d3c3fa8"
+    },
+    {
+      "path": "src/mva_hackathon/community_pipeline.py",
+      "role": "pipeline_source",
+      "sha256": "a127a535623b42b410c092d152efcbbf693e176fc6066d2d9e74a6524b6cdc8a"
+    },
+    {
+      "path": "src/mva_hackathon/program_gates.py",
+      "role": "gates_source",
+      "sha256": "164eca99769b3612dc64cf6abe99e0190019bae34c1851a0ced6081c7fafa628"
+    },
+    {
+      "path": "src/mva_hackathon/lineage.py",
+      "role": "lineage_source",
+      "sha256": "85d8c02ecc8208adb00ba5249f19e02ddad1b36af7b8756be2b2c0d9205c806b"
+    },
+    {
+      "path": "src/mva_hackathon/exposure_gate.py",
+      "role": "exposure_gate_source",
+      "sha256": "acf1d4cf5508bb1ef800dab117392760b47d7888a9154a5025c4da854e641ca2"
+    },
+    {
+      "path": "src/mva_hackathon/assay_power.py",
+      "role": "assay_power_source",
+      "sha256": "b5366c7e81662c7884011c9cca4cd7b041e1ef9d36ab7c1aa4b08bb13fd50128"
+    },
+    {
+      "path": "src/mva_hackathon/clone_safety.py",
+      "role": "clone_safety_source",
+      "sha256": "6d616b15d1434426ca6bb94a8da76f05206e28402c99f5e352fdc3823971918b"
+    },
+    {
+      "path": "src/mva_hackathon/save_path.py",
+      "role": "save_path_source",
+      "sha256": "36e9f81c4212f824e84c45ad33873a2fbe1711899a6ae06aebc64babd9377832"
+    },
+    {
+      "path": "src/mva_hackathon/method_delta.py",
+      "role": "method_delta_source",
+      "sha256": "e765a036b4a68c9ce5f8c34bc7bc9196495c536ff3cfd7c2878e5aed8946fef3"
+    },
+    {
+      "path": "scripts/check_submission_go.py",
+      "role": "submission_go_checker",
+      "sha256": "d432b97a1112315c6bf3ca091d814cdf8cc65327b6d397a38a4b9f641877c743"
+    },
+    {
+      "path": "tests/test_lineage.py",
+      "role": "lineage_test",
+      "sha256": "14910af2b7beeaacd4114363dad32401d65562e756ab380d9f3cab476b3f8d3e"
+    },
+    {
+      "path": "tests/test_exposure_gate.py",
+      "role": "exposure_gate_test",
+      "sha256": "7a6e4e86543fca5948fb5772f719c90b7f7955a43ae6b634ada00ee9555ba8fb"
+    },
+    {
+      "path": "tests/test_save_path.py",
+      "role": "save_path_test",
+      "sha256": "717d906c133ef66b08e2c0fe115def566367bdcbbd9358fca6089a961c25415f"
+    },
+    {
+      "path": "tests/test_assay_power.py",
+      "role": "assay_power_test",
+      "sha256": "5932b0d8913ee92a55f0ee12c93593e6db1ef856ee175d3484ea846a924a3c00"
+    },
+    {
+      "path": "tests/test_clone_safety.py",
+      "role": "clone_safety_test",
+      "sha256": "171531475ab8815201c1b7ec7e5e2f3ced6e76a5493e4982a25502dd0d87b168"
+    },
+    {
+      "path": "schemas/track2_lineage_counts.schema.json",
+      "role": "lineage_counts_schema",
+      "sha256": "3b48c91ca80632487287b585fb5253515fce0eb2eedf88377e00a17051db8e64"
+    },
+    {
+      "path": "schemas/track2_clone_safety.schema.json",
+      "role": "clone_safety_schema",
+      "sha256": "fef75d977671bf3a7cfd04c29c3eb427b357f0c3616be7a81faf93d39947a952"
+    },
+    {
+      "path": "schemas/track2_method_delta.schema.json",
+      "role": "method_delta_schema",
+      "sha256": "42f3a8ecf4f797334a7cf845cf0f7031e3cee95556981545e34028b68affedcc"
+    },
+    {
+      "path": "schemas/track2_candidate_ledger.schema.json",
+      "role": "candidate_ledger_schema",
+      "sha256": "2d291b1923c5249915c2e4c4fdf9aa2fd09c80cdc95346c42d4294bf77fba01a"
+    },
+    {
+      "path": "templates/community/README.md",
+      "role": "template_readme",
+      "sha256": "6c67a34986c51756e417c926403890642af8ab86cab56ebfe9b410fbb7dd6c83"
+    },
+    {
+      "path": "templates/community/allele_function_scorecard.synthetic.json",
+      "role": "template_allele_scorecard",
+      "sha256": "2e8080eb146c23c29767a961f9bf390629f73454850b8977b9f8af69f783b6f5"
+    },
+    {
+      "path": "templates/community/assay_power.synthetic.json",
+      "role": "template_assay_power_plan",
+      "sha256": "4755487935f3400fedac05df3bb1dedf566486a88d21fb540e7058725c5348e9"
+    },
+    {
+      "path": "templates/community/blinded_count_table.synthetic.json",
+      "role": "template_blinded_counts",
+      "sha256": "c2c1376e5b9c73395f00b87a3bab6b709c4cd1026f78ed0dfb0e6b8e64594173"
+    },
+    {
+      "path": "templates/community/causal_chain_worksheet.synthetic.json",
+      "role": "template_causal_chain",
+      "sha256": "3dd8d085e490fa10377dbfaba2183dcd7817e8ab04ea7dea794630cfe807f5a7"
+    },
+    {
+      "path": "templates/community/clone_safety_table.synthetic.json",
+      "role": "template_clone_safety",
+      "sha256": "8aafd65eb4039bff3ed56b699f40e65ab08ce39a21b22c37f6b7e9c8953d466e"
+    },
+    {
+      "path": "templates/community/confirmation_record.synthetic.json",
+      "role": "template_confirmation",
+      "sha256": "2d21205c6e8e897e1899ea72a4112d77973aa585ed0c3f9e7fe75e718c665f4c"
+    },
+    {
+      "path": "templates/community/coordinate_model.synthetic.pdb",
+      "role": "template_coordinate_model",
+      "sha256": "36a80d4dfd998c8a57cc52466dc2b6c354f0a570356b6693fea767277b6e6cb3"
+    },
+    {
+      "path": "templates/community/family_plain_language.synthetic.md",
+      "role": "template_family_language",
+      "sha256": "335f72d85511601b98259a190099f025ba497ed4e31deefa65507b92a7444f49"
+    },
+    {
+      "path": "templates/community/lineage_count_table.synthetic.json",
+      "role": "template_lineage_counts",
+      "sha256": "0c04d16a19b70db3bed8e697a680edb70ef55595b4f280b6739b413befbfbf73"
+    },
+    {
+      "path": "templates/community/measured_exposure_table.synthetic.json",
+      "role": "template_measured_exposure",
+      "sha256": "ee1a6d22430f8fd183062018f638758a7505ddac090095d2a29ca50fd3221b4a"
+    },
+    {
+      "path": "templates/community/observed_inferred_unknown.synthetic.json",
+      "role": "template_observed_inferred",
+      "sha256": "a8e4c4bd455e1b33f1a5df4e6c08ac204cbf4dc88e57b10d9ef6333ca4e768e7"
+    },
+    {
+      "path": "templates/community/phase_record.synthetic.json",
+      "role": "template_phase_record",
+      "sha256": "c4ec9d89f599438544051f1a35df7a47c91bc400a7ccd898c7ccca5687f0d247"
+    },
+    {
+      "path": "templates/community/replication_decision.synthetic.json",
+      "role": "template_replication",
+      "sha256": "8879f80e6b52b3760c311901e1ed4a982ffe019450aae4bff106bd606f49722c"
+    },
+    {
+      "path": "templates/community/structure_ranking.synthetic.json",
+      "role": "template_structure_ranking",
+      "sha256": "d9f7c5d415880e2aad7f6ef90ef0a5fa910a9f5164f1138380b0aaa8f23212e2"
+    },
+    {
+      "path": "templates/community/transcript_record.synthetic.json",
+      "role": "template_transcript",
+      "sha256": "1d32a529619c20ff18f7bc12c47e4a1539c36df9fe78349a4f05fbd2a6ff9591"
     }
   ],
   "commands": {
@@ -69,5 +249,5 @@
     "tests": "python -m unittest discover -s tests -v"
   },
   "schema": "mva-track2-reproducibility/v2",
-  "source_commit": "f73bc570b66d9a0a7c5be29b93b41765079fb87a"
+  "source_commit": "e90f81d54b3a775491bf8cca9a4060cb8c36af4c"
 }

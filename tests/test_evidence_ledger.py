@@ -104,6 +104,20 @@ class EvidenceLedgerTests(unittest.TestCase):
                 with self.assertRaisesRegex(EvidenceLedgerError, message):
                     validate_evidence_ledger(candidate)
 
+    def test_assessed_status_must_agree_with_direction_and_effect(self) -> None:
+        mutations = (
+            (0, "direction", "contradicts", "non-supporting direction"),
+            (0, "decision_effect", "demote", "cannot demote or exclude"),
+            (0, "decision_effect", "exclude", "cannot demote or exclude"),
+            (1, "decision_effect", "promote", "cannot promote"),
+        )
+        for index, field, value, message in mutations:
+            with self.subTest(index=index, field=field, value=value):
+                candidate = self.fixture()
+                candidate["entries"][index][field] = value  # type: ignore[index]
+                with self.assertRaisesRegex(EvidenceLedgerError, message):
+                    validate_evidence_ledger(candidate)
+
     def test_assessed_status_requires_result_and_null_gap_reason(self) -> None:
         mutations = (
             ("result", None, "requires a result"),
@@ -141,6 +155,18 @@ class EvidenceLedgerTests(unittest.TestCase):
         with self.assertRaisesRegex(EvidenceLedgerError, "relative and non-traversing"):
             validate_evidence_ledger(candidate)
 
+    def test_artifact_root_binds_declared_digest_to_bytes(self) -> None:
+        ledger = load_evidence_ledger(TEMPLATE, artifact_root=ROOT)
+        candidate = self.fixture()
+        candidate["entries"][0]["artifact_sha256"] = "sha256:" + "0" * 64  # type: ignore[index]
+        with self.assertRaisesRegex(EvidenceLedgerError, "digest mismatch"):
+            validate_evidence_ledger(candidate, artifact_root=ROOT)
+        candidate = self.fixture()
+        candidate["entries"][0]["artifact_path"] = "nonexistent.bin"  # type: ignore[index]
+        with self.assertRaisesRegex(EvidenceLedgerError, "not a regular file|escapes"):
+            validate_evidence_ledger(candidate, artifact_root=ROOT)
+        self.assertIsNotNone(ledger)
+
     def test_public_sources_require_safe_https_url(self) -> None:
         candidate = self.fixture()
         entry = candidate["entries"][0]  # type: ignore[index]
@@ -156,12 +182,47 @@ class EvidenceLedgerTests(unittest.TestCase):
     def test_public_gate_rejects_controlled_class_and_source_mismatch(self) -> None:
         candidate = self.fixture()
         candidate["entries"][0]["privacy_class"] = "controlled"  # type: ignore[index]
+        candidate["entries"][0]["source_class"] = "manual_review"  # type: ignore[index]
         validate_evidence_ledger(candidate)
         with self.assertRaisesRegex(EvidenceLedgerError, "forbidden privacy classes"):
             validate_evidence_ledger(candidate, public_only=True)
         candidate["entries"][0]["privacy_class"] = "synthetic"  # type: ignore[index]
         candidate["entries"][0]["source_class"] = "controlled_source"  # type: ignore[index]
         with self.assertRaisesRegex(EvidenceLedgerError, "cannot label a controlled source"):
+            validate_evidence_ledger(candidate)
+
+    def test_source_class_privacy_binding_is_enforced(self) -> None:
+        candidate = self.fixture()
+        candidate["entries"][0]["privacy_class"] = "public"  # type: ignore[index]
+        with self.assertRaisesRegex(EvidenceLedgerError, "synthetic privacy class"):
+            validate_evidence_ledger(candidate)
+        candidate = self.fixture()
+        candidate["entries"][0]["privacy_class"] = "synthetic"  # type: ignore[index]
+        candidate["entries"][0]["source_class"] = "public_database"  # type: ignore[index]
+        candidate["entries"][0]["source_url"] = "https://example.invalid/x"  # type: ignore[index]
+        with self.assertRaisesRegex(EvidenceLedgerError, "synthetic privacy class"):
+            validate_evidence_ledger(candidate)
+
+    def test_manual_review_assessed_requires_reviewer(self) -> None:
+        candidate = self.fixture()
+        entry = candidate["entries"][0]  # type: ignore[index]
+        entry["source_class"] = "manual_review"
+        entry["reviewer"] = None
+        entry["reviewed_at"] = None
+        with self.assertRaisesRegex(EvidenceLedgerError, "reviewer and reviewed_at"):
+            validate_evidence_ledger(candidate)
+
+    def test_assessed_entries_cannot_carry_neutral_direction(self) -> None:
+        candidate = self.fixture()
+        candidate["entries"][0]["direction"] = "neutral"  # type: ignore[index]
+        with self.assertRaisesRegex(EvidenceLedgerError, "neutral direction"):
+            validate_evidence_ledger(candidate)
+
+    def test_derived_only_ledger_is_rejected(self) -> None:
+        candidate = self.fixture()
+        for entry in candidate["entries"]:  # type: ignore[index]
+            entry["source_class"] = "derived_evidence"
+        with self.assertRaisesRegex(EvidenceLedgerError, "non-derived source"):
             validate_evidence_ledger(candidate)
 
     def test_duplicate_evidence_ids_unknown_fields_and_duplicate_keys_rejected(self) -> None:

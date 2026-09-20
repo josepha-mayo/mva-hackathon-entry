@@ -11,13 +11,18 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import re
+import subprocess
 import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path, PurePosixPath
 from typing import Mapping, Sequence
 
+from .community_pipeline import run_community_pipeline
+from .provenance import receipt_sha256_ok
+from .reproducibility import validate_manifest_bytes
 from .submission import SubmissionError, load_predictions
 
 SCHEMA_VERSION = "mva-track1-freeze/v2"
@@ -25,6 +30,17 @@ PUBLIC_COMMITMENT_SCHEMA = "mva-track1-public-commitments/v1"
 COMMITMENT_SCHEME = "SHA256(nonce||bytes)"
 REQUIRED_ARTIFACT_KINDS = ("report", "config", "code", "reference", "benchmark")
 ABLATION_DIRECTIONS = frozenset({"higher", "lower", "no_change"})
+# Resource ceilings: the freezer must never hash or parse an unbounded
+# number or size of artifacts.
+MAX_ARTIFACTS_PER_KIND = 256
+MAX_ARTIFACT_BYTES = 256 * 1024 * 1024
+MAX_TOTAL_ARTIFACT_BYTES = 1024 * 1024 * 1024
+MAX_PRIVATE_RAW_ARTIFACTS = 64
+MAX_PRIVATE_RAW_BYTES = 4 * 1024 * 1024 * 1024
+MAX_PRIVATE_RAW_TOTAL_BYTES = 8 * 1024 * 1024 * 1024
+MAX_RECEIPT_BYTES = 1024 * 1024
+MAX_MANIFEST_BYTES = 16 * 1024 * 1024
+_isjunction = getattr(os.path, "isjunction", lambda _path: False)
 
 _HEX_SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
@@ -62,7 +78,7 @@ def _sha256_prefixed(path: Path, prefix: bytes) -> str:
 def _canonical_sha256(value: object) -> str:
     payload = json.dumps(
         value, ensure_ascii=False, separators=(",", ":"), sort_keys=True
-    ).encode("utf-8")
+    , allow_nan=False).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
 
 
@@ -99,8 +115,8 @@ def _utc_timestamp(value: object) -> str:
 
 def _root(path: Path, label: str) -> Path:
     candidate = Path(path)
-    if candidate.is_symlink():
-        raise FreezeError(f"{label} must not be a symlink")
+    if candidate.is_symlink() or _isjunction(candidate):
+        raise FreezeError(f"{label} must not be a symlink or junction")
     try:
         resolved = candidate.resolve(strict=True)
     except OSError as exc:
@@ -114,8 +130,33 @@ def _regular_file_under(path: Path, root: Path, label: str) -> tuple[Path, str]:
     lexical = Path(path)
     if not lexical.is_absolute():
         lexical = root / lexical
-    if lexical.is_symlink():
+    if lexical.is_symlink() or _isjunction(lexical):
         raise FreezeError(f"{label} must be a regular non-symlink file")
+    # Walk the lexical path components: resolving first would hide an
+    # intermediate symlink or junction that silently redirects to a
+    # different file under the same root. A colon component names a
+    # Windows alternate data stream and must never be opened. When the
+    # lexical spelling cannot be related to the resolved root (short
+    # 8.3 names or case differences), every component is walked instead;
+    # containment is still enforced by the resolved-path check below.
+    normalized = Path(os.path.normpath(str(lexical)))
+    try:
+        lexical_parts = normalized.relative_to(root).parts
+        cursor = root
+    except ValueError:
+        lexical_parts = normalized.parts
+        cursor = Path(normalized.anchor)
+    # A drive-letter anchor legitimately contains a colon; only non-anchor
+    # components may name an alternate data stream.
+    non_anchor = [
+        part for part in lexical_parts if part != normalized.anchor
+    ]
+    if any(":" in part for part in non_anchor):
+        raise FreezeError(f"{label} must not name an alternate data stream")
+    for part in lexical_parts:
+        cursor = cursor / part
+        if cursor.is_symlink() or _isjunction(cursor):
+            raise FreezeError(f"{label} must not traverse a symlink or junction")
     try:
         resolved = lexical.resolve(strict=True)
         relative = resolved.relative_to(root)
@@ -123,11 +164,6 @@ def _regular_file_under(path: Path, root: Path, label: str) -> tuple[Path, str]:
         raise FreezeError(f"{label} must remain inside its declared root") from exc
     if not resolved.is_file():
         raise FreezeError(f"{label} must be a regular non-symlink file")
-    cursor = root
-    for part in relative.parts:
-        cursor = cursor / part
-        if cursor.is_symlink():
-            raise FreezeError(f"{label} must not traverse a symlink")
     return resolved, relative.as_posix()
 
 
@@ -137,7 +173,9 @@ def _manifest_relative_path(value: object, label: str) -> PurePosixPath:
     path = PurePosixPath(value)
     if path.is_absolute() or any(part in {"", ".", ".."} for part in path.parts):
         raise FreezeError(f"{label} is not a safe relative path")
-    if ":" in path.parts[0]:
+    # A colon in any component is a Windows alternate data stream — the
+    # manifest must name only ordinary file bytes.
+    if any(":" in part for part in path.parts):
         raise FreezeError(f"{label} is not a safe relative path")
     return path
 
@@ -147,6 +185,89 @@ def _manifest_file(root: Path, value: object, label: str) -> tuple[Path, str]:
     return _regular_file_under(Path(*relative.parts), root, label)
 
 
+def _git_commit_exists(git_root: Path, commit: str) -> None:
+    """Prove the declared Space commit exists in the bound repository.
+
+    Format-checking a 40-character string is not provenance — the freeze
+    moment is the only time the commit can be shown to exist locally.
+    External attestation (timestamp/registry) remains a separate control.
+    """
+
+    root = _root(git_root, "git root")
+    try:
+        proc = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(root),
+                "rev-parse",
+                "--verify",
+                f"{commit}^{{commit}}",
+            ],
+            capture_output=True,
+            timeout=15,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise FreezeError("cannot verify official_space_commit in Git") from exc
+    if proc.returncode != 0:
+        raise FreezeError(
+            "official_space_commit does not resolve to a commit in the bound repository"
+        )
+
+
+def _track2_binding(
+    manifest_path: Path, root: Path
+) -> dict[str, object]:
+    """Verify and digest-bind a Track 2 reproducibility manifest.
+
+    A freeze must not proceed on a stale manifest: every bound artifact is
+    re-read and cross-checked before the manifest's own digest is bound.
+    """
+
+    resolved_root = _root(root, "track2 root")
+    resolved_manifest, relative = _regular_file_under(
+        manifest_path, resolved_root, "track2 reproducibility manifest"
+    )
+    with resolved_manifest.open("rb") as handle:
+        data = handle.read(16 * 1024 * 1024 + 1)
+    if len(data) > 16 * 1024 * 1024:
+        raise FreezeError("track2 reproducibility manifest exceeds the byte ceiling")
+
+    def load_artifact(path: PurePosixPath) -> bytes | None:
+        try:
+            target = resolved_root.joinpath(*path.parts)
+            if target.is_symlink() or _isjunction(target):
+                return None
+            resolved_target = target.resolve()
+            if resolved_target != resolved_root and not resolved_target.is_relative_to(
+                resolved_root
+            ):
+                return None
+            with resolved_target.open("rb") as handle:
+                return handle.read(256 * 1024 * 1024 + 1)
+        except (OSError, RuntimeError, ValueError):
+            # A symlink loop surfaces as RuntimeError from resolve(); a NUL in
+            # a path component raises ValueError — both mean "unreadable".
+            return None
+
+    issues = validate_manifest_bytes(data, load_artifact)
+    if issues:
+        raise FreezeError(
+            "track2 reproducibility manifest is stale or invalid: "
+            + "; ".join(issues[:8])
+        )
+    try:
+        parsed = json.loads(data)
+    except (json.JSONDecodeError, UnicodeError) as exc:  # unreachable post-validation
+        raise FreezeError("track2 reproducibility manifest is unreadable") from exc
+    return {
+        "path": relative,
+        "sha256": hashlib.sha256(data).hexdigest(),
+        "source_commit": parsed["source_commit"],
+    }
+
+
 def _valid_sha256(value: object, label: str) -> str:
     if not isinstance(value, str) or not _HEX_SHA256.fullmatch(value):
         raise FreezeError(f"{label} must be a lowercase SHA-256 digest")
@@ -154,7 +275,9 @@ def _valid_sha256(value: object, label: str) -> str:
 
 
 def _artifact_entries(
-    artifact_paths: Mapping[str, Sequence[Path]], artifact_root: Path
+    artifact_paths: Mapping[str, Sequence[Path]],
+    artifact_root: Path,
+    seen_inodes: set[tuple[int, int]],
 ) -> dict[str, list[dict[str, object]]]:
     if not isinstance(artifact_paths, Mapping):
         raise FreezeError("artifacts must map each required kind to files")
@@ -167,11 +290,14 @@ def _artifact_entries(
         )
 
     seen_paths: set[str] = set()
+    total_bytes = 0
     result: dict[str, list[dict[str, object]]] = {}
     for kind in REQUIRED_ARTIFACT_KINDS:
         paths = artifact_paths[kind]
         if isinstance(paths, (str, bytes, Path)) or not isinstance(paths, Sequence) or not paths:
             raise FreezeError(f"artifact kind {kind} must contain at least one file")
+        if len(paths) > MAX_ARTIFACTS_PER_KIND:
+            raise FreezeError(f"artifact kind {kind} exceeds the file-count ceiling")
         entries: list[dict[str, object]] = []
         for index, path in enumerate(paths, start=1):
             resolved, relative = _regular_file_under(
@@ -181,6 +307,24 @@ def _artifact_entries(
             if key in seen_paths:
                 raise FreezeError("one evidence file cannot occupy multiple artifact roles")
             seen_paths.add(key)
+            stat_result = resolved.stat()
+            if stat_result.st_size == 0:
+                raise FreezeError(
+                    f"{kind} artifact {index}: a 0-byte file cannot satisfy an evidence-artifact role"
+                )
+            if stat_result.st_size > MAX_ARTIFACT_BYTES:
+                raise FreezeError(
+                    f"{kind} artifact {index} exceeds the per-file byte ceiling"
+                )
+            total_bytes += stat_result.st_size
+            if total_bytes > MAX_TOTAL_ARTIFACT_BYTES:
+                raise FreezeError("evidence artifacts exceed the total byte ceiling")
+            inode_key = (stat_result.st_dev, stat_result.st_ino)
+            if inode_key in seen_inodes:
+                raise FreezeError(
+                    "hard-linked evidence files cannot occupy multiple artifact roles"
+                )
+            seen_inodes.add(inode_key)
             entries.append(
                 {
                     "path": relative,
@@ -318,6 +462,8 @@ def _private_raw_entries(
 ) -> list[dict[str, object]]:
     if not isinstance(private_raw_paths, Mapping) or not private_raw_paths:
         raise FreezeError("at least one private raw artifact must be frozen")
+    if len(private_raw_paths) > MAX_PRIVATE_RAW_ARTIFACTS:
+        raise FreezeError("private raw artifacts exceed the file-count ceiling")
     if not isinstance(public_commitment_nonces, Mapping):
         raise FreezeError("public_commitment_nonces must be a mapping")
     unknown_nonce_ids = set(public_commitment_nonces) - set(private_raw_paths)
@@ -328,7 +474,9 @@ def _private_raw_entries(
 
     seen_ids: set[str] = set()
     seen_paths: set[str] = set()
+    seen_inodes: set[tuple[int, int]] = set()
     seen_nonces: set[bytes] = set()
+    total_bytes = 0
     result: list[dict[str, object]] = []
     for artifact_id, path in sorted(
         private_raw_paths.items(), key=lambda item: str(item[0]).casefold()
@@ -344,10 +492,24 @@ def _private_raw_entries(
         if relative.casefold() in seen_paths:
             raise FreezeError("one private raw file cannot occupy multiple artifact ids")
         seen_paths.add(relative.casefold())
+        inode_key = (resolved.stat().st_dev, resolved.stat().st_ino)
+        if inode_key in seen_inodes:
+            raise FreezeError(
+                "hard-linked private raw files cannot occupy multiple artifact ids"
+            )
+        seen_inodes.add(inode_key)
+        size_bytes = resolved.stat().st_size
+        if size_bytes > MAX_PRIVATE_RAW_BYTES:
+            raise FreezeError(
+                f"private raw artifact {artifact_id} exceeds the per-file byte ceiling"
+            )
+        total_bytes += size_bytes
+        if total_bytes > MAX_PRIVATE_RAW_TOTAL_BYTES:
+            raise FreezeError("private raw artifacts exceed the total byte ceiling")
         entry: dict[str, object] = {
             "artifact_id": artifact_id,
             "path": relative,
-            "size_bytes": resolved.stat().st_size,
+            "size_bytes": size_bytes,
             "private_sha256": _sha256(resolved),
         }
         if artifact_id in public_commitment_nonces:
@@ -383,9 +545,18 @@ def build_manifest(
     upload_order: Sequence[str],
     private_raw_root: Path,
     private_raw_paths: Mapping[str, Path],
+    community_toolkit_root: Path,
     public_commitment_nonces: Mapping[str, bytes] | None = None,
+    track2_reproducibility: Path | None = None,
+    track2_root: Path | None = None,
+    git_root: Path | None = None,
 ) -> dict[str, object]:
-    """Build a complete private v2 freeze manifest without copying any files."""
+    """Build a complete private v2 freeze manifest without copying any files.
+
+    When supplied, ``git_root`` proves ``official_space_commit`` resolves to
+    a real commit at freeze time, and ``track2_reproducibility`` binds a
+    verified, non-stale Track 2 reproducibility manifest by digest.
+    """
 
     if isinstance(csv_paths, (str, bytes, Path)) or not isinstance(csv_paths, Sequence):
         raise FreezeError("csv_paths must be a sequence")
@@ -400,7 +571,8 @@ def build_manifest(
     public_root = _root(Path(artifact_root), "artifact_root")
     raw_root = _root(Path(private_raw_root), "private_raw_root")
 
-    evidence = _artifact_entries(artifacts, public_root)
+    evidence_inodes: set[tuple[int, int]] = set()
+    evidence = _artifact_entries(artifacts, public_root, evidence_inodes)
     evidence_paths = {
         str(entry["path"]).casefold()
         for entries in evidence.values()
@@ -415,6 +587,7 @@ def build_manifest(
     resolved_csvs: list[tuple[Path, str]] = []
     seen_filenames: set[str] = set()
     seen_paths: set[str] = set()
+    seen_inodes: set[tuple[int, int]] = set()
     for slot, path in enumerate(csv_paths, start=1):
         resolved, relative = _regular_file_under(
             Path(path), public_root, f"submission slot {slot}"
@@ -427,8 +600,19 @@ def build_manifest(
             raise FreezeError("the same submission file cannot occupy two freeze slots")
         if relative.casefold() in evidence_paths:
             raise FreezeError("a submission CSV cannot also occupy an evidence-artifact role")
+        csv_stat = resolved.stat()
+        csv_inode = (csv_stat.st_dev, csv_stat.st_ino)
+        if csv_inode in evidence_inodes:
+            raise FreezeError(
+                "a submission CSV cannot be hard-linked to an evidence artifact"
+            )
+        if csv_inode in seen_inodes:
+            raise FreezeError(
+                "hard-linked submission files cannot occupy two freeze slots"
+            )
         seen_filenames.add(resolved.name.casefold())
         seen_paths.add(relative.casefold())
+        seen_inodes.add(csv_inode)
         resolved_csvs.append((resolved, relative))
 
     filenames = [path.name for path, _ in resolved_csvs]
@@ -570,10 +754,93 @@ def build_manifest(
         public_commitment_nonces or {},
     )
 
-    return {
+    # A frozen release must carry the advancing community-pipeline receipt as
+    # the private raw artifact "program-receipt": strict JSON, the pipeline
+    # schema, decision="advance", and a valid self-integrity digest. A
+    # syntactically valid CSV set cannot be frozen on a non-advancing program.
+    program_entry = next(
+        (
+            entry
+            for entry in private_raw
+            if entry["artifact_id"] == "program-receipt"
+        ),
+        None,
+    )
+    if program_entry is None:
+        raise FreezeError(
+            "a frozen release must carry the advancing program receipt as "
+            "the private raw artifact 'program-receipt'"
+        )
+    receipt_path = (raw_root / str(program_entry["path"])).resolve()
+    if receipt_path.stat().st_size > MAX_RECEIPT_BYTES:
+        raise FreezeError("program receipt exceeds the byte ceiling")
+    try:
+        program_receipt = json.loads(
+            receipt_path.read_text(encoding="utf-8"),
+            object_pairs_hook=_reject_duplicate_json_keys,
+            parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
+        )
+    except (
+        OSError,
+        json.JSONDecodeError,
+        UnicodeError,
+        RecursionError,
+        _DuplicateJsonKey,
+        _NonFiniteJsonConstant,
+    ) as exc:
+        raise FreezeError("program receipt is unreadable") from exc
+    if (
+        not isinstance(program_receipt, Mapping)
+        or program_receipt.get("schema") != "mva-track2-community-pipeline/v1"
+    ):
+        raise FreezeError(
+            "program receipt must be the community-pipeline decision receipt"
+        )
+    if program_receipt.get("decision") != "advance":
+        raise FreezeError(
+            "a program that did not advance cannot be frozen for submission"
+        )
+    if not receipt_sha256_ok(program_receipt):
+        raise FreezeError("program receipt self-integrity digest is invalid")
+    # A valid self-digest is not authenticity: a fabricated receipt can carry
+    # one. Re-run the pipeline over the bound toolkit and require the exact
+    # same receipt — only the real gate sequence can mint the advancing one.
+    toolkit_root = _root(Path(community_toolkit_root), "community_toolkit_root")
+    try:
+        recomputed = run_community_pipeline(toolkit_root)
+    except Exception as exc:
+        # Gate modules raise their own error types (ProgramGateError,
+        # NextExperimentError, ProvenanceError, ...). Any failure to re-run
+        # fails the freeze closed — a receipt we cannot reproduce is not
+        # evidence.
+        raise FreezeError(
+            "the bound community toolkit cannot be re-run"
+        ) from exc
+    if recomputed != program_receipt:
+        raise FreezeError(
+            "program receipt does not match the bound community toolkit"
+        )
+
+    commit = _commit(official_space_commit)
+    if git_root is not None:
+        _git_commit_exists(git_root, commit)
+    track2_binding = None
+    if track2_reproducibility is not None:
+        if track2_root is None:
+            raise FreezeError(
+                "track2_root is required to bind the reproducibility manifest"
+            )
+        track2_binding = _track2_binding(track2_reproducibility, track2_root)
+        if track2_binding["source_commit"] != commit:
+            raise FreezeError(
+                "track2 source_commit does not match official_space_commit"
+            )
+
+    result = {
         "schema": SCHEMA_VERSION,
         "created_at_utc": _utc_timestamp(created_at_utc),
-        "official_space_commit": _commit(official_space_commit),
+        "official_space_commit": commit,
         "policy": dict(_POLICY),
         "champion_method_id": champion,
         "artifacts": evidence,
@@ -584,6 +851,9 @@ def build_manifest(
         "convergence_groups": convergence_groups,
         "upload_order": upload_plan,
     }
+    if track2_binding is not None:
+        result["track2_reproducibility"] = track2_binding
+    return result
 
 
 def build_public_commitment_manifest(
@@ -631,24 +901,67 @@ def build_public_commitment_manifest(
             }
         )
 
-    return {
+    projection: dict[str, object] = {
         "schema": PUBLIC_COMMITMENT_SCHEMA,
         "created_at_utc": created_at,
         "official_space_commit": commit,
         "commitments": commitments,
     }
+    track2_field = private_manifest.get("track2_reproducibility")
+    if track2_field is not None:
+        # The bound manifest is itself a public release artifact, so its
+        # digest belongs in the public projection — anyone can confirm the
+        # freeze binds that exact reproducibility manifest.
+        if (
+            not isinstance(track2_field, Mapping)
+            or set(track2_field) != {"path", "sha256", "source_commit"}
+        ):
+            raise FreezeError("track2_reproducibility binding is malformed")
+        bound_commit = _commit(track2_field.get("source_commit"))
+        if bound_commit != commit:
+            raise FreezeError(
+                "track2 source_commit does not match official_space_commit"
+            )
+        projection["track2_reproducibility"] = {
+            "path": _manifest_relative_path(
+                track2_field.get("path"), "track2 reproducibility manifest"
+            ).as_posix(),
+            "sha256": _valid_sha256(
+                track2_field.get("sha256"), "track2 reproducibility manifest"
+            ),
+            "source_commit": bound_commit,
+        }
+    return projection
 
 
-def write_manifest(path: Path, manifest: Mapping[str, object]) -> None:
-    """Write a new manifest atomically and refuse to overwrite a prior freeze."""
+def write_manifest(
+    path: Path,
+    manifest: Mapping[str, object],
+    *,
+    artifact_root: Path | None = None,
+    private_raw_root: Path | None = None,
+    track2_root: Path | None = None,
+    git_root: Path | None = None,
+) -> None:
+    """Write a new manifest atomically and refuse to overwrite a prior freeze.
+
+    When ``artifact_root`` is supplied the staged manifest is fully
+    re-verified against the tree before it is sealed, so a file swapped
+    between ``build_manifest`` and this call cannot be frozen under a stale
+    digest.
+    """
 
     if manifest.get("schema") != SCHEMA_VERSION:
         raise FreezeError("refusing to write an unsupported freeze-manifest schema")
+    if artifact_root is None and (track2_root is not None or git_root is not None):
+        raise FreezeError(
+            "track2_root/git_root require artifact_root for seal-time verification"
+        )
     path = path.resolve()
     if path.exists():
         raise FreezeError("freeze manifest already exists; refusing to overwrite it")
     path.parent.mkdir(parents=True, exist_ok=True)
-    payload = json.dumps(manifest, indent=2, sort_keys=True) + "\n"
+    payload = json.dumps(manifest, indent=2, sort_keys=True, allow_nan=False) + "\n"
     handle = tempfile.NamedTemporaryFile(
         "w", encoding="utf-8", newline="\n", dir=path.parent, delete=False
     )
@@ -658,6 +971,14 @@ def write_manifest(path: Path, manifest: Mapping[str, object]) -> None:
             handle.write(payload)
             handle.flush()
             os.fsync(handle.fileno())
+        if artifact_root is not None:
+            verify_manifest(
+                temporary,
+                artifact_root,
+                private_raw_root=private_raw_root,
+                track2_root=track2_root,
+                git_root=git_root,
+            )
         temporary.replace(path)
     except Exception:
         temporary.unlink(missing_ok=True)
@@ -665,6 +986,10 @@ def write_manifest(path: Path, manifest: Mapping[str, object]) -> None:
 
 
 class _DuplicateJsonKey(ValueError):
+    pass
+
+
+class _NonFiniteJsonConstant(ValueError):
     pass
 
 
@@ -677,6 +1002,17 @@ def _reject_duplicate_json_keys(pairs: list[tuple[str, object]]) -> dict[str, ob
     return result
 
 
+def _reject_json_constant(value: str) -> object:
+    raise _NonFiniteJsonConstant(value)
+
+
+def _finite_json_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise _NonFiniteJsonConstant(value)
+    return parsed
+
+
 def _verify_file_entry(
     entry: object, root: Path, label: str, *, private_hash: bool = False
 ) -> tuple[str, str]:
@@ -684,9 +1020,16 @@ def _verify_file_entry(
     if not isinstance(entry, Mapping) or set(entry) != required:
         raise FreezeError(f"{label} is malformed")
     path, relative = _manifest_file(root, entry["path"], label)
+    if relative != entry["path"]:
+        raise FreezeError(
+            f"{label} stored path does not match the resolved artifact path"
+        )
     size = entry["size_bytes"]
     if not isinstance(size, int) or isinstance(size, bool) or size < 0:
         raise FreezeError(f"{label} has an invalid byte size")
+    ceiling = MAX_PRIVATE_RAW_BYTES if private_hash else MAX_ARTIFACT_BYTES
+    if size > ceiling:
+        raise FreezeError(f"{label} exceeds the per-file byte ceiling")
     if path.stat().st_size != size:
         raise FreezeError(f"{label} byte size changed")
     hash_key = "private_sha256" if private_hash else "sha256"
@@ -701,20 +1044,41 @@ def verify_manifest(
     artifact_root: Path,
     *,
     private_raw_root: Path | None = None,
+    track2_root: Path | None = None,
+    git_root: Path | None = None,
 ) -> None:
-    """Verify every v2 binding, including private raw bytes and upload policy."""
+    """Verify every v2 binding, including private raw bytes and upload policy.
+
+    When ``git_root`` is supplied, ``official_space_commit`` must resolve to
+    a real commit. When ``track2_root`` is supplied and the manifest carries
+    a ``track2_reproducibility`` binding, the bound manifest is re-read from
+    disk and re-validated — a stale or tampered binding fails closed.
+    """
 
     try:
+        # Bounded read — a file that grows past the ceiling between stat and
+        # read still cannot materialize over-cap bytes.
+        with path.open("rb") as handle:
+            raw = handle.read(MAX_MANIFEST_BYTES + 1)
+    except OSError as exc:
+        raise FreezeError("freeze manifest is unreadable") from exc
+    if len(raw) > MAX_MANIFEST_BYTES:
+        raise FreezeError("freeze manifest exceeds the byte ceiling")
+    try:
         manifest = json.loads(
-            path.read_text(encoding="utf-8"),
+            raw.decode("utf-8"),
             object_pairs_hook=_reject_duplicate_json_keys,
+            parse_constant=_reject_json_constant,
+            parse_float=_finite_json_float,
         )
-    except (OSError, json.JSONDecodeError, UnicodeError, _DuplicateJsonKey) as exc:
+    except (UnicodeError, json.JSONDecodeError, RecursionError, _DuplicateJsonKey, _NonFiniteJsonConstant) as exc:
         raise FreezeError("freeze manifest is unreadable") from exc
     if not isinstance(manifest, Mapping) or manifest.get("schema") != SCHEMA_VERSION:
         raise FreezeError("unsupported freeze-manifest schema")
     _utc_timestamp(manifest.get("created_at_utc"))
-    _commit(manifest.get("official_space_commit"))
+    commit = _commit(manifest.get("official_space_commit"))
+    if git_root is not None:
+        _git_commit_exists(git_root, commit)
     if manifest.get("policy") != _POLICY:
         raise FreezeError("freeze manifest policy is missing or changed")
 
@@ -723,20 +1087,37 @@ def verify_manifest(
     if not isinstance(artifacts, Mapping) or set(artifacts) != set(REQUIRED_ARTIFACT_KINDS):
         raise FreezeError("freeze manifest has an invalid evidence-artifact map")
     seen_public_paths: set[str] = set()
+    seen_public_inodes: set[tuple[int, int]] = set()
     artifacts_by_path: dict[str, tuple[str, Mapping[str, object]]] = {}
+    total_public_bytes = 0
     for kind in REQUIRED_ARTIFACT_KINDS:
         entries = artifacts[kind]
         if not isinstance(entries, list) or not entries:
             raise FreezeError(f"artifact kind {kind} must contain at least one file")
+        if len(entries) > MAX_ARTIFACTS_PER_KIND:
+            raise FreezeError(f"artifact kind {kind} exceeds the file-count ceiling")
         stored_paths: list[str] = []
         for index, entry in enumerate(entries, start=1):
             relative, _ = _verify_file_entry(
                 entry, public_root, f"{kind} artifact {index}"
             )
+            total_public_bytes += int(entry["size_bytes"])
+            if total_public_bytes > MAX_TOTAL_ARTIFACT_BYTES:
+                raise FreezeError(
+                    "evidence artifacts exceed the total byte ceiling"
+                )
             key = relative.casefold()
             if key in seen_public_paths:
                 raise FreezeError("one public file occupies multiple frozen roles")
             seen_public_paths.add(key)
+            details = (public_root / relative).stat()
+            identity = (details.st_dev, details.st_ino)
+            if details.st_ino:
+                if identity in seen_public_inodes:
+                    raise FreezeError(
+                        "one public file occupies multiple frozen roles"
+                    )
+                seen_public_inodes.add(identity)
             stored_paths.append(relative)
             artifacts_by_path[key] = (kind, entry)
         if stored_paths != sorted(stored_paths, key=str.casefold):
@@ -952,12 +1333,16 @@ def verify_manifest(
     raw_entries = manifest.get("private_raw_artifacts")
     if not isinstance(raw_entries, list) or not raw_entries:
         raise FreezeError("freeze manifest must contain private raw-artifact hashes")
+    if len(raw_entries) > MAX_PRIVATE_RAW_ARTIFACTS:
+        raise FreezeError("private raw artifacts exceed the file-count ceiling")
     if private_raw_root is None:
         raise FreezeError("private_raw_root is required to verify private raw artifacts")
     raw_root = _root(Path(private_raw_root), "private_raw_root")
     seen_raw_ids: set[str] = set()
     seen_raw_paths: set[str] = set()
+    seen_raw_inodes: set[tuple[int, int]] = set()
     seen_nonces: set[bytes] = set()
+    total_raw_bytes = 0
     for index, entry in enumerate(raw_entries, start=1):
         if not isinstance(entry, Mapping):
             raise FreezeError(f"private raw artifact {index} is malformed")
@@ -976,6 +1361,20 @@ def verify_manifest(
         ):
             raise FreezeError("private raw artifact ids are unsafe or duplicated")
         seen_raw_ids.add(artifact_id.casefold())
+        raw_size = entry["size_bytes"]
+        if (
+            not isinstance(raw_size, int)
+            or isinstance(raw_size, bool)
+            or raw_size < 0
+        ):
+            raise FreezeError(f"private raw artifact {artifact_id} has an invalid byte size")
+        total_raw_bytes += raw_size
+        if total_raw_bytes > MAX_PRIVATE_RAW_TOTAL_BYTES:
+            raise FreezeError(
+                "private raw artifacts exceed the total byte ceiling"
+            )
+        if artifact_id == "program-receipt" and raw_size > MAX_RECEIPT_BYTES:
+            raise FreezeError("program receipt exceeds the byte ceiling")
         relative, _ = _verify_file_entry(
             {key: entry[key] for key in base_keys - {"artifact_id"}},
             raw_root,
@@ -985,6 +1384,18 @@ def verify_manifest(
         if relative.casefold() in seen_raw_paths:
             raise FreezeError("one private raw file occupies multiple artifact ids")
         seen_raw_paths.add(relative.casefold())
+        raw_details = (raw_root / relative).stat()
+        if raw_details.st_ino:
+            raw_inode = (raw_details.st_dev, raw_details.st_ino)
+            if raw_inode in seen_public_inodes:
+                raise FreezeError(
+                    "a private raw file cannot be hard-linked to a public artifact"
+                )
+            if raw_inode in seen_raw_inodes:
+                raise FreezeError(
+                    "hard-linked private raw files cannot occupy two artifact ids"
+                )
+            seen_raw_inodes.add(raw_inode)
         if has_commitment:
             nonce_hex = entry["private_commitment_nonce_hex"]
             if not isinstance(nonce_hex, str) or len(nonce_hex) % 2:
@@ -1015,6 +1426,41 @@ def verify_manifest(
             )
             if _sha256_prefixed(raw_path, nonce) != digest:
                 raise FreezeError(f"public commitment for {artifact_id} changed")
+
+    track2_field = manifest.get("track2_reproducibility")
+    if track2_field is None:
+        if track2_root is not None:
+            raise FreezeError(
+                "track2_root was supplied but the freeze manifest binds no "
+                "track2_reproducibility manifest"
+            )
+        return
+    if track2_root is None:
+        raise FreezeError(
+            "track2_reproducibility binding cannot be verified without track2_root"
+        )
+    if (
+        not isinstance(track2_field, Mapping)
+        or set(track2_field) != {"path", "sha256", "source_commit"}
+    ):
+        raise FreezeError("track2_reproducibility binding is malformed")
+    bound_path = _manifest_relative_path(
+        track2_field.get("path"), "track2 reproducibility manifest"
+    )
+    resolved_track2_root = _root(track2_root, "track2_root")
+    recomputed = _track2_binding(
+        resolved_track2_root.joinpath(*bound_path.parts), resolved_track2_root
+    )
+    if recomputed != {
+        "path": track2_field["path"],
+        "sha256": track2_field["sha256"],
+        "source_commit": track2_field["source_commit"],
+    }:
+        raise FreezeError("track2_reproducibility binding does not match the bound file")
+    if track2_field["source_commit"] != commit:
+        raise FreezeError(
+            "track2 source_commit does not match official_space_commit"
+        )
 
 
 __all__ = [

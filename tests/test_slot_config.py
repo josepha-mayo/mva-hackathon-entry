@@ -74,7 +74,7 @@ class SlotConfigTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             path = root / "plan.json"
-            path.write_text(json.dumps(plan), encoding="utf-8")
+            path.write_text(json.dumps(plan, allow_nan=False), encoding="utf-8")
             with self.assertRaisesRegex(SlotConfigError, "unsafe config filename"):
                 load_slot_plan(path)
 
@@ -98,7 +98,7 @@ class SlotConfigTests(unittest.TestCase):
                 source = PLAN.parent / name
                 (root / name).write_bytes(source.read_bytes())
             plan_path = root / "plan.json"
-            plan_path.write_text(json.dumps(plan), encoding="utf-8")
+            plan_path.write_text(json.dumps(plan, allow_nan=False), encoding="utf-8")
             with self.assertRaisesRegex(SlotConfigError, "duplicate JSON key"):
                 load_slot_plan(plan_path)
 

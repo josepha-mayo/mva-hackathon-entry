@@ -1,6 +1,6 @@
 # Competition contract snapshot
 
-Verified against the rendered challenge Space and public source on **2026-08-26**. Dates are explicitly subject to change; refresh this document before any submission.
+Verified against the rendered challenge Space and public source on **2026-08-26**, re-audited on **2026-08-29**, and read again from the live rendered Space in a separate read-only browser session on **2026-09-01**. The live Track 2 form still states up to three submissions per team and latest-entry-only review; the deadline remains 2026-10-24 23:59 UTC and the judging weights remain 35/25/25/15. The authenticated remaining-attempt counter was not read in the 2026-09-01 public session. Dates and account state remain subject to change; refresh them before any further submission.
 
 ## Timeline
 
@@ -8,7 +8,7 @@ Verified against the rendered challenge Space and public source on **2026-08-26*
 |---|---|
 | 2026-08-24 | Launch; gated dataset available |
 | 2026-08-25 | Submissions open |
-| 2026-10-24 23:59 | Submissions close; Track 1 leaderboard freezes |
+| 2026-10-24 23:59 UTC | Submissions close; Track 1 leaderboard freezes |
 | 2026-10-24 through 2026-11-24 | Track 1 qualitative review and Track 2 panel judging |
 | 2026-11-25 | Winners announced |
 
@@ -20,7 +20,7 @@ The close time is consistent across current official pages. The judging/announce
 - Each team member registers individually and accepts the rules.
 - Teams are optional. A participant may enter either or both tracks.
 - Track 1 gives each registered participant six submissions; only the best score is displayed.
-- Track 2 accepts one final submission per team. One team member must submit it; duplicates are ignored.
+- Track 2 allows three submissions per team. Organizers review only the latest Track 2 entry. Do not treat an earlier Track 2 upload as the judged artifact once a later entry exists. Team records: attempt 1 exists; attempts 2 and 3 have not been submitted. This document does not publish a live portal remaining-attempt counter.
 
 ## Track 1
 
@@ -60,12 +60,18 @@ Required artifacts:
 2. Public GitHub repository with documented, reproducible code.
 3. Three-minute pitch video on YouTube or Vimeo.
 
-Only one final submission is accepted. Judging weights:
+Three submissions are accepted per team; only the latest entry is reviewed. Judging weights:
 
 - Scientific rigor: 35%
 - Potential impact: 25%
 - Innovation: 25%
 - Scalability: 15%
+
+The Track 2 methods instructions were updated on 28 August 2026: if an LLM or AI assistant was used, the methods description must record the provider, the plan or tier, and the relevant data-handling setting. Operator confirmation on 2026-08-29 for the earlier tool record: **Anysphere Cursor, Ultra plan, Cursor Grok 4.6, privacy mode**. Later living Phase-2 method work also used **OpenAI Codex**, including **GPT-5.6 Sol** independent audit subagents, on the public/synthetic working tree. The Codex model/reasoning and ChatGPT Pro plan fields were checked from local action-time configuration and the signed-in authorization claim on 2026-08-31 without copying credentials; the relevant Codex account data-handling setting remains unestablished. A later adversarial hardening wave on 2026-09-19 used **Cognition Devin** (desktop/CLI, **SWE-2 Max**, including independent audit/research subagents) on the same public/synthetic tree; its plan/tier and account data-handling setting remain unestablished and are operator freeze-time checks. A Cursor-only or Devin-omitting disclosure is incomplete and the new judged report remains HOLD. Controlled VCF, FASTQ, and phenotype payloads were not supplied to hosted inference during this living-method work; Hugging Face Hub was used authenticated as josephmayo for public Space source and gated-file HEAD metadata only. The frozen attempt-1 report does not yet contain the required fields. They belong in a planned bound-report freeze, not a drive-by hash break. Organizers also stated that an already-submitted team may add this disclosure to the report in its linked GitHub repository without consuming another submission; a materially changed scientific proposal should use a new attempt so the judged package is unambiguous.
+
+The live 2026-09-01 download of the organizer's 28 August methods workbook has SHA-256 `61aab080a2868a3b724e76692b83c24812112e305cd3a8b03f8f91a6b2414441` and contains the required commercial-AI question. Its introductory Track 2 cell still says “one final submission per team,” which conflicts with the live Track 2 form's later operational copy allowing three and reviewing only the latest. Treat that workbook sentence as stale quota text; use the workbook for methods fields, not attempt accounting.
+
+Live FAQ item "Can I participate as a team?" still contains older one-submission wording, while the same FAQ's "How many submissions can I make?" item, `config.py`, and the Track 2 submit tab all state three submissions with latest-entry review. A 2026-08-29 evening Hub re-read of live `tabs/faq.py` still has that leftover sentence. Treat `MAX_TRACK2_SUBMISSIONS = 3` and the submit-tab copy as operational until the leftover FAQ sentence is aligned.
 
 The public Track 1 leaderboard is already saturated with perfect automated scores. Its displayed medal order is not a meaningful tie-break: source code sorts only on the two equal metrics and inherits repository-list order. The Track 1 qualitative tie-break/weighting is not published and requires organizer clarification.
 
@@ -91,6 +97,8 @@ No upload until all of the following are true:
 - the exact current rules and leaderboard have been refreshed;
 - every public artifact passes the privacy gate;
 - Track 1 output reproduces the official scorer locally and independent read/VCF evidence supports the top row;
-- Track 2 report has citation, exposure, contradiction, and cancer-safety audits;
+- Track 2 report has citation, exposure, contradiction, cancer-safety, and AI-disclosure audits;
+- if the Track 2 report claims an exact machine-ranked candidate result, its canonical public-only ledger, exact recomputed ranking receipt, and the report's two digest-binding lines are jointly validated under the future v4 release quarantine;
+- for any further Track 2 upload, the exact remaining quota is read from the authenticated portal on that day and the user types the separate authorization phrase;
 - all intended Track 1 candidate files are frozen before the first submission, so the six-attempt allowance is not used as an adaptive hidden-answer probe;
 - the user explicitly authorizes the actual upload/submission.

@@ -1,0 +1,310 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mva:track2-clone-safety:v2",
+  "title": "MVA Track 2 observed-label clone-safety decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "synthetic_only",
+    "claim_boundary",
+    "ratio_stop",
+    "death_ratio_stop",
+    "minimum_resolved",
+    "status",
+    "program_effect",
+    "clone_safety_stop",
+    "advancement_blocked",
+    "source_fingerprint",
+    "nests"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mva-track2-clone-safety/v2"
+    },
+    "privacy_class": {
+      "const": "synthetic"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000
+    },
+    "synthetic_only": {
+      "type": "boolean"
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000
+    },
+    "ratio_stop": {
+      "type": "number",
+      "exclusiveMinimum": 1
+    },
+    "death_ratio_stop": {
+      "type": "number",
+      "exclusiveMinimum": 1
+    },
+    "minimum_resolved": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "stop",
+        "not_assessable"
+      ]
+    },
+    "program_effect": {
+      "enum": [
+        "pass",
+        "stop",
+        "hold"
+      ]
+    },
+    "clone_safety_stop": {
+      "type": "boolean"
+    },
+    "advancement_blocked": {
+      "type": "boolean"
+    },
+    "source_fingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nests": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/nest"
+      }
+    }
+  },
+  "$defs": {
+    "opaqueId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$",
+      "maxLength": 128
+    },
+    "nullableRate": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "nullableRatio": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "status",
+        "reason",
+        "ratio",
+        "unbounded"
+      ],
+      "properties": {
+        "name": {
+          "enum": [
+            "error_daughter_reproduction",
+            "relative_positive_negative_reproduction",
+            "event_negative_daughter_death"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "stop",
+            "not_assessable"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "ratio": {
+          "$ref": "#/$defs/nullableRatio"
+        },
+        "unbounded": {
+          "type": "boolean"
+        }
+      }
+    },
+    "nest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "edit_event_id",
+        "clone_id",
+        "run_id",
+        "vehicle_followed",
+        "vehicle_reproduced",
+        "treatment_followed",
+        "treatment_reproduced",
+        "vehicle_rate",
+        "treatment_rate",
+        "ratio",
+        "ratio_unbounded",
+        "vehicle_negative_followed",
+        "vehicle_negative_reproduced",
+        "vehicle_negative_died",
+        "treatment_negative_followed",
+        "treatment_negative_reproduced",
+        "treatment_negative_died",
+        "vehicle_negative_reproduction_rate",
+        "treatment_negative_reproduction_rate",
+        "vehicle_negative_death_rate",
+        "treatment_negative_death_rate",
+        "relative_positive_negative_reproduction_ratio",
+        "relative_reproduction_ratio_unbounded",
+        "negative_death_ratio",
+        "negative_death_ratio_unbounded",
+        "checks",
+        "status",
+        "reason",
+        "vehicle_positive_divisions",
+        "treatment_positive_divisions",
+        "positive_followup_complete",
+        "negative_followup_symmetric"
+      ],
+      "properties": {
+        "edit_event_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "clone_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "run_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "vehicle_followed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "vehicle_reproduced": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "treatment_followed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "treatment_reproduced": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "vehicle_rate": {
+          "$ref": "#/$defs/nullableRate"
+        },
+        "treatment_rate": {
+          "$ref": "#/$defs/nullableRate"
+        },
+        "ratio": {
+          "$ref": "#/$defs/nullableRatio"
+        },
+        "ratio_unbounded": {
+          "type": "boolean"
+        },
+        "vehicle_negative_followed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "vehicle_negative_reproduced": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "vehicle_negative_died": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "treatment_negative_followed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "treatment_negative_reproduced": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "treatment_negative_died": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "vehicle_negative_reproduction_rate": {
+          "$ref": "#/$defs/nullableRate"
+        },
+        "treatment_negative_reproduction_rate": {
+          "$ref": "#/$defs/nullableRate"
+        },
+        "vehicle_negative_death_rate": {
+          "$ref": "#/$defs/nullableRate"
+        },
+        "treatment_negative_death_rate": {
+          "$ref": "#/$defs/nullableRate"
+        },
+        "relative_positive_negative_reproduction_ratio": {
+          "$ref": "#/$defs/nullableRatio"
+        },
+        "relative_reproduction_ratio_unbounded": {
+          "type": "boolean"
+        },
+        "negative_death_ratio": {
+          "$ref": "#/$defs/nullableRatio"
+        },
+        "negative_death_ratio_unbounded": {
+          "type": "boolean"
+        },
+        "checks": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/check"
+          }
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "stop",
+            "not_assessable"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "vehicle_positive_divisions": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "treatment_positive_divisions": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "positive_followup_complete": {
+          "type": "boolean"
+        },
+        "negative_followup_symmetric": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

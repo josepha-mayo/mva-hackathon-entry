@@ -25,6 +25,9 @@ class BenchmarkInputError(ValueError):
     """Raised when a benchmark fixture or run configuration is malformed."""
 
 
+MAX_BOOTSTRAP_ITERATIONS = 100_000
+
+
 @dataclass(frozen=True)
 class SyntheticTruth:
     gene: str
@@ -102,6 +105,8 @@ def _bootstrap_rate(
         return (math.nan, math.nan)
     if iterations < 100:
         raise BenchmarkInputError("bootstrap_iterations must be at least 100")
+    if iterations > MAX_BOOTSTRAP_ITERATIONS:
+        raise BenchmarkInputError("bootstrap_iterations exceeds the fixed ceiling")
     generator = random.Random(seed)
     count = len(observations)
     estimates = [
@@ -125,8 +130,19 @@ def evaluate_synthetic_cases(
         raise BenchmarkInputError("at least one synthetic case is required")
     if len({case.case_id for case in materialized}) != len(materialized):
         raise BenchmarkInputError("case_id values must be unique")
+    if (
+        len({(frozenset(case.records), case.truth) for case in materialized})
+        != len(materialized)
+    ):
+        raise BenchmarkInputError(
+            "case payloads must be unique; duplicate records cannot pad recall"
+        )
     if isinstance(seed, bool) or not isinstance(seed, int):
         raise BenchmarkInputError("seed must be an integer")
+    if isinstance(bootstrap_iterations, bool) or not isinstance(
+        bootstrap_iterations, int
+    ):
+        raise BenchmarkInputError("bootstrap_iterations must be an integer")
 
     positive_outcomes: list[int] = []
     pair_outcomes: list[int] = []
@@ -144,7 +160,16 @@ def evaluate_synthetic_cases(
             if candidate.model is InheritanceModel.COMPOUND_HETEROZYGOUS
         ]
         emitted_pairs += len(pair_candidates)
-        cis_leaks += sum(candidate.phase_state is PhaseState.CIS_CONFIRMED for candidate in pair_candidates)
+        # A cis leak is a case whose truth is cis-confirmed but whose emitted
+        # compound candidate on the same locus carries a trans call — the
+        # engine skips CIS_CONFIRMED emission by design, so count mislabeling.
+        if case.truth is not None and case.truth.phase_state is PhaseState.CIS_CONFIRMED:
+            cis_leaks += sum(
+                candidate.gene == case.truth.gene
+                and frozenset(candidate.variant_keys) == case.truth.variant_keys
+                and candidate.phase_state is PhaseState.TRANS_CONFIRMED
+                for candidate in pair_candidates
+            )
 
         truth_match = None
         if case.truth is not None:
@@ -157,7 +182,9 @@ def evaluate_synthetic_cases(
                 and candidate.phase_state is case.truth.phase_state
             ]
             if len(matches) > 1:
-                raise AssertionError("candidate engine emitted duplicate truth matches")
+                raise BenchmarkInputError(
+                    "candidate engine emitted duplicate truth matches"
+                )
             truth_match = matches[0] if matches else None
             positive_outcomes.append(int(truth_match is not None))
             if case.truth.model is InheritanceModel.COMPOUND_HETEROZYGOUS:
@@ -197,7 +224,11 @@ def evaluate_synthetic_cases(
         "compound_truth_recall_bootstrap_95_ci": list(pair_ci),
         "emitted_compound_candidates": emitted_pairs,
         "false_compound_candidates": false_pairs,
-        "false_compound_fraction": false_pairs / emitted_pairs if emitted_pairs else 0.0,
+        # null when no compound candidates were emitted — a vacuous 0.0 would
+        # look like a perfect specificity result while measuring nothing.
+        "false_compound_fraction": (
+            false_pairs / emitted_pairs if emitted_pairs else None
+        ),
         "confirmed_cis_leaks": cis_leaks,
     }
 
