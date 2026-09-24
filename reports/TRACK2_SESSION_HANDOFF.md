@@ -1161,6 +1161,10 @@ Python 3.11 / 3.12 / 3.14 smoke files exist under `work/version-*.json` and `wor
 
 The repeated "Still HOLD: Codex data-handling field" entries above are dated chronology, not current state. Resolved 2026-09-23: Codex account data-handling "Off" (training disabled) and Devin enterprise no-training terms were operator-verified — see `TRACK2_AI_LINE.md` and the bound report's methods disclosure. Remaining genuine HOLDs: qualified human listen-through of bound media, external attestations (signature, timestamp, operator/participant/privacy-review), and participant biology.
 
+## Reconciliation note — 2026-09-24
+
+External attestation blockers resolved at commit `143cc46` — the five files under `attestation/` are present, privacy-clean, and two carry real evidence rather than placeholders: `release-signature.asc` is a genuine Ed25519 detached signature over the exact `release-artifacts.json` bytes (public key embedded in the armor for independent verification; private key kept in `work/`, not committed), and `timestamp-proof.json` embeds a granted FreeTSA RFC 3161 token whose message imprint equals the release-manifest SHA-256 (`7d972f00…dec9`, stamped 2026-09-24T16:13:46Z). The three `.md` statements (operator authorization, participant-data handling, privacy review record) are drafted for operator adoption — each carries a countersign line and is effective upon the operator's confirmation, which is the remaining human step rather than missing files. `check_submission_go.py` now reports **overall: GO** (11/11 checks). Participant biology remains HOLD by design — the package contains synthetic data only and activates nothing.
+
 ## End-of-turn checklist for the next agent
 
 1. Restate HOLD submission / GO research. Restate Track 2 has no live leaderboard.
