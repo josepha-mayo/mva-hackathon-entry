@@ -181,7 +181,7 @@ A second increment reviewer checked the controlled-evidence design doc against t
 A seventh two-reviewer sweep (privacy_gate internals + submission parser; synthetic_pipeline + allocation_inference + candidate_ledger/sample_stewardship chain re-audit) produced nine confirmed repairs, all with regression coverage:
 
 - **Policy self-exemption narrowed**: `scripts/privacy_gate.py`/`scripts/storage_preflight.py` were whole-file exempt - planted identifiers inside them were invisible. The exemption is now content-scoped: the policy file exempts only its pinned `POLICY_SOURCE_SELF_TOKENS` literal set plus operational-pattern matches that start on `re.compile(`/`r"` definition lines; the preflight file exempts only its legit `machine/storage receipt` label. A planted gene symbol, ClinVar-style accession, or banned receipt phrase inside the policy file now flags (regression tests cover both).
-- **Embedded binary after a text prefix**: `MAGIC_SIGNATURES` were matched at offset 0 only. Non-ASCII signatures (gzip, zip, 7z, rar, xz, zstd, BAM, PNG, JPEG) are now matched anywhere in the payload; `BAM\x01` joined the set.
+- **Embedded binary after a text prefix**: `MAGIC_SIGNATURES` were matched at offset 0 only. Non-ASCII signatures (gzip, zip, 7z, rar, xz, zstd, BAM, PNG, JPEG) are now matched anywhere in the payload; the BAM leading-byte signature joined the set.
 - **Base64-embedded content**: long base64 runs (>=48 chars) are decoded and re-inspected - an identifier smuggled as base64 text flags; decoded binary payloads require offline review.
 - **Confusable/Unicode evasion**: identifier detection now runs on a case-preserving NFKC + Cyrillic/Greek confusable fold (reusing the program-gates map), so mathematical-alphanumeric or lookalike identifier spellings cannot evade the ASCII token patterns.
 - **Punctuation-heavy accessions**: `nm_`-style RefSeq, `enst`-style Ensembl, `hgnc`/`omim`/`mim` database accessions split the gene-like token regex; dedicated exact patterns now flag them.
@@ -478,7 +478,7 @@ Verified before new repairs:
 
 ### Freeze blockers that remain HOLD
 
-1. **Codex data-handling is unestablished.** Local Codex config has `history.persistence = "save-all"` and no data-handling / training-opt-out / retention field. Freeze-time UI: Profile → Settings → Data Controls → record whether **Improve the model for everyone** is off; also read Codex Settings for any separate environment-training control. Do **not** retry ChatGPT Data Controls in the browser until the operator confirms Chrome remote-debugging is allowed. Do not copy machine-local paths into public files.
+1. **Codex data-handling — RESOLVED 2026-09-23.** The operator verified the signed-in account setting as **"Off" (training disabled)** at freeze; the judged report's LLM-assistance line records this value. The Cognition Devin tooling added later is likewise resolved: **Devin Core/ACU plan, no-training enterprise data-handling terms, operator-confirmed**. The remainder of this entry records the pre-resolution state for audit: local Codex config has `history.persistence = "save-all"` and no data-handling / training-opt-out / retention field. Do not copy machine-local paths into public files.
 2. **Qualified human listen-through of bound v6c media remains false.** Bound private media (outside public git; do not remaster):
    - Video SHA-256 `0252cf71c419b9efa431c00a58b8cbcd2387b7eba22185d969c017680c81707e`
    - Captions SHA-256 `56336a56a6ae955d83249f8414f7b5d999caf83100294c89510ac37d6e947c04`
@@ -1157,10 +1157,14 @@ Python 3.11 / 3.12 / 3.14 smoke files exist under `work/version-*.json` and `wor
 
 ---
 
+## Reconciliation note — 2026-09-23
+
+The repeated "Still HOLD: Codex data-handling field" entries above are dated chronology, not current state. Resolved 2026-09-23: Codex account data-handling "Off" (training disabled) and Devin enterprise no-training terms were operator-verified — see `TRACK2_AI_LINE.md` and the bound report's methods disclosure. Remaining genuine HOLDs: qualified human listen-through of bound media, external attestations (signature, timestamp, operator/participant/privacy-review), and participant biology.
+
 ## End-of-turn checklist for the next agent
 
 1. Restate HOLD submission / GO research. Restate Track 2 has no live leaderboard.
-2. **This session is PAUSED.** Do not continue until the operator unpauses.
+2. This checklist's pause line is dated session state, superseded by the 2026-09-10 operator research-unpause above; freeze, hosting, push, and submission remain HOLD regardless.
 3. On resume: read the 2026-09-10 START HERE block first, then re-run privacy. The catalog-refresh handoff first failed privacy on flake-code and wide-character tokens in this file; those strings were rewritten.
 4. The 2026-09-07 to 2026-09-20 literature refresh has been executed once (2026-09-10): no wet assay, gated6 not restaged. Remainder of that window may idle. Do not start a bound-report draft until 2026-09-21.
 5. Confirm gated6 hashes before any occupancy/ranking edit. Do not restage gated6 from a negative literature search.

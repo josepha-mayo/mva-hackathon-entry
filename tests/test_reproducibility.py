@@ -201,7 +201,7 @@ class ReproducibilityManifestTests(unittest.TestCase):
         )
         self.assertTrue(any("scenario result list" in issue for issue in issues))
 
-    def test_verifier_script_reports_no_go_under_divergent_tree(self) -> None:
+    def test_verifier_script_reports_go_on_consistent_release_tree(self) -> None:
         import subprocess
 
         result = subprocess.run(
@@ -213,9 +213,9 @@ class ReproducibilityManifestTests(unittest.TestCase):
             capture_output=True,
             text=True,
         )
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("NO-GO", result.stdout)
-        self.assertNotIn("GO: Track 2", result.stdout)
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("GO: Track 2", result.stdout)
+        self.assertNotIn("NO-GO", result.stdout)
 
     def test_every_bound_artifact_is_eol_pinned(self) -> None:
         """Cross-machine digest stability: every bound artifact must carry

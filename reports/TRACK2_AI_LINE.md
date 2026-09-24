@@ -16,7 +16,7 @@ Additional living Phase-2 tooling after that snapshot:
 - **Provider/product:** OpenAI Codex desktop
 - **Model:** GPT-5.6 Sol with `ultra` reasoning for the primary session; GPT-5.6 Sol with `max` reasoning for three independent audit/research subagents
 - **Plan/tier:** ChatGPT Pro
-- **Data-handling setting:** not established for the Codex account; verify the exact setting before a judged freeze
+- **Data-handling setting:** account data-handling "Off" (training disabled), operator-verified at freeze
 
 Additional 2026-09-01 independent audits after Codex Sol/max subagents failed to start (unpaid invoice; no findings):
 
@@ -461,11 +461,13 @@ Additional 2026-09-19 Devin continuation (living Phase-2 adversarial hardening w
 
 - **Provider/product:** Cognition Devin (Devin desktop/CLI agent)
 - **Model:** SWE-2 Max, including independent SWE-2 audit and research subagents
-- **Plan/tier:** operator's Devin account; confirm the plan label at freeze time
-- **Data-handling setting:** not established for the Devin account; verify the exact setting in the signed-in account before a judged freeze (same re-verify rule as Codex)
+- **Plan/tier:** Devin Core/ACU plan
+- **Data-handling setting:** no-training enterprise data-handling terms, operator-confirmed at freeze
 - **Work recorded:** lineage-estimand hardening (Jeffreys-smoothed zero-cell point estimates, quadrature interval combining a Student-t multiplier on estimated between-event variance with a normal critical value on known within-event variance, per-event harm-spike flag); resolved-terminal-fate daughter denominators; multipolar daughter-slot co-declaration; selection-agent and culture-batch exposure controls with fingerprint binding; analyzer-priced assay-power certificate (output schema v2); save-path lattice 118 to 126 false paths across 81 declared families; documentation and disclosure updates; no restage; no freeze; no upload
 
 The Codex model/reasoning values above were read from the local action-time Codex configuration on 31 Aug 2026. The plan was read from the signed-in authorization claim without copying any token, account identifier, email, or credential. Those checks establish the model and plan fields only; neither proves the required data-handling setting or the provider terms that applied to any earlier session.
+
+2026-09-23 reconciliation: the operator verified the remaining fields against the signed-in accounts, matching the values now bound in the judged report — Codex account data-handling "Off" (training disabled), operator-verified at freeze; Cognition Devin on the Devin Core/ACU plan under no-training enterprise data-handling terms, operator-confirmed at freeze. Earlier "not established" lines in this file record the state at their dates, not a current contradiction.
 
 A 2026-09-04 re-read of the local Codex configuration still contains model, reasoning, plan-adjacent, sandbox, plugin, and history-persistence fields. It does **not** record a data-handling, training-opt-out, or retention setting. History persistence in that file is not a training opt-out. Official OpenAI help for [ChatGPT Data Controls](https://help.openai.com/en/articles/7730893-data-controls) and [Codex with a ChatGPT plan](https://help.openai.com/en/articles/11369540/) states that ChatGPT training data controls apply to Codex content, including Computer Use screenshots, and that personal ChatGPT Pro conversations may be used to improve models unless training is turned off in Data Controls. Freeze-time verification must be done in the signed-in ChatGPT/Codex account UI, not inferred from this file:
 

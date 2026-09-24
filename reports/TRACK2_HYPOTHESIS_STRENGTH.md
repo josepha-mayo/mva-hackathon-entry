@@ -2,7 +2,7 @@
 
 Status: synthetic software contract only. This document names no subject-specific gene, allele, or medicine.
 
-A precise experimental hypothesis is how this package helps a child without pretending a desktop result is a rescue. Weakest link wins. Analog-allele, homolog, species-model, complementation, docking, AlphaFold, FoldX, AlphaMissense, geometry-ranking, coordinate-geometry, in-silico, pathogenicity-score, ESM, REVEL, MAVE, frequency, conservation, ClinVar, official-label, software, literature, cell-free, ectopic, unmatched, imposed-stress, ranking, predictor, unlabeled, transgene, overexpression, computational, cDNA, transient, biophysical, thermal-shift, purified-protein, protein-surrogate, unmatched-line, RNA-seq, or computational-haplotype evidence cannot stand in for an exact-allele assay. Heat-shock-family upregulation after aneuploidy cannot count as checkpoint rescue.
+A precise experimental hypothesis is how this package could help a child without pretending a desktop result is a rescue. Weakest link wins. Analog-allele, homolog, species-model, complementation, docking, AlphaFold, FoldX, AlphaMissense, geometry-ranking, coordinate-geometry, in-silico, pathogenicity-score, ESM, REVEL, MAVE, frequency, conservation, ClinVar, official-label, software, literature, cell-free, ectopic, unmatched, imposed-stress, ranking, predictor, unlabeled, transgene, overexpression, computational, cDNA, transient, biophysical, thermal-shift, purified-protein, protein-surrogate, unmatched-line, RNA-seq, or computational-haplotype evidence cannot stand in for an exact-allele assay. Heat-shock-family upregulation after aneuploidy cannot count as checkpoint rescue.
 
 ## What it scores
 

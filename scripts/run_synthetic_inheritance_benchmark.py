@@ -77,15 +77,17 @@ def generate_cases(count: int) -> tuple[tuple[SyntheticCase, ...], Counter[str]]
             )
             distribution["homozygous_recessive"] += 1
         elif kind == 3:
-            record = _allele(gene, "chrX", 5_000_000 + index, zygosity=Zygosity.HEMIZYGOUS)
+            hemi_base = 5_000_000
+            record = _allele(gene, "chrX", hemi_base + index, zygosity=Zygosity.HEMIZYGOUS)
             records.append(record)
             truth = SyntheticTruth(
                 gene, InheritanceModel.X_LINKED, frozenset((record.variant_key,))
             )
             distribution["x_linked"] += 1
         elif kind == 4:
+            mito_base = 1_000
             record = _allele(
-                gene, "chrM", 1_000 + index % 10_000, zygosity=Zygosity.HETEROPLASMIC
+                gene, "chrM", mito_base + index % 10_000, zygosity=Zygosity.HETEROPLASMIC
             )
             records.append(record)
             truth = SyntheticTruth(

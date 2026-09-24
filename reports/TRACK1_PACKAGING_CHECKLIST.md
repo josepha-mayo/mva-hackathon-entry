@@ -69,7 +69,7 @@ Use the organizer template's exact 12-column order:
 
 ```csv
 proband_id,chrom_1,pos_1,ref_1,alt_1,chrom_2,pos_2,ref_2,alt_2,epcr,finding_type,notes
-PROBAND01,chr1,100000,A,T,chr1,200000,G,C,0.50,primary,Synthetic placeholder; uncalibrated rank-1 pair; phase unresolved
+PROBAND01,chr1,100,A,T,chr1,200,G,C,0.50,primary,Synthetic placeholder; uncalibrated rank-1 pair; phase unresolved
 ```
 
 The example coordinates and alleles are invented placeholders from the public

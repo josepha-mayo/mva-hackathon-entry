@@ -23,7 +23,7 @@ Source anchors: `src/mva_hackathon/lineage.py`, `exposure_gate.py`,
 ## 1. Worked example — `clean_generation` fixture, then one flipped input
 
 Fixture: `build_adversarial_fixture("clean_generation")`
-(`lineage.py:1674-1691`). Three paired edit events; each (event, arm) enrolls
+(`lineage.py:1686-1705`). Three paired edit events; each (event, arm) enrolls
 110 founders with the identical competing-risk partition: 108 completed, 1
 pre-division death, 1 no-division, 0 dropout. Error-bearing completions differ:
 vehicle 24/108, treatment 6/108. Every completed founder produces two recorded

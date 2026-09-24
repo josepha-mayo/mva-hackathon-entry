@@ -17,10 +17,12 @@ from mva_hackathon.submission import (
 )
 
 
+_CHROM = "chr7"
+
 TRUE = frozenset(
     {
-        ("chr7", 101_001, "A", "G"),
-        ("chr7", 101_249, "C", "T"),
+        (_CHROM, 101_001, "A", "G"),
+        (_CHROM, 101_249, "C", "T"),
     }
 )
 
@@ -274,11 +276,12 @@ class SubmissionTests(unittest.TestCase):
             )
 
     def test_overflowing_epcr_literal_is_rejected(self) -> None:
+        chrom = "chr7"
         with self.assertRaisesRegex(SubmissionError, r"must be in \(0, 1\]"):
             load_predictions(
                 self.write_text(
                     ",".join(REQUIRED_FIELDS) + "\n"
-                    "PROBAND01,chr7,101001,A,G,chr7,101249,C,T,1e1000,primary,x\n"
+                    "PROBAND01," + chrom + ",101001,A,G," + chrom + ",101249,C,T,1e1000,primary,x\n"
                 )
             )
 

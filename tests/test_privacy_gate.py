@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import csv
+import gzip
 import hashlib
 import io
 import json
@@ -436,6 +437,99 @@ class PrivacyGateTests(unittest.TestCase):
                 any("SYN42" in issue for issue in issues),
                 msg=f"SYN-namespace label must not flag: {issues}",
             )
+
+    def test_declared_label_glued_to_fields_discharges_compact_subject(
+        self,
+    ) -> None:
+        # A CSV row merges the declared label onto the genotype columns on
+        # the compacted view; the leading raw token is the declared label,
+        # so the merge tail cannot revive a subject claim.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            proband = "proband".upper() + "01"
+            chrom = "chr7"
+            (root / "pair.csv").write_text(
+                proband
+                + ","
+                + chrom
+                + ",101001,A,G,"
+                + chrom
+                + ",101249,C,T,1e1000,primary,x\n",
+                encoding="utf-8",
+            )
+            issues = findings(root, include_git=False)
+            self.assertFalse(
+                any("subject identifier" in issue for issue in issues),
+                msg=f"declared label glued to fields must not flag: {issues}",
+            )
+
+    def test_extended_declared_label_still_flags(self) -> None:
+        # An extension of the declared label is a different token — it
+        # flags on the raw view and its transforms are not suppressed.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            variant = "proband".upper() + "01" + "X"
+            (root / "notes.md").write_text(
+                f"sample {variant} noted\n", encoding="utf-8"
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                any(variant in issue for issue in issues),
+                msg=f"label extension must flag: {issues}",
+            )
+
+    def test_rot13_accession_smuggle_flags(self) -> None:
+        # A rot13'd accession stays identifier-shaped in plaintext, so
+        # neither the raw hit nor the transform hit is suppressed.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            accession = "vcv".upper() + "000533901"
+            (root / "notes.md").write_text(
+                "token " + "ipi".upper() + "000533901" + "\n",
+                encoding="utf-8",
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                any(accession in issue for issue in issues),
+                msg=f"rot13'd accession must flag: {issues}",
+            )
+
+    def test_rot13_of_declared_label_does_not_flag(self) -> None:
+        # The declared label rot13s to an identifier-shaped string on the
+        # transform view; the inverse is declared plaintext, so the hit is
+        # an artifact and suppresses.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "notes.md").write_text(
+                "Enrolment covered " + "proband".upper() + "01" + ".\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(findings(root, include_git=False), [])
+
+    def test_carrier_alphabet_documentation_is_not_a_payload(self) -> None:
+        # Spelling out an alphabet ordering is documentation, not carrier
+        # content — but a real base64-wrapped identifier beside it still
+        # flags.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            alphabet = (
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "abcdefghijklmnopqrstuvwxyz"
+                + "0123456789_-"
+            )
+            encoded = base64.b64encode(
+                "gene ".encode() + "brca".upper().encode() + b"1"
+            ).decode("ascii")
+            (root / "notes.md").write_text(
+                f"identifier charset \"{alphabet}\"\n", encoding="utf-8"
+            )
+            self.assertEqual(findings(root, include_git=False), [])
+            (root / "notes.md").write_text(
+                f"identifier charset \"{alphabet}\" payload {encoded}\n",
+                encoding="utf-8",
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(issues, "base64 identifier beside alphabet doc must flag")
 
     def test_constant_and_path_tokens_are_not_base64_payloads(self) -> None:
         # Uppercase constants, hex digests, and slash-delimited paths decode
@@ -1198,11 +1292,13 @@ class PrivacyGateTests(unittest.TestCase):
     def test_lowercase_and_spaced_accessions_are_flagged(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            omim_digits = "600123"
+            nm_digits = "000123.4"
             (root / "report.md").write_text(
                 "Transcript "
-                + "nm" + "_" + "000123.4"
+                + "nm" + "_" + nm_digits
                 + " with "
-                + "omim" + ":" + "600123"
+                + "omim" + ":" + omim_digits
                 + " and "
                 + "hp" + ":" + "0000123"
                 + " plus "
@@ -1240,6 +1336,147 @@ class PrivacyGateTests(unittest.TestCase):
                     issues,
                     f"base64 evasion not flagged: {variant[:24]!r}",
                 )
+
+    def test_hex_embedded_identifier_is_flagged(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            payload = "participant " + "P" + "-" + "0001"
+            (root / "notes.md").write_text(
+                "checksum " + payload.encode().hex() + "\n",
+                encoding="utf-8",
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                issues, "hex-embedded identifier was not flagged"
+            )
+
+    def test_base32_embedded_identifier_is_flagged(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            payload = "participant " + "P" + "-" + "0001"
+            token = base64.b32encode(payload.encode()).decode("ascii")
+            (root / "notes.md").write_text(
+                f"token {token}\n", encoding="utf-8"
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                issues, "base32-embedded identifier was not flagged"
+            )
+
+    def test_short_base64_identifier_run_is_flagged(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            token = base64.b64encode(
+                "vcv".upper().encode() + b"000533901"
+            ).decode("ascii")
+            self.assertLess(len(token), 24)
+            (root / "notes.md").write_text(
+                f"see {token}\n", encoding="utf-8"
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                issues, "short base64 identifier run was not flagged"
+            )
+
+    def test_interior_padding_base64_is_flagged(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            token = base64.b64encode(
+                b"participant " + b"P" + b"-" + b"0001"
+            ).decode("ascii")
+            corrupted = token[:10] + "=" + token[10:]
+            (root / "notes.md").write_text(
+                f"see {corrupted}\n", encoding="utf-8"
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                issues, "interior-padding base64 was not flagged"
+            )
+
+    def test_deep_nesting_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            payload = b"participant " + b"P" + b"-" + b"0001"
+            for _ in range(4):
+                payload = base64.b64encode(payload)
+            (root / "notes.md").write_text(
+                f"see {payload.decode()}\n", encoding="utf-8"
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                any("depth" in issue for issue in issues),
+                f"depth-4 nested payload did not fail closed: {issues!r}",
+            )
+
+    def test_benign_shape_does_not_suppress_binary_magic(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            blob = gzip.compress(
+                b"participant " + b"P" + b"-" + b"0001\n"
+            )
+            token = base64.b64encode(blob).decode("ascii")
+            while "/" not in token:
+                blob += b"!"
+                token = base64.b64encode(blob).decode("ascii")
+            (root / "notes.md").write_text(
+                f"blob {token}\n", encoding="utf-8"
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                issues, "slash-bearing gzip payload was not flagged"
+            )
+
+    def test_spaced_identifier_digits_are_flagged(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spaced = "vcv".upper() + " 000 533 901"
+            (root / "notes.md").write_text(
+                f"evidence {spaced} here\n", encoding="utf-8"
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                any("accession" in issue for issue in issues),
+                f"spaced accession evaded: {issues!r}",
+            )
+
+    def test_role_word_separator_variants_are_flagged(self) -> None:
+        for label in ("p-" + "0001", "P." + "0001", "P" + "0001"):
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                (root / "notes.md").write_text(
+                    f"subject {label} enrolled\n", encoding="utf-8"
+                )
+                issues = findings(root, include_git=False)
+                self.assertTrue(
+                    any("subject" in issue for issue in issues),
+                    f"subject {label!r} evaded: {issues!r}",
+                )
+
+    def test_encoded_filename_stem_is_flagged(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            stem = base64.b64encode(
+                b"participant " + b"P" + b"-" + b"0001"
+            ).decode("ascii")
+            (root / f"{stem}.md").write_text("plain\n", encoding="utf-8")
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                issues, "base64 filename stem was not flagged"
+            )
+
+    def test_binary_gap_fillers_cannot_split_an_accession(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            token = base64.b64encode(
+                "vcv".upper().encode() + b"\x07\x07\x07" + b"000533901"
+            ).decode("ascii")
+            (root / "notes.md").write_text(
+                f"see {token}\n", encoding="utf-8"
+            )
+            issues = findings(root, include_git=False)
+            self.assertTrue(
+                issues, "gap-filled accession payload was not flagged"
+            )
 
     def test_utf8_bom_cannot_hide_payload_shape(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

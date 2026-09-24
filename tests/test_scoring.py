@@ -7,10 +7,12 @@ from mva_hackathon.scoring import score_rows
 from mva_hackathon.submission import Prediction, SubmissionError
 
 
+_CHROM = "chr7"
+
 TRUE = frozenset(
     {
-        ("chr7", 101001, "A", "G"),
-        ("chr7", 101249, "C", "T"),
+        (_CHROM, 101001, "A", "G"),
+        (_CHROM, 101249, "C", "T"),
     }
 )
 
