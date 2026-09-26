@@ -198,6 +198,7 @@ POLICY_SOURCE_SELF_TOKENS = frozenset(
         "A0", "A1", "A-Z0", "A-Z0-", "A9-0", "ALPHA", "ARMS", "B10", "B11",
         "B12", "B13", "B14", "BAM", "BCF", "BLE001", "BUB1B", "BUB1B-",
         "BUBR1", "CEBONAQ01", "CLASSIFICATIONS", "COMMANDS", "CRAM", "E402",
+        "FV8", "SI8",
         "END", "ENDMDL", "ESTIMANDS", "G418", "GO", "GPT-5", "HMAC-SHA256",
         "L737", "METHODS", "MITOCHONDRIAL", "MVA", "N1002K", "NFD", "NFKC",
         "NO-GO", "OXT", "PARTITIONS", "PATH", "PK", "PMC7610696", "PPS",
@@ -797,8 +798,11 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     PurePosixPath("scripts/confirm_alleles_from_fastq.py"): frozenset(
         {"BLE001", "E402"}
     ),
+    # The machine-generated benchmark receipt's JSON key/hash runs decode
+    # under ascii85 to these gene-shaped tokens; rot13 shadows one of them.
+    # The tokens exist only in the decoded-carrier view of this file.
     PurePosixPath("reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json"): frozenset(
-        {"SP0"}
+        {"FV8", "SI8", "SP0"}
     ),
 }
 QUOTED_UPPER_IDENTIFIER_PATTERN = re.compile(
