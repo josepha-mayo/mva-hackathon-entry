@@ -676,13 +676,17 @@ class GenerationSelectionBenchmarkTests(unittest.TestCase):
         self.assertEqual(mixed["gate"], "fail_closed")
         self.assertEqual(mixed["expected_flags"], [])
         self.assertGreater(
-            mixed["fail_closed_insufficient_information"]["successes"], 0
+            mixed["fail_closed_refusals"]["successes"], 0
+        )
+        refusals = sum(
+            mixed["interpretation_counts"].get(name, 0)
+            for name in (
+                "insufficient_information",
+                "generation_signal_incomplete_deconvolution",
+            )
         )
         self.assertEqual(
-            mixed["fail_closed_insufficient_information"]["rate"],
-            mixed["estimands"]["relative_error_daughter_reproduction"][
-                "invalid_fraction"
-            ],
+            mixed["fail_closed_refusals"]["successes"], refusals
         )
 
     def test_low_replicate_wilson_uncertainty_cannot_claim_acceptance(self) -> None:
@@ -695,8 +699,11 @@ class GenerationSelectionBenchmarkTests(unittest.TestCase):
         self.assertIn("reusable external", calibration["shared_panel_role"])
         self.assertIn("not regenerated", calibration["shared_panel_role"])
         self.assertIn("blinded", calibration["arm_drift_audits"])
-        shared_rates = {
-            tuple(
+        # Scenario calibration panels are drawn per scenario so Monte Carlo
+        # error is decorrelated across the suite; a miscalibrated override
+        # must visibly change that scenario's realized panel rates.
+        realized = {
+            row["name"]: tuple(
                 row["representative_observed_analysis"]["calibration"][key]
                 for key in (
                     "shared_event_sensitivity",
@@ -706,10 +713,82 @@ class GenerationSelectionBenchmarkTests(unittest.TestCase):
             )
             for row in self.smoke["scenarios"]
         }
-        self.assertEqual(len(shared_rates), 1)
+        self.assertGreater(len(set(realized.values())), 1)
+        miscalibrated = next(
+            scenario for scenario in self.smoke_config["scenarios"]
+            if scenario["name"] == "miscalibrated_shared_panel"
+        )
+        override = miscalibrated["shared_measurement"]
+        observed = realized["miscalibrated_shared_panel"]
+        self.assertAlmostEqual(
+            observed[0], override["error_event_sensitivity"], delta=0.2
+        )
+        self.assertAlmostEqual(
+            observed[2],
+            override["division_detection_probability"],
+            delta=0.2,
+        )
+        self.assertLess(
+            observed[0], self.smoke_config["shared_measurement"][
+                "error_event_sensitivity"
+            ],
+        )
         boundaries = " ".join(self.smoke["unmodeled_measurement_boundaries"])
         self.assertIn("label misclassification is not", boundaries)
         self.assertIn("not identifiable", boundaries)
+
+    def test_boundary_scenario_requires_a_declared_clean_signal_bound(self) -> None:
+        config = _config()
+        boundary = next(
+            scenario for scenario in config["scenarios"]
+            if scenario["gate"] == "boundary"
+        )
+        self.assertIn(
+            "maximum_clean_signal_wilson_upper", boundary
+        )
+        del boundary["maximum_clean_signal_wilson_upper"]
+        with self.assertRaisesRegex(
+            GenerationSelectionError, "maximum_clean_signal_wilson_upper"
+        ):
+            run_benchmark(config)
+
+    def test_detection_floor_requires_an_unbounded_required_g_row(self) -> None:
+        config = _config()
+        config["monte_carlo_replicates"] = 1
+        for scenario in config["scenarios"]:
+            if (
+                scenario["gate"] == "required"
+                and "generation_reduction" in scenario["expected_flags"]
+            ):
+                scenario["maximum_clean_signal_wilson_upper"] = 0.5
+        with self.assertRaisesRegex(
+            GenerationSelectionError, "detection floor"
+        ):
+            run_benchmark(config)
+
+    def test_clean_signal_bound_is_enforced_per_scenario(self) -> None:
+        config = _config()
+        config["monte_carlo_replicates"] = 4
+        strong = next(
+            scenario for scenario in config["scenarios"]
+            if scenario["name"] == "fewer_new_errors_strong"
+        )
+        keep_floor = copy.deepcopy(strong)
+        keep_floor["name"] = "fewer_new_errors_strong_unbounded_twin"
+        config["scenarios"].append(keep_floor)
+        strong["maximum_clean_signal_wilson_upper"] = 0.0
+        receipt = run_benchmark(config)
+        row = next(
+            row for row in receipt["scenarios"]
+            if row["name"] == "fewer_new_errors_strong"
+        )
+        self.assertEqual(row["clean_signal_wilson_upper_bound"], 0.0)
+        self.assertFalse(row["passed"])
+        twin = next(
+            row for row in receipt["scenarios"]
+            if row["name"] == "fewer_new_errors_strong_unbounded_twin"
+        )
+        self.assertIsNone(twin["clean_signal_wilson_upper_bound"])
 
     def test_benchmark_is_deterministic_and_truth_never_enters_analysis_payload(self) -> None:
         config = _config()

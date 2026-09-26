@@ -20,7 +20,7 @@ Daughters are allowed only after a completed division — at most two per bipola
 
 ## Pediatric completion band
 
-The v3 aggregate software band of 0.80-1.25 is not reused here. A 20 percent drop in completed divisions can itself be harmful in a growth-disorder assay and can manufacture an apparently lower error fraction.
+The aggregate software benchmark enforces this same pediatric band (0.95-1.10); it no longer uses the earlier exploratory 0.80-1.25 window. A 20 percent drop in completed divisions can itself be harmful in a growth-disorder assay and can manufacture an apparently lower error fraction.
 
 The lineage contract freezes a stricter band before unblinding:
 

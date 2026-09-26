@@ -1,6 +1,6 @@
 # Three-minute Track 2 pitch: When lower aneuploidy is not rescue
 
-**Target runtime:** 2:30–2:35 at 140–145 spoken words per minute; allow up to 2:55 for pauses and slide transitions
+**Target runtime:** ≈2:50–3:05 at 140–150 spoken words per minute (~430-word narration); tighten narration or raise rate toward 2:45 if a hard three-minute cap applies
 **Claim boundary:** preclinical research prioritization only; not a diagnosis, treatment, dose, safety claim, clinical recommendation, or claim of cure
 
 ## 0:00–0:22 — The problem judges should remember
@@ -41,7 +41,7 @@
 
 **Narration:**
 
-“We implemented a deterministic benchmark for paired, hierarchical aggregate counts. The analyzer never receives the hidden simulation truth. Each independent edit event is the unit of inference. And a prespecified observed-data rule returns insufficient information instead of inventing a biological answer. Across fourteen thousand comparisons, all fourteen prespecified benchmark checks passed. Detection of strong new-error generation was ninety point six percent. The Wilson upper confidence bound for false new-error generation calls was zero point five six percent. And the sparse mixed case failed closed eighty five point two percent. Bulk-only results remain limited to the toy dynamics.”
+“We implemented a deterministic benchmark for paired, hierarchical aggregate counts. The analyzer never receives the hidden simulation truth. Each independent edit event is the unit of inference. And a prespecified observed-data rule returns insufficient information instead of inventing a biological answer. Across eighteen thousand comparisons, all eighteen prespecified benchmark checks passed. Strong new-error generation was flagged in ninety point five percent of comparisons, and produced a clean advanceable signal in sixty five point five percent under the enforced pediatric completion band. When the same rescue was contaminated by moderate cytostasis, zero of one thousand comparisons produced a clean signal. The Wilson upper confidence bound for false new-error generation calls was zero point five six percent. And the sparse mixed case failed closed eighty five point two percent. Bulk-only results remain limited to the toy dynamics.”
 
 ## 2:31–2:58 — Why this can matter
 

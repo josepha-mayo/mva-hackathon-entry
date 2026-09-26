@@ -46,7 +46,7 @@ ESTIMANDS = (
     "division_completion",
     "nonerror_daughter_death",
 )
-GATE_PROFILES = ("required", "power_curve", "fail_closed")
+GATE_PROFILES = ("required", "power_curve", "fail_closed", "boundary")
 # Resource ceilings: a malformed design or replicate count must not be able
 # to consume unbounded CPU or memory.
 MAX_DESIGN_FIELD = 1_000_000
@@ -1554,6 +1554,9 @@ def analyze_observed_study(
             for name, estimate in estimates.items()
         }
     all_core_estimable = all(estimates[name].estimable for name in ESTIMANDS)
+    blocked_generation_signal = (
+        not all_core_estimable and biological_flags["generation_reduction"]
+    )
     if not all_core_estimable:
         biological_flags = {name: False for name in BIOLOGICAL_FLAGS}
         conditional_generation_reduction = False
@@ -1580,7 +1583,7 @@ def analyze_observed_study(
     )
     if measurement_invalid:
         interpretation = "measurement_invalid"
-    elif biological_flags["generation_reduction"] and not all_core_estimable:
+    elif blocked_generation_signal:
         interpretation = "generation_signal_incomplete_deconvolution"
     elif biological_flags["generation_reduction"] and not division_equivalent:
         interpretation = "generation_signal_with_unresolved_competing_completion"
@@ -1830,6 +1833,22 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
     parsed: list[dict[str, Any]] = []
     seen: set[str] = set()
     for index, raw_scenario in enumerate(raw_scenarios, start=1):
+        shared_override = None
+        clean_bound = None
+        flag_bound = None
+        clean_floor = None
+        if isinstance(raw_scenario, dict):
+            raw_scenario = dict(raw_scenario)
+            shared_override = raw_scenario.pop("shared_measurement", None)
+            clean_bound = raw_scenario.pop(
+                "maximum_clean_signal_wilson_upper", None
+            )
+            flag_bound = raw_scenario.pop(
+                "maximum_generation_flag_wilson_upper", None
+            )
+            clean_floor = raw_scenario.pop(
+                "minimum_clean_signal_wilson_lower", None
+            )
         scenario = _strict_object(
             raw_scenario,
             {"name", "gate", "treatment", "treatment_measurement", "expected_flags"},
@@ -1842,7 +1861,35 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
         gate = scenario["gate"]
         if gate not in GATE_PROFILES:
             raise GenerationSelectionError(
-                "scenario gate must be required, power_curve, or fail_closed"
+                "scenario gate must be required, power_curve, fail_closed, "
+                "or boundary"
+            )
+        if clean_bound is not None:
+            clean_bound = _probability(
+                clean_bound, f"scenario {index} clean-signal bound"
+            )
+            if clean_bound > 0.5:
+                raise GenerationSelectionError(
+                    "a clean-signal bound above 0.5 is vacuous and cannot "
+                    "be used to exempt a scenario from the detection floor"
+                )
+        if flag_bound is not None:
+            flag_bound = _probability(
+                flag_bound, f"scenario {index} generation-flag bound"
+            )
+        if clean_floor is not None:
+            clean_floor = _probability(
+                clean_floor, f"scenario {index} clean-signal floor"
+            )
+            if gate != "required":
+                raise GenerationSelectionError(
+                    "a clean-signal floor is only meaningful on a required "
+                    "scenario"
+                )
+        if gate == "boundary" and clean_bound is None:
+            raise GenerationSelectionError(
+                "a boundary scenario must declare "
+                "maximum_clean_signal_wilson_upper"
             )
         expected_raw = scenario["expected_flags"]
         if (
@@ -1864,7 +1911,19 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                     scenario["treatment_measurement"],
                     f"scenario {index} treatment_measurement",
                 ),
+                "shared_measurement": (
+                    _dataclass_from_dict(
+                        MeasurementParameters,
+                        shared_override,
+                        f"scenario {index} shared_measurement",
+                    )
+                    if shared_override is not None
+                    else None
+                ),
                 "expected_flags": set(expected_raw),
+                "clean_signal_wilson_upper_bound": clean_bound,
+                "generation_flag_wilson_upper_bound": flag_bound,
+                "clean_signal_wilson_lower_floor": clean_floor,
             }
         )
     required_generation = [
@@ -1883,6 +1942,14 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
         raise GenerationSelectionError(
             "at least one required G and one required non-G scenario are required"
         )
+    if not any(
+        scenario["clean_signal_wilson_upper_bound"] is None
+        for scenario in required_generation
+    ):
+        raise GenerationSelectionError(
+            "at least one required G scenario must be free of a clean-signal "
+            "bound so the detection floor is defined"
+        )
     total_work = (
         design.planned_opportunities_per_arm * replicates * len(parsed)
     )
@@ -1892,19 +1959,21 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
         )
 
     rows: list[dict[str, Any]] = []
-    shared_calibrations = [
-        _simulate_shared_calibration(
-            design,
-            shared_measurement,
-            StableRng(seed + 900_000_000 + replicate),
-        )
-        for replicate in range(replicates)
-    ]
     for index, scenario in enumerate(parsed, start=1):
+        scenario_calibrations = [
+            _simulate_shared_calibration(
+                design,
+                scenario["shared_measurement"] or shared_measurement,
+                StableRng(seed + 900_000_000 + index * 1_000_000 + replicate),
+            )
+            for replicate in range(replicates)
+        ]
         flag_counts = {flag: 0 for flag in COMPONENT_FLAGS}
         exact_flag_sets = 0
         measurement_invalid_count = 0
         fail_closed_count = 0
+        clean_signal_count = 0
+        interpretation_counts: dict[str, int] = {}
         estimable_counts = {name: 0 for name in ESTIMANDS}
         coverage_counts = {name: 0 for name in ESTIMANDS}
         log_error_sums = {name: 0.0 for name in ESTIMANDS}
@@ -1919,11 +1988,12 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                 heterogeneity=heterogeneity,
                 vehicle=vehicle,
                 treatment=scenario["treatment"],
-                shared_measurement=shared_measurement,
+                shared_measurement=scenario["shared_measurement"]
+                or shared_measurement,
                 vehicle_measurement=vehicle_measurement,
                 treatment_measurement=scenario["treatment_measurement"],
                 seed=replicate_seed,
-                shared_calibration_counts=shared_calibrations[replicate],
+                shared_calibration_counts=scenario_calibrations[replicate],
             )
             analysis = analyze_observed_study(
                 simulation.observed, design=design, thresholds=thresholds
@@ -1936,13 +2006,22 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
             measurement_invalid_count += not analysis["status"]["measurement_valid"]
             fail_closed_count += (
                 analysis["status"]["measurement_valid"]
-                and not analysis["status"]["all_core_estimable"]
                 and not any(
                     analysis["flags"][flag] for flag in BIOLOGICAL_FLAGS
                 )
-                and analysis["interpretation"] == "insufficient_information"
+                and analysis["interpretation"]
+                in (
+                    "insufficient_information",
+                    "generation_signal_incomplete_deconvolution",
+                )
             )
             exact_flag_sets += observed_flags == scenario["expected_flags"]
+            clean_signal_count += bool(
+                analysis["status"]["clean_generation_signal"]
+            )
+            interpretation_counts[analysis["interpretation"]] = (
+                interpretation_counts.get(analysis["interpretation"], 0) + 1
+            )
             for flag in COMPONENT_FLAGS:
                 flag_counts[flag] += bool(analysis["flags"][flag])
             for estimand in ESTIMANDS:
@@ -2041,6 +2120,7 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
             or flag_summaries["generation_reduction"]["wilson_upper"]
             <= maximum_false_generation
         )
+        clean_signal_summary = _rate_summary(clean_signal_count, replicates)
         if scenario["gate"] == "required":
             passed = (
                 expected_pass
@@ -2055,17 +2135,46 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                 and measurement_invalid_summary["wilson_upper"]
                 <= 1.0 - minimum_specificity
             )
+        elif scenario["gate"] == "boundary":
+            passed = True
         else:
             passed = method_pass
+        clean_bound = scenario["clean_signal_wilson_upper_bound"]
+        if clean_bound is not None:
+            passed = passed and (
+                clean_signal_summary["wilson_upper"] <= clean_bound
+            )
+        flag_bound = scenario["generation_flag_wilson_upper_bound"]
+        if flag_bound is not None:
+            passed = passed and (
+                flag_summaries["generation_reduction"]["wilson_upper"]
+                <= flag_bound
+            )
+        clean_floor = scenario["clean_signal_wilson_lower_floor"]
+        if clean_floor is not None:
+            passed = passed and (
+                clean_signal_summary["wilson_lower"] >= clean_floor
+            )
         rows.append(
             {
                 "name": scenario["name"],
                 "gate": scenario["gate"],
                 "expected_flags": sorted(scenario["expected_flags"]),
+                "asserted_via": (
+                    "hazard_bounds_only"
+                    if scenario["gate"] == "boundary"
+                    else scenario["gate"]
+                ),
+                "method_pass": method_pass,
+                "clean_signal_wilson_upper_bound": clean_bound,
+                "generation_flag_wilson_upper_bound": flag_bound,
+                "clean_signal_wilson_lower_floor": clean_floor,
+                "clean_generation_signal": clean_signal_summary,
+                "interpretation_counts": interpretation_counts,
                 "component_detection": flag_summaries,
                 "exact_expected_flag_set": exact_summary,
                 "measurement_invalid": measurement_invalid_summary,
-                "fail_closed_insufficient_information": fail_closed_summary,
+                "fail_closed_refusals": fail_closed_summary,
                 "estimands": estimand_summaries,
                 "false_generation_wilson_upper": (
                     None
@@ -2088,7 +2197,19 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
         for row in required_rows
         if "generation_reduction" not in row["expected_flags"]
     ]
+    # The detection floor measures power on uncompromised rescue signals;
+    # rows carrying a clean-signal bound are deliberately dirty cases whose
+    # criterion is the bound itself, so they are disclosed but not pooled.
+    detection_floor_pool = [
+        row
+        for row in required_generation_rows
+        if row["clean_signal_wilson_upper_bound"] is None
+    ]
     minimum_generation_lower = min(
+        row["component_detection"]["generation_reduction"]["wilson_lower"]
+        for row in detection_floor_pool
+    )
+    all_generation_lower = min(
         row["component_detection"]["generation_reduction"]["wilson_lower"]
         for row in required_generation_rows
     )
@@ -2096,6 +2217,16 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
         row["component_detection"]["generation_reduction"]["wilson_upper"]
         for row in required_confound_rows
     )
+    maximum_clean_upper_asserted = max(
+        (
+            row["clean_generation_signal"]["wilson_upper"]
+            for row in rows
+            if row["clean_signal_wilson_upper_bound"] is not None
+        ),
+        default=None,
+    )
+    boundary_rows = [row for row in rows if row["gate"] == "boundary"]
+    asserted_rows = [row for row in rows if row["gate"] != "boundary"]
     all_passed = all(row["passed"] for row in rows)
     acceptance_passed = (
         all_passed
@@ -2187,8 +2318,25 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                 "passed": sum(bool(row["passed"]) for row in rows),
                 "total": len(rows),
                 "all_passed": all_passed,
+                "asserted_scenarios_passed": sum(
+                    bool(row["passed"]) for row in asserted_rows
+                ),
+                "asserted_scenarios_total": len(asserted_rows),
+                "boundary_probes_bounded": sum(
+                    bool(row["passed"]) for row in boundary_rows
+                ),
+                "boundary_probes_total": len(boundary_rows),
+                "detection_floor_pool": [
+                    row["name"] for row in detection_floor_pool
+                ],
                 "minimum_required_generation_detection_wilson_lower": (
                     minimum_generation_lower
+                ),
+                "all_required_generation_detection_wilson_lower": (
+                    all_generation_lower
+                ),
+                "maximum_clean_signal_wilson_upper_on_bound_scenarios": (
+                    maximum_clean_upper_asserted
                 ),
                 "maximum_false_generation_wilson_upper_per_required_confound": (
                     maximum_confound_upper

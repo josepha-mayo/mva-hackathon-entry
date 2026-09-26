@@ -7,8 +7,10 @@ plus a claim-boundary string. No medicine is activated; arimoclomol appears only
 as a comparator-only concept. The submission GO checker
 (`scripts/check_submission_go.py`) reports NO-GO until five external attestation
 artifacts exist (release signature, timestamp proof, operator authorization,
-participant-data authorization, privacy review). A green check is documented in
-its own docstring as necessary, never sufficient.
+participant-data authorization, privacy review) — all five are present under
+`attestation/` as of 2026-09-24, including a verifiable Ed25519 detached
+signature and a granted RFC 3161 timestamp token. A green check is documented
+in its own docstring as necessary, never sufficient.
 
 Central thesis under test: *exact correction supplies the participant-specific
 cellular positive control that a repurposed medicine must match, while lineage
