@@ -3,22 +3,22 @@
     {
       "path": "reports/josephmayo_track2_report.md",
       "role": "track2_report",
-      "sha256": "7f0c9f0314c026ea95c13b43733e07668a5bb85d3ddde3f40691f23aff7ac7b5"
+      "sha256": "96d99907c83cd646e41527a83bf7fc6a873310c302346edcebff3955e1729b45"
     },
     {
       "path": "reports/josephmayo_track2_pitch_script.md",
       "role": "track2_pitch_script",
-      "sha256": "c53091d61ca92698c733da283882eea9a1e5e751b936ceff320e863b0a2c7801"
+      "sha256": "b63783edbe746ef9d0e278e09a01bc17d8103d51c7e271f734b1104f1c9cbb3b"
     },
     {
       "path": "configs/track2-generation-selection-benchmark.json",
       "role": "benchmark_config",
-      "sha256": "9b45ca5a0e7a5414349a92ee464da17a9a0f544629cdedf1116c534032d81dbe"
+      "sha256": "50287400f890b39b679bc75a7545f8e00971d253783ed2ea8c1d92af9e1ed02c"
     },
     {
       "path": "src/mva_hackathon/generation_selection.py",
       "role": "benchmark_source",
-      "sha256": "5c7b4aaccba2120e5d7ba5821eca1a88924a9b2f83ac808680efc26d1878a2d7"
+      "sha256": "e611f8d9a907004614e6f46034a33de7147090162b42b6c7438f9e100aec1347"
     },
     {
       "path": "scripts/run_generation_selection_benchmark.py",
@@ -28,12 +28,12 @@
     {
       "path": "tests/test_generation_selection.py",
       "role": "benchmark_test",
-      "sha256": "6024f74f7d92bd8e528ca11d76911ad7cc43a2baf89255da2771aaaa7cd6bfaa"
+      "sha256": "200e55ecfd8e6dfb9a9eb687efa0eec185ec7895395c96565c996c37cf386835"
     },
     {
       "path": "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json",
       "role": "benchmark_receipt",
-      "sha256": "6a8e36d3f9dbc4dbd76df84a54a59dbecad818b13466fb0a1131a0f0dcabd4fb"
+      "sha256": "c2082474653f0737f8d6c3b4f380aafd84d20f6a90327f2b09b42dc3bac1c642"
     },
     {
       "path": "src/mva_hackathon/reproducibility.py",
@@ -249,5 +249,5 @@
     "tests": "python -m unittest discover -s tests -v"
   },
   "schema": "mva-track2-reproducibility/v2",
-  "source_commit": "0a319b880335b4b615fb044d6237222c35c1887e"
+  "source_commit": "0f14d6725417f582a8e0c32843a79201d4924208"
 }
