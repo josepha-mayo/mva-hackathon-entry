@@ -29,7 +29,7 @@
       "role": "track2_reproducibility_manifest",
       "path": "release/track2-reproducibility.json",
       "status": "released",
-      "sha256": "e3cc3b8d48e14e0a0a927783e4fd03d9c3a3d356a29b2332c420efbe4bcc8d2e"
+      "sha256": "12a889a90372009b9f48f0024349443fcfa48b3a0d1a4c19a8ed152c6cb44e3e"
     }
   ]
 }

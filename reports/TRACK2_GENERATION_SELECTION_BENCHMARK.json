@@ -35,6 +35,11 @@
     "shared_event_reference_errors": 300,
     "shared_event_reference_nonerrors": 750
   },
+  "field_semantics": {
+    "asserted_via": "which acceptance rule produced 'passed' (e.g., 'fail_closed' when refusal was the required result)",
+    "method_pass": "biological-method outcome: whether the configured biological signal was correctly classified; deliberately false on fail-closed scenarios where the expected correct behavior is refusal",
+    "passed": "scenario-gate outcome: whether the scenario's declared acceptance rule (asserted flag set or boundary hazard ceiling) was satisfied"
+  },
   "heterogeneity": {
     "arm_well_sd": 0.04,
     "clone_sd": 0.08,
@@ -70,13 +75,13 @@
   "runtime_receipt": {
     "canonical_command": "python scripts/run_generation_selection_benchmark.py --config configs/track2-generation-selection-benchmark.json --output <new-path>",
     "config_sha256": "50287400f890b39b679bc75a7545f8e00971d253783ed2ea8c1d92af9e1ed02c",
-    "git_source_commit": "fb6d7e6c327993677b0d21cb0e78cef82ad62273",
+    "git_source_commit": "e072e12add4f40a11789508fdab67bd3c8e2ed3e",
     "git_tracked_worktree_clean": true,
     "platform": "Windows-11-10.0.26200-SP0",
     "python_implementation": "CPython",
     "python_version": "3.14.7",
     "runner_sha256": "bd794bb80846726bf9f8afdf2ea75e6ede573054101a7bb90e08b7ca410cfdf3",
-    "source_sha256": "e611f8d9a907004614e6f46034a33de7147090162b42b6c7438f9e100aec1347",
+    "source_sha256": "9b976b1c8deed65e330a96f90e48fbc8cdcfdd61b92fcb24b0f666276974979b",
     "test_sha256": "200e55ecfd8e6dfb9a9eb687efa0eec185ec7895395c96565c996c37cf386835"
   },
   "scenarios": [

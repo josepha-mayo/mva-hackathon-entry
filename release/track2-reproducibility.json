@@ -3,12 +3,12 @@
     {
       "path": "reports/josephmayo_track2_report.md",
       "role": "track2_report",
-      "sha256": "96d99907c83cd646e41527a83bf7fc6a873310c302346edcebff3955e1729b45"
+      "sha256": "550886289746ef52fa3c7c2d916c0d12663c210ab4828a26c59807b7eb153ff4"
     },
     {
       "path": "reports/josephmayo_track2_pitch_script.md",
       "role": "track2_pitch_script",
-      "sha256": "b63783edbe746ef9d0e278e09a01bc17d8103d51c7e271f734b1104f1c9cbb3b"
+      "sha256": "908713d0c81869c5446b24bf8f73097b24491c027a80eb4f6429fe2e60b923aa"
     },
     {
       "path": "configs/track2-generation-selection-benchmark.json",
@@ -18,7 +18,7 @@
     {
       "path": "src/mva_hackathon/generation_selection.py",
       "role": "benchmark_source",
-      "sha256": "e611f8d9a907004614e6f46034a33de7147090162b42b6c7438f9e100aec1347"
+      "sha256": "9b976b1c8deed65e330a96f90e48fbc8cdcfdd61b92fcb24b0f666276974979b"
     },
     {
       "path": "scripts/run_generation_selection_benchmark.py",
@@ -33,7 +33,7 @@
     {
       "path": "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json",
       "role": "benchmark_receipt",
-      "sha256": "b63d44b0ddf8034bdb6aacc35636c2faf730d30525c6b9503add02b2a4f200da"
+      "sha256": "9bf77c998a6e71012671cae8c9c54adb6f54cacc959030a0c822973da485c1a7"
     },
     {
       "path": "src/mva_hackathon/reproducibility.py",
@@ -68,7 +68,7 @@
     {
       "path": "scripts/privacy_gate.py",
       "role": "privacy_gate",
-      "sha256": "3cd16fc848456118e99c4a765ac345ffb5f0d4c1e897531193fcbfbb4ff44140"
+      "sha256": "7bbe92c46464747edbc28741f58a995d60293832919d1ec23d246378c7c6ff99"
     },
     {
       "path": "src/mva_hackathon/community_pipeline.py",
@@ -249,5 +249,5 @@
     "tests": "python -m unittest discover -s tests -v"
   },
   "schema": "mva-track2-reproducibility/v2",
-  "source_commit": "fb6d7e6c327993677b0d21cb0e78cef82ad62273"
+  "source_commit": "e072e12add4f40a11789508fdab67bd3c8e2ed3e"
 }
