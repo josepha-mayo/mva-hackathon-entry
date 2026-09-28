@@ -275,7 +275,9 @@ def _privacy_gate(root: Path) -> dict:
             check=False,
             capture_output=True,
             text=True,
-            timeout=900,
+            # The gate walks every reachable blob under every transform;
+            # the full scan exceeds fifteen minutes on commodity hardware.
+            timeout=3600,
         )
     except (OSError, subprocess.TimeoutExpired) as exc:
         return _check("privacy_gate", False, f"cannot run privacy gate: {exc}")
