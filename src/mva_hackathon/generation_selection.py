@@ -2308,6 +2308,23 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                     "aggregate sufficient statistics"
                 ),
             ],
+            "field_semantics": {
+                "passed": (
+                    "scenario-gate outcome: whether the scenario's declared "
+                    "acceptance rule (asserted flag set or boundary hazard "
+                    "ceiling) was satisfied"
+                ),
+                "method_pass": (
+                    "biological-method outcome: whether the configured "
+                    "biological signal was correctly classified; deliberately "
+                    "false on fail-closed scenarios where the expected correct "
+                    "behavior is refusal"
+                ),
+                "asserted_via": (
+                    "which acceptance rule produced 'passed' "
+                    "(e.g., 'fail_closed' when refusal was the required result)"
+                ),
+            },
             "monte_carlo_replicates_per_scenario": replicates,
             "total_simulated_vehicle_treatment_comparisons": replicates * len(rows),
             "thresholds": dataclasses.asdict(thresholds),

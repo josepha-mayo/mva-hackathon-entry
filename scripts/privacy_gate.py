@@ -198,7 +198,7 @@ POLICY_SOURCE_SELF_TOKENS = frozenset(
         "A0", "A1", "A-Z0", "A-Z0-", "A9-0", "ALPHA", "ARMS", "B10", "B11",
         "B12", "B13", "B14", "BAM", "BCF", "BLE001", "BUB1B", "BUB1B-",
         "BUBR1", "CEBONAQ01", "CLASSIFICATIONS", "COMMANDS", "CRAM", "E402",
-        "FV8", "SI8",
+        "FV8", "SI8", "QC9",
         "END", "ENDMDL", "ESTIMANDS", "G418", "GO", "GPT-5", "HMAC-SHA256",
         "L737", "METHODS", "MITOCHONDRIAL", "MVA", "N1002K", "NFD", "NFKC",
         "NO-GO", "OXT", "PARTITIONS", "PATH", "PK", "PMC7610696", "PPS",
@@ -804,6 +804,9 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     PurePosixPath("reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json"): frozenset(
         {"FV8", "SI8", "SP0"}
     ),
+    # The Ed25519 detached-signature base64 payload reverses to a gene-shaped
+    # token; the token exists only in the reversed view of this file.
+    PurePosixPath("attestation/release-signature.asc"): frozenset({"QC9"}),
 }
 QUOTED_UPPER_IDENTIFIER_PATTERN = re.compile(
     r"[`'\"]([A-Z][A-Z0-9-]{1,15})[`'\"]"
@@ -2575,6 +2578,12 @@ def _b58_decode_token(token: str) -> bytes | None:
 
     if not token or any(char not in _BASE58_ALPHABET for char in token):
         return None
+    # The manual decode below is quadratic in token length (a big-int
+    # multiply per character). Tokens beyond this bound cannot hide a
+    # scannable identifier-sized payload and would otherwise allow a
+    # memory-exhaustion denial of service inside the scanner itself.
+    if len(token) > 131072:
+        return None
     number = 0
     for char in token:
         number = number * 58 + _BASE58_ALPHABET.index(char)
@@ -2897,7 +2906,10 @@ def _embedded_identifier_sweep(
             if carrier == "uuencode":
                 decoded = _uu_decode_block(token)
             else:
-                decoded = _decode_carrier(token, carrier)
+                try:
+                    decoded = _decode_carrier(token, carrier)
+                except (MemoryError, OverflowError, ValueError):
+                    decoded = None
             if decoded is None:
                 continue
             payload = _printable_payload_text(decoded)
@@ -3083,7 +3095,10 @@ def _inspect_payload_text(
                 align = 1 if short_only else _CARRIER_ALIGNMENT.get(carrier, 1)
                 decodes_uu = []
                 for offset in range(align):
-                    decoded = _decode_carrier(token[offset:], carrier)
+                    try:
+                        decoded = _decode_carrier(token[offset:], carrier)
+                    except (MemoryError, OverflowError, ValueError):
+                        decoded = None
                     if (
                         decoded is not None
                         and len(decoded) <= MAX_PUBLIC_BYTES
@@ -3407,7 +3422,10 @@ def _inspect_path_identifiers(
         # every carrier gets an attempt, including punctuation-joined
         # fragments, since the path itself can carry the smuggle.
         for token, carrier, _primary, _short in _decode_candidates(folded):
-            decoded = _decode_carrier(token, carrier)
+            try:
+                decoded = _decode_carrier(token, carrier)
+            except (MemoryError, OverflowError, ValueError):
+                decoded = None
             if decoded is None:
                 continue
             payload = _printable_payload_text(decoded)

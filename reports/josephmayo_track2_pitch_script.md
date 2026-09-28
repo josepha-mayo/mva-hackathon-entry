@@ -25,7 +25,7 @@
 
 **Narration:**
 
-“Arimoclomol is the lead ex-vivo probe. If N1002K destabilizes BUBR1, heat-shock amplification might raise usable protein. In eleven paired samples from the arimoclomol arm, mean PBMC HSP70 increased from baseline at month twelve, but sample loss precluded a controlled placebo comparison. No study tests it in BUB1B or MVA. The label says its clinical mechanism in NPC is unknown. Trials in ALS and inclusion-body myositis missed efficacy endpoints. And Gaucher assays often used concentrations far above the label-estimated pediatric serum peak.”
+“Arimoclomol is the lead ex-vivo probe. If N1002K destabilizes BUBR1, heat-shock amplification might raise usable protein. In Niemann-Pick cells it enlarged the mature pool of mutant NPC1 across three genotypes — the same abundance-rescue shape this design tests for BUBR1. In eleven paired samples from the arimoclomol arm, mean PBMC HSP70 increased from baseline at month twelve, but sample loss precluded a controlled placebo comparison. No study tests it in BUB1B or MVA. The label says its clinical mechanism in NPC is unknown. Trials in ALS and inclusion-body myositis missed efficacy endpoints. And Gaucher assays often used concentrations far above the label-estimated pediatric serum peak.”
 
 ## 1:19–1:52 — The exposure and causal funnel
 
