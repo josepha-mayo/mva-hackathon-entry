@@ -51,3 +51,4 @@
 /templates/community/replication_decision.synthetic.json text eol=lf
 /templates/community/structure_ranking.synthetic.json text eol=lf
 /templates/community/transcript_record.synthetic.json text eol=lf
+/reports/TRACK2_COORDINATE_GEOMETRY_SYNTHETIC.json text eol=lf
