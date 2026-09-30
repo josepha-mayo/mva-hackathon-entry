@@ -1203,3 +1203,23 @@ imprint `8bc9e245`...; added `attestation/VERIFY.md` with copy-paste verificatio
 commands for judges). Receipt sha `16b2970e`...; pitch video rebuilt against it,
 170.5 s. Operator-only remainder unchanged: listen-through, video upload, attestation
 adoption, portal submission.
+
+Post-refresh audit reconciliation (2026-09-30, third batch): four adversarial
+audits (live-imaging, phase resolution, pharmacology, biostatistics) were folded
+into one content commit `254d771` alongside a new bound artifact class - a
+predeclared five-seed sensitivity sweep (`seed_sensitivity` role family, command
+registered in the frozen command map). All five supplementary seeds passed all
+18 scenarios with acceptance met; the false-generation ceiling was
+seed-invariant and the detection floor spread under 0.2 percentage points.
+Report additions: imaging acquisition/phototoxicity qualification with a
+published label-perturbation caveat, molecular-phasing pitfalls plus fallback
+hierarchy, population-frequency consistency check, fit-for-purpose
+bioanalytical validation spec with unbound-vs-intracellular exposure gate,
+and the statistical contract (alpha, intersection-union rationale, fixed-sequence
+gatekeeping, comparator multiplicity, intercurrent-event handling, internal
+pilot, analyzer-priced power certificate), references extended to 96.
+Binding commit `787b5b4` (receipt regenerated at the content commit,
+deterministic; manifest reminted at 53 artifacts, sha `8460eeb3`...), attestation
+refresh `7da62ed` (signature re-issued over the release manifest bytes; fresh
+rfc3161 token serial 0x08b03901, imprint `c1ca2dd5`...). Operator-only remainder
+unchanged: listen-through, video upload, attestation adoption, portal submission.
