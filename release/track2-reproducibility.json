@@ -3,7 +3,7 @@
     {
       "path": "reports/josephmayo_track2_report.md",
       "role": "track2_report",
-      "sha256": "9c9855897f87f649af685e2b700946ec79dd04964152c93a0fedab1af721e8bd"
+      "sha256": "4962fc1befb177d89c813530f7f1f3df44450ac3af718d7ccd4a573783ae2277"
     },
     {
       "path": "reports/josephmayo_track2_pitch_script.md",
@@ -33,7 +33,7 @@
     {
       "path": "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json",
       "role": "benchmark_receipt",
-      "sha256": "85ddcf91e6755d718fdc4b52d1a64ffe437860d895f45600ec2aaa26a337ef84"
+      "sha256": "16b2970e4435c3ce14773d1ee67f468809b84ac3a8ecaf575e549627920bb0e9"
     },
     {
       "path": "src/mva_hackathon/reproducibility.py",
@@ -249,5 +249,5 @@
     "tests": "python -m unittest discover -s tests -v"
   },
   "schema": "mva-track2-reproducibility/v2",
-  "source_commit": "5a20f7ab3a85af3acfb66d2a44ea20c135f59ff3"
+  "source_commit": "4646a6cc2632148edfd565644730a2d035d44a11"
 }
