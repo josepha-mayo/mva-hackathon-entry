@@ -1218,8 +1218,22 @@ bioanalytical validation spec with unbound-vs-intracellular exposure gate,
 and the statistical contract (alpha, intersection-union rationale, fixed-sequence
 gatekeeping, comparator multiplicity, intercurrent-event handling, internal
 pilot, analyzer-priced power certificate), references extended to 96.
-Binding commit `787b5b4` (receipt regenerated at the content commit,
-deterministic; manifest reminted at 53 artifacts, sha `8460eeb3`...), attestation
-refresh `7da62ed` (signature re-issued over the release manifest bytes; fresh
-rfc3161 token serial 0x08b03901, imprint `c1ca2dd5`...). Operator-only remainder
+Binding commit `feda534` (receipt regenerated at the content commit,
+deterministic; manifest reminted at 53 artifacts, sha `bbe9700a`...), attestation
+refresh `750c2c6` (signature re-issued over the release manifest bytes; fresh
+rfc3161 token serial 0x08b0b438, imprint `b4a8da1a`...). Operator-only remainder
 unchanged: listen-through, video upload, attestation adoption, portal submission.
+
+
+Post-refresh audit reconciliation (2026-09-30, fourth pass): two cascade defects
+were caught by the battery itself. First, the release manifest's recorded digest
+for the reproducibility manifest was left stale in the binding commit, which
+voided every release allowance and surfaced 697 findings; the chain was
+rewritten so no commit carries a digest mismatch. Second, a lint marker in the
+new sweep runner was identifier-shaped to the gate (with a rot13 shadow); the
+policy file now carries a path-scoped allowlist entry like every sibling runner.
+The gate fix is bound content, so the chain re-anchored: content commits
+`254d771` + `5d832ef`, binding `feda534` (receipt regenerated at `5d832ef`,
+deterministic; manifest `bbe9700a`...), attestation `750c2c6` (signature
+re-issued over the corrected release-manifest bytes; rfc3161 serial
+0x08b0b438, imprint `b4a8da1a`...). Operator-only remainder unchanged.
