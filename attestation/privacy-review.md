@@ -6,7 +6,7 @@ countersigns to adopt it; an independent human reviewer may replace it.
 
 ## 1. Scope reviewed
 
-- Full working tree at freeze commits `254d771` + `65ec802`
+- Full working tree at freeze commits `5d832ef` + `feda534`
 - Complete reachable Git history (every blob of every commit)
 - Git index / staged content
 - Commit messages and tag contents
