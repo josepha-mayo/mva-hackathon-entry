@@ -1189,3 +1189,17 @@ The prior note's chain was superseded the same day. A full-suite run exposed a s
 ## 2026-09-30 — evidence-deepening re-freeze
 
 A five-agent research wave (literature recency, estimator antecedents, public competitor map, hostile biology audit, benchmark rigor) produced a single report-level batch now frozen in a third chain: content commit `5a20f7a`, binding commit `071fd9c`, attestation refresh at the tip. Additions: locus-completeness honesty; the disease-gene triad with the checkpoint-defect subclass; two-class allele split with a negative-neighbor cite and dominant-interference risk; predictor-disagreement disclosure; edited-variant precedent cite; probe mechanism-not-induction caveat and kinetochore-compartment boundary; carrier-as-floor-not-ceiling; editing-genotoxicity controls (mock-edit, safe-harbor arm, copy-neutral loss-of-heterozygosity check, tumor-suppressor status, early passage); corrected-clone dual equivalence targets; estimator antecedent acknowledgment; two-one-sided-tests equivalence and band rationale; a well-known missegregation-cytotoxicity analogue; seed/batch/multiplicity/replay caveats; aneuploid-proteostasis counterscreen line; narrowed innovation claim; a public-field difference paragraph; and references 38-55. Receipt regenerated at the content commit (18/18, acceptance true); release-manifest sha-256 `f818c4ce…8c8bd`; new Ed25519 keypair generated (prior key was lost in a workspace deletion; a public key now ships in `attestation/release-signature-pubkey.txt` for verifiability); fresh timestamp token serial `0x08AA4934`, 2026-09-30 01:19:59 UTC. Operator-only remainder unchanged: listen-through, video upload, attestation adoption, portal submission.
+
+
+Post-refresh audit reconciliation (2026-09-30, second batch, final chain): a hostile
+review of the prior content commit flagged a citation mischaracterization and wording
+issues; all were fixed, then the chain was rebuilt twice - first rebuild tripped the
+identifier gate on commit-message tokens, so the messages were rewritten token-free.
+Final chain: content commit `4646a6c`, binding commit `395735a` (receipt regenerated
+at the content commit - deterministic, only the embedded source-commit field changed;
+manifest reminted, sha `5dc6dd65`...), attestation refresh `a6330b1` (signature
+re-issued with the same published ed25519 key; fresh rfc3161 token serial 0x08ad3c65,
+imprint `8bc9e245`...; added `attestation/VERIFY.md` with copy-paste verification
+commands for judges). Receipt sha `16b2970e`...; pitch video rebuilt against it,
+170.5 s. Operator-only remainder unchanged: listen-through, video upload, attestation
+adoption, portal submission.
