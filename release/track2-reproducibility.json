@@ -3,7 +3,7 @@
     {
       "path": "reports/josephmayo_track2_report.md",
       "role": "track2_report",
-      "sha256": "4962fc1befb177d89c813530f7f1f3df44450ac3af718d7ccd4a573783ae2277"
+      "sha256": "5d537a3885cc8848a22e215d181cfddcbd033af5075e75732e97f5c5741c1169"
     },
     {
       "path": "reports/josephmayo_track2_pitch_script.md",
@@ -33,12 +33,37 @@
     {
       "path": "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json",
       "role": "benchmark_receipt",
-      "sha256": "16b2970e4435c3ce14773d1ee67f468809b84ac3a8ecaf575e549627920bb0e9"
+      "sha256": "16f78dcfb4813172ee9a7b075fb336900560cd64f06bedc0229c0381dabd366b"
+    },
+    {
+      "path": "configs/track2-seed-sensitivity.json",
+      "role": "seed_sensitivity_config",
+      "sha256": "5c25260aa32be5985fbbeaece496792f5522e5301d7c60bf61b4876ae77813b6"
+    },
+    {
+      "path": "src/mva_hackathon/seed_sensitivity.py",
+      "role": "seed_sensitivity_source",
+      "sha256": "9af0621104692c63d7652319e09dcc3604ac98485fa4f5475e9e08f1be3affc0"
+    },
+    {
+      "path": "scripts/run_seed_sensitivity.py",
+      "role": "seed_sensitivity_runner",
+      "sha256": "8fdb02a2d9f7c244415f8775e7d964668a34845248e396b89dd6afce56e8432e"
+    },
+    {
+      "path": "tests/test_seed_sensitivity.py",
+      "role": "seed_sensitivity_test",
+      "sha256": "1336591d132c24d3c4e3ec8e7f903f041bd21a7da97111cabd2208f66c25f985"
+    },
+    {
+      "path": "reports/TRACK2_SEED_SENSITIVITY.json",
+      "role": "seed_sensitivity_receipt",
+      "sha256": "f6cb85fd38277da5344445c54dac2318bd3a41b595873bbfb7763d70ac8ce390"
     },
     {
       "path": "src/mva_hackathon/reproducibility.py",
       "role": "integrity_source",
-      "sha256": "7e048eef9f17281ef0a153f4641c5913a18ee2d0a81540ad1e5e0b18bd1a1b15"
+      "sha256": "c55de8816d2b5e050a4baf5f81c608fb6dbc8164a4a398801fe9d24364b968a8"
     },
     {
       "path": "scripts/verify_track2_reproducibility.py",
@@ -246,8 +271,9 @@
     "integrity": "python scripts/verify_track2_reproducibility.py .",
     "manifest": "python scripts/create_track2_reproducibility_manifest.py . --source-commit <40-hex>",
     "privacy": "python scripts/privacy_gate.py .",
+    "seed_sensitivity": "python scripts/run_seed_sensitivity.py --config configs/track2-seed-sensitivity.json --output <new-path>",
     "tests": "python -m unittest discover -s tests -v"
   },
   "schema": "mva-track2-reproducibility/v2",
-  "source_commit": "4646a6cc2632148edfd565644730a2d035d44a11"
+  "source_commit": "254d7715b776d28008709b0e33da2eca94cb2ea6"
 }
