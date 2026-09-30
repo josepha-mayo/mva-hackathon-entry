@@ -52,3 +52,8 @@
 /templates/community/structure_ranking.synthetic.json text eol=lf
 /templates/community/transcript_record.synthetic.json text eol=lf
 /reports/TRACK2_COORDINATE_GEOMETRY_SYNTHETIC.json text eol=lf
+/configs/track2-seed-sensitivity.json text eol=lf
+/src/mva_hackathon/seed_sensitivity.py text eol=lf
+/scripts/run_seed_sensitivity.py text eol=lf
+/tests/test_seed_sensitivity.py text eol=lf
+/reports/TRACK2_SEED_SENSITIVITY.json text eol=lf

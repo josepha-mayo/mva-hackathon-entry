@@ -25,6 +25,21 @@ ARTIFACT_PATHS = {
     "benchmark_receipt": PurePosixPath(
         "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json"
     ),
+    "seed_sensitivity_config": PurePosixPath(
+        "configs/track2-seed-sensitivity.json"
+    ),
+    "seed_sensitivity_source": PurePosixPath(
+        "src/mva_hackathon/seed_sensitivity.py"
+    ),
+    "seed_sensitivity_runner": PurePosixPath(
+        "scripts/run_seed_sensitivity.py"
+    ),
+    "seed_sensitivity_test": PurePosixPath(
+        "tests/test_seed_sensitivity.py"
+    ),
+    "seed_sensitivity_receipt": PurePosixPath(
+        "reports/TRACK2_SEED_SENSITIVITY.json"
+    ),
     "integrity_source": PurePosixPath("src/mva_hackathon/reproducibility.py"),
     "integrity_runner": PurePosixPath("scripts/verify_track2_reproducibility.py"),
     "integrity_test": PurePosixPath("tests/test_reproducibility.py"),
@@ -118,6 +133,10 @@ COMMANDS = {
     "benchmark": (
         "python scripts/run_generation_selection_benchmark.py --config "
         "configs/track2-generation-selection-benchmark.json --output <new-path>"
+    ),
+    "seed_sensitivity": (
+        "python scripts/run_seed_sensitivity.py --config "
+        "configs/track2-seed-sensitivity.json --output <new-path>"
     ),
     "integrity": "python scripts/verify_track2_reproducibility.py .",
     "manifest": (

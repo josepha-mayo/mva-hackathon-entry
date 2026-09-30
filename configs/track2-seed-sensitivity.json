@@ -1,0 +1,7 @@
+{
+  "schema": "mva-track2-seed-sensitivity/v1",
+  "seeds": [17032027, 17032028, 17032029, 17032030, 17032031],
+  "acceptance": {
+    "min_accepting_seeds": 5
+  }
+}

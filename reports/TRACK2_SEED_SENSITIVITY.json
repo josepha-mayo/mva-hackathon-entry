@@ -1,0 +1,77 @@
+{
+  "base_config_sha256": "50287400f890b39b679bc75a7545f8e00971d253783ed2ea8c1d92af9e1ed02c",
+  "claim_boundary": "supplementary robustness receipt: replays the bound synthetic aggregate-count benchmark across predeclared master seeds. Answers whether the primary bound seed was favorable by chance; inherits every limitation of the primary receipt and is not real-data validation.",
+  "metric_ranges": {
+    "maximum_false_generation_wilson_upper_per_required_confound": {
+      "max": 0.00564255859796,
+      "min": 0.00564255859796
+    },
+    "minimum_required_generation_detection_wilson_lower": {
+      "max": 0.886326845683,
+      "min": 0.885245560206
+    }
+  },
+  "per_seed": [
+    {
+      "acceptance_passed": true,
+      "failed_scenarios": [],
+      "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
+      "minimum_required_generation_detection_wilson_lower": 0.885245560206,
+      "scenarios_passed": 18,
+      "scenarios_total": 18,
+      "seed": 17032027
+    },
+    {
+      "acceptance_passed": true,
+      "failed_scenarios": [],
+      "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
+      "minimum_required_generation_detection_wilson_lower": 0.885245560206,
+      "scenarios_passed": 18,
+      "scenarios_total": 18,
+      "seed": 17032028
+    },
+    {
+      "acceptance_passed": true,
+      "failed_scenarios": [],
+      "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
+      "minimum_required_generation_detection_wilson_lower": 0.886326845683,
+      "scenarios_passed": 18,
+      "scenarios_total": 18,
+      "seed": 17032029
+    },
+    {
+      "acceptance_passed": true,
+      "failed_scenarios": [],
+      "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
+      "minimum_required_generation_detection_wilson_lower": 0.886326845683,
+      "scenarios_passed": 18,
+      "scenarios_total": 18,
+      "seed": 17032030
+    },
+    {
+      "acceptance_passed": true,
+      "failed_scenarios": [],
+      "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
+      "minimum_required_generation_detection_wilson_lower": 0.886326845683,
+      "scenarios_passed": 18,
+      "scenarios_total": 18,
+      "seed": 17032031
+    }
+  ],
+  "primary_seed": 17032026,
+  "schema": "mva-track2-seed-sensitivity/v1",
+  "summary": {
+    "acceptance_passed": true,
+    "min_accepting_seeds": 5,
+    "seeds_accepted": 5,
+    "seeds_run": 5
+  },
+  "supplementary_seeds": [
+    17032027,
+    17032028,
+    17032029,
+    17032030,
+    17032031
+  ],
+  "synthetic_only": true
+}
