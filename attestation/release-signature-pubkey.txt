@@ -1,2 +1,1 @@
-Ed25519 public key (raw 32-byte, base64) for release-signature.asc
 7DKzJQJFnsC+g5tbgYEvyE7kDKzaJ7RIeqlb8pRoWds=

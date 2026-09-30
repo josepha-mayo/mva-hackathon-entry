@@ -10,9 +10,9 @@ I, **JosephMayo** (repository operator and submission owner), state the
 following for the Track 2 MVA hackathon submission frozen in this repository:
 
 1. I authorize the freeze state bound by `release/release-artifacts.json`
-   (SHA-256 `8bc9e2456bd6cd0a345f2765db4983336a540546faa869307cf3e7010a678c20`)
+   (SHA-256 `c1ca2dd5845e87ce7092ded028671a1ca74c308dac1e07408847540dbbb3ef5d`)
    and `release/track2-reproducibility.json` (SHA-256
-   `5dc6dd65ad7ddb39c8f700d3364b2b2bc4f65637135336bea9489fdb0daf79b0`) as the
+   `8460eeb3fc898972f2b4546e8e70e466098dcf773b3eb4d9d64051b7a77bbaf9`) as the
    intended submission package.
 
 2. I authorize submission of this package under the competition rules in
