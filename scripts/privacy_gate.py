@@ -460,6 +460,7 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     PurePosixPath("scripts/run_generation_selection_benchmark.py"): frozenset(
         {"E402"}
     ),
+    PurePosixPath("scripts/run_seed_sensitivity.py"): frozenset({"E402"}),
     PurePosixPath("src/mva_hackathon/generation_selection.py"): frozenset(
         {"ARM_NAMES", "CLASSIFICATIONS", "COMPONENT_FLAGS", "ESTIMANDS", "SCHEMA"}
     ),
