@@ -1237,3 +1237,33 @@ The gate fix is bound content, so the chain re-anchored: content commits
 deterministic; manifest `bbe9700a`...), attestation `750c2c6` (signature
 re-issued over the corrected release-manifest bytes; rfc3161 serial
 0x08b0b438, imprint `b4a8da1a`...). Operator-only remainder unchanged.
+
+## 2026-10-01 twenty-fourth increment - deepened-spec + feasibility round
+
+Supersedes the same-week chain. A five-front audit wave (RNA-fate
+quantification, abundance/stability measurement, fallback ordering, judge
+discoverability, coverage) plus a second wave (editing modality reality,
+cell-culture feasibility, estimand identification, mechanism breadth,
+competition fit) folded into one content commit `7471ad0`: the RNA-fate gate
+carries a quantified depletion contract; the abundance gate declares its
+dose-matched baseline before measuring; prime-editing-only modality reality,
+cloning-feasibility fallback, truncated-fragment KARD correction, and
+causal-estimand identification are in the report; the epilogue is an ordered
+four-rung fallback ladder; the front matter leads with an
+implementation/receipt table.
+
+Coverage grew from 18 to 22 scenarios (18 asserted + 4 declared boundary
+probes): marginal-preserving selective follow-up masking (260/1,000 clean
+signals, ceiling 0.40, disclosed residual), audit-band edge drift (361/1,000,
+ceiling 0.50), completion-band edge refusal (1/1,000, ceiling 0.02), and a
+zero-division arm that fails closed 1,000/1,000. The seed-sweep module was
+hardened en route: base-config validation applies to the sweep entry point,
+vacuous acceptance thresholds are rejected, metric finiteness is guarded.
+Reproducibility-manifest sha-256 `04b65103`...; FreeTSA token serial
+`0x08BE3DB0` stamped 2026-10-01T11:50:25Z over release-manifest sha-256
+`3a64dea1`...; fresh Ed25519 keypair signs those exact LF bytes. A third
+cascade defect was caught by the gate itself: a backticked verdict word in
+the verification doc was identifier-shaped; the doc now carries it unquoted.
+Pitch video rebuilt at 163.9s, receipt-hash bound. Operator-only remainder
+unchanged: listen-through, video upload, attestation adoption, portal
+submission.
