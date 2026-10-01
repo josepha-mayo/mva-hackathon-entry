@@ -3,17 +3,17 @@
     {
       "path": "reports/josephmayo_track2_report.md",
       "role": "track2_report",
-      "sha256": "5d537a3885cc8848a22e215d181cfddcbd033af5075e75732e97f5c5741c1169"
+      "sha256": "0fcf7d1b00d99d7d9e5246f93ebeb0a53196fad1f6530c47fdab6c9dece7a41e"
     },
     {
       "path": "reports/josephmayo_track2_pitch_script.md",
       "role": "track2_pitch_script",
-      "sha256": "908713d0c81869c5446b24bf8f73097b24491c027a80eb4f6429fe2e60b923aa"
+      "sha256": "cbf4dc38ee4f2825d85896423a03dcab77cefb27b09c6b4e9977eadd4310ad9c"
     },
     {
       "path": "configs/track2-generation-selection-benchmark.json",
       "role": "benchmark_config",
-      "sha256": "50287400f890b39b679bc75a7545f8e00971d253783ed2ea8c1d92af9e1ed02c"
+      "sha256": "e83cb984f4be9904aa9dab6c1df7587e2b78f19e38850cc55fe5c8edff3794fc"
     },
     {
       "path": "src/mva_hackathon/generation_selection.py",
@@ -33,7 +33,7 @@
     {
       "path": "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json",
       "role": "benchmark_receipt",
-      "sha256": "9e893a3253ff320041d1244bc0a7e1b0b89cacd4fb203b4b1cc06a6ee7b6a30a"
+      "sha256": "ba436af8a414eb02aff264835b8a771fd5a99a00d0694240fc0919ecb410794c"
     },
     {
       "path": "configs/track2-seed-sensitivity.json",
@@ -43,7 +43,7 @@
     {
       "path": "src/mva_hackathon/seed_sensitivity.py",
       "role": "seed_sensitivity_source",
-      "sha256": "9af0621104692c63d7652319e09dcc3604ac98485fa4f5475e9e08f1be3affc0"
+      "sha256": "779bf2e047727ab5f0d816f7abe96222b470cc9a5f4b3f846e4bb3a2e1649203"
     },
     {
       "path": "scripts/run_seed_sensitivity.py",
@@ -53,12 +53,12 @@
     {
       "path": "tests/test_seed_sensitivity.py",
       "role": "seed_sensitivity_test",
-      "sha256": "1336591d132c24d3c4e3ec8e7f903f041bd21a7da97111cabd2208f66c25f985"
+      "sha256": "2b02ab55cfe34f55085466391188449fe7b905cde687175ded9721c79bdab389"
     },
     {
       "path": "reports/TRACK2_SEED_SENSITIVITY.json",
       "role": "seed_sensitivity_receipt",
-      "sha256": "f6cb85fd38277da5344445c54dac2318bd3a41b595873bbfb7763d70ac8ce390"
+      "sha256": "0ccd95b8abd49dd070aef103e64442efc32fc420706b4ab0bc8f8cef5525756c"
     },
     {
       "path": "src/mva_hackathon/reproducibility.py",
@@ -275,5 +275,5 @@
     "tests": "python -m unittest discover -s tests -v"
   },
   "schema": "mva-track2-reproducibility/v2",
-  "source_commit": "5d832ef868c7f49d989c36475c6c96baa7ac22d8"
+  "source_commit": "7471ad03214807210c29b4c9b51bcf036522035e"
 }
