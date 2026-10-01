@@ -1267,3 +1267,69 @@ the verification doc was identifier-shaped; the doc now carries it unquoted.
 Pitch video rebuilt at 163.9s, receipt-hash bound. Operator-only remainder
 unchanged: listen-through, video upload, attestation adoption, portal
 submission.
+
+
+## 2026-10-01 twenty-fifth increment - statistical-contract + judge-currency round
+
+Supersedes `fc8e1cc`. A third five-front audit wave (judge-facing
+consistency, biostatistical next-tier, wet-lab feasibility recheck,
+literature currency, translational judge read) plus a structural stats
+hardening folded into one content commit:
+
+- **Selection-equivalence gate**: `clean_generation_signal` now requires the
+  selection interval to lie *inside* a declared equivalence margin
+  (factor 1.5, [2/3, 3/2]) — TOST-style, distinct from the narrower
+  flagging band [0.75, 1.25]. Previously a wide unresolved interval
+  certified clean merely by failing to flag. Same parity applied to
+  `lineage.py`.
+- **Per-event completion-drop gate**: aggregate analyzer computes
+  `vehicle_division - treatment_division` per edit event and refuses clean
+  equivalence when the maximum drop exceeds `0.05`, closing the
+  pooled-masking hole where one event's collapse hid inside a passing
+  ratio.
+- **Two new scenarios** (22 -> 24): `event_scoped_completion_drop_rescue`
+  (pooled ratio passes, event-level drop fails) and
+  `completion_overshoot_rescue` (ratio above the upper band fails
+  equivalence, not passes).
+- **MCSE** added to every rate summary; scenario partitions now split
+  asserted / boundary-probe / fail-closed explicitly.
+- **Stale judge-package worked example caught and pinned**: the "verified"
+  table claimed 0.265 [0.165, 0.428]; the live analyzer emits
+  0.250 [0.155, 0.403]. Table corrected, mechanics description fixed
+  (raw-rate convention; Jeffreys smoothing only for zero cells), and a
+  regression test now pins the worked example so it cannot drift again.
+- **Masking hole collapsed**: the strengthened gate drove
+  `masked_followup_rescue` clean false-signals from 260/1,000 to 1/1,000.
+- **Declared floor re-declared**: the pre-gate 0.55 clean-signal floor is
+  unattainable under any honest two-sided margin at this design's daughter
+  count; floor re-declared at 0.25 atomically with the gate, power cost
+  disclosed rather than hidden.
+- **Literature currency**: CHMP refusal of the lead comparator's EU
+  application (July 2026) added to both drug sections; the first
+  engineered sup-tRNA therapeutic to reach human dosing (an Arg->TGA
+  program matching the exact opal stop class the nonsense allele creates)
+  entered first-in-human Phase 1 — the "purely preclinical" claim
+  corrected with strict non-transferability; first-in-human prime
+  editing (NEJM 2025) added to Gate 3 modality framing; CHIP
+  preferentially degrades Hsp70-bound substrates (PMID 20618441) added as
+  a named backfire channel of the chaperone premise; the coupled
+  co-primary coincidence detector is now named as innovation in the
+  comparison section.
+- **Feasibility honesty**: commercial phospho-antibody availability is
+  pS670-only; phospho-assay language narrowed accordingly.
+
+Freeze chain: content `3721ee6` -> binding `b9df810` (53 artifacts,
+release-manifest sha-256 `b7793ff4`...; benchmark receipt minted at the
+content commit on a clean tracked worktree — the manifest validator
+rejects a dirty-mint receipt outright; seed receipt bound inside the
+content commit via blob equality) -> attestation `efef2d8` (Ed25519
+signature verifies via the documented openssl path; FreeTSA RFC 3161
+serial `0x08C31514` stamped 2026-10-01T20:37:20Z over release-artifacts
+sha-256 `ccd49609`...; imprint verified equal to the artifact digest
+before accepting). The gate caught two self-inflicted wounds mid-chain —
+program-code tokens in the handoff/commit message and seven fresh
+digest-collision tokens in the reminted receipt — resolved by stripping
+the code names and extending the receipt's path-scoped discharge.
+Operator-only remainder unchanged: listen-through, video upload,
+attestation adoption, portal submission (deadline Oct 24; slot 2 planned
+next week, slot 3 held for final).

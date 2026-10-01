@@ -50,9 +50,12 @@
     "generation_reduction_ratio": 0.75,
     "selection_reduction_ratio": 0.75,
     "selection_increase_ratio": 1.25,
+    "selection_equivalence_lower_ratio": 0.6667,
+    "selection_equivalence_upper_ratio": 1.5,
     "division_reduction_ratio": 0.75,
     "division_equivalence_lower_ratio": 0.95,
     "division_equivalence_upper_ratio": 1.1,
+    "maximum_event_completion_drop": 0.05,
     "toxicity_increase_ratio": 2.0,
     "event_detection_bias_ratio": 0.8,
     "event_false_positive_increase_ratio": 2.0,
@@ -120,7 +123,7 @@
       "expected_flags": [
         "generation_reduction"
       ],
-      "minimum_clean_signal_wilson_lower": 0.55
+      "minimum_clean_signal_wilson_lower": 0.25
     },
     {
       "name": "local_generation_ratio_0_75",
@@ -503,6 +506,60 @@
       },
       "expected_flags": [],
       "maximum_clean_signal_wilson_upper": 0.01
+    },
+    {
+      "name": "event_scoped_completion_drop_rescue",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.93,
+        "new_error_probability": 0.03,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_event_division_drops": [
+        {
+          "edit_event": 1,
+          "drop": 0.21
+        }
+      ],
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ],
+      "maximum_clean_signal_wilson_upper": 0.02
+    },
+    {
+      "name": "completion_overshoot_rescue",
+      "gate": "required",
+      "treatment": {
+        "division_probability": 0.97,
+        "new_error_probability": 0.03,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [
+        "generation_reduction"
+      ],
+      "maximum_clean_signal_wilson_upper": 0.02
     },
     {
       "name": "masked_followup_rescue",

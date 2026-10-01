@@ -99,6 +99,14 @@ GENERATION_REDUCTION_RATIO = 0.75
 MAX_LINEAGE_STUDY_BYTES = 256 * 1024 * 1024
 SELECTION_REDUCTION_RATIO = 0.75
 SELECTION_INCREASE_RATIO = 1.25
+# Selection equivalence is a declared-margin test: the reproduction-ratio
+# interval must sit inside a predeclared factor-1.5 band, not merely fail to
+# trip a flag — a point estimate near one with a wide interval is not
+# evidence of neutral selection. The margin is wider than the flag
+# thresholds because resolved-daughter counts are far scarcer than division
+# counts; it is declared and bounded rather than fitted.
+SELECTION_EQUIVALENCE_LOWER_RATIO = 2.0 / 3.0
+SELECTION_EQUIVALENCE_UPPER_RATIO = 1.5
 DIVISION_REDUCTION_RATIO = 0.75
 TOXICITY_INCREASE_RATIO = 2.0
 DROPOUT_INCREASE_RATIO = 1.25
@@ -1335,11 +1343,20 @@ def analyze_lineage_study(study: LineageStudy) -> dict[str, Any]:
         and max_event_drop is not None
         and max_event_drop <= study.completion_band.absolute_drop_max
     )
+    selection_equivalent = bool(
+        not qc_failed
+        and selection_est.estimable
+        and selection_est.lower is not None
+        and selection_est.upper is not None
+        and selection_est.lower >= SELECTION_EQUIVALENCE_LOWER_RATIO
+        and selection_est.upper <= SELECTION_EQUIVALENCE_UPPER_RATIO
+    )
     adverse = any(biological[name] for name in BIOLOGICAL_FLAGS if name != "generation_reduction")
     clean = bool(
         biological["generation_reduction"]
         and all_core_estimable
         and pediatric_equivalent
+        and selection_equivalent
         and not adverse
         and not qc_failed
     )
@@ -1379,6 +1396,7 @@ def analyze_lineage_study(study: LineageStudy) -> dict[str, Any]:
             "core_estimable": core_estimable,
             "all_core_estimable": all_core_estimable,
             "pediatric_completion_equivalent": pediatric_equivalent,
+            "selection_equivalent": selection_equivalent,
             "clean_generation_signal": clean,
             "pre_division_death_separated": True,
             "highest_inferential_unit": "edit_event",

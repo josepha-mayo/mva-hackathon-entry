@@ -34,15 +34,16 @@ daughters; by construction one carries a resolved fate (`reproduced`) and one is
 
 | Estimand | Vehicle per event | Treatment per event | Ratio estimate [interval] | Disposition |
 |---|---|---|---|---|
-| generation_rate | 24/108 = 0.222 | 6/108 = 0.0556 | 0.265 [0.165, 0.428] | reduced (<=0.75, upper<1) |
-| founder_error_bearing_completion | 24/110 = 0.218 | 6/110 = 0.0545 | 0.265 [0.165, 0.428] | reduced (co-primary) |
+| generation_rate | 24/108 = 0.222 | 6/108 = 0.0556 | 0.250 [0.155, 0.403] | reduced (<=0.75, upper<1) |
+| founder_error_bearing_completion | 24/110 = 0.218 | 6/110 = 0.0545 | 0.250 [0.155, 0.403] | reduced (co-primary) |
 | division_completion | 108/110 = 0.982 | 108/110 = 0.982 | 1.000 [0.977, 1.023] | inside [0.95, 1.10] |
-| relative_error_daughter_reproduction | 24/24 vs 84/84 | 6/6 vs 102/102 | 0.947 [0.829, 1.081] | estimable, neutral |
+| relative_error_daughter_reproduction | 24/24 vs 84/84 | 6/6 vs 102/102 | 1.000 [0.876, 1.142] | estimable, neutral |
 | pre_division_death | 1/110 | 1/110 | 1.000 [0.272, 3.683] | estimable, no spike |
 | dropout | 0/110 | 0/110 | inestimable | `no_observed_events` — refused, not zero-width |
 
-Mechanics the analyzer applies, per event-arm pair: Jeffreys-smoothed point
-rates `(k+0.5)/(n+1)`; per-event paired log-ratios pooled across the three
+Mechanics the analyzer applies, per event-arm pair: raw point rates `k/n`
+(Jeffreys `(k+0.5)/(n+1)` smoothing is reserved for zero cells); per-event
+paired log-ratios pooled across the three
 events; interval half-width is the quadrature sum of a Student-t component at
 df=2 (4.303, estimated between-event variance — here identically zero because
 all three events are numerically identical) and a normal-z component (1.96,
@@ -249,7 +250,7 @@ The co-primary pair is `generation_rate` (error-bearing / completed) and
 founder = generation x completion, so their *ratios* coincide exactly when
 the division-completion ratio is 1.0 — and the pediatric band forces
 certified runs toward that point. In the worked example both ratios are
-0.265 because both arms completed 108/110; the intervals differ only in the
+0.250 because both arms completed 108/110; the intervals differ only in the
 within-event term (n=108 vs n=110 denominators). In the limiting case —
 zero competing risks, detected == opportunities — the two estimands are
 literally the same quantity.
@@ -302,6 +303,20 @@ What the suite cannot prove, stated plainly:
   principal-stratum assumption holds, in which case bounds, not a point,
   are reported. The completion band is a four-region rule — a CI entirely
   above the band is an overshoot flag that fails, not a pass.
+- **Decision-rule parity is now exercised, not asserted.** The aggregate
+  benchmark implements the same pediatric contract as the lineage
+  analyzer: the [0.95, 1.10] completion band, the at-most-0.05 per-event
+  absolute completion-drop clause, and a declared factor-1.5
+  selection-equivalence margin `[2/3, 1.5]` on the daughter-reproduction
+  interval. Two scenarios exist specifically to exercise the clauses the
+  pooled band cannot express: an event-scoped completion drop
+  (pooled point ratio ≈1.00, one event ≈0.13 below vehicle — refused) and
+  a hyper-completion rescue (ratio ≈1.15 — refused). Every rate summary
+  carries a Monte Carlo standard error alongside its Wilson bounds.
+  The strengthening has a disclosed power cost: the clean-signal floor
+  on the strong-rescue scenario was re-declared at 0.25 (from 0.55) in
+  the same frozen configuration that introduced the margin — the floor
+  and the margin are bound atomically before each run.
 - **MC resolution is disclosed.** At 1,000 replicates the standard error
   near the 0.025 level is roughly half a percentage point; all scenarios
   share one generator family, so receipts certify counting-pipeline

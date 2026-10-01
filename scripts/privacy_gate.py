@@ -198,7 +198,8 @@ POLICY_SOURCE_SELF_TOKENS = frozenset(
         "A0", "A1", "A-Z0", "A-Z0-", "A9-0", "ALPHA", "ARMS", "B10", "B11",
         "B12", "B13", "B14", "BAM", "BCF", "BLE001", "BUB1B", "BUB1B-",
         "BUBR1", "CEBONAQ01", "CLASSIFICATIONS", "COMMANDS", "CRAM", "E402",
-        "FV8", "SI8", "QC9",
+        "A4V", "FV8", "HIX8", "I4N", "K8Y", "L8X", "N4I", "QC9", "SI8",
+        "UVK8", "V4A", "X8L", "Y8K",
         "END", "ENDMDL", "ESTIMANDS", "G418", "GO", "GPT-5", "HMAC-SHA256",
         "L737", "METHODS", "MITOCHONDRIAL", "MVA", "N1002K", "NFD", "NFKC",
         "NO-GO", "OXT", "PARTITIONS", "PATH", "PK", "PMC7610696", "PPS",
@@ -802,8 +803,12 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     # The machine-generated benchmark receipt's JSON key/hash runs decode
     # under ascii85 to these gene-shaped tokens; rot13 shadows one of them.
     # The tokens exist only in the decoded-carrier view of this file.
+    # A4V/V4A/HIX8/K8Y/L8X/Y8K/I4N join the earlier collisions after the
+    # increment-25 remint: every digest in this artifact is sha256-bound by
+    # the release manifest, so the payload space cannot carry a smuggled
+    # identifier without breaking the manifest.
     PurePosixPath("reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json"): frozenset(
-        {"FV8", "SI8", "SP0"}
+        {"A4V", "FV8", "HIX8", "I4N", "K8Y", "L8X", "SI8", "SP0", "V4A", "Y8K"}
     ),
     # The Ed25519 detached-signature base64 payload reverses to a gene-shaped
     # token; the token exists only in the reversed view of this file.

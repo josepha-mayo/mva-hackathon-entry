@@ -38,6 +38,32 @@ from mva_hackathon.save_path import passing_exposure, passing_power
 
 
 class LineageContractTests(unittest.TestCase):
+    def test_clean_generation_fixture_matches_judge_package_worked_example(self) -> None:
+        """The judge package publishes a verified analyzer table for this
+        fixture; pin the exact values so a stale published table cannot
+        silently diverge from the shipped analyzer."""
+        study = build_adversarial_fixture("clean_generation")
+        analysis = analyze_lineage_study(study)
+        expected = {
+            "generation_rate": (0.250, 0.155107, 0.402947),
+            "founder_error_bearing_completion": (0.250, 0.155107, 0.402947),
+            "division_completion": (1.000, 0.977, 1.023),
+            "relative_error_daughter_reproduction": (1.000, 0.876, 1.142),
+        }
+        for name, (ratio, lower, upper) in expected.items():
+            with self.subTest(estimand=name):
+                estimate = analysis["estimates"][name]
+                self.assertTrue(estimate["estimable"])
+                self.assertAlmostEqual(estimate["ratio"], ratio, places=3)
+                self.assertAlmostEqual(estimate["lower"], lower, places=3)
+                self.assertAlmostEqual(estimate["upper"], upper, places=3)
+        self.assertTrue(analysis["status"]["selection_equivalent"])
+        self.assertTrue(analysis["status"]["clean_generation_signal"])
+        self.assertEqual(
+            analysis["interpretation"],
+            "generation_reduction_without_detected_configured_confound",
+        )
+
     def test_export_has_no_truth_and_separates_pre_division_death(self) -> None:
         study = build_adversarial_fixture("clean_generation")
         exported = export_first_attempt_aggregates(study)

@@ -340,9 +340,12 @@ class AnalysisThresholds:
     generation_reduction_ratio: float
     selection_reduction_ratio: float
     selection_increase_ratio: float
+    selection_equivalence_lower_ratio: float
+    selection_equivalence_upper_ratio: float
     division_reduction_ratio: float
     division_equivalence_lower_ratio: float
     division_equivalence_upper_ratio: float
+    maximum_event_completion_drop: float
     toxicity_increase_ratio: float
     event_detection_bias_ratio: float
     event_false_positive_increase_ratio: float
@@ -422,6 +425,66 @@ class AnalysisThresholds:
         if self.division_equivalence_lower_ratio < 0.8:
             raise GenerationSelectionError(
                 "division_equivalence_lower_ratio must be at least 0.8"
+            )
+        object.__setattr__(
+            self,
+            "maximum_event_completion_drop",
+            _positive_number(
+                self.maximum_event_completion_drop,
+                "maximum_event_completion_drop",
+            ),
+        )
+        # The per-event absolute-drop clause exists to stop event-heterogeneous
+        # completion loss hiding inside a passing pooled ratio. A bound above
+        # 0.25 would tolerate a quarter-completion collapse in one event and
+        # could not police the confound it exists to catch.
+        if self.maximum_event_completion_drop > 0.25:
+            raise GenerationSelectionError(
+                "maximum_event_completion_drop must not exceed 0.25"
+            )
+        # Selection equivalence is a declared-margin equivalence test: the
+        # reproduction-ratio interval must sit inside a predeclared band, not
+        # merely fail to trip a flag. The margin must enclose the flag
+        # thresholds (a band inside them would certify equivalence on data
+        # already compatible with a detected effect) and must stay inside a
+        # factor of two in each direction, beyond which "equivalent" is void.
+        object.__setattr__(
+            self,
+            "selection_equivalence_lower_ratio",
+            _probability(
+                self.selection_equivalence_lower_ratio,
+                "selection_equivalence_lower_ratio",
+            ),
+        )
+        if self.selection_equivalence_lower_ratio < 0.5:
+            raise GenerationSelectionError(
+                "selection_equivalence_lower_ratio must be at least 0.5"
+            )
+        if self.selection_equivalence_lower_ratio > self.selection_reduction_ratio:
+            raise GenerationSelectionError(
+                "selection_equivalence_lower_ratio must not exceed the "
+                "pruning-flag threshold"
+            )
+        object.__setattr__(
+            self,
+            "selection_equivalence_upper_ratio",
+            _positive_number(
+                self.selection_equivalence_upper_ratio,
+                "selection_equivalence_upper_ratio",
+            ),
+        )
+        if self.selection_equivalence_upper_ratio <= 1.0:
+            raise GenerationSelectionError(
+                "selection_equivalence_upper_ratio must exceed one"
+            )
+        if self.selection_equivalence_upper_ratio > 2.0:
+            raise GenerationSelectionError(
+                "selection_equivalence_upper_ratio must not exceed two"
+            )
+        if self.selection_equivalence_upper_ratio < self.selection_increase_ratio:
+            raise GenerationSelectionError(
+                "selection_equivalence_upper_ratio must be at least the "
+                "preservation-flag threshold"
             )
         for name in ("selection_increase_ratio", "toxicity_increase_ratio"):
             object.__setattr__(self, name, _positive_number(getattr(self, name), name))
@@ -859,6 +922,7 @@ def simulate_aggregate_study(
     treatment_measurement: MeasurementParameters,
     seed: int,
     shared_calibration_counts: SharedCalibrationCounts | None = None,
+    treatment_event_division_drops: dict[int, float] | None = None,
 ) -> SimulatedAggregateStudy:
     """Generate observed aggregate counts plus evaluator-only realized truth."""
 
@@ -903,6 +967,19 @@ def simulate_aggregate_study(
                         event_treatment_effects=event_treatment_effects,
                         clone_treatment_effects=clone_treatment_effects,
                     )
+                    if (
+                        arm == "treatment"
+                        and treatment_event_division_drops
+                        and event_id in treatment_event_division_drops
+                    ):
+                        adjusted = dataclasses.replace(
+                            adjusted,
+                            division_probability=max(
+                                0.0,
+                                adjusted.division_probability
+                                - treatment_event_division_drops[event_id],
+                            ),
+                        )
                     opportunities = design.observation_opportunities_per_run
                     latent_divisions = _binomial(
                         opportunities, adjusted.division_probability, rng
@@ -1562,6 +1639,21 @@ def analyze_observed_study(
         conditional_generation_reduction = False
         founder_error_reduction = False
     flags = {**biological_flags, **measurement_flags}
+    event_completion_drops = [
+        (
+            rates[event]["vehicle"]["division"]
+            - rates[event]["treatment"]["division"]
+            if rates[event]["vehicle"]["division"] is not None
+            and rates[event]["treatment"]["division"] is not None
+            else None
+        )
+        for event in rates
+    ]
+    max_event_completion_drop = (
+        max(d for d in event_completion_drops if d is not None)
+        if any(d is not None for d in event_completion_drops)
+        else None
+    )
     division_equivalent = bool(
         not measurement_invalid
         and division.estimable
@@ -1569,6 +1661,28 @@ def analyze_observed_study(
         and division.upper is not None
         and division.lower >= thresholds.division_equivalence_lower_ratio
         and division.upper <= thresholds.division_equivalence_upper_ratio
+        # The pooled band alone cannot see one event collapsing while the
+        # others hold: the per-event absolute-drop clause is the part of the
+        # pediatric rule that refuses event-heterogeneous completion loss.
+        and all(d is not None for d in event_completion_drops)
+        and max_event_completion_drop is not None
+        and max_event_completion_drop <= thresholds.maximum_event_completion_drop
+    )
+    # Selection gets the same treatment completion does: a clean certificate
+    # requires the relative error-daughter-reproduction interval to sit
+    # inside the predeclared equivalence margin, not merely to fail to trip
+    # a flag — a point estimate near one with a wide interval is not
+    # evidence of neutral selection. The margin is wider than the flag
+    # thresholds because daughter-outcome counts are far scarcer than
+    # division counts; the margin is declared, bounded, and symmetric in
+    # log space rather than fitted to the data.
+    selection_equivalent = bool(
+        not measurement_invalid
+        and selection.estimable
+        and selection.lower is not None
+        and selection.upper is not None
+        and selection.lower >= thresholds.selection_equivalence_lower_ratio
+        and selection.upper <= thresholds.selection_equivalence_upper_ratio
     )
     adverse_biology = any(
         biological_flags[name]
@@ -1579,6 +1693,7 @@ def analyze_observed_study(
         biological_flags["generation_reduction"]
         and all_core_estimable
         and division_equivalent
+        and selection_equivalent
         and not adverse_biology
     )
     if measurement_invalid:
@@ -1608,6 +1723,8 @@ def analyze_observed_study(
             "measurement_valid": not measurement_invalid,
             "all_core_estimable": all_core_estimable,
             "division_completion_equivalent": division_equivalent,
+            "maximum_event_completion_drop": max_event_completion_drop,
+            "selection_equivalent": selection_equivalent,
             "clean_generation_signal": clean_generation_signal,
             "conditional_generation_reduction": conditional_generation_reduction,
             "founder_error_bearing_completion_reduction": founder_error_reduction,
@@ -1702,12 +1819,18 @@ def runtime_receipt(config_path: Path | None = None) -> dict[str, Any]:
 
 def _rate_summary(successes: int, total: int) -> dict[str, Any]:
     lower, upper = _wilson(successes, total)
+    rate = successes / total if total else None
+    # Monte Carlo standard error of the simulation-estimated rate: the
+    # binomial sampling SE sqrt(p(1-p)/n). This is distinct from the Wilson
+    # interval, which is the frequentist bound on the underlying parameter.
+    mcse = math.sqrt(rate * (1.0 - rate) / total) if rate is not None else None
     return {
         "successes": successes,
         "total": total,
-        "rate": successes / total if total else None,
+        "rate": rate,
         "wilson_lower": lower,
         "wilson_upper": upper,
+        "mcse": mcse,
     }
 
 
@@ -1837,6 +1960,7 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
         clean_bound = None
         flag_bound = None
         clean_floor = None
+        event_drops_raw = None
         if isinstance(raw_scenario, dict):
             raw_scenario = dict(raw_scenario)
             shared_override = raw_scenario.pop("shared_measurement", None)
@@ -1848,6 +1972,9 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
             )
             clean_floor = raw_scenario.pop(
                 "minimum_clean_signal_wilson_lower", None
+            )
+            event_drops_raw = raw_scenario.pop(
+                "treatment_event_division_drops", None
             )
         scenario = _strict_object(
             raw_scenario,
@@ -1891,14 +2018,36 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                 "a boundary scenario must declare "
                 "maximum_clean_signal_wilson_upper"
             )
+        event_drops: dict[int, float] = {}
+        if event_drops_raw is not None:
+            if not isinstance(event_drops_raw, list) or not event_drops_raw:
+                raise GenerationSelectionError(
+                    "treatment_event_division_drops must be a non-empty list"
+                )
+            for entry in event_drops_raw:
+                if (
+                    not isinstance(entry, dict)
+                    or set(entry) != {"edit_event", "drop"}
+                ):
+                    raise GenerationSelectionError(
+                        "each event drop needs exactly edit_event and drop"
+                    )
+                edit_event = entry["edit_event"]
+                if (
+                    isinstance(edit_event, bool)
+                    or not isinstance(edit_event, int)
+                    or not 1 <= edit_event <= design.edit_events
+                ):
+                    raise GenerationSelectionError(
+                        "event drop edit_event must be a real edit event index"
+                    )
+                drop = _probability(entry["drop"], "event division drop")
+                if edit_event in event_drops:
+                    raise GenerationSelectionError(
+                        "duplicate event division drop"
+                    )
+                event_drops[edit_event] = drop
         expected_raw = scenario["expected_flags"]
-        if (
-            not isinstance(expected_raw, list)
-            or any(not isinstance(flag, str) for flag in expected_raw)
-            or len(expected_raw) != len(set(expected_raw))
-            or not set(expected_raw) <= set(COMPONENT_FLAGS)
-        ):
-            raise GenerationSelectionError("expected_flags must be unique supported strings")
         parsed.append(
             {
                 "name": name,
@@ -1924,6 +2073,7 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                 "clean_signal_wilson_upper_bound": clean_bound,
                 "generation_flag_wilson_upper_bound": flag_bound,
                 "clean_signal_wilson_lower_floor": clean_floor,
+                "treatment_event_division_drops": event_drops,
             }
         )
     required_generation = [
@@ -1993,6 +2143,9 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                 vehicle_measurement=vehicle_measurement,
                 treatment_measurement=scenario["treatment_measurement"],
                 seed=replicate_seed,
+                treatment_event_division_drops=(
+                    scenario["treatment_event_division_drops"] or None
+                ),
                 shared_calibration_counts=scenario_calibrations[replicate],
             )
             analysis = analyze_observed_study(
@@ -2324,6 +2477,11 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                     "which acceptance rule produced 'passed' "
                     "(e.g., 'fail_closed' when refusal was the required result)"
                 ),
+                "mcse": (
+                    "Monte Carlo standard error of the simulation-estimated "
+                    "rate, sqrt(p(1-p)/n); distinct from the Wilson interval, "
+                    "which bounds the underlying parameter, not the estimate"
+                ),
             },
             "monte_carlo_replicates_per_scenario": replicates,
             "total_simulated_vehicle_treatment_comparisons": replicates * len(rows),
@@ -2343,6 +2501,14 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                     bool(row["passed"]) for row in boundary_rows
                 ),
                 "boundary_probes_total": len(boundary_rows),
+                "fail_closed_scenarios_passed": sum(
+                    bool(row["passed"])
+                    for row in rows
+                    if row["gate"] == "fail_closed"
+                ),
+                "fail_closed_scenarios_total": sum(
+                    row["gate"] == "fail_closed" for row in rows
+                ),
                 "detection_floor_pool": [
                     row["name"] for row in detection_floor_pool
                 ],

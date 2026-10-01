@@ -103,7 +103,12 @@ def _balanced_audits() -> dict[str, ArmAuditCounts]:
     return {"vehicle": audit, "treatment": audit}
 
 
-def _fixed_cohort_study(*, treatment_divisions: int = 850) -> tuple[
+def _fixed_cohort_study(
+    *,
+    treatment_divisions: int = 850,
+    treatment_event_divisions: tuple[int, ...] | None = None,
+    treatment_event_positive_daughters: tuple[int, ...] | None = None,
+) -> tuple[
     ObservedAggregateStudy, StudyDesign, AnalysisThresholds
 ]:
     """Deterministic first-attempt aggregates with three edit-event units."""
@@ -145,8 +150,18 @@ def _fixed_cohort_study(*, treatment_divisions: int = 850) -> tuple[
                 event_negative_daughters_died=78,
             )
         )
-        treatment_positive = 26 if treatment_divisions == 850 else 15
-        treatment_negative = treatment_divisions - treatment_positive
+        event_treatment_divisions = (
+            treatment_divisions
+            if treatment_event_divisions is None
+            else treatment_event_divisions[event - 1]
+        )
+        treatment_positive = 26 if event_treatment_divisions == 850 else 15
+        treatment_negative = event_treatment_divisions - treatment_positive
+        event_positive_reproduced = (
+            round(1.2 * treatment_positive)
+            if treatment_event_positive_daughters is None
+            else treatment_event_positive_daughters[event - 1]
+        )
         runs.append(
             ObservedRun(
                 arm="treatment",
@@ -154,11 +169,11 @@ def _fixed_cohort_study(*, treatment_divisions: int = 850) -> tuple[
                 clone_id=event,
                 run_id=1,
                 opportunities=1000,
-                detected_divisions=treatment_divisions,
+                detected_divisions=event_treatment_divisions,
                 event_positive_divisions=treatment_positive,
                 event_negative_divisions=treatment_negative,
                 event_positive_daughters_followed=2 * treatment_positive,
-                event_positive_daughters_reproduced=round(1.2 * treatment_positive),
+                event_positive_daughters_reproduced=event_positive_reproduced,
                 event_positive_daughters_died=round(0.3 * treatment_positive),
                 event_negative_daughters_followed=2 * treatment_negative,
                 event_negative_daughters_reproduced=round(
@@ -430,6 +445,134 @@ class GenerationSelectionAnalysisTests(unittest.TestCase):
         )
         self.assertIn("no-completion/death", shifted["status"]["primary_cohort_outcome_model"])
         self.assertIn("not separable", shifted["status"]["primary_cohort_boundary"])
+
+    def test_event_scoped_completion_drop_refuses_despite_balanced_others(
+        self,
+    ) -> None:
+        """One edit event can collapse while the pooled completion ratio
+        stays near one. The declared pediatric rule caps the per-event
+        absolute drop at 0.05, so the analyzer must refuse the clean
+        certificate even though the pooled point ratio is ~1.00."""
+        study, design, thresholds = _fixed_cohort_study(
+            treatment_event_divisions=(780, 880, 880)
+        )
+        result = analyze_observed_study(
+            study, design=design, thresholds=thresholds
+        )
+        status = result["status"]
+        self.assertTrue(result["flags"]["generation_reduction"])
+        self.assertGreater(
+            status["maximum_event_completion_drop"], 0.05
+        )
+        self.assertFalse(status["division_completion_equivalent"])
+        self.assertFalse(status["clean_generation_signal"])
+        self.assertEqual(
+            result["interpretation"],
+            "generation_signal_with_unresolved_competing_completion",
+        )
+
+    def test_completion_overshoot_breaching_upper_band_refuses_clean(
+        self,
+    ) -> None:
+        """Hyper-completion is not equivalence: a treatment arm that
+        completes more first divisions than vehicle must not certify a
+        clean rescue even when the generation signal fires."""
+        study, design, thresholds = _fixed_cohort_study(
+            treatment_divisions=970
+        )
+        result = analyze_observed_study(
+            study, design=design, thresholds=thresholds
+        )
+        status = result["status"]
+        self.assertTrue(result["flags"]["generation_reduction"])
+        self.assertLess(status["maximum_event_completion_drop"], 0.0)
+        self.assertFalse(status["division_completion_equivalent"])
+        self.assertFalse(status["clean_generation_signal"])
+
+    def test_imprecise_selection_interval_cannot_certify_equivalence(
+        self,
+    ) -> None:
+        """A reproduction-ratio point estimate near one with an interval
+        spanning both pruning and preservation regimes is not evidence of
+        neutral selection: the declared equivalence margin requires the
+        interval itself to fit inside [2/3, 1.5]."""
+        study, design, thresholds = _fixed_cohort_study(
+            treatment_event_positive_daughters=(8, 16, 27)
+        )
+        result = analyze_observed_study(
+            study, design=design, thresholds=thresholds
+        )
+        estimate = result["estimates"]["relative_error_daughter_reproduction"]
+        self.assertTrue(estimate["estimable"])
+        self.assertGreater(estimate["upper"], 1.5)
+        self.assertFalse(result["status"]["selection_equivalent"])
+        self.assertFalse(result["status"]["clean_generation_signal"])
+
+    def test_selection_equivalence_margin_bounds_are_validated(self) -> None:
+        base = _config()["thresholds"]
+        vacuous = [
+            {"selection_equivalence_lower_ratio": 0.4},
+            {"selection_equivalence_lower_ratio": 0.8},
+            {"selection_equivalence_upper_ratio": 0.9},
+            {"selection_equivalence_upper_ratio": 1.2},
+            {"selection_equivalence_upper_ratio": 2.5},
+            {"maximum_event_completion_drop": 0.5},
+        ]
+        for override in vacuous:
+            with self.subTest(override=override):
+                with self.assertRaises(GenerationSelectionError):
+                    AnalysisThresholds(**{**base, **override})
+
+    def test_event_division_drop_schema_is_strict(self) -> None:
+        config = _config()
+        config["monte_carlo_replicates"] = 2
+        config["scenarios"] = [
+            row
+            for row in config["scenarios"]
+            if row["name"] == "event_scoped_completion_drop_rescue"
+        ] + [
+            row
+            for row in config["scenarios"]
+            if row["name"] == "no_change"
+        ]
+        malformed = [
+            [{"edit_event": 1}],
+            [{"edit_event": 1, "drop": 0.2}, {"edit_event": 1, "drop": 0.3}],
+            [{"edit_event": 0, "drop": 0.2}],
+            [{"edit_event": 99, "drop": 0.2}],
+            [{"edit_event": 1, "drop": -0.1}],
+            [{"edit_event": 1.5, "drop": 0.2}],
+            {"edit_event": 1, "drop": 0.2},
+            [],
+        ]
+        for bad in malformed:
+            with self.subTest(bad=bad):
+                config["scenarios"][0]["treatment_event_division_drops"] = bad
+                with self.assertRaises(GenerationSelectionError):
+                    run_benchmark(config)
+
+    def test_rate_summaries_carry_monte_carlo_standard_errors(self) -> None:
+        config = _config()
+        config["monte_carlo_replicates"] = 4
+        config["scenarios"] = [
+            row
+            for row in config["scenarios"]
+            if row["name"] in ("no_change", "fewer_new_errors_strong")
+        ]
+        result = run_benchmark(config)
+        for row in result["scenarios"]:
+            for summary in row["component_detection"].values():
+                self.assertIn("mcse", summary)
+                self.assertIsNotNone(summary["mcse"])
+                self.assertGreaterEqual(summary["mcse"], 0.0)
+                self.assertLessEqual(summary["mcse"], 0.5)
+            self.assertIn("mcse", row["clean_generation_signal"])
+        self.assertIn(
+            "fail_closed_scenarios_total", result["summary"]
+        )
+        self.assertIn(
+            "asserted_scenarios_total", result["summary"]
+        )
 
     def test_quiescent_followed_daughters_stay_in_the_accounted_cohort(
         self,
