@@ -517,6 +517,9 @@ class GenerationSelectionAnalysisTests(unittest.TestCase):
             {"selection_equivalence_upper_ratio": 1.2},
             {"selection_equivalence_upper_ratio": 2.5},
             {"maximum_event_completion_drop": 0.5},
+            # A non-numeric flag threshold must be rejected as a domain
+            # error even though the equivalence margin cross-checks it.
+            {"selection_increase_ratio": "wide"},
         ]
         for override in vacuous:
             with self.subTest(override=override):
@@ -548,6 +551,31 @@ class GenerationSelectionAnalysisTests(unittest.TestCase):
         for bad in malformed:
             with self.subTest(bad=bad):
                 config["scenarios"][0]["treatment_event_division_drops"] = bad
+                with self.assertRaises(GenerationSelectionError):
+                    run_benchmark(config)
+
+    def test_expected_flags_contract_is_strict(self) -> None:
+        """expected_flags must be a list of unique supported flag names.
+        Anything else is a contract violation rejected before simulation —
+        never a post-run KeyError from the summary lookup."""
+        config = _config()
+        config["monte_carlo_replicates"] = 2
+        config["scenarios"] = [
+            row
+            for row in config["scenarios"]
+            if row["name"] in ("no_change", "fewer_new_errors_strong")
+        ]
+        malformed = [
+            "generation_reduction",
+            7,
+            ["generation_reduction", 7],
+            [["generation_reduction"]],
+            ["generation_reduction", "generation_reduction"],
+            ["unsupported_flag_name"],
+        ]
+        for bad in malformed:
+            with self.subTest(bad=bad):
+                config["scenarios"][0]["expected_flags"] = bad
                 with self.assertRaises(GenerationSelectionError):
                     run_benchmark(config)
 

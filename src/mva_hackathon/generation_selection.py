@@ -481,11 +481,6 @@ class AnalysisThresholds:
             raise GenerationSelectionError(
                 "selection_equivalence_upper_ratio must not exceed two"
             )
-        if self.selection_equivalence_upper_ratio < self.selection_increase_ratio:
-            raise GenerationSelectionError(
-                "selection_equivalence_upper_ratio must be at least the "
-                "preservation-flag threshold"
-            )
         for name in ("selection_increase_ratio", "toxicity_increase_ratio"):
             object.__setattr__(self, name, _positive_number(getattr(self, name), name))
             if getattr(self, name) <= 1.0:
@@ -496,6 +491,13 @@ class AnalysisThresholds:
                 raise GenerationSelectionError(
                     f"{name} must be at least 1.1 to detect real increases"
                 )
+        # Compared after selection_increase_ratio is normalized so a
+        # non-numeric threshold is rejected as a domain error, not TypeError.
+        if self.selection_equivalence_upper_ratio < self.selection_increase_ratio:
+            raise GenerationSelectionError(
+                "selection_equivalence_upper_ratio must be at least the "
+                "preservation-flag threshold"
+            )
         object.__setattr__(
             self,
             "event_false_positive_increase_ratio",
@@ -2048,6 +2050,13 @@ def run_benchmark(config: dict[str, Any]) -> dict[str, Any]:
                     )
                 event_drops[edit_event] = drop
         expected_raw = scenario["expected_flags"]
+        if (
+            not isinstance(expected_raw, list)
+            or any(not isinstance(flag, str) for flag in expected_raw)
+            or len(expected_raw) != len(set(expected_raw))
+            or not set(expected_raw) <= set(COMPONENT_FLAGS)
+        ):
+            raise GenerationSelectionError("expected_flags must be unique supported strings")
         parsed.append(
             {
                 "name": name,
