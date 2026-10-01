@@ -1,5 +1,5 @@
 {
-  "base_config_sha256": "50287400f890b39b679bc75a7545f8e00971d253783ed2ea8c1d92af9e1ed02c",
+  "base_config_sha256": "e83cb984f4be9904aa9dab6c1df7587e2b78f19e38850cc55fe5c8edff3794fc",
   "claim_boundary": "supplementary robustness receipt: replays the bound synthetic aggregate-count benchmark across predeclared master seeds. Answers whether the primary bound seed was favorable by chance; inherits every limitation of the primary receipt and is not real-data validation.",
   "metric_ranges": {
     "maximum_false_generation_wilson_upper_per_required_confound": {
@@ -17,8 +17,8 @@
       "failed_scenarios": [],
       "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
       "minimum_required_generation_detection_wilson_lower": 0.885245560206,
-      "scenarios_passed": 18,
-      "scenarios_total": 18,
+      "scenarios_passed": 22,
+      "scenarios_total": 22,
       "seed": 17032027
     },
     {
@@ -26,8 +26,8 @@
       "failed_scenarios": [],
       "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
       "minimum_required_generation_detection_wilson_lower": 0.885245560206,
-      "scenarios_passed": 18,
-      "scenarios_total": 18,
+      "scenarios_passed": 22,
+      "scenarios_total": 22,
       "seed": 17032028
     },
     {
@@ -35,8 +35,8 @@
       "failed_scenarios": [],
       "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
       "minimum_required_generation_detection_wilson_lower": 0.886326845683,
-      "scenarios_passed": 18,
-      "scenarios_total": 18,
+      "scenarios_passed": 22,
+      "scenarios_total": 22,
       "seed": 17032029
     },
     {
@@ -44,8 +44,8 @@
       "failed_scenarios": [],
       "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
       "minimum_required_generation_detection_wilson_lower": 0.886326845683,
-      "scenarios_passed": 18,
-      "scenarios_total": 18,
+      "scenarios_passed": 22,
+      "scenarios_total": 22,
       "seed": 17032030
     },
     {
@@ -53,8 +53,8 @@
       "failed_scenarios": [],
       "maximum_false_generation_wilson_upper_per_required_confound": 0.00564255859796,
       "minimum_required_generation_detection_wilson_lower": 0.886326845683,
-      "scenarios_passed": 18,
-      "scenarios_total": 18,
+      "scenarios_passed": 22,
+      "scenarios_total": 22,
       "seed": 17032031
     }
   ],

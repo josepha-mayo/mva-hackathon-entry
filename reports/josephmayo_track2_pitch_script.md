@@ -9,7 +9,7 @@
 
 **Narration:**
 
-“A lower aneuploid-cell count can lie. It may mean fewer segregation errors—or abnormal daughters died, cells stopped dividing, or measurement failed. In a suspected chromosome-instability disorder, those mechanisms imply opposite decisions. Our entry builds a false-rescue firewall before any medicine hypothesis advances.”
+“A lower aneuploid-cell count can lie. It may mean fewer segregation errors—or abnormal daughters died, cells stopped dividing, or measurement failed. In a suspected chromosome-instability disorder, those mechanisms imply opposite decisions. Our entry ships an executable false-rescue firewall—frozen code, bound receipts, and a verification command—before any medicine hypothesis advances.”
 
 ## 0:22–0:50 — The exact genetic hypothesis
 
@@ -41,7 +41,7 @@
 
 **Narration:**
 
-“We implemented a deterministic benchmark for paired, hierarchical aggregate counts. The analyzer never receives the hidden simulation truth. Each independent edit event is the unit of inference. And a prespecified observed-data rule returns insufficient information instead of inventing a biological answer. Across eighteen thousand comparisons, all eighteen prespecified benchmark checks passed. Strong new-error generation was flagged in ninety point five percent of comparisons, and produced a clean advanceable signal in sixty five point five percent under the enforced pediatric completion band. When the same rescue was contaminated by moderate cytostasis, zero of one thousand comparisons produced a clean signal. The Wilson upper confidence bound for false new-error generation calls was zero point five six percent. And the sparse mixed case failed closed eighty five point two percent. Bulk-only results remain limited to the toy dynamics.”
+“We froze a deterministic benchmark for paired, hierarchical aggregate counts. The analyzer never receives the hidden simulation truth. Each independent edit event is the unit of inference, and a prespecified observed-data rule returns insufficient information instead of inventing an answer. Across twenty-two thousand comparisons, all twenty-two prespecified checks passed—reproduced on five independent seeds. Strong new-error generation was flagged in ninety point five percent of comparisons and produced a clean advanceable signal in sixty five point five percent under the enforced pediatric completion band. Contaminate that same rescue with moderate cytostasis and zero of one thousand comparisons certify clean. Push a true rescue just outside the completion band: one of one thousand. And when we attacked our own follow-up audit with marginal-preserving selective dropout, the residual leak was measured, bounded, and published—not hidden. The Wilson upper bound for false new-error generation calls was zero point five six percent. Every number lives in a committed receipt that anyone can re-derive with one command. Bulk-only results remain limited to the toy dynamics.”
 
 ## 2:31–2:58 — Why this can matter
 

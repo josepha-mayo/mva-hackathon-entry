@@ -503,6 +503,93 @@
       },
       "expected_flags": [],
       "maximum_clean_signal_wilson_upper": 0.01
+    },
+    {
+      "name": "masked_followup_rescue",
+      "gate": "boundary",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.03,
+        "error_daughter_reproduction_probability": 0.25,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.4,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.95,
+        "followup_if_died": 0.3,
+        "followup_if_other": 0.95
+      },
+      "expected_flags": [],
+      "maximum_clean_signal_wilson_upper": 0.4
+    },
+    {
+      "name": "audit_band_edge_drift",
+      "gate": "boundary",
+      "treatment": {
+        "division_probability": 0.85,
+        "new_error_probability": 0.03,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.73,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [],
+      "maximum_clean_signal_wilson_upper": 0.5
+    },
+    {
+      "name": "completion_band_edge_rescue",
+      "gate": "boundary",
+      "treatment": {
+        "division_probability": 0.79,
+        "new_error_probability": 0.03,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": [],
+      "maximum_clean_signal_wilson_upper": 0.02
+    },
+    {
+      "name": "zero_division_arm",
+      "gate": "fail_closed",
+      "treatment": {
+        "division_probability": 0.0,
+        "new_error_probability": 0.03,
+        "error_daughter_reproduction_probability": 0.6,
+        "nonerror_daughter_reproduction_probability": 0.78,
+        "error_daughter_death_probability": 0.15,
+        "nonerror_daughter_death_probability": 0.05
+      },
+      "treatment_measurement": {
+        "division_detection_probability": 0.95,
+        "error_event_sensitivity": 0.9,
+        "error_event_specificity": 0.995,
+        "followup_if_reproduced": 0.9,
+        "followup_if_died": 0.9,
+        "followup_if_other": 0.9
+      },
+      "expected_flags": []
     }
   ]
 }

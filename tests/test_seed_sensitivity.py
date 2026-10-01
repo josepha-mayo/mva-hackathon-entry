@@ -14,10 +14,12 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from mva_hackathon.generation_selection import GenerationSelectionError, run_benchmark
 from mva_hackathon.seed_sensitivity import (
+    MAX_SEEDS,
     SCHEMA,
     load_and_run_seed_sweep,
     load_sweep_config,
     run_seed_sweep,
+    validate_sweep_config,
 )
 
 BASE_CONFIG = ROOT / "configs" / "track2-generation-selection-benchmark.json"
@@ -99,6 +101,25 @@ class SeedSensitivityConfigTests(unittest.TestCase):
             with self.assertRaises(GenerationSelectionError):
                 load_sweep_config(path)
 
+    def test_rejects_empty_seeds(self) -> None:
+        with self.assertRaises(GenerationSelectionError):
+            validate_sweep_config(_sweep(seeds=[]))
+
+    def test_rejects_too_many_seeds(self) -> None:
+        with self.assertRaises(GenerationSelectionError):
+            validate_sweep_config(_sweep(seeds=list(range(MAX_SEEDS + 1))))
+
+    def test_rejects_zero_min_accepting(self) -> None:
+        with self.assertRaises(GenerationSelectionError):
+            validate_sweep_config(
+                _sweep(seeds=[1], acceptance={"min_accepting_seeds": 0})
+            )
+
+    def test_rejects_non_integer_seeds(self) -> None:
+        for bad in (1.5, True, "7"):
+            with self.assertRaises(GenerationSelectionError):
+                validate_sweep_config(_sweep(seeds=[bad]))
+
 
 class SeedSensitivityRunTests(unittest.TestCase):
     def test_sweep_aggregates_per_seed_outcomes(self) -> None:
@@ -130,17 +151,30 @@ class SeedSensitivityRunTests(unittest.TestCase):
             "0" * 64,
         )
         rejected = sum(1 for r in receipt["per_seed"] if r["acceptance_passed"] is False)
-        if rejected:
-            self.assertFalse(receipt["summary"]["acceptance_passed"])
-            self.assertEqual(
-                receipt["summary"]["seeds_accepted"],
-                receipt["summary"]["seeds_run"] - rejected,
-            )
+        self.assertGreater(rejected, 0)
+        self.assertFalse(receipt["summary"]["acceptance_passed"])
+        self.assertEqual(
+            receipt["summary"]["seeds_accepted"],
+            receipt["summary"]["seeds_run"] - rejected,
+        )
 
     def test_rejects_seed_equal_to_primary(self) -> None:
         base = _mini_base()
         with self.assertRaises(GenerationSelectionError):
             run_seed_sweep(_sweep(seeds=[base["seed"]]), base, "0" * 64)
+
+    def test_run_validates_unvalidated_config(self) -> None:
+        base = _mini_base()
+        # Direct in-process callers must not bypass the schema gate: an empty
+        # seed list or a vacuous acceptance floor must raise, not accept.
+        with self.assertRaises(GenerationSelectionError):
+            run_seed_sweep(_sweep(seeds=[]), base, "0" * 64)
+        with self.assertRaises(GenerationSelectionError):
+            run_seed_sweep(
+                _sweep(seeds=[17032027], acceptance={"min_accepting_seeds": 0}),
+                base,
+                "0" * 64,
+            )
 
     def test_deterministic_across_identical_runs(self) -> None:
         base = _mini_base()
@@ -171,15 +205,18 @@ class SeedSensitivityRunTests(unittest.TestCase):
             committed["summary"]["seeds_accepted"]
             >= committed["summary"]["min_accepting_seeds"],
         )
-        for row in per_seed:
-            for key in (
-                "maximum_false_generation_wilson_upper_per_required_confound",
-                "minimum_required_generation_detection_wilson_lower",
-            ):
-                self.assertEqual(
-                    committed["metric_ranges"][key]["min"],
-                    min(r[key] for r in per_seed),
-                )
+        for key in (
+            "maximum_false_generation_wilson_upper_per_required_confound",
+            "minimum_required_generation_detection_wilson_lower",
+        ):
+            self.assertEqual(
+                committed["metric_ranges"][key]["min"],
+                min(r[key] for r in per_seed),
+            )
+            self.assertEqual(
+                committed["metric_ranges"][key]["max"],
+                max(r[key] for r in per_seed),
+            )
 
 
 if __name__ == "__main__":

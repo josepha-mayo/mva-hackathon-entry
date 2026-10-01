@@ -272,6 +272,46 @@ certified while founders are silently being lost upstream.
 
 What the suite cannot prove, stated plainly:
 
+- **Seed sensitivity is bounded, not eliminated.** The bound benchmark
+  receipt answers whether the analyzer satisfies the contract at the frozen
+  seed; a second bound receipt (`reports/TRACK2_SEED_SENSITIVITY.json`,
+  config `configs/track2-seed-sensitivity.json`, runner
+  `scripts/run_seed_sensitivity.py`) replays the identical configuration
+  across five predeclared supplementary master seeds — all five accepted all
+  scenarios, and the false-generation Wilson ceiling was seed-invariant.
+  Both receipts exercise the same synthetic generator, so the sweep answers
+  "was the release seed lucky?" and nothing more; it is descriptive
+  robustness evidence, not real-data validation. The sweep runner refuses
+  to overwrite an existing receipt and validates its configuration before
+  any compute, so a vacuous acceptance floor cannot certify an empty sweep.
+
+- **Cloning feasibility is the disclosed wet-lab bottleneck.** No published
+  MVA study has single-cell-cloned patient material — the field used
+  transformed lines or forward-edited tractable cells. Effective clone
+  recovery in aneuploidy-prone primaries is estimated in the low single
+  digits and a recovered "clone" is a karyotypic mixture. The protocol
+  therefore carries a declared non-clonal fallback: three independent
+  editing runs on genotyped uncloned populations with in-situ lineage
+  tracking as the biological unit, parental heterozygous and mock-edited
+  controls, and a transient-cDNA rescue arm — and the k=3 events are fixed
+  strata, so inference claims a finite-population effect over the observed
+  events only, never a superpopulation.
+- **Estimand honesty is explicit.** The enrolled-founder endpoint is a
+  composite strategy (non-completion counts as non-rescue); the
+  conditional-on-completion rate is descriptive unless a declared
+  principal-stratum assumption holds, in which case bounds, not a point,
+  are reported. The completion band is a four-region rule — a CI entirely
+  above the band is an overshoot flag that fails, not a pass.
+- **MC resolution is disclosed.** At 1,000 replicates the standard error
+  near the 0.025 level is roughly half a percentage point; all scenarios
+  share one generator family, so receipts certify counting-pipeline
+  correctness, not model-misspecification robustness.
+- **Prime-editing modality is forced by the chemistry.** Both variants are
+  T>G transversions — outside base-editor chemistry — so exact correction
+  requires prime editing; no published study has prime-edited a
+  checkpoint-defective line, and recovery rates are measured empirically
+  rather than assumed.
+
 - **Declared metadata is self-reported.** `culture_batch_id`,
   `selection_agent`, `selection_agent_cleared`, `selection_clearance_method`,
   timestamps, and specimen labels are declared fields. The contract enforces

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -28,6 +29,10 @@ from mva_hackathon.generation_selection import (
 
 SCHEMA = "mva-track2-seed-sensitivity/v1"
 MAX_SEEDS = 16
+HARVESTED_METRIC_KEYS = (
+    "maximum_false_generation_wilson_upper_per_required_confound",
+    "minimum_required_generation_detection_wilson_lower",
+)
 
 
 def _positive_integer(value: object, field: str) -> int:
@@ -62,11 +67,9 @@ def _load_json_strict(path: Path, label: str) -> dict[str, Any]:
     return parsed
 
 
-def load_sweep_config(path: Path) -> dict[str, Any]:
+def validate_sweep_config(config: object) -> dict[str, Any]:
     config = _strict_object(
-        _load_json_strict(path, "seed-sweep config"),
-        {"schema", "seeds", "acceptance"},
-        "seed-sweep config",
+        config, {"schema", "seeds", "acceptance"}, "seed-sweep config"
     )
     if config["schema"] != SCHEMA:
         raise GenerationSelectionError("unsupported seed-sweep schema")
@@ -93,10 +96,17 @@ def load_sweep_config(path: Path) -> dict[str, Any]:
     return config
 
 
+def load_sweep_config(path: Path) -> dict[str, Any]:
+    return validate_sweep_config(
+        _load_json_strict(path, "seed-sweep config")
+    )
+
+
 def run_seed_sweep(
     sweep_config: dict[str, Any], base_config: dict[str, Any], base_sha256: str
 ) -> dict[str, Any]:
     """Run the base benchmark once per supplementary seed and aggregate."""
+    sweep_config = validate_sweep_config(sweep_config)
     seeds = sweep_config["seeds"]
     min_accepting = sweep_config["acceptance"]["min_accepting_seeds"]
     primary_seed = base_config.get("seed")
@@ -116,6 +126,12 @@ def run_seed_sweep(
             for scenario in result["scenarios"]
             if scenario.get("passed") is not True
         ]
+        harvested = {key: summary[key] for key in HARVESTED_METRIC_KEYS}
+        for key, value in harvested.items():
+            if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value):
+                raise GenerationSelectionError(
+                    f"seed {seed} summary metric {key} is not a finite number"
+                )
         per_seed.append(
             {
                 "seed": seed,
@@ -123,26 +139,17 @@ def run_seed_sweep(
                 "scenarios_total": summary["total"],
                 "acceptance_passed": summary["acceptance_passed"],
                 "failed_scenarios": failed,
-                "maximum_false_generation_wilson_upper_per_required_confound": summary[
-                    "maximum_false_generation_wilson_upper_per_required_confound"
-                ],
-                "minimum_required_generation_detection_wilson_lower": summary[
-                    "minimum_required_generation_detection_wilson_lower"
-                ],
+                **harvested,
             }
         )
 
     seeds_accepted = sum(1 for row in per_seed if row["acceptance_passed"] is True)
-    metric_keys = (
-        "maximum_false_generation_wilson_upper_per_required_confound",
-        "minimum_required_generation_detection_wilson_lower",
-    )
     metric_ranges = {
         key: {
             "min": min(row[key] for row in per_seed),
             "max": max(row[key] for row in per_seed),
         }
-        for key in metric_keys
+        for key in HARVESTED_METRIC_KEYS
     }
     return {
         "schema": SCHEMA,
