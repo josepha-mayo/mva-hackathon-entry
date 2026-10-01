@@ -1335,3 +1335,30 @@ by stripping the code names and extending the receipt's path-scoped
 discharge plus matching self-tokens. Operator-only remainder unchanged:
 listen-through, video upload, attestation adoption, portal submission
 (deadline Oct 24; slot 2 planned next week, slot 3 held for final).
+
+## 2026-10-01 twenty-sixth increment - review-repair round
+
+An independent code review of the increment-25 diff caught a contract
+regression the increment's own tests did not cover: the scenario
+`expected_flags` unique-supported-string check was dropped during the
+parse restructure, so a typoed or mistyped flag list crashed with a bare
+lookup error after the full Monte Carlo run instead of a domain error
+before it. The check is restored verbatim, and the equivalence-margin
+cross-check now runs after the preservation-flag threshold is normalized,
+so a non-numeric threshold fails as a domain error rather than a type
+error. Two regression tests pin both behaviors; benchmark semantics on
+the frozen config are unchanged, so the reminted receipt's scenario
+results are byte-identical to the increment-25 receipt and only the
+provenance block moved.
+
+Freeze chain: content `56fcff6` -> binding `ea596c0` (53 artifacts,
+release-manifest sha-256 `8f943066`...; benchmark receipt minted at the
+content commit on a clean tracked worktree; no report or pitch bytes
+changed, so release-artifacts kept its prior report/pitch digests and
+only the manifest digest moved) -> attestation `16e1d75` (fresh Ed25519
+keypair; signature verifies via the documented openssl path; FreeTSA
+RFC 3161 serial `0x08C3F5D4` stamped 2026-10-01T22:48:56Z over
+release-artifacts sha-256 `fdf2e5c1`...; imprint verified equal to the
+artifact digest before accepting). Operator-only remainder unchanged:
+listen-through, video upload, attestation adoption, portal submission
+(deadline Oct 24; slot 2 planned next week, slot 3 held for final).
