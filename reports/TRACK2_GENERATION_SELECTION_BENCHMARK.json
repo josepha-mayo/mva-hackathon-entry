@@ -76,14 +76,14 @@
   "runtime_receipt": {
     "canonical_command": "python scripts/run_generation_selection_benchmark.py --config configs/track2-generation-selection-benchmark.json --output <new-path>",
     "config_sha256": "7bcfbd06579e70ddc89109b222f79f69c9455f4dde03c397be356451b8461f86",
-    "git_source_commit": "465338dc8fde9270f1ec5ad46e8a87c1d21fdd07",
+    "git_source_commit": "56fcff665d3896c67b436d8f9e868cca1e856867",
     "git_tracked_worktree_clean": true,
     "platform": "Windows-11-10.0.26300-SP0",
     "python_implementation": "CPython",
     "python_version": "3.14.7",
     "runner_sha256": "bd794bb80846726bf9f8afdf2ea75e6ede573054101a7bb90e08b7ca410cfdf3",
-    "source_sha256": "f320b3bc4a4179549eab53a027e13691d207b640bc8c1fd29e281012e2006b6f",
-    "test_sha256": "6c9629a67e506dad840e3616f0914840497fb89296493c8b560733ffa996b8f9"
+    "source_sha256": "b545890c95bcfd222956243819180121fdbceabffc8264be2e90634a4a035df2",
+    "test_sha256": "e4436317301db4444d8c99bd6d8374f1c591136a41d4ee87e22a366b4199d47f"
   },
   "scenarios": [
     {
