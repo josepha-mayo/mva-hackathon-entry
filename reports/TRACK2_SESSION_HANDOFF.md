@@ -1318,18 +1318,20 @@ hardening folded into one content commit:
 - **Feasibility honesty**: commercial phospho-antibody availability is
   pS670-only; phospho-assay language narrowed accordingly.
 
-Freeze chain: content `3721ee6` -> binding `b9df810` (53 artifacts,
-release-manifest sha-256 `b7793ff4`...; benchmark receipt minted at the
+Freeze chain: content `465338d` -> binding `45d912a` (53 artifacts,
+release-manifest sha-256 `4702ac0d`...; benchmark receipt minted at the
 content commit on a clean tracked worktree — the manifest validator
 rejects a dirty-mint receipt outright; seed receipt bound inside the
-content commit via blob equality) -> attestation `efef2d8` (Ed25519
-signature verifies via the documented openssl path; FreeTSA RFC 3161
-serial `0x08C31514` stamped 2026-10-01T20:37:20Z over release-artifacts
-sha-256 `ccd49609`...; imprint verified equal to the artifact digest
-before accepting). The gate caught two self-inflicted wounds mid-chain —
-program-code tokens in the handoff/commit message and seven fresh
-digest-collision tokens in the reminted receipt — resolved by stripping
-the code names and extending the receipt's path-scoped discharge.
-Operator-only remainder unchanged: listen-through, video upload,
-attestation adoption, portal submission (deadline Oct 24; slot 2 planned
-next week, slot 3 held for final).
+content commit via blob equality; the content commit must itself carry
+release-artifacts with the new report/pitch digests and the *old*
+manifest digest or the allowance map voids) -> attestation `8625d9d`
+(Ed25519 signature verifies via the documented openssl path; FreeTSA
+RFC 3161 serial `0x08C362CA` stamped 2026-10-01T21:19:33Z over
+release-artifacts sha-256 `fbdb0067`...; imprint verified equal to the
+artifact digest before accepting). The gate caught two self-inflicted
+wounds mid-chain — program-code tokens in the handoff/commit message and
+seven fresh digest-collision tokens in the reminted receipt — resolved
+by stripping the code names and extending the receipt's path-scoped
+discharge plus matching self-tokens. Operator-only remainder unchanged:
+listen-through, video upload, attestation adoption, portal submission
+(deadline Oct 24; slot 2 planned next week, slot 3 held for final).
