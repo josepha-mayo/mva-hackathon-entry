@@ -74,3 +74,14 @@ python scripts/run_seed_sensitivity.py --config configs/track2-seed-sensitivity.
 The generated receipts should match `reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json`
 and `reports/TRACK2_SEED_SENSITIVITY.json` in their metric fields (the
 `runtime_receipt` block reflects the run environment by design).
+
+The stronger check re-runs every frozen receipt-producing command and diffs
+the regenerated payload against the committed receipt (provenance fields
+excluded — they legitimately differ between minting commit and verify-time
+HEAD):
+
+```
+python scripts/verify_track2_reproducibility.py . --reexecute
+# expected: GO — plus one "re-executed ... payload identical" line per
+# receipt; any divergence is reported key-by-key
+```
