@@ -76,7 +76,7 @@
   "runtime_receipt": {
     "canonical_command": "python scripts/run_generation_selection_benchmark.py --config configs/track2-generation-selection-benchmark.json --output <new-path>",
     "config_sha256": "7bcfbd06579e70ddc89109b222f79f69c9455f4dde03c397be356451b8461f86",
-    "git_source_commit": "9fd7b8457eda940d67b28b354fa3fe273f8dfb18",
+    "git_source_commit": "7a3997a01aa9c5ae08166b50d1cbaef529169e6c",
     "git_tracked_worktree_clean": true,
     "platform": "Windows-11-10.0.26300-SP0",
     "python_implementation": "CPython",
