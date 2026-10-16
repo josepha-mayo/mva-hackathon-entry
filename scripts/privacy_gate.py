@@ -202,7 +202,7 @@ POLICY_SOURCE_SELF_TOKENS = frozenset(
         "UVK8", "V4A", "X8L", "Y8K",
         "CEP57", "CEP57-", "FAIL", "GAA-71", "GO-DIGESTS-ONLY", "HSP90", "HSP90-",
         "TNN-71", "Z6R7O",
-        "B7E6M", "O7R6Z", "SCF-FBXW7", "TP53", "TRIP13", "TRIP13-",
+        "B7E6M", "O60566", "O7R6Z", "RGB", "SCF-FBXW7", "TP53", "TRIP13", "TRIP13-",
         "END", "ENDMDL", "ESTIMANDS", "G418", "GO", "GPT-5", "HMAC-SHA256",
         "L737", "METHODS", "MITOCHONDRIAL", "MVA", "N1002K", "NFD", "NFKC",
         "NO-GO", "OXT", "PARTITIONS", "PATH", "PK", "PMC7610696", "PPS",
@@ -526,6 +526,10 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     # GAA-71 reversed / TNN-71 under rot13) — discharge only those two
     # transform artifacts on the pseudo-path, nothing else.
     PurePosixPath("<git-commit-message>"): frozenset({"GAA-71", "TNN-71"}),
+    # The pitch-video builder renders the storyboard's declared source labels
+    # (the structure-accession citation is intentional on-screen text) and
+    # Pillow color-mode literals.
+    PurePosixPath("scripts/build_video.py"): frozenset({"O60566", "RGB"}),
     PurePosixPath("reports/TRACK2_ATTEMPT2_DELTA.md"): frozenset(
         {
             "HMAC-SHA256", "PYTHONPATH", "SHA-256-",
@@ -838,7 +842,7 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     # recovery-era signature's blob additionally reads as O7R6Z raw, Z6R7O
     # reversed, and B7E6M under rot13 — encoding artifacts, not identifiers.
     PurePosixPath("attestation/release-signature.asc"): frozenset(
-        {"B7E6M", "O7R6Z", "QC9", "Z6R7O"}
+        {"B7E6M", "O60566", "O7R6Z", "RGB", "QC9", "Z6R7O"}
     ),
 }
 QUOTED_UPPER_IDENTIFIER_PATTERN = re.compile(
