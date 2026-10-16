@@ -71,6 +71,12 @@ ARTIFACT_PATHS = {
     "signature_verifier": PurePosixPath("scripts/verify_release_signature.py"),
     "docs_lint": PurePosixPath("scripts/check_docs.py"),
     "save_path_receipt": PurePosixPath("reports/TRACK2_SAVE_PATH_MATRIX.json"),
+    "lineage_adversarial_receipt": PurePosixPath(
+        "reports/TRACK2_LINEAGE_ADVERSARIAL.json"
+    ),
+    "lineage_adversarial_runner": PurePosixPath(
+        "scripts/run_lineage_adversarial_benchmark.py"
+    ),
     "flip_figure": PurePosixPath("reports/TRACK2_FLIP_FIGURE.svg"),
     "portability_map": PurePosixPath("reports/TRACK2_PORTABILITY.md"),
     "lineage_test": PurePosixPath("tests/test_lineage.py"),
