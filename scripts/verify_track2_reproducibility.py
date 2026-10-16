@@ -6,6 +6,7 @@ import math
 import os
 import subprocess
 import sys
+import tempfile
 from pathlib import Path, PurePosixPath
 
 SOURCE_ROOT = Path(__file__).resolve().parents[1] / "src"
@@ -125,11 +126,129 @@ def _verify_git_provenance(root: Path, manifest_data: bytes) -> list[str]:
     return issues
 
 
+# Frozen commands whose committed receipts --reexecute regenerates and diffs.
+# Provenance fields legitimately differ between minting commit and verify-time
+# HEAD, so the comparison strips them and compares the result payload only.
+_REEXECUTE_COMMANDS: list[tuple[PurePosixPath, list[str]]] = [
+    (
+        PurePosixPath("reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json"),
+        [
+            "scripts/run_generation_selection_benchmark.py",
+            "--config",
+            "configs/track2-generation-selection-benchmark.json",
+        ],
+    ),
+    (
+        PurePosixPath("reports/TRACK2_SEED_SENSITIVITY.json"),
+        [
+            "scripts/run_seed_sensitivity.py",
+            "--config",
+            "configs/track2-seed-sensitivity.json",
+        ],
+    ),
+    (
+        PurePosixPath("reports/TRACK2_SAVE_PATH_MATRIX.json"),
+        ["scripts/run_save_path_simulation.py"],
+    ),
+    (
+        PurePosixPath("reports/TRACK2_LINEAGE_ADVERSARIAL.json"),
+        ["scripts/run_lineage_adversarial_benchmark.py"],
+    ),
+]
+
+_VOLATILE_KEYS = {"runtime_receipt", "receipt_sha256", "generated_at"}
+
+
+def _strip_volatile(node: object) -> object:
+    if isinstance(node, dict):
+        return {
+            key: _strip_volatile(value)
+            for key, value in node.items()
+            if key not in _VOLATILE_KEYS
+        }
+    if isinstance(node, list):
+        return [_strip_volatile(item) for item in node]
+    return node
+
+
+def _diff_keys(a: object, b: object, path: str = "") -> list[str]:
+    if isinstance(a, dict) and isinstance(b, dict):
+        diffs = []
+        for key in sorted(set(a) | set(b)):
+            diffs.extend(_diff_keys(a.get(key), b.get(key), f"{path}.{key}"))
+        return diffs
+    if isinstance(a, list) and isinstance(b, list):
+        if len(a) != len(b):
+            return [f"{path} (length {len(a)} != {len(b)})"]
+        diffs = []
+        for index, (x, y) in enumerate(zip(a, b)):
+            diffs.extend(_diff_keys(x, y, f"{path}[{index}]"))
+            if len(diffs) > 10:
+                return diffs + [f"{path}[...] (further diffs truncated)"]
+        return diffs
+    return [] if a == b else [f"{path}: {a!r} != {b!r}"]
+
+
+def _reexecute(root: Path) -> list[str]:
+    """Re-run the frozen commands and diff regenerated receipts against the
+    committed ones. This converts "self-consistent bytes" into "verified
+    computation" — the trust-boundary gap reviewers flagged."""
+    issues: list[str] = []
+    for receipt_path, command in _REEXECUTE_COMMANDS:
+        committed_path = root.joinpath(*receipt_path.parts)
+        try:
+            committed = json.loads(committed_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            issues.append(f"{receipt_path.as_posix()}: cannot load committed receipt ({exc})")
+            continue
+        with tempfile.TemporaryDirectory(prefix="mva-reexec-") as tmp:
+            output_path = Path(tmp) / "receipt.json"
+            run = subprocess.run(
+                [
+                    sys.executable,
+                    str(root.joinpath(command[0])),
+                    *command[1:],
+                    "--output",
+                    str(output_path),
+                ],
+                cwd=root,
+                capture_output=True,
+                text=True,
+                timeout=3600,
+            )
+            if run.returncode != 0:
+                issues.append(
+                    f"{receipt_path.as_posix()}: frozen command failed "
+                    f"(exit {run.returncode}): {run.stderr.strip()[-400:]}"
+                )
+                continue
+            try:
+                fresh = json.loads(output_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError) as exc:
+                issues.append(f"{receipt_path.as_posix()}: cannot load regenerated receipt ({exc})")
+                continue
+        diffs = _diff_keys(_strip_volatile(committed), _strip_volatile(fresh))
+        if diffs:
+            issues.append(
+                f"{receipt_path.as_posix()}: regenerated receipt diverges "
+                f"({len(diffs)} diff(s); first: {diffs[0]})"
+            )
+        else:
+            print(f"re-executed: {receipt_path.as_posix()} — payload identical")
+    return issues
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Verify every byte in the receipt-bound Track 2 evidence chain."
     )
     parser.add_argument("root", nargs="?", default=Path.cwd(), type=Path)
+    parser.add_argument(
+        "--reexecute",
+        action="store_true",
+        help="also re-run the frozen benchmark/save-path commands and diff "
+        "the regenerated receipts against the committed ones (slow)",
+    )
     arguments = parser.parse_args()
     root = arguments.root.resolve()
     manifest_path = root.joinpath(*MANIFEST_PATH.parts)
@@ -160,6 +279,8 @@ def main() -> int:
 
     issues = validate_manifest_bytes(manifest_data, load_artifact)
     issues += _verify_git_provenance(root, manifest_data)
+    if arguments.reexecute and not issues:
+        issues += _reexecute(root)
     if issues:
         for issue in issues:
             print(f"NO-GO: {issue}")
@@ -168,6 +289,9 @@ def main() -> int:
     print(
         "scope: digest, receipt, and provenance validation only; the frozen "
         "commands were not re-executed"
+        if not arguments.reexecute
+        else "scope: digest, receipt, provenance, and re-execution of the "
+        "frozen commands"
     )
     return 0
 

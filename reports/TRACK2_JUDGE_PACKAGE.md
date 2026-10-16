@@ -57,35 +57,35 @@ biological flags are false; only `generation_reduction` is set. Result:
 throughout: 3 paired events, 2 clones per event-arm, >=8 completed per
 event-arm, resolved-daughter floors (>=2 error / >=8 non-error per event-arm).
 
-**The flip: censor half the resolved daughters.** Two layers respond
+**The flip: censor the resolved daughters.** Two layers respond
 differently, and the difference is the point of the design.
 
-- At the founder-level analyzer (verified): halving resolved daughters leaves
-  12 error / 42 non-error resolved on vehicle and 3 / 51 on treatment — still
-  above the floors, so the selection estimand stays estimable
-  (0.908 [0.703, 1.174]) and the study still certifies clean. The analyzer
-  requires only enough resolved progeny to deconvolve selection; it is
-  deliberately tolerant of partial censoring. Pushing past the floors —
-  censoring *all* resolved daughters — makes the selection estimand
-  inestimable and the interpretation degrades to
-  `generation_signal_incomplete_deconvolution`: a generation drop the
-  analyzer cannot separate from daughter-fate selection is never certified
-  clean.
+- At the founder-level analyzer (verified on the shipped code): censoring a
+  quarter of resolved daughters leaves the selection estimand estimable at
+  1.000 [0.823, 1.214]; censoring half widens it to 1.000 [0.774, 1.293] —
+  still inside the equivalence certificate's margin, so the study still
+  certifies clean. The estimator does not punish missing daughters beyond
+  widening the interval; it is deliberately tolerant of partial censoring.
+  Censoring *all* resolved daughters makes the estimand inestimable and the
+  interpretation degrades to `generation_signal_incomplete_deconvolution`:
+  a generation drop the analyzer cannot separate from daughter-fate
+  selection is never certified clean.
 - At the clone-safety gate on the lineage-counts table (verified, upstream of
   lineage analysis in the pipeline): the same half-censoring fires
-  `not_assessable`. Per (event, clone, run) nest, treatment-arm resolved
-  error daughters drop 8 -> 4, below the fixed `MINIMUM_RESOLVED = 8` floor
-  (`insufficient_positive_followup`); vehicle-arm resolved drop 24 -> 12,
-  below the 24 declared daughter slots (`incomplete_positive_followup`).
+  `not_assessable` with `advancement_blocked` — per (event, clone, run)
+  nest, resolved event-positive daughters fall to 12 on vehicle and 3 on
+  treatment, and the treatment nests sit below the fixed
+  `MINIMUM_RESOLVED = 8` floor (`insufficient_positive_followup`).
   Censored or `not_followed` daughters count in `followed` but never in
   `resolved = reproduced + died`, so they cannot satisfy the completeness
   obligation or dilute a rate. The gate holds the program before any rescue
   interpretation is reached.
 
-Net: partial censoring is absorbed at the estimand layer but refused at the
-completeness layer; total censoring is refused at both. The save-path suite
-exercises the same refusal as named false paths (`censored_daughters_dilute`,
-`clone_safety_under_followed`, `multipolar_daughters_unfollowed`).
+Net: partial censoring is absorbed — with a widening interval — at the
+estimand layer but refused at the completeness layer; total censoring is
+refused at both. The save-path suite exercises the same refusal as named
+false paths (`censored_daughters_dilute`, `clone_safety_under_followed`,
+`multipolar_daughters_unfollowed`).
 
 ---
 
@@ -97,7 +97,7 @@ Status vocabulary: **cited** = named external precedent, not re-derived here;
 
 | Method component | Closest precedent | Status | What this package adds |
 |---|---|---|---|
-| Corrected-isogenic control | Merkert 2019, Parkinson GBA | cited | The control is a required genotype class (`exact_corrected`) inside a gate lattice, not a figure panel; a correction that is computational, cell-free, ectopic, unmatched-line, imposed-stress, or analog-allele cannot discharge it, and the control defines the bar a comparator must match — it is never itself a medicine result |
+| Corrected-isogenic control | Schöndorf et al. 2014, Nat Commun — ZFN-corrected GBA iPSC neurons | cited | The control is a required genotype class (`exact_corrected`) inside a gate lattice, not a figure panel; a correction that is computational, cell-free, ectopic, unmatched-line, imposed-stress, or analog-allele cannot discharge it, and the control defines the bar a comparator must match — it is never itself a medicine result |
 | Reciprocal editing | Soldner 2011, isogenic iPSC pairs | cited | `recreated_missense` must restore the exact endpoints the defect was called on; analog, homolog, nearby, or unlabeled recreation is refused at gate level, making reciprocity an executable precondition rather than a suggestion |
 | Division-gated micronucleus scoring | CBMN assay / OECD TG 487 | cited (TG 487 also cited in `reports/TRACK2_EXPOSURE_GATE.md` with OECD GD 211) | The per-division error outcome and the exposure-schedule vocabulary (constant vs pulse, washout, >=1 h window) are contract fields with pass/stop semantics, not guideline text |
 | Exact competing-risk first-attempt lineage | none claimed | novel-here | Enrolled-founder first-attempt partition across five exhaustive outcomes with pre-division death labeled separately from other non-completion; daughters attach only to completed divisions and resolve to terminal fates |
@@ -105,7 +105,7 @@ Status vocabulary: **cited** = named external precedent, not re-derived here;
 | Analyzer-priced power lock | none claimed | novel-here | `detection_rate` is the fraction of 400 seeded simulations in which the *production analyzer* certifies `clean_generation_signal` — the priced object is the real decision rule, not a pooled binomial surrogate; Wilson lower bound must also clear the >=0.8 floor |
 | Event-level paired inference with quadrature interval | none claimed | novel-here | Per-edit-event paired log-ratio estimands; Student-t df=2 on estimated between-event variance plus normal z on known within-event variance, combined in quadrature so sparse-but-honest denominators are not double-penalized and sparse events cannot borrow precision |
 
-No other citations are claimed. Merkert 2019 and Soldner 2011 are named as
+No other citations are claimed. Schöndorf 2014 and Soldner 2011 are named as
 prior art for the *concept* of isogenic correction controls; this package does
 not reproduce, extend, or validate their biology.
 

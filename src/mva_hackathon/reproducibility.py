@@ -63,6 +63,16 @@ ARTIFACT_PATHS = {
     "save_path_source": PurePosixPath("src/mva_hackathon/save_path.py"),
     "method_delta_source": PurePosixPath("src/mva_hackathon/method_delta.py"),
     "submission_go_checker": PurePosixPath("scripts/check_submission_go.py"),
+    # Judge-facing verification and demonstration surfaces are bound: a
+    # weakened verifier or a stale demo claim must fail manifest validation.
+    "demo_runner": PurePosixPath("scripts/demo_contract.py"),
+    "demo_transcript": PurePosixPath("reports/TRACK2_DEMO_TRANSCRIPT.md"),
+    "verify_all_runner": PurePosixPath("scripts/verify_all.py"),
+    "signature_verifier": PurePosixPath("scripts/verify_release_signature.py"),
+    "docs_lint": PurePosixPath("scripts/check_docs.py"),
+    "save_path_receipt": PurePosixPath("reports/TRACK2_SAVE_PATH_MATRIX.json"),
+    "flip_figure": PurePosixPath("reports/TRACK2_FLIP_FIGURE.svg"),
+    "portability_map": PurePosixPath("reports/TRACK2_PORTABILITY.md"),
     "lineage_test": PurePosixPath("tests/test_lineage.py"),
     "exposure_gate_test": PurePosixPath("tests/test_exposure_gate.py"),
     "save_path_test": PurePosixPath("tests/test_save_path.py"),

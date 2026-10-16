@@ -4,7 +4,39 @@ Reproducible, privacy-first work for Sage Bionetworks' **Rare Disease, Real Kid:
 
 ## For judges — 30-second read
 
-**One-sentence method claim:** exact correction supplies the participant-specific cellular positive control that a repurposed medicine must match, while lineage tracking prevents selection or cytostasis from masquerading as rescue.
+**The case:** a child with suspected BUB1B-associated Mosaic Variegated
+Aneuploidy (MVA), carrying the proposed compound-heterozygous pair
+Leu737Ter + Asn1002Lys — *phase unconfirmed (cis vs. trans
+unresolved)*. This entry delivers a vetting method and a ranked candidate
+disposition — one exposure-gated conditional probe (arimoclomol), named
+comparators, and declined classes with reasons; it recommends no medicine
+and reports no wet-lab result.
+
+**The method claim:** exact correction of the proposed missense allele
+supplies the participant-specific cellular positive control that a
+repurposed medicine must match. The contract separates generation (fewer
+new errors *made* per division) from selection (fewer errors *seen*
+because error-bearing daughters die or drop out) — so a cytostatic mirage
+cannot certify as rescue.
+
+> The analyzer has no word for "rescue." Its strongest emission is a
+> certificate that the configured QC checks, adverse flags, pediatric
+> completion band, and daughter-fate selection window all held at once.
+
+**For the family, in plain words:** this package does not recommend any
+medicine and claims no benefit. It is a public, checkable method for telling
+a real cellular fix from a mirage *before* a laboratory spends the child's
+cells on it — and a "no" at any gate is a protective answer, not a failure.
+
+**Watch the contract refuse a rigged rescue** (synthetic fixtures, seconds, no data):
+
+```powershell
+python scripts/demo_contract.py
+```
+
+No install? Read the captured run: [reports/TRACK2_DEMO_TRANSCRIPT.md](reports/TRACK2_DEMO_TRANSCRIPT.md).
+
+`0/1,000` clean signals from a cytostasis-contaminated "rescue" · `126/126` configured false paths blocked, `1/1` complete path opens · a masked-followup hole we found in our own gate measured `260/1,000` before the selection-equivalence fix and `1/1,000` after — the post-fix number is in the signed receipt; the pre-fix `260/1,000` is in the method-improvement log.
 
 | What it is | Where | One-command verify |
 |---|---|---|
@@ -12,11 +44,20 @@ Reproducible, privacy-first work for Sage Bionetworks' **Rare Disease, Real Kid:
 | 126 configured false-rescue scenarios blocked from advancing; the one constructed complete path still opens | [Save-path suite](tests/test_save_path.py) | `python -m unittest tests.test_save_path -q` |
 | Frozen attempt-1 judged report and reproducible synthetic benchmark | links below | `python scripts/verify_track2_reproducibility.py .` |
 
-Suggested reading order: [TRACK2_JUDGE_PACKAGE.md](reports/TRACK2_JUDGE_PACKAGE.md) → [the judged report](reports/josephmayo_track2_report.md) → [community toolkit](templates/community/README.md) → [external case replay](reports/TRACK2_EXTERNAL_CASE_REPLAY.md).
+**Judge this in N minutes:** **90 s** — this block plus `python scripts/demo_contract.py`. **10 min** — [judge package](reports/TRACK2_JUDGE_PACKAGE.md) §1 worked example (the flip) and §4 gate chain. **30 min** — report §4/§6, then `python scripts/verify_track2_reproducibility.py .`.
+
+Suggested reading order: [JUDGES.md](JUDGES.md) (one-page claims → evidence → falsifier map) → [TRACK2_JUDGE_PACKAGE.md](reports/TRACK2_JUDGE_PACKAGE.md) → [the judged report](reports/josephmayo_track2_report.md) → [external case replay](reports/TRACK2_EXTERNAL_CASE_REPLAY.md) → [community toolkit](templates/community/README.md). The three-minute pitch video is delivered through the competition portal with this package; its [script and storyboard](reports/josephmayo_track2_pitch_script.md) are in the judged surface.
 
 Why this is not just a test suite: the software is the executable form of a predeclared experiment contract. Its estimands, gate ordering, and identity checks decide which laboratory records are admissible and which culture spend may be declared next — a test suite checks code; this contract decides whether a proposed rescue measurement is even allowed to be interpreted. The save-path replay demonstrates the contract is non-vacuous (one constructed path advances) and the submission GO checker refuses self-certification — it reports NO-GO until five external attestation artifacts exist; the current bundle lives under [attestation/](attestation/) with a real Ed25519 detached signature and a FreeTSA RFC 3161 timestamp token. Commands below are PowerShell; all `python` invocations are shell-agnostic and `$env:MVA_PRIVATE_ROOT` reads as `$MVA_PRIVATE_ROOT` under bash.
 
-## Verified status snapshot (updated 2026-09-19; public portal facts last live-checked 2026-09-01)
+**What the judges see:** the portal scores only the latest upload. Attempt
+1 is already submitted and judged; this repository is the candidate
+attempt-2 continuation — hardened past the uploaded bytes, so not
+byte-identical to them. Each release is frozen, signed, and reproducible at
+its own anchor; living Phase-2 files below do not silently replace bound
+artifacts.
+
+## Verified status snapshot (rebuilt 2026-10-14 after a local disk loss; public portal facts last live-checked 2026-09-01)
 
 - Official challenge contract, scoring code, and templates inspected. Track 1 has a public Rank-Points / F-max leaderboard. Track 2 has no live leaderboard: JSON is stored under a private `track2/` folder and is never rendered or auto-scored. The panel reviews only the latest of three qualitative uploads.
 - Registration, access, secure-storage, and machine receipts remain private operational records and are not published in this repository.

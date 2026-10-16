@@ -64,6 +64,50 @@ class LineageContractTests(unittest.TestCase):
             "generation_reduction_without_detected_configured_confound",
         )
 
+    def test_judge_package_daughter_censoring_flip_is_pinned(self) -> None:
+        """Judge package section 1 publishes verified numbers for the
+        daughter-censoring flip: partial censoring is absorbed at the
+        estimand layer (the interval widens but stays inside the
+        equivalence margin), and total censoring makes the selection
+        estimand inestimable. Pin both ends so the published claim cannot
+        diverge silently from the shipped analyzer."""
+        study = build_adversarial_fixture("clean_generation")
+
+        def censor(step: int) -> object:
+            daughters = list(study.daughters)
+            seen = 0
+            for i, daughter in enumerate(daughters):
+                if daughter.outcome == "reproduced":
+                    if seen % step == 0:
+                        daughters[i] = dataclasses.replace(daughter, outcome="censored")
+                    seen += 1
+            return dataclasses.replace(study, daughters=tuple(daughters))
+
+        quarter = analyze_lineage_study(censor(4))
+        est = quarter["estimates"]["relative_error_daughter_reproduction"]
+        self.assertTrue(est["estimable"])
+        self.assertAlmostEqual(est["ratio"], 1.000, places=3)
+        self.assertAlmostEqual(est["lower"], 0.823397, places=3)
+        self.assertAlmostEqual(est["upper"], 1.214481, places=3)
+        self.assertTrue(quarter["status"]["clean_generation_signal"])
+
+        half = analyze_lineage_study(censor(2))
+        est = half["estimates"]["relative_error_daughter_reproduction"]
+        self.assertTrue(est["estimable"])
+        self.assertAlmostEqual(est["ratio"], 1.000, places=3)
+        self.assertAlmostEqual(est["lower"], 0.773674, places=3)
+        self.assertAlmostEqual(est["upper"], 1.292535, places=3)
+        self.assertTrue(half["status"]["clean_generation_signal"])
+
+        total = analyze_lineage_study(censor(1))
+        self.assertFalse(
+            total["estimates"]["relative_error_daughter_reproduction"]["estimable"]
+        )
+        self.assertEqual(
+            total["interpretation"], "generation_signal_incomplete_deconvolution"
+        )
+        self.assertFalse(total["status"]["clean_generation_signal"])
+
     def test_export_has_no_truth_and_separates_pre_division_death(self) -> None:
         study = build_adversarial_fixture("clean_generation")
         exported = export_first_attempt_aggregates(study)

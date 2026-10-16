@@ -200,6 +200,8 @@ POLICY_SOURCE_SELF_TOKENS = frozenset(
         "BUBR1", "CEBONAQ01", "CLASSIFICATIONS", "COMMANDS", "CRAM", "E402",
         "A4V", "FV8", "HIX8", "I4N", "K8Y", "L8X", "N4I", "QC9", "SI8",
         "UVK8", "V4A", "X8L", "Y8K",
+        "CEP57", "CEP57-", "FAIL", "GO-DIGESTS-ONLY", "HSP90", "HSP90-",
+        "SCF-FBXW7", "TP53", "TRIP13", "TRIP13-",
         "END", "ENDMDL", "ESTIMANDS", "G418", "GO", "GPT-5", "HMAC-SHA256",
         "L737", "METHODS", "MITOCHONDRIAL", "MVA", "N1002K", "NFD", "NFKC",
         "NO-GO", "OXT", "PARTITIONS", "PATH", "PK", "PMC7610696", "PPS",
@@ -527,7 +529,8 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     ),
     PurePosixPath("reports/TRACK2_METHOD_IMPROVEMENTS.md"): frozenset(
         {
-            "BAM", "HMAC-SHA256", "PATH", "PYTHONPATH",
+            "BAM", "BUBR1", "HMAC-SHA256", "HSP90-", "MVA", "PATH",
+            "PYTHONPATH", "SCF-FBXW7",
             "sample-v17", "gated5-sample-v17",
         }
     ),
@@ -542,7 +545,22 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     PurePosixPath("reports/TRACK2_JUDGE_PACKAGE.md"): frozenset(
         {"BUB1B", "BUBR1"}
     ),
+    # The judge map names the same public biology vocabulary as the package
+    # (gene symbol, comparator-gene labels, verdict-tier labels) plus the
+    # gate's own GO/NO-GO verdict strings it documents.
+    PurePosixPath("JUDGES.md"): frozenset(
+        {
+            "BUB1B", "BUB1B-", "BUBR1", "GO", "GO-DIGESTS-ONLY",
+            "HSP90-", "TP53",
+        }
+    ),
     PurePosixPath("README.md"): frozenset({"BUB1B", "BUB1B-"}),
+    # The portability map names the other MVA molecular classes it maps to.
+    PurePosixPath("reports/TRACK2_PORTABILITY.md"): frozenset(
+        {"BUB1B", "BUB1B-", "CEP57-", "N1002K", "TRIP13", "TRIP13-"}
+    ),
+    # The fast verifier prints the same GO/NO-GO verdict strings it runs.
+    PurePosixPath("scripts/verify_all.py"): frozenset({"FAIL", "GO"}),
     PurePosixPath("reports/TRACK2_SESSION_HANDOFF.md"): frozenset(
         {
             "B10", "B11", "B12", "B13", "B14", "BAM",

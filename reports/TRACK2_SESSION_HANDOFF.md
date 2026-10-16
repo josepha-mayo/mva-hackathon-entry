@@ -782,7 +782,7 @@ The four families added versus skip-ahead:
 | `window.powered_but_unmanufacturable` | `unmanufacturable_window` | assay_power | **8** | leftover (same imaging object) |
 | `false_rescue.bulk_fraction_window` | `bulk_fraction_endpoint` | assay_power `false_bulk_rescue_likely` | **8** | **yes** — culture-window OC |
 
-Independent subagents on that increment ([culture-window review](8043f8d4-37f4-4e1d-97ff-49a9ce370f23), [adversarial method-delta](16dac9a1-4727-4996-a877-823151f01464)): both **`agree_complex`**. Keep the window gate. Do not claim earlier-kill. Split leftover families from the culture-window story when talking to the operator.
+Independent subagents on that increment (culture-window review, adversarial method-delta): both **`agree_complex`**. Keep the window gate. Do not claim earlier-kill. Split leftover families from the culture-window story when talking to the operator.
 
 ### Exposure duration / contact-pattern increment (previous canonical)
 
@@ -1362,3 +1362,34 @@ release-artifacts sha-256 `fdf2e5c1`...; imprint verified equal to the
 artifact digest before accepting). Operator-only remainder unchanged:
 listen-through, video upload, attestation adoption, portal submission
 (deadline Oct 24; slot 2 planned next week, slot 3 held for final).
+
+
+## 2026-10-16 recovery rebuild - post-wipe reconstruction
+
+A local disk event deleted the working tree including .git at ~11:23 on
+2026-10-14. Recovery source: the published GitHub mirror at 6353745
+(method-log 182 era). Rebuild rule applied throughout: what could not be
+reproduced was dropped or marked lost rather than approximated; the method
+log records which increments are verbatim-recovered (192-196, 199, 200,
+201-partial) and which are declared lost (183-191, 197-198).
+
+Rebuilt this session: JUDGES.md (one-page claims/evidence/verify/falsifier
+map), README judge surface, the flip figure SVG, the refusal demo +
+committed transcript, the portability map, verify_all / signature-verifier /
+docs-lint scripts, the save-path receipt (126/126, 1/1), a --reexecute mode
+on the reproducibility verifier that re-runs the frozen commands and
+payload-diffs the receipts, and the report landings (exposure-gate +1 SD
+precision, harm-vector citation, abundance-axis receipts, ranked
+dispositions + first-experiment card, readthrough-class update). The worked-
+example flip was re-pinned against this tree's analyzer: quarter- and
+half-censoring certify with widening intervals inside the factor-1.5 margin;
+full censoring makes the estimand inestimable; the completeness gate refuses
+at half. The lost tree's pin recorded half-censoring as non-certifying - the
+divergence is recorded in the method log, not reconciled by assumption.
+
+Operator-only remainder unchanged: listen-through, video upload (the pitch
+render must be regenerated against the new receipt digests before upload),
+attestation adoption, portal submission (deadline Oct 24; only the latest
+upload is judged; slot 2 planned next, slot 3 held for final). No upload
+without a live portal refresh and the exact attempt-specific authorization
+phrase.

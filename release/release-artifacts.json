@@ -1,35 +1,35 @@
 {
-  "schema": "mva-public-release-quarantine/v3",
-  "artifacts": [
-    {
-      "role": "track1_submission_csv",
-      "path": "submissions/track1/josephmayo_track1_bub1b_pair.csv",
-      "status": "released",
-      "sha256": "a12d5878c4bfdca43bf0e7143c7a5cc9323739db52a4fd69b5245a86d9cc5dab"
-    },
-    {
-      "role": "track1_methods_report",
-      "path": "reports/josephmayo_track1_report.md",
-      "status": "released",
-      "sha256": "4e1dbcf21102b3f8378a3fdf422fa67c4f5398b5db2f73863a312249d3014de8"
-    },
-    {
-      "role": "track2_repositioning_report",
-      "path": "reports/josephmayo_track2_report.md",
-      "status": "released",
-      "sha256": "e799f9ce4877220b3dcfc471387b5b125fbfdad498cf9211d0e156f66637190b"
-    },
-    {
-      "role": "track2_pitch_script",
-      "path": "reports/josephmayo_track2_pitch_script.md",
-      "status": "released",
-      "sha256": "ae8250cb04d325b1cdf7957fbca5f61d8815b6743c029376c554e2b0e694b2e8"
-    },
-    {
-      "role": "track2_reproducibility_manifest",
-      "path": "release/track2-reproducibility.json",
-      "status": "released",
-      "sha256": "8f94306639e865d5058ecc7f2aa8d93c3b56b762b4a76bec515a89e8dd5b0e19"
-    }
-  ]
+ "schema": "mva-public-release-quarantine/v3",
+ "artifacts": [
+  {
+   "role": "track1_submission_csv",
+   "path": "submissions/track1/josephmayo_track1_bub1b_pair.csv",
+   "status": "released",
+   "sha256": "a12d5878c4bfdca43bf0e7143c7a5cc9323739db52a4fd69b5245a86d9cc5dab"
+  },
+  {
+   "role": "track1_methods_report",
+   "path": "reports/josephmayo_track1_report.md",
+   "status": "released",
+   "sha256": "4e1dbcf21102b3f8378a3fdf422fa67c4f5398b5db2f73863a312249d3014de8"
+  },
+  {
+   "role": "track2_repositioning_report",
+   "path": "reports/josephmayo_track2_report.md",
+   "status": "released",
+   "sha256": "d2502d2c5cfded4e53430df8c56fb2f10ca9a2671d51cc67748c41925683dab2"
+  },
+  {
+   "role": "track2_pitch_script",
+   "path": "reports/josephmayo_track2_pitch_script.md",
+   "status": "released",
+   "sha256": "ae8250cb04d325b1cdf7957fbca5f61d8815b6743c029376c554e2b0e694b2e8"
+  },
+  {
+   "role": "track2_reproducibility_manifest",
+   "path": "release/track2-reproducibility.json",
+   "status": "released",
+   "sha256": "8f94306639e865d5058ecc7f2aa8d93c3b56b762b4a76bec515a89e8dd5b0e19"
+  }
+ ]
 }

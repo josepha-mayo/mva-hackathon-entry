@@ -57,3 +57,11 @@
 /scripts/run_seed_sensitivity.py text eol=lf
 /tests/test_seed_sensitivity.py text eol=lf
 /reports/TRACK2_SEED_SENSITIVITY.json text eol=lf
+/scripts/demo_contract.py text eol=lf
+/reports/TRACK2_DEMO_TRANSCRIPT.md text eol=lf
+/scripts/verify_all.py text eol=lf
+/scripts/verify_release_signature.py text eol=lf
+/scripts/check_docs.py text eol=lf
+/reports/TRACK2_SAVE_PATH_MATRIX.json text eol=lf
+/reports/TRACK2_FLIP_FIGURE.svg text eol=lf
+/reports/TRACK2_PORTABILITY.md text eol=lf

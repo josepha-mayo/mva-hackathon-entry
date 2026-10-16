@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 470" role="img" aria-label="The flip: identical founder counts, two daughter truths, two verdicts">
+<rect width="980" height="470" fill="#fafafa"/>
+<text x="490" y="34" font-family="system-ui,sans-serif" font-size="19" fill="#1c1c1e" font-weight="bold" text-anchor="middle">The same 4× drop in error divisions — rescue or mask?</text>
+<text x="490" y="58" font-family="system-ui,sans-serif" font-size="13" fill="#6b6b70" font-weight="normal" text-anchor="middle">Identical founder counts; only the daughters' follow-up differs.</text>
+<rect x="10" y="86" width="460" height="330" rx="10" fill="#ffffff" stroke="#d4d4d8"/>
+<text x="26" y="112" font-family="system-ui,sans-serif" font-size="15" fill="#1c1c1e" font-weight="bold" text-anchor="start">Followed-out daughters — the contract certifies</text>
+<text x="26" y="134" font-family="system-ui,sans-serif" font-size="12" fill="#6b6b70" font-weight="normal" text-anchor="start">founder error rate (first division)</text>
+<text x="26" y="156" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#1c1c1e" font-weight="normal" text-anchor="start">vehicle 22.2%  →  treatment 5.6%</text>
+<text x="26" y="176" font-family="system-ui,sans-serif" font-size="11" fill="#6b6b70" font-weight="normal" text-anchor="start">(4x fewer error divisions — identical in both panels)</text>
+<text x="26" y="208" font-family="system-ui,sans-serif" font-size="12" fill="#6b6b70" font-weight="normal" text-anchor="start">daughter outcomes</text>
+<rect x="26" y="219" width="300" height="14" rx="3" fill="#2563eb" opacity="0.85"/>
+<text x="334" y="230" font-family="system-ui,sans-serif" font-size="11" fill="#1c1c1e" font-weight="normal" text-anchor="start">reproduced — most daughters</text>
+<rect x="26" y="245" width="46" height="14" rx="3" fill="#b45309" opacity="0.85"/>
+<text x="80" y="256" font-family="system-ui,sans-serif" font-size="11" fill="#1c1c1e" font-weight="normal" text-anchor="start">died — small</text>
+<rect x="26" y="271" width="210" height="14" rx="3" fill="#9ca3af" opacity="0.85"/>
+<text x="244" y="282" font-family="system-ui,sans-serif" font-size="11" fill="#1c1c1e" font-weight="normal" text-anchor="start">censored — tiny</text>
+<text x="26" y="318" font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#1c1c1e" font-weight="normal" text-anchor="start">selection estimate: 1.000  [0.876, 1.142] — inside [0.75, 1.25]</text>
+<text x="26" y="338" font-family="system-ui,sans-serif" font-size="11" fill="#6b6b70" font-weight="normal" text-anchor="start">the point estimate is identical — the interval decides</text>
+<rect x="26" y="350" width="300" height="26" rx="6" fill="#dcfce7"/>
+<text x="36" y="368" font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#166534" font-weight="bold" text-anchor="start">clean_generation_signal = true</text>
+<text x="26" y="398" font-family="system-ui,sans-serif" font-size="11" fill="#6b6b70" font-weight="normal" text-anchor="start">same founder story — daughter fate fully resolved</text>
+<rect x="510" y="86" width="460" height="330" rx="10" fill="#ffffff" stroke="#d4d4d8"/>
+<text x="526" y="112" font-family="system-ui,sans-serif" font-size="15" fill="#1c1c1e" font-weight="bold" text-anchor="start">Censored daughters — the contract refuses</text>
+<text x="526" y="134" font-family="system-ui,sans-serif" font-size="12" fill="#6b6b70" font-weight="normal" text-anchor="start">founder error rate (first division)</text>
+<text x="526" y="156" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#1c1c1e" font-weight="normal" text-anchor="start">vehicle 22.2%  →  treatment 5.6%</text>
+<text x="526" y="176" font-family="system-ui,sans-serif" font-size="11" fill="#6b6b70" font-weight="normal" text-anchor="start">(4x fewer error divisions — identical in both panels)</text>
+<text x="526" y="208" font-family="system-ui,sans-serif" font-size="12" fill="#6b6b70" font-weight="normal" text-anchor="start">daughter outcomes</text>
+<rect x="526" y="219" width="160" height="14" rx="3" fill="#2563eb" opacity="0.85"/>
+<text x="694" y="230" font-family="system-ui,sans-serif" font-size="11" fill="#1c1c1e" font-weight="normal" text-anchor="start">reproduced — ~half of followed daughters</text>
+<rect x="526" y="245" width="46" height="14" rx="3" fill="#b45309" opacity="0.85"/>
+<text x="580" y="256" font-family="system-ui,sans-serif" font-size="11" fill="#1c1c1e" font-weight="normal" text-anchor="start">died — small</text>
+<rect x="526" y="271" width="300" height="14" rx="3" fill="#9ca3af" opacity="0.85"/>
+<text x="834" y="282" font-family="system-ui,sans-serif" font-size="11" fill="#1c1c1e" font-weight="normal" text-anchor="start">censored — ~half — unaccounted progeny</text>
+<text x="526" y="318" font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#1c1c1e" font-weight="normal" text-anchor="start">selection estimate: 1.000  [0.774, 1.293] — spills the 1.25 edge</text>
+<text x="526" y="338" font-family="system-ui,sans-serif" font-size="11" fill="#6b6b70" font-weight="normal" text-anchor="start">the point estimate is identical — the interval decides</text>
+<rect x="526" y="350" width="330" height="26" rx="6" fill="#fee2e2"/>
+<text x="536" y="368" font-family="ui-monospace,Consolas,monospace" font-size="11" fill="#991b1b" font-weight="bold" text-anchor="start">analyzer: mixed_components  ·  clone-safety: not_assessable</text>
+<text x="526" y="398" font-family="system-ui,sans-serif" font-size="11" fill="#6b6b70" font-weight="normal" text-anchor="start">insufficient_positive_followup — refused before any rescue reading</text>
+<text x="490" y="446" font-family="system-ui,sans-serif" font-size="11" fill="#6b6b70" font-weight="normal" text-anchor="middle">Selection ≈ (error-daughter reproduction rate) ÷ (clean-daughter reproduction rate). The figure shows software behavior on fixtures, not patient data.</text>
+</svg>
