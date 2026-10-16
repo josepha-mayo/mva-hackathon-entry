@@ -201,8 +201,8 @@ POLICY_SOURCE_SELF_TOKENS = frozenset(
         "A4V", "FV8", "HIX8", "I4N", "K8Y", "L8X", "N4I", "QC9", "SI8",
         "UVK8", "V4A", "X8L", "Y8K",
         "CEP57", "CEP57-", "FAIL", "GAA-71", "GO-DIGESTS-ONLY", "HSP90", "HSP90-",
-        "TNN-71",
-        "SCF-FBXW7", "TP53", "TRIP13", "TRIP13-",
+        "TNN-71", "Z6R7O",
+        "B7E6M", "O7R6Z", "SCF-FBXW7", "TP53", "TRIP13", "TRIP13-",
         "END", "ENDMDL", "ESTIMANDS", "G418", "GO", "GPT-5", "HMAC-SHA256",
         "L737", "METHODS", "MITOCHONDRIAL", "MVA", "N1002K", "NFD", "NFKC",
         "NO-GO", "OXT", "PARTITIONS", "PATH", "PK", "PMC7610696", "PPS",
@@ -834,8 +834,12 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
         {"A4V", "FV8", "HIX8", "I4N", "K8Y", "L8X", "SI8", "SP0", "V4A", "Y8K"}
     ),
     # The Ed25519 detached-signature base64 payload reverses to a gene-shaped
-    # token; the token exists only in the reversed view of this file.
-    PurePosixPath("attestation/release-signature.asc"): frozenset({"QC9"}),
+    # token; the token exists only in the reversed view of this file. The
+    # recovery-era signature's blob additionally reads as O7R6Z raw, Z6R7O
+    # reversed, and B7E6M under rot13 — encoding artifacts, not identifiers.
+    PurePosixPath("attestation/release-signature.asc"): frozenset(
+        {"B7E6M", "O7R6Z", "QC9", "Z6R7O"}
+    ),
 }
 QUOTED_UPPER_IDENTIFIER_PATTERN = re.compile(
     r"[`'\"]([A-Z][A-Z0-9-]{1,15})[`'\"]"
