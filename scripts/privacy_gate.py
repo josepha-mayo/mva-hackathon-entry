@@ -200,7 +200,7 @@ POLICY_SOURCE_SELF_TOKENS = frozenset(
         "BUBR1", "CEBONAQ01", "CLASSIFICATIONS", "COMMANDS", "CRAM", "E402",
         "A4V", "FV8", "HIX8", "I4N", "K8Y", "L8X", "N4I", "QC9", "SI8",
         "UVK8", "V4A", "X8L", "Y8K",
-        "CEP57", "CEP57-", "FAIL", "GO-DIGESTS-ONLY", "HSP90", "HSP90-",
+        "CEP57", "CEP57-", "FAIL", "GAA-71", "GO-DIGESTS-ONLY", "HSP90", "HSP90-",
         "SCF-FBXW7", "TP53", "TRIP13", "TRIP13-",
         "END", "ENDMDL", "ESTIMANDS", "G418", "GO", "GPT-5", "HMAC-SHA256",
         "L737", "METHODS", "MITOCHONDRIAL", "MVA", "N1002K", "NFD", "NFKC",
@@ -529,8 +529,8 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     ),
     PurePosixPath("reports/TRACK2_METHOD_IMPROVEMENTS.md"): frozenset(
         {
-            "BAM", "BUBR1", "HMAC-SHA256", "HSP90-", "MVA", "PATH",
-            "PYTHONPATH", "SCF-FBXW7",
+            "BAM", "BUBR1", "GAA-71", "HMAC-SHA256", "HSP90-", "MVA",
+            "PATH", "PYTHONPATH", "SCF-FBXW7",
             "sample-v17", "gated5-sample-v17",
         }
     ),
