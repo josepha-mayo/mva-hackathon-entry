@@ -86,6 +86,27 @@
       "reason": null
     },
     {
+      "clean_generation_signal": false,
+      "interpretation": "measurement_invalid",
+      "name": "clone_selection_washout",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "generation_signal_incomplete_deconvolution",
+      "name": "zero_error_arm",
+      "passed": true,
+      "reason": null
+    },
+    {
+      "clean_generation_signal": false,
+      "interpretation": "mixed_components",
+      "name": "diluted_harm_event",
+      "passed": true,
+      "reason": null
+    },
+    {
       "clean_generation_signal": null,
       "interpretation": null,
       "name": "enroll_after_exposure",
@@ -94,8 +115,8 @@
     }
   ],
   "claim_boundary": "Timestamped first-attempt competing-risk software contract only; pre-division death is labeled separately from other non-completion; this is not biological validation, mixed-effects clinical inference, or efficacy evidence.",
-  "n_cases": 13,
-  "passed": 13,
+  "n_cases": 16,
+  "passed": 16,
   "schema": "mva-track2-lineage-study/v1",
   "synthetic_only": true
 }
