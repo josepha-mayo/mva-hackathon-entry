@@ -201,6 +201,7 @@ POLICY_SOURCE_SELF_TOKENS = frozenset(
         "A4V", "FV8", "HIX8", "I4N", "K8Y", "L8X", "N4I", "QC9", "SI8",
         "UVK8", "V4A", "X8L", "Y8K",
         "CEP57", "CEP57-", "FAIL", "GAA-71", "GO-DIGESTS-ONLY", "HSP90", "HSP90-",
+        "TNN-71",
         "SCF-FBXW7", "TP53", "TRIP13", "TRIP13-",
         "END", "ENDMDL", "ESTIMANDS", "G418", "GO", "GPT-5", "HMAC-SHA256",
         "L737", "METHODS", "MITOCHONDRIAL", "MVA", "N1002K", "NFD", "NFKC",
@@ -521,6 +522,10 @@ PUBLIC_PATH_TECHNICAL_IDENTIFIER_ALLOWLIST = {
     PurePosixPath("scripts/privacy_gate.py"): frozenset(
         {"sample-v17", "gated5-sample-v17"}
     ),
+    # Commit messages legitimately name published reagents (17-AAG reads as
+    # GAA-71 reversed / TNN-71 under rot13) — discharge only those two
+    # transform artifacts on the pseudo-path, nothing else.
+    PurePosixPath("<git-commit-message>"): frozenset({"GAA-71", "TNN-71"}),
     PurePosixPath("reports/TRACK2_ATTEMPT2_DELTA.md"): frozenset(
         {
             "HMAC-SHA256", "PYTHONPATH", "SHA-256-",
