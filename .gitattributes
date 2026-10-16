@@ -65,3 +65,14 @@
 /reports/TRACK2_SAVE_PATH_MATRIX.json text eol=lf
 /reports/TRACK2_FLIP_FIGURE.svg text eol=lf
 /reports/TRACK2_PORTABILITY.md text eol=lf
+/attestation/VERIFY.md text eol=lf
+/attestation/operator-authorization.md text eol=lf
+/attestation/participant-data-authorization.md text eol=lf
+/attestation/privacy-review.md text eol=lf
+/attestation/release-signature-pubkey.txt text eol=lf
+/attestation/release-signature.asc text eol=lf
+/attestation/timestamp-proof.json text eol=lf
+/tests/test_method_delta.py text eol=lf
+/JUDGES.md text eol=lf
+/reports/TRACK2_METHOD_IMPROVEMENTS.md text eol=lf
+/reports/TRACK2_SESSION_HANDOFF.md text eol=lf
