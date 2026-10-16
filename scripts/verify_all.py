@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import time
@@ -32,14 +33,20 @@ ROOT_MARKERS = ("release/release-artifacts.json", "attestation/release-signature
 
 
 def _run_python(script: str, root: Path) -> tuple[int, str]:
+    env = dict(os.environ, PYTHONIOENCODING="utf-8")
     proc = subprocess.run(
         [sys.executable, str(root / "scripts" / script), str(root)],
         capture_output=True,
         text=True,
         encoding="utf-8",
         errors="replace",
+        env=env,
     )
     return proc.returncode, (proc.stdout + proc.stderr).strip()
+
+
+def _safe(text: str) -> str:
+    return text.encode("ascii", "backslashreplace").decode("ascii")
 
 
 def _check_timestamp(root: Path) -> tuple[bool, str]:
@@ -84,13 +91,13 @@ def main() -> int:
     t0 = time.monotonic()
     rc, out = _run_python("verify_track2_reproducibility.py", root)
     ok = rc == 0 and "GO" in out
-    print(f"  reproducibility manifest  {'pass' if ok else 'FAIL'}  ({time.monotonic()-t0:5.1f}s)  {out.splitlines()[-1] if out else 'no output'}")
+    print(f"  reproducibility manifest  {'pass' if ok else 'FAIL'}  ({time.monotonic()-t0:5.1f}s)  {_safe(out.splitlines()[-1]) if out else 'no output'}")
     failures += 0 if ok else 1
 
     t0 = time.monotonic()
     rc, out = _run_python("verify_release_signature.py", root)
     ok = rc == 0 and "SIGNATURE OK" in out
-    print(f"  release signature         {'pass' if ok else 'FAIL'}  ({time.monotonic()-t0:5.1f}s)  {out.splitlines()[-1] if out else 'no output'}")
+    print(f"  release signature         {'pass' if ok else 'FAIL'}  ({time.monotonic()-t0:5.1f}s)  {_safe(out.splitlines()[-1]) if out else 'no output'}")
     failures += 0 if ok else 1
 
     t0 = time.monotonic()
