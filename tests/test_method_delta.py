@@ -666,7 +666,7 @@ class MethodDeltaTests(unittest.TestCase):
         self.assertGreaterEqual(pointers["n_artifacts_checked"], 10)
         self.assertEqual(
             pointers["source_commit"],
-            "81bacfed46dc328ab6638a4e47ec107454a395b8",
+            "9fd7b8457eda940d67b28b354fa3fe273f8dfb18",
         )
 
     def test_living_method_pointers_reject_hard_link_aliases(self) -> None:

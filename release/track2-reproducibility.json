@@ -33,7 +33,7 @@
     {
       "path": "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json",
       "role": "benchmark_receipt",
-      "sha256": "5a4658639628dcfe7f8a4e4acc159c5e5a1a4cc972b7ae61e04eec551d41bc80"
+      "sha256": "281ebc27ee4cff644bbfb59e202d2e681f99230eeabaadb7a172e23150db0ef3"
     },
     {
       "path": "configs/track2-seed-sensitivity.json",
@@ -93,7 +93,7 @@
     {
       "path": "scripts/privacy_gate.py",
       "role": "privacy_gate",
-      "sha256": "4823130cd0b13911ba7dcc5f770e8f48edb1d417f542eb7685dc7da9f6c2ca43"
+      "sha256": "da91bbdf263f68c588d9547d909dea058ccb5301ebd8e788af79da1ff74512d9"
     },
     {
       "path": "src/mva_hackathon/community_pipeline.py",
@@ -315,5 +315,5 @@
     "tests": "python -m unittest discover -s tests -v"
   },
   "schema": "mva-track2-reproducibility/v2",
-  "source_commit": "81bacfed46dc328ab6638a4e47ec107454a395b8"
+  "source_commit": "9fd7b8457eda940d67b28b354fa3fe273f8dfb18"
 }
