@@ -33,7 +33,7 @@
     {
       "path": "reports/TRACK2_GENERATION_SELECTION_BENCHMARK.json",
       "role": "benchmark_receipt",
-      "sha256": "070ec2d98eb3856253b1d6e4f4fb3e600696e0342bf014556c91c08f2891d88d"
+      "sha256": "5dd65f54f308fe5f4a45d99cea571160e4a902a1426ae1b7b6800b0c8ab9f4b8"
     },
     {
       "path": "configs/track2-seed-sensitivity.json",
@@ -63,7 +63,7 @@
     {
       "path": "src/mva_hackathon/reproducibility.py",
       "role": "integrity_source",
-      "sha256": "fc055edc4ad32a5c6863d2da32a0f10618d35c5fc0be07b046f5a193ac3d1709"
+      "sha256": "f4673bbc1ef42774ae72cd8a20afb0d79532af77b3f4938b77da4d4090cc85ae"
     },
     {
       "path": "scripts/verify_track2_reproducibility.py",
@@ -169,6 +169,16 @@
       "path": "reports/TRACK2_SAVE_PATH_MATRIX.json",
       "role": "save_path_receipt",
       "sha256": "444e1ae93816a329f3346255090bfba7b2edbe033ae02fc55686d1480030ad84"
+    },
+    {
+      "path": "reports/TRACK2_LINEAGE_ADVERSARIAL.json",
+      "role": "lineage_adversarial_receipt",
+      "sha256": "cddb2906c6740b300f157e5c1541c1184125d9ad5156f76a7ff3c629be1c24c1"
+    },
+    {
+      "path": "scripts/run_lineage_adversarial_benchmark.py",
+      "role": "lineage_adversarial_runner",
+      "sha256": "44e04a37f30ee67fef0ded87e744d8023868570fc40cd762e14df591e69d7740"
     },
     {
       "path": "reports/TRACK2_FLIP_FIGURE.svg",
@@ -315,5 +325,5 @@
     "tests": "python -m unittest discover -s tests -v"
   },
   "schema": "mva-track2-reproducibility/v2",
-  "source_commit": "7a3997a01aa9c5ae08166b50d1cbaef529169e6c"
+  "source_commit": "9b4286d64118ecfce04bbb95c44b6587afb12394"
 }
