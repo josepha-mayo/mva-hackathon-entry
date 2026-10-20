@@ -25,7 +25,7 @@ Source anchors: `src/mva_hackathon/lineage.py`, `exposure_gate.py`,
 ## 1. Worked example — `clean_generation` fixture, then one flipped input
 
 Fixture: `build_adversarial_fixture("clean_generation")`
-(`lineage.py:1686-1705`). Three paired edit events; each (event, arm) enrolls
+(`lineage.py:1704`, `clean_generation` branch :1708-1726). Three paired edit events; each (event, arm) enrolls
 110 founders with the identical competing-risk partition: 108 completed, 1
 pre-division death, 1 no-division, 0 dropout. Error-bearing completions differ:
 vehicle 24/108, treatment 6/108. Every completed founder produces two recorded
@@ -172,7 +172,7 @@ or drug responsiveness; arimoclomol efficacy in any indication relevant here.
 
 ## 4. Gate chain mapped to a real rescue program
 
-Pipeline order implemented in `community_pipeline.py:179-438` (stop-early: the
+Pipeline order implemented in `community_pipeline.py:179-469` (stop-early: the
 first non-pass blocks every downstream step). One line per gate — what it
 proves vs what it refuses.
 
