@@ -1,0 +1,148 @@
+{
+  "schema": "mva.missense-correction-evidence/v2",
+  "specimens": {
+    "mutant": {
+      "specimen_id": "mutant",
+      "derivation_event_id": "mutant-event",
+      "genotype": [
+        "NM_001211.6:c.2210T>G",
+        "NM_001211.6:c.3006T>G"
+      ],
+      "phase": "trans_confirmed",
+      "background_id": "synthetic-background",
+      "assay_protocol_id": "synthetic-protocol",
+      "genotype_evidence_id": "synthetic-mutant"
+    },
+    "corrected": {
+      "specimen_id": "corrected",
+      "derivation_event_id": "corrected-event",
+      "genotype": [
+        "NM_001211.6:c.2210T>G",
+        "NM_001211.6:WT"
+      ],
+      "phase": "trans_confirmed",
+      "background_id": "synthetic-background",
+      "assay_protocol_id": "synthetic-protocol",
+      "genotype_evidence_id": "synthetic-corrected"
+    },
+    "comparator": {
+      "specimen_id": "comparator",
+      "derivation_event_id": "comparator-event",
+      "genotype": [
+        "NM_001211.6:c.2210T>G",
+        "NM_001211.6:WT"
+      ],
+      "phase": "trans_confirmed",
+      "background_id": "synthetic-background",
+      "assay_protocol_id": "synthetic-protocol",
+      "genotype_evidence_id": "synthetic-comparator"
+    }
+  },
+  "plan_sha256": "sha256:2598650bc040ef22dd7cc25a4c6c97024fd403335981b3acaea6ba7d5a17d221",
+  "outcome_unblinded_at": "2026-02-01T00:00:00Z",
+  "contrast_method_id": "synthetic-joint-event-contrast",
+  "analysis_record_id": "synthetic-analysis",
+  "confidence_level": 0.95,
+  "endpoints": [
+    {
+      "endpoint": "abundance",
+      "direction": "higher_is_better",
+      "units": "synthetic-unit",
+      "mutant_mean": 1,
+      "carrier_mean": 2,
+      "corrected_mean": 1.9,
+      "oriented_mutant_to_carrier_gap_ci": [
+        0.8,
+        1.2
+      ],
+      "corrected_minus_carrier_ci": [
+        -0.15,
+        0.05
+      ],
+      "gap_restoration_fraction_ci": [
+        0.6,
+        1.1
+      ]
+    },
+    {
+      "endpoint": "half_life",
+      "direction": "higher_is_better",
+      "units": "synthetic-unit",
+      "mutant_mean": 1,
+      "carrier_mean": 2,
+      "corrected_mean": 1.9,
+      "oriented_mutant_to_carrier_gap_ci": [
+        0.8,
+        1.2
+      ],
+      "corrected_minus_carrier_ci": [
+        -0.15,
+        0.05
+      ],
+      "gap_restoration_fraction_ci": [
+        0.6,
+        1.1
+      ]
+    },
+    {
+      "endpoint": "localization",
+      "direction": "higher_is_better",
+      "units": "synthetic-unit",
+      "mutant_mean": 1,
+      "carrier_mean": 2,
+      "corrected_mean": 1.9,
+      "oriented_mutant_to_carrier_gap_ci": [
+        0.8,
+        1.2
+      ],
+      "corrected_minus_carrier_ci": [
+        -0.15,
+        0.05
+      ],
+      "gap_restoration_fraction_ci": [
+        0.6,
+        1.1
+      ]
+    },
+    {
+      "endpoint": "checkpoint",
+      "direction": "higher_is_better",
+      "units": "synthetic-unit",
+      "mutant_mean": 1,
+      "carrier_mean": 2,
+      "corrected_mean": 1.9,
+      "oriented_mutant_to_carrier_gap_ci": [
+        0.8,
+        1.2
+      ],
+      "corrected_minus_carrier_ci": [
+        -0.15,
+        0.05
+      ],
+      "gap_restoration_fraction_ci": [
+        0.6,
+        1.1
+      ]
+    },
+    {
+      "endpoint": "first_division_error",
+      "direction": "lower_is_better",
+      "units": "synthetic-unit",
+      "mutant_mean": 3,
+      "carrier_mean": 2,
+      "corrected_mean": 2.1,
+      "oriented_mutant_to_carrier_gap_ci": [
+        0.8,
+        1.2
+      ],
+      "corrected_minus_carrier_ci": [
+        -0.05,
+        0.15
+      ],
+      "gap_restoration_fraction_ci": [
+        0.6,
+        1.1
+      ]
+    }
+  ]
+}

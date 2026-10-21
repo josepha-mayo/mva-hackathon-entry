@@ -1,0 +1,103 @@
+{
+  "schema": "mva.missense-correction-plan/v2",
+  "correction_scope": "N1002K_only",
+  "specimens": {
+    "mutant": {
+      "specimen_id": "mutant",
+      "derivation_event_id": "mutant-event",
+      "genotype": [
+        "NM_001211.6:c.2210T>G",
+        "NM_001211.6:c.3006T>G"
+      ],
+      "phase": "trans_confirmed",
+      "background_id": "synthetic-background",
+      "assay_protocol_id": "synthetic-protocol",
+      "genotype_evidence_id": "synthetic-mutant"
+    },
+    "corrected": {
+      "specimen_id": "corrected",
+      "derivation_event_id": "corrected-event",
+      "genotype": [
+        "NM_001211.6:c.2210T>G",
+        "NM_001211.6:WT"
+      ],
+      "phase": "trans_confirmed",
+      "background_id": "synthetic-background",
+      "assay_protocol_id": "synthetic-protocol",
+      "genotype_evidence_id": "synthetic-corrected"
+    },
+    "comparator": {
+      "specimen_id": "comparator",
+      "derivation_event_id": "comparator-event",
+      "genotype": [
+        "NM_001211.6:c.2210T>G",
+        "NM_001211.6:WT"
+      ],
+      "phase": "trans_confirmed",
+      "background_id": "synthetic-background",
+      "assay_protocol_id": "synthetic-protocol",
+      "genotype_evidence_id": "synthetic-comparator"
+    }
+  },
+  "frozen_at": "2026-01-01T00:00:00Z",
+  "freeze_record_id": "synthetic-freeze",
+  "contrast_method_id": "synthetic-joint-event-contrast",
+  "confidence_level": 0.95,
+  "endpoints": [
+    {
+      "endpoint": "abundance",
+      "direction": "higher_is_better",
+      "units": "synthetic-unit",
+      "equivalence_bounds": [
+        -0.2,
+        0.2
+      ],
+      "role": "defect_reversal",
+      "minimum_gap_restoration": 0.5
+    },
+    {
+      "endpoint": "half_life",
+      "direction": "higher_is_better",
+      "units": "synthetic-unit",
+      "equivalence_bounds": [
+        -0.2,
+        0.2
+      ],
+      "role": "defect_reversal",
+      "minimum_gap_restoration": 0.5
+    },
+    {
+      "endpoint": "localization",
+      "direction": "higher_is_better",
+      "units": "synthetic-unit",
+      "equivalence_bounds": [
+        -0.2,
+        0.2
+      ],
+      "role": "defect_reversal",
+      "minimum_gap_restoration": 0.5
+    },
+    {
+      "endpoint": "checkpoint",
+      "direction": "higher_is_better",
+      "units": "synthetic-unit",
+      "equivalence_bounds": [
+        -0.2,
+        0.2
+      ],
+      "role": "defect_reversal",
+      "minimum_gap_restoration": 0.5
+    },
+    {
+      "endpoint": "first_division_error",
+      "direction": "lower_is_better",
+      "units": "synthetic-unit",
+      "equivalence_bounds": [
+        -0.2,
+        0.2
+      ],
+      "role": "defect_reversal",
+      "minimum_gap_restoration": 0.5
+    }
+  ]
+}
