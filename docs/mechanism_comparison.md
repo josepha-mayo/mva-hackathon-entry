@@ -79,10 +79,36 @@ supply full-length protein, their combined invariant signal cannot identify
 each allele's contribution. No peptide detectability or abundance deficit
 is established by this arithmetic.
 
-The reference audit matched independently obtained transcript translation
-and protein sequence. Its source receipts and candidate runner remain in
-the private research review pending a scoped publication review. They are
-outside the frozen signed release and are not an automatic advancement gate.
+The narrow [reported-case runner](../scripts/audit_reference_case.py)
+compares the annotated public protein with an independently obtained protein
+sequence, checks the reported codons and exon coordinates, and computes
+ideal tryptic fragments. It explicitly does not translate the complete CDS.
+It agrees on every reported result with the separate full-translation review.
+The broader parser remains a private review candidate. Exact input identities
+and source digests accompany the research review.
+
+```text
+python scripts/audit_reference_case.py --help
+```
+
+## A software pass is a bounded statement
+
+The [safety-boundary demo](../scripts/demo_clone_safety_boundary.py) executes
+three invented, completely followed daughter-count tables. The existing
+observed-label checker passes reproduction ratios of 1.00 and 1.20; it stops
+at its 1.25 boundary. Thus a 20% observed increase can pass this standalone
+threshold rule. This agrees with its documented heuristic contract and does
+not establish full-pipeline eligibility, absent fitness gain or clinical
+safety. Observed error labels do not establish true daughter genotype.
+
+```text
+python scripts/demo_clone_safety_boundary.py
+```
+
+Confirmatory inference requires justified harm margins and event/background-
+aware uncertainty bounds before unblinding. Insufficient information or an
+unacceptable upper bound holds advancement. The new demos change no frozen
+code or thresholds and grant no automatic advancement.
 
 The useful outcome remains fewer newly generated chromosome errors with
 normal divisions preserved, independent daughter-fate assessment, no

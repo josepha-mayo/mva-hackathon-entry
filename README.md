@@ -27,6 +27,10 @@ matched-carrier correction controls, a distinct stop-restoration comparator,
 and a variant-specific protein-measurement trap. It is a research supplement
 outside the frozen signed release.
 
+The card links runnable reference arithmetic and a threshold-boundary demo:
+an observed 20% increase can pass the standalone clone checker. A pass under
+that rule is not proof of absent fitness gain or clinical safety.
+
 ```sh
 python scripts/demo_functional_supply.py
 python -m unittest tests.test_functional_supply -v
