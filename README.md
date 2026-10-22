@@ -1,74 +1,73 @@
-# MVA Hackathon 2026 entry
+# A faithful division
 
-Reproducible, privacy-first work for Sage Bionetworks' **Rare Disease, Real Kid: The MVA Hackathon 2026**.
+An experimental decision method for **Rare Disease, Real Kid: MVA 2026**.
 
-## For judges — 30-second read
+The practical goal is to find a measurable way to improve chromosome
+segregation while preserving healthy divisions and checking abnormal-clone
+fitness. A fall in the number of abnormal cells alone cannot establish that.
+No benefit to the child has been demonstrated.
 
-**The case:** a child with suspected BUB1B-associated Mosaic Variegated
-Aneuploidy (MVA), carrying the proposed compound-heterozygous pair
-Leu737Ter + Asn1002Lys — *phase unconfirmed (cis vs. trans
-unresolved)*. This entry delivers a vetting method and a ranked candidate
-disposition — one exposure-gated conditional probe (arimoclomol), named
-comparators, and declined classes with reasons; it recommends no medicine
-and reports no wet-lab result.
+## Start with the experiment
 
-**The method claim:** exact correction of the proposed missense allele
-supplies the participant-specific cellular positive control that a
-repurposed medicine must match. The contract separates generation (fewer
-new errors *made* per division) from selection (fewer errors *seen*
-because error-bearing daughters die or drop out) — so a cytostatic mirage
-cannot certify as rescue.
+The proposed rescue route depends on an unresolved question: **where is
+functional checkpoint protein being lost?** Low input, loss before assembly,
+clearance after assembly, and protein that remains defective when abundant
+can demand different experiments. A folding hypothesis must survive that
+comparison before it earns a drug screen.
 
-> The analyzer has no word for "rescue." Its strongest emission is a
-> certificate that the configured QC checks, adverse flags, pediatric
-> completion band, and daughter-fate selection window all held at once.
+[The functional-supply experiment card](docs/functional_supply.md) turns this
+question into competing predictions and a small, staged assay design. Its
+executable counterexamples show three distinct mechanisms with the same
+tenfold fall in bulk protein, and identical turnover curves with different
+functional output. These are invented examples, not measurements in the child.
 
-**For the family, in plain words:** this package does not recommend any
-medicine and claims no benefit. It is a public, checkable method for telling
-a real cellular fix from a mirage *before* a laboratory spends the child's
-cells on it — and a "no" at any gate is a protective answer, not a failure.
+```sh
+python scripts/demo_functional_supply.py
+python -m unittest tests.test_functional_supply -v
+```
 
-**Watch the contract refuse a rigged rescue** (synthetic fixtures, seconds, no data):
+Next, [the existing refusal demo](reports/TRACK2_DEMO_TRANSCRIPT.md) tests
+whether a proposed functional improvement could instead be explained by
+stopped divisions or selective daughter loss:
 
-```powershell
+```sh
 python scripts/demo_contract.py
 ```
 
-No install? Read the captured run: [reports/TRACK2_DEMO_TRANSCRIPT.md](reports/TRACK2_DEMO_TRANSCRIPT.md).
+The contribution is a linked set of decisions: establish the causal genotype,
+locate a functional bottleneck, test an exposure-qualified rescue hypothesis,
+then distinguish fewer new errors from selective loss of damaged cells.
+Negative results retire hypotheses before scarce material is spent.
 
-`0/1,000` clean signals from a cytostasis-contaminated "rescue" · `126/126` configured false paths blocked, `1/1` complete path opens · a masked-followup hole we found in our own gate measured `260/1,000` before the selection-equivalence fix and `1/1,000` after — the post-fix number is in the signed receipt; the pre-fix `260/1,000` is in the method-improvement log.
+## What has actually been established
 
-| What it is | Where | One-command verify |
+| Evidence | Supported conclusion | Remaining gap |
 |---|---|---|
-| A fail-closed decision contract for a BUB1B-associated MVA rescue hypothesis: it orders laboratory spend and refuses advancement on missing identity, function, exposure, or lineage provenance | [Judge package](reports/TRACK2_JUDGE_PACKAGE.md) — worked example, precedent table, candidate card, pipeline map | `python scripts/run_save_path_simulation.py` |
-| 126 configured false-rescue scenarios blocked from advancing; the one constructed complete path still opens | [Save-path suite](tests/test_save_path.py) | `python -m unittest tests.test_save_path -q` |
-| Frozen attempt-1 judged report and reproducible synthetic benchmark | links below | `python scripts/verify_track2_reproducibility.py .` |
+| Signed report and reproducible synthetic benchmarks | A checkable experiment contract and software behavior on configured scenarios | Exact-genotype biology and drug response |
+| 126 configured unsafe paths blocked; one constructed complete path opens | The declared software gate is non-vacuous | Real assay calibration and independent replication |
+| New functional-supply counterexamples | Bulk amount and turnover alone can be insufficient to identify mechanism or function | Qualified native measurements and independent input/recovery estimates |
+| Historical Track 1 score recorded as 100 points | A previous automated result reported in the project record | Fresh authenticated portal verification |
 
-**Judge this in N minutes:** **90 s** — this block plus `python scripts/demo_contract.py`. **10 min** — [judge package](reports/TRACK2_JUDGE_PACKAGE.md) §1 worked example (the flip) and §4 gate chain. **30 min** — report §4/§6, then `python scripts/verify_track2_reproducibility.py .`.
+The functional-supply supplement is a **research candidate outside the signed
+release**. The frozen report remains the auditable baseline. No wet-lab result,
+treatment recommendation, or new submission is established by these demos.
 
-Suggested reading order: [JUDGES.md](JUDGES.md) (one-page claims → evidence → falsifier map) → [TRACK2_JUDGE_PACKAGE.md](reports/TRACK2_JUDGE_PACKAGE.md) → [the judged report](reports/josephmayo_track2_report.md) → [external case replay](reports/TRACK2_EXTERNAL_CASE_REPLAY.md) → [community toolkit](templates/community/README.md). The three-minute pitch video is delivered through the competition portal with this package; its [script and storyboard](reports/josephmayo_track2_pitch_script.md) are in the judged surface.
+Read [JUDGES.md](JUDGES.md) for the frozen claims-to-evidence map, then the
+[signed report](reports/josephmayo_track2_report.md) for its conditional probe
+and alternatives. The public repository and its working supplements must not
+be confused with the latest uploaded portal entry.
 
-Why this is not just a test suite: the software is the executable form of a predeclared experiment contract. Its estimands, gate ordering, and identity checks decide which laboratory records are admissible and which culture spend may be declared next — a test suite checks code; this contract decides whether a proposed rescue measurement is even allowed to be interpreted. The save-path replay demonstrates the contract is non-vacuous (one constructed path advances) and the submission GO checker refuses self-certification — it reports NO-GO until five external attestation artifacts exist; the current bundle lives under [attestation/](attestation/) with a real Ed25519 detached signature and a FreeTSA RFC 3161 timestamp token. Commands below are PowerShell; all `python` invocations are shell-agnostic and `$env:MVA_PRIVATE_ROOT` reads as `$MVA_PRIVATE_ROOT` under bash.
+## Deadline and submission state
 
-**What the judges see:** the portal scores only the latest upload. Attempt
-1 is already submitted and judged; this repository is the candidate
-attempt-2 continuation — hardened past the uploaded bytes, so not
-byte-identical to them. Each release is frozen, signed, and reproducible at
-its own anchor; living Phase-2 files below do not silently replace bound
-artifacts.
+The official close is **24 October 2026 at 23:59 UTC** (**25 October at
+00:59 WAT**). Current requirements are a PDF or Markdown report, repository,
+and a three-minute YouTube/Vimeo pitch; the panel reviews the latest of at most
+three Track 2 submissions. [Official challenge](https://huggingface.co/spaces/SageBio/rare-disease-real-kid-mva-hackathon-2026).
 
-## Verified status snapshot (rebuilt 2026-10-14 after a local disk loss; public portal facts last live-checked 2026-09-01)
-
-- Official challenge contract, scoring code, and templates inspected. Track 1 has a public Rank-Points / F-max leaderboard. Track 2 has no live leaderboard: JSON is stored under a private `track2/` folder and is never rendered or auto-scored. The panel reviews only the latest of three qualitative uploads.
-- Registration, access, secure-storage, and machine receipts remain private operational records and are not published in this repository.
-- Controlled-data processing occurs only in the separate local private root; gated source files and verbatim phenotype text are excluded from this tree.
-- Track 1 official automated score is at the scoring ceiling: 100.0 rank points and F-max 1.000. Do not spend another Track 1 attempt unless the contract changes or a demonstrably stronger qualitative package is ready.
-- Public participant outputs remain segregated landscape context and are not ranking inputs. Every answer-bearing release surface uses one fixed path and an exact-byte release digest.
-- Track 1 allows six attempts per registered participant; only the best automated score is displayed. Track 2 allows three submissions per team; organizers review only the latest Track 2 entry. Team records: Track 2 attempt 1 has been submitted; attempts 2 and 3 have not. This repository does not publish a live portal remaining-attempt counter.
-- The local scorer matched all fields from the pinned official evaluator in 10,000 deterministic randomized synthetic cases.
-- A 600-case synthetic inheritance component benchmark recovered all 500 positive truths and all 200 compound-pair truths, excluded every confirmed-cis pair, and intentionally retained 60 unresolved distractor pairs. This validates enumeration invariants only, not biological ranking.
-- The Track 2 living draft now proposes a correction-trained **two-lane** discovery program, not a treatment: a small targeted mechanism lane plus a phenotype lane drawn from the current marketed/available subset of an approved-medicine collection through a qualified screening partner. Its v3 paired hierarchical fixed-cohort aggregate-count benchmark passed all 24 configured gates across 24,000 comparisons: strong-effect generation was flagged in 90.5% of comparisons and produced a clean advanceable signal in 37.4% under the enforced pediatric completion band plus the declared factor-1.5 selection-equivalence margin; the same rescue contaminated by moderate cytostasis produced zero clean signals; an event-scoped completion drop invisible to the pooled ratio and a hyper-completion overshoot each produced zero clean signals; a true rescue pushed just outside the completion-band edge produced one clean signal in 1,000; a marginal-preserving selective-follow-up attack on the follow-up audit produced 1/1,000 clean false-advance signals (declared ceiling 40%) — the interval-containment selection gate closed most of a hole that measured 260/1,000 before it existed; and a zero-division degenerate arm was refused in 1,000/1,000 comparisons. The maximum false-generation 95% Wilson upper bound across required non-generation confounds was 0.564%, and a predeclared five-seed sensitivity sweep passed 5/5 supplementary seeds with a seed-invariant false-generation ceiling. These are synthetic software-behavior measurements, not biological validation, treatment efficacy, or real-study power.
-- Phase 2 adds a separate timestamped lineage/competing-risk contract, a fail-closed Track 2 candidate evidence ledger, an A0 to A1 scarce-material contract, and the living method surfaces listed below. Nested identity and function gates refuse RNA as genomic confirmation, unmatched-line DNA/RNA/phase/function as assay-matched evidence, computational transcript or phase as molecule-level identity, analog or computational missense as an exact wet defect, unlabeled or analog recreation as exact restoration, analog, unmatched-line, ectopic, cell-free, imposed-stress, or computational correction as genetic reversal, geometry ranking or a computational predictor as a functional assay, a public software catalog or official medicine label as positive exact-allele, checkpoint, direct-target, or human-PD ledger evidence or as a lead or conditional-hold row, a public software catalog as a pharmacologic ranking role, a public database or ontology record as a pharmacologic ranking role or lead-advancement row, a derived_evidence row that inherits a catalog, label, database, or ontology parent as those same roles, a mechanistic-control or no-go ledger row as a remaining conditional probe, a challenger or comparator as the active lead, two labeled leads, a synthetic fixture labeled as public evidence, a public source labeled as synthetic, a parked comparator-only ledger row as a promote decision, a demoted ledger row as a remaining conditional probe, an oncology-stop, unassessed-oncology, unassessed-exposure, expired-eligibility, or nontranslational-high row as a remaining conditional probe, a mixed-or-unsafe functional hit as a remaining conditional probe, a no-go or exclude row as anything other than rejected, literature proof wording as exact-allele function, absent or unassessed pediatric information as displacement-eligible or as an active lead, and observed identity, stability, probe, or endpoint labels that omit nested confirmation, phase, transcript, hypomorph, exposure, or concordance objects. Reciprocal recreation is required. Geometry ranking runs in the stop-early pipeline before confirmation. Sample stewardship v17 and candidate ledger v7 fail closed on both discovery lanes, cumulative sample debits, context qualification, and blinded independent replication. The identifier-free search protocol is `track2-candidate-search-v3`; `searched_on` remains 2026-09-01 and that axis bump is not a completed literature refresh. A signal confined to a renewable 2-D surrogate remains `mechanism_only`; it cannot become a child-relevant claim. The living code, tests, templates, and selected methods reports are **not** part of the frozen attempt-1 judged packet or its v3 aggregate receipt. None authorizes a new Track 2 upload. Operator confirmation on 2026-08-29: keep iterating through the close date; do not submit without the exact authorization phrase.
+Requirements were checked against official source commit
+`60e1c30e337ce6fe01813040dbe49979eb8c50aa` on 22 October. Live authenticated inspection on 22 October showed 1 of 3 Track 2 submissions
+used and 2 remaining. No new submission was made in this audit. Final video
+hosting still requires verification.
 
 ## Track 1 release surfaces
 
@@ -78,7 +77,7 @@ artifacts.
 
 The proposed causal pair is a research hypothesis, not a confirmed molecular diagnosis. Phase and the missense mechanism remain unresolved, and the report states the decisive confirmation path.
 
-## Track 2 frozen attempt-1 judged surface
+## Track 2 frozen signed surface
 
 - [Drug-repositioning research report](reports/josephmayo_track2_report.md)
 - [Three-minute pitch script and storyboard](reports/josephmayo_track2_pitch_script.md)
@@ -87,7 +86,7 @@ The proposed causal pair is a research hypothesis, not a confirmed molecular dia
 - [Predeclared five-seed sensitivity receipt](reports/TRACK2_SEED_SENSITIVITY.json) and [sweep configuration](configs/track2-seed-sensitivity.json)
 - [Transitive reproducibility manifest](release/track2-reproducibility.json)
 
-These are the currently judged attempt-1 surfaces. They remain frozen and reproducible; living Phase-2 files below do not silently replace them.
+These files remain frozen and reproducible. Their signatures cover their recorded bytes; living research supplements do not replace them. Current portal status must be verified separately.
 
 ## Track 2 living Phase-2 research surface (not uploaded or judged)
 
@@ -103,7 +102,6 @@ These are the currently judged attempt-1 surfaces. They remain frozen and reprod
 - [External false-rescue case replay](reports/TRACK2_EXTERNAL_CASE_REPLAY.md)
 - [Attempt-2 software delta](reports/TRACK2_ATTEMPT2_DELTA.md)
 - [Phase 2 scale plan](reports/PHASE2_SCALE_PLAN.md)
-- [Session handoff (continue; do not submit)](reports/TRACK2_SESSION_HANDOFF.md)
 - [Judge package: worked example, precedent table, candidate card](reports/TRACK2_JUDGE_PACKAGE.md)
 - [Judge self-score rubric](reports/TRACK2_JUDGE_RUBRIC.md)
 - [Method-delta comparison](reports/TRACK2_METHOD_DELTA.md)

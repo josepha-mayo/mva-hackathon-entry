@@ -77,3 +77,6 @@ Thumbs.db
 
 # Private audit/working material must never enter the publishable repository.
 work/
+
+# Operational handoffs belong in private task storage.
+/reports/*HANDOFF*.md

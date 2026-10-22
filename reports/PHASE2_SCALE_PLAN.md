@@ -11,7 +11,7 @@ Close: 2026-10-24 23:59 UTC. The public Track 2 form was live-checked on 2026-09
 - Cursor Ultra, Grok 4.6, privacy mode is the recorded earlier AI line. OpenAI Codex desktop, GPT-5.6 Sol, and ChatGPT Pro are also part of the living-method record. The Codex account data-handling setting remains unestablished, so the judged methods disclosure is HOLD until it is verified. *Reconciled 2026-09-23: Codex account data-handling verified "Off" (training disabled) and Devin enterprise no-training terms operator-confirmed — see TRACK2_AI_LINE.md.*
 - Do not overwrite the frozen attempt-1 report, pitch, or v3 aggregate receipt except as part of a planned freeze.
 
-Canonical continuation brief: [TRACK2_SESSION_HANDOFF.md](TRACK2_SESSION_HANDOFF.md). Read it before editing. Do not submit.
+Operational continuation notes are kept outside the public repository. The signed report and release manifests define the frozen baseline; current submission authorization is recorded in the active work session.
 
 ## Cadence
 
