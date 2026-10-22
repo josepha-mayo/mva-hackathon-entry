@@ -21,6 +21,12 @@ executable counterexamples show three distinct mechanisms with the same
 tenfold fall in bulk protein, and identical turnover curves with different
 functional output. These are invented examples, not measurements in the child.
 
+[The mechanism comparison](docs/mechanism_comparison.md) adds the measured
+choices between delivery, maintenance and persistent functional damage,
+matched-carrier correction controls, a distinct stop-restoration comparator,
+and a variant-specific protein-measurement trap. It is a research supplement
+outside the frozen signed release.
+
 ```sh
 python scripts/demo_functional_supply.py
 python -m unittest tests.test_functional_supply -v
