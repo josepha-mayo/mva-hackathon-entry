@@ -1,5 +1,7 @@
 # Independent medicine hypotheses with a finite first decision
 
+**23 October new-route review:** [Elamipretide mitochondrial challenger](mitochondrial_challenger.md) adds a separate, bounded neural-function hypothesis. It is not an efficacy-ranked replacement; positive and negative human/model evidence and rival mechanisms are retained.
+
 Research decision · 23 October 2026 · unsigned
 
 **Ataluren receives a limited stop-allele feasibility arm alongside one

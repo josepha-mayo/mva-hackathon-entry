@@ -9,6 +9,8 @@ No benefit to the child has been demonstrated.
 
 ## Start with the experiment
 
+**New distinct challenger:** [mitochondrial support of neural output](docs/mitochondrial_challenger.md), with elamipretide as a bounded experimental candidate. A 2026 checkpoint-instability model supplies a closer mechanism, but its genetic rescue is not drug efficacy. Human trial failures, neural-exposure gaps and omaveloxolone/lithium rivals remain explicit. No overall drug winner is established.
+
 **Current medicine hypotheses:** a limited ataluren stop-allele arm, separate
 fasudil/active-metabolite ciliary comparison and a cilostazol/metabolite barrier
 hypothesis. Belumosudil is reserved; selumetinib is deferred after direct-drug

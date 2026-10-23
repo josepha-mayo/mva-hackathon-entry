@@ -14,7 +14,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "4ee0c6e363b31387b721449e92a3175127f961d3ddfb7e0077aaf3ad550e5322",
+      "sha256": "7c8566a7c336e7dfb1480df79d25f35ea41cbd1ec003bbae0a47b35cc64cdff4",
       "source_class": "public literature and references",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -67,7 +67,7 @@
     },
     {
       "path": "docs/drug_decision.md",
-      "sha256": "c624651deb8014b3ab6204b9d200b24c94810e13b53cbabd036859592ce4d9a4",
+      "sha256": "e9154fd648b1743534248f7a92cde9e2ba13ce9c75e0044adf1341e7251c503c",
       "source_class": "public literature and references",
       "identifier_finding_count": 56,
       "identifier_findings_sha256": "dc512a0d63910591b721410180a6f5278421375e5433b90b6e401c7027d661da",
@@ -237,7 +237,7 @@
     },
     {
       "path": "docs/treatment_evidence.md",
-      "sha256": "3a71d41ee8e612d1ae31de4aba32b9527259f6a2461637a466e396b6db6c0649",
+      "sha256": "fb6d61bf057d8e8a5d70f726c07d165b88dd0808f2c7bfafefd5621b2df01e4d",
       "source_class": "public literature and references",
       "identifier_finding_count": 2,
       "identifier_findings_sha256": "1dd53ed686eb62691f1999e9c6e630156aed63c2d859cda8afb115da2d888378",
@@ -312,7 +312,7 @@
     },
     {
       "path": "docs/finite_pilot.md",
-      "sha256": "e79cb318bc839aa8c0b19b084ce9ce066a2c34104e52434287cf8478eae1c596",
+      "sha256": "39796e075aeb43afcc139f5bdccfe6eeca731539109aea592a258a190ad44986",
       "source_class": "public literature and references",
       "identifier_finding_count": 33,
       "identifier_findings_sha256": "72a77ec720907712d97bcbe1d22d09bded42b6441b5e48f3ac63b8b186dd6a0f",
@@ -351,6 +351,51 @@
         "non-synthetic biological identifier 'OHOE1-': public-source-review: docs/finite_pilot.md(rot13)",
         "non-synthetic biological identifier 'TYV1': public-source-review: docs/finite_pilot.md(rot13)"
       ]
+    },
+    {
+      "path": "docs/mitochondrial_challenger.md",
+      "sha256": "c3b8be541069e9763eafdf52feb4bf22502a923a4a3f6be071843ee615ffd52f",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 28,
+      "identifier_findings_sha256": "8eea41fe2fd8155dcd5744fd7d081905dd2cb4492b4f7649f0b698a4a0e62fe9",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'BUB1B-': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'BUBR1': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'JCI196687': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'JCI64650': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'LONP1': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'MMPOWER-3': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'N1002K': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'NCT05162768': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'NCT05168774': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'PMC7176297': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'PMC9562127': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'POLG1-': public-source-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'B1BUB': public-source-review: docs/mitochondrial_challenger.md(reversed)",
+        "non-synthetic biological identifier 'K2001N': public-source-review: docs/mitochondrial_challenger.md(reversed)",
+        "non-synthetic biological identifier 'A1002X': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'APG05162768': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'APG05168774': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'CBYT1-': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'CZP7176297': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'CZP9562127': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O-': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'WPV196687': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'WPV64650': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'YBAC1': public-source-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'ZZCBJRE-3': public-source-review: docs/mitochondrial_challenger.md(rot13)"
+      ]
+    },
+    {
+      "path": "docs/research_source_review.md",
+      "sha256": "4daab18b9579419ed227ad89a5d12c5045e16932c2db6c76fc45e84ad4b38e4c",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
     },
     {
       "path": "docs/alternative_challenge.md",

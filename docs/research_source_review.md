@@ -59,10 +59,20 @@ redox records describe their earlier bytes and do not cover later edits.
 The frozen report and historical signatures remain unchanged; this update
 does not claim exact-genotype rescue or a new portal submission.
 
-The subsequent cilostazol, fasudil and selumetinib challenge updates these
-cards and the finite pilot. The [current tissue-route content record](../release/tissue-literature-review.json)
+The subsequent cilostazol, fasudil and selumetinib challenge updated these
+cards and the finite pilot. The [historical tissue-route content record](../release/tissue-literature-review.json)
 binds their new bytes and retained diagnostics. Compound-identity conflicts,
 conditioned assays, negative trials and measured-versus-derived exposure are
 explicit. Previous content receipts remain historical; the unchanged exact
 source checker is refreshed for the current reviewed files. No controlled
 data, patient-specific exposure or performed drug experiment is introduced.
+
+The later search beyond that shortlist adds the
+[mitochondrial challenger](mitochondrial_challenger.md), including a bounded
+elamipretide comparison, opposing functional evidence, the posted FRDA results
+and the unresolved NuPOWER subgroup announcement. The
+[new-route content record](../release/new-route-literature-review.json)
+binds the changed public files. Earlier receipts remain evidence for their
+earlier bytes. The exact-source review is refreshed without altering the
+scanner or granting a historical release clearance. No controlled participant
+data, drug experiment or portal submission is introduced.

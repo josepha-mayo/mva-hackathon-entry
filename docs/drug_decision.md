@@ -1,5 +1,7 @@
 # Which medicine earns the next experiment?
 
+**23 October new-route review:** [Elamipretide mitochondrial challenger](mitochondrial_challenger.md) adds a separate, bounded neural-function hypothesis. It is not an efficacy-ranked replacement; positive and negative human/model evidence and rival mechanisms are retained.
+
 Primary-source decision audit, updated 23 October 2026. These are research questions,
 not treatment choices. No medicine has demonstrated rescue of the proposed
 exact genotype, clinical benefit, or acceptable risk for this child.
