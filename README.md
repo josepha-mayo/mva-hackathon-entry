@@ -9,17 +9,20 @@ No benefit to the child has been demonstrated.
 
 ## Start with the experiment
 
-**Current medicine hypothesis:** nominate acetylcysteine (NAC) for a bounded
-test of oxidative amplification. The [redox-fork design](docs/redox_fork.md)
-sets its positive evidence against a close counterexample: antioxidant
-response can weaken abnormal-cell restraint. The proposed experiment measures
-new errors and daughter outcomes, not growth or protein abundance alone.
-No exact-genotype rescue or treatment lead is established. HCQ, nicotinic acid,
-arimoclomol and formulation-specific PBA remain distinct conditional branches.
+**Current medicine hypotheses:** a limited ataluren stop-allele arm, separate
+fasudil/belumosudil ciliary hypotheses and a cilostazol barrier hypothesis.
+NAC remains a protective comparator. The [ataluren challenge](docs/stop_allele_challenge.md)
+retains both the meaningful positives and the negative controlled human trials.
+The [tissue comparison](docs/tissue_candidates.md) identifies each candidate's
+missing functional bridge. No overall efficacy ranking or child benefit is established.
 
-Read the [current medicine decision](docs/treatment_evidence.md). The new
-research cards supersede the prior incumbent-drug framing. The matching
-report candidate is being prepared separately for the next submission.
+Start with the [finite pilot](docs/finite_pilot.md): eight cycling-cell conditions,
+one available tissue module, all-founder outcomes and staged confirmation.
+It is a proposed experiment, not an executed drug screen. Ataluren does not
+have exclusive priority. The [current decision](docs/treatment_evidence.md)
+and [full evidence comparison](docs/drug_decision.md) preserve earlier alternatives.
+The matching report candidate is prepared separately for the next submission;
+the frozen signed report and existing portal entry have not been replaced.
 
 **Current audit correction:** the frozen v1 lineage checker does not enforce
 its stated fixed daughter horizon and mislabels mother-attempt duration as

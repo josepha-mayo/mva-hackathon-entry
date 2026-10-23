@@ -48,3 +48,13 @@ The last completed all-history scan was at the prior public checkout.
 Subsequent long-running attempts were interrupted and produced no completed
 result. The current exact-file content review is separate; no whole-tree or
 all-history clearance is inferred from it.
+
+The later 23 October ataluren challenge adds the stop-allele, tissue-candidate,
+alternative-challenge and finite-pilot cards to the exact identifier review and refreshes the current
+README and decision-card bindings. Public primary papers, official product
+labels and explicit proposed methods are the sources. No controlled payload
+or clinical record was used. The [current content record](../release/function-literature-review.json)
+retains the unchanged scanner findings for these publication files. Earlier
+redox records describe their earlier bytes and do not cover later edits.
+The frozen report and historical signatures remain unchanged; this update
+does not claim exact-genotype rescue or a new portal submission.

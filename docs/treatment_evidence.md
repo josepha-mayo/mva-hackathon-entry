@@ -1,21 +1,22 @@
-# A conditional medicine nomination with a test that can reject it
+# Independent medicine hypotheses with a finite first decision
 
 Research decision · 23 October 2026 · unsigned
 
-**Acetylcysteine (NAC) is nominated for a bounded test of oxidative
-amplification in BUB1B-associated MVA. No treatment lead is established.**
-The [redox-fork hypothesis](redox_fork.md) pairs direct checkpoint-protein
-preservation and a separate chromosome-spread positive with the strongest
-opposing observation: NAC can weaken ATM–p53 restraint in other
-checkpoint-defective cells. The experiment must distinguish fewer new errors
-from increased persistence of abnormal lineages.
+**Ataluren receives a limited stop-allele feasibility arm alongside one
+available, qualified tissue-function module.** Fasudil and belumosudil remain
+distinct ciliary hypotheses; cilostazol is a barrier-support hypothesis. NAC
+remains a protective comparator. No overall efficacy ranking or treatment
+lead is established. The [ataluren challenge](stop_allele_challenge.md) weighs
+native-context and human positives against failed controlled trials,
+protein-without-function results and exposure gaps. The
+[tissue comparison](tissue_candidates.md) keeps each model and drug distinct.
 
-Hydroxychloroquine is a conditional lysosomal-loss comparator; nicotinic acid,
-arimoclomol and sodium phenylbutyrate retain distinct maintenance or supply
-hypotheses. Glycerol phenylbutyrate is a separate prodrug/formulation question.
-No overall drug ranking, exact-allele response or benefit for the child is
-established. Nomination is appropriate before clinical validation; approval
-elsewhere does not establish MVA safety or efficacy.
+The [finite pilot](finite_pilot.md) defines an eight-condition cycling-cell
+comparison and one parallel tissue module. Ataluren does not have to win or
+finish first. A functional hit receives focused attribution and confirmation;
+perfect mechanism is not an entry requirement. The
+[redox-fork design](redox_fork.md) remains the NAC-specific test. Earlier
+maintenance and supply evidence is retained below.
 
 The earlier lead/challenger ranking is not adopted by this reassessment.
 The signed historical report retains that wording as an auditable record.

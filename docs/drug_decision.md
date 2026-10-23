@@ -6,12 +6,27 @@ exact genotype, clinical benefit, or acceptable risk for this child.
 
 ## Decision
 
-**NAC is a conditional research nomination; no medicine is an established
-treatment lead.** The [redox-fork design](redox_fork.md) tests protection from
-oxidative amplification against release of abnormal-cell restraint. This
-is an informative experiment priority, not predicted efficacy or a comparative
-drug ranking. The [current decision](treatment_evidence.md) retains arimoclomol
-and formulation-specific phenylbutyrate as separate supply hypotheses.
+**Ataluren receives a limited stop-allele feasibility arm alongside one
+available, qualified tissue-function module.** Fasudil and belumosudil remain
+distinct ciliary hypotheses; cilostazol is a barrier-support hypothesis. NAC
+remains a protective comparator. No overall efficacy ranking or treatment
+lead is established. The [ataluren challenge](stop_allele_challenge.md) weighs
+native-context and human positives against failed controlled trials,
+protein-without-function results and exposure gaps. The
+[tissue comparison](tissue_candidates.md) keeps each model and drug distinct.
+
+The [finite pilot](finite_pilot.md) defines an eight-condition cycling-cell
+comparison and one parallel tissue module. Ataluren does not have to win or
+finish first. A functional hit receives focused attribution and confirmation;
+perfect mechanism is not an entry requirement. The
+[redox-fork design](redox_fork.md) remains the NAC-specific test. Earlier
+maintenance and supply evidence is retained below.
+
+The [broader alternative challenge](alternative_challenge.md) preserves a
+conditional selumetinib/MAPK experiment while separating the U0126 alignment
+positive from an unproved approved-drug or completed-division result. It also
+records why G-CSF substitution, senolytic model conflation and low-dose
+microtubule stabilization do not displace the current finite pilot.
 
 A small qualified renewable-cell phenotypic pilot can proceed alongside
 mechanistic attribution. Exact-allele confirmation, candidate-specific
@@ -27,6 +42,9 @@ global phosphatase activator or an engineered recruitment reagent as a medicine.
 
 | Candidate or route | Best supporting evidence | Decisive missing link or counterevidence | Research disposition |
 |---|---|---|---|
+| Ataluren | Native-context cellular positives and a three-person uncontrolled SDS series | Negative controlled CF/pediatric CNS trials; no exact-stop useful BUBR1 result; exposure/product uncertainty | Limited feasibility arm, not exclusive priority; see stop-allele challenge |
+| Fasudil / belumosudil | Compound-specific ciliary positives in other genetic models | BUBR1 ciliary phenotype and regulated functional rescue unproved; metabolites/readouts differ | Separate ciliary conditions; no pooled class efficacy claim |
+| Cilostazol | Functional barrier positives in a separate rat system | Low-BubR1 mouse barrier phenotype is a different experiment; exact-genotype deficit/exposure unknown | Parallel barrier hypothesis if a suitable platform exists |
 | NAC | Direct BUBR1/MAD2 preservation under oxidant stress; separate Sod1-oocyte chromosome result; approved oral medicine | NAC also weakened ATM–p53 restraint in other checkpoint-defective cells; exact-genotype function and exposure unresolved | Conditional protective nomination; test the redox fork, not growth alone |
 | Hydroxychloroquine | BUBR1 band increased in late-passage WJ-MSCs | Retained LC3-associated cargo may be nonfunctional; another study delayed mitotic chromatin dynamics; exposure/compartment gaps | Conditional lysosomal-loss comparator |
 | Arimoclomol | US approval in NPC with miglustat; proteostasis responses in other systems | BUBR1 dependence on HSP90 does not establish rescue by this drug. Basal-state response at qualified exposure and useful exact-allele function are untested | Unranked exploratory compound; no treatment lead |
@@ -154,7 +172,11 @@ that native rapamycin repairs BUBR1 attachment function.
 [UPCP study](https://doi.org/10.1038/s43587-023-00361-w),
 [engineered PP2A assay](https://doi.org/10.1038/s41467-025-58185-8)
 
-## First experiment and the decision it buys
+## Earlier mechanism checks retained alongside the finite pilot
+
+The bounded first-round design is now [specified separately](finite_pilot.md).
+The checks below inform mechanism and later confirmation; completing all of
+them is not an entrance requirement for the first phenotype experiment.
 
 Do not erase partial mechanistic rescue when excluding a drug class from
 advancement. Aurora inhibition improved alignment in engineered HeLa
