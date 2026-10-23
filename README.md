@@ -180,7 +180,7 @@ the missing observation/safety contract or evidence of biological efficacy.
 - [AI / LLM methods line](reports/TRACK2_AI_LINE.md)
 - [Candidate evidence-ledger template](templates/track2_candidate_ledger.synthetic.json)
 - [Scarce-sample stewardship template](templates/track2_sample_stewardship.synthetic.json)
-- [Candidate search protocol](configs/track2-candidate-search-protocol.json) (`track2-candidate-search-v3`; `searched_on` 2026-09-10 � the catalog-refresh pass found no primary wet assay; frequency, conservation, ClinVar, a public software catalog, software proof wording, and an official medicine label are exclusion axes, not hits)
+- [Candidate search protocol](configs/track2-candidate-search-protocol.json) (`track2-candidate-search-v3`; `searched_on` 2026-09-10 — the catalog-refresh pass found no primary wet assay; frequency, conservation, ClinVar, a public software catalog, software proof wording, and an official medicine label are exclusion axes, not hits)
 - [Community templates](templates/community/README.md)
 
 Current drug dispositions are in the treatment-evidence card above: NAC is a

@@ -1,6 +1,6 @@
 # Acetylcysteine: test the redox fork before advancing a protective hypothesis
 
-Research nomination � 23 October 2026 � no laboratory or clinical result
+Research nomination · 23 October 2026 · no laboratory or clinical result
 
 **We nominate acetylcysteine (NAC) for a bounded test of oxidative amplification
 in BUB1B-associated MVA.** The proposed benefit is prevention of further

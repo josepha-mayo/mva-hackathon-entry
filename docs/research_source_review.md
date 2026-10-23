@@ -1,6 +1,6 @@
 # Exact public-source research review
 
-Reviewed 22�23 October 2026 by Codex in the user-authorized repository audit.
+Reviewed 22–23 October 2026 by Codex in the user-authorized repository audit.
 
 The reference parser, audit corrections, invented test fixtures and literature
 cards contain public reference biology, standard code and published research. They contain no

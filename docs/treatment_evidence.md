@@ -1,12 +1,12 @@
 # A conditional medicine nomination with a test that can reject it
 
-Research decision � 23 October 2026 � unsigned
+Research decision · 23 October 2026 · unsigned
 
 **Acetylcysteine (NAC) is nominated for a bounded test of oxidative
 amplification in BUB1B-associated MVA. No treatment lead is established.**
 The [redox-fork hypothesis](redox_fork.md) pairs direct checkpoint-protein
 preservation and a separate chromosome-spread positive with the strongest
-opposing observation: NAC can weaken ATM�p53 restraint in other
+opposing observation: NAC can weaken ATM–p53 restraint in other
 checkpoint-defective cells. The experiment must distinguish fewer new errors
 from increased persistence of abnormal lineages.
 

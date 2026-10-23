@@ -27,7 +27,7 @@ global phosphatase activator or an engineered recruitment reagent as a medicine.
 
 | Candidate or route | Best supporting evidence | Decisive missing link or counterevidence | Research disposition |
 |---|---|---|---|
-| NAC | Direct BUBR1/MAD2 preservation under oxidant stress; separate Sod1-oocyte chromosome result; approved oral medicine | NAC also weakened ATM�p53 restraint in other checkpoint-defective cells; exact-genotype function and exposure unresolved | Conditional protective nomination; test the redox fork, not growth alone |
+| NAC | Direct BUBR1/MAD2 preservation under oxidant stress; separate Sod1-oocyte chromosome result; approved oral medicine | NAC also weakened ATM–p53 restraint in other checkpoint-defective cells; exact-genotype function and exposure unresolved | Conditional protective nomination; test the redox fork, not growth alone |
 | Hydroxychloroquine | BUBR1 band increased in late-passage WJ-MSCs | Retained LC3-associated cargo may be nonfunctional; another study delayed mitotic chromatin dynamics; exposure/compartment gaps | Conditional lysosomal-loss comparator |
 | Arimoclomol | US approval in NPC with miglustat; proteostasis responses in other systems | BUBR1 dependence on HSP90 does not establish rescue by this drug. Basal-state response at qualified exposure and useful exact-allele function are untested | Unranked exploratory compound; no treatment lead |
 | Phenylbutyrate, specifying formulation | Functional rescue of other unstable proteins; pediatric UCD use and some human repurposing experience | No direct BUBR1 rescue identified. Millimolar nominal cell exposure, binding/time-course gaps, conflicting disease-model results, metabolic toxicity | Unranked exploratory compound; requires its own exposure and response bridge |
@@ -61,7 +61,7 @@ the abstract's broad wording into universal rescue. Neither target is BUBR1.
 [DeLeeuw et al., 2026](https://doi.org/10.1002/acn3.70430)
 
 The negative 2026 zebrafish study found no locomotion or seizure rescue under
-its tested conditions. Its body reports locomotion at 25�50 micromolar, but
+its tested conditions. Its body reports locomotion at 25–50 micromolar, but
 Figure 1D's caption says 10/25; that discrepancy needs clarification. The
 seizure test used an acute 50-micromolar exposure. The reported negative
 locomotion Z-prime also limits confidence in assay separation. Null fish,
@@ -86,14 +86,14 @@ account of this route. Glycerol phenylbutyrate is a prodrug, hydrolyzed to PBA
 and then metabolized to PAA. Its UCD active moiety PAA is not a substitute
 for measuring PBA for the proposed chaperone hypothesis. A direct culture
 experiment cannot assume intact prodrug provides an equivalent PBA exposure.
-The label reports 81�98% in-vitro PBA protein binding. Sodium burden belongs
+The label reports 81–98% in-vitro PBA protein binding. Sodium burden belongs
 to sodium formulations; removing sodium does not remove the other risks.
 [RAVICTI US label, sections 8.4 and 12](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=900e7dc0-9afe-4f50-80de-90567bb78519)
 
 The adjacent arithmetic receipt converts a reported healthy-adult mean total
 PBA peak of 100 micrograms/mL to approximately 609 micromolar using the acid
 molecular mass. Applying the label's binding-range endpoints gives an
-illustrative 12�116-micromolar free range, **not measured free exposure**.
+illustrative 12–116-micromolar free range, **not measured free exposure**.
 The 2,000-micromolar nominal culture example is about 3.28 times that reported
 total peak. This is neither an exposure ceiling nor a free-exposure ratio:
 medium binding, intracellular exposure, duration and pediatric values remain
