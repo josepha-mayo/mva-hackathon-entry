@@ -1,6 +1,6 @@
 # Independent medicine hypotheses with a finite first decision
 
-**23 October hardened comparison:** [Phenylbutyrate versus elamipretide](neural_protection_comparison.md) compares protein-stress and mitochondrial support on the same useful neural function. PBA has closer actual-drug human aneuploid-cell stress evidence; no useful BUB1B rescue or clinical rank is established. The [mitochondrial evidence](mitochondrial_challenger.md) retains elamipretide positives and counterevidence.
+**23 October extended comparison:** [PBA, elamipretide and levacetylleucine](neural_protection_comparison.md) compete on the same useful neural function. [Levacetylleucine](levacetylleucine_challenger.md) adds a randomized human A–T functional positive; PBA retains closer human aneuploid-cell marker evidence and elamipretide distinct mitochondrial/animal positives and human negatives. None establishes BUB1B efficacy or an overall rank. The [exposure-time audit](exposure_time_audit.md) is executed arithmetic, not a biological response simulation.
 
 Research decision · 23 October 2026 · unsigned
 

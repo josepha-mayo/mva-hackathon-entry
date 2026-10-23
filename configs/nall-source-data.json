@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "source": {
+    "doi": "10.1172/JCI196137",
+    "article_url": "https://www.jci.org/articles/view/196137",
+    "source_url": "https://dm5migu4zj3pb.cloudfront.net/manuscripts/196000/196137/JCI196137.sdval.xlsx",
+    "landing_url": "https://www.jci.org/articles/view/196137/sd/5",
+    "sha256": "3bcd611735652efed3b72292ea0bbad1670741e0c30235be58f6756bbcb89001"
+  },
+  "targets": [
+    {
+      "id": "gba1_l444p",
+      "publication_panel": "Figure 3K",
+      "sheet": "Fig 3I",
+      "mapping_basis": "Condition headers, exact ROI counts and rounded means match Figure 3K; workbook sheet name differs from publication panel.",
+      "groups": [
+        {"column": "B", "header": "L444P_NT", "expected_n": 89},
+        {"column": "C", "header": "L444P_NALL", "expected_n": 59}
+      ],
+      "published_summary": {
+        "NT_mean": 133.2,
+        "NT_n": 89,
+        "NT_plus_minus": 5.3,
+        "NALL_mean": 105.3,
+        "NALL_n": 59,
+        "NALL_plus_minus": 5.8,
+        "caption_error_label": "SD"
+      }
+    },
+    {
+      "id": "lrrk2_r1441c",
+      "publication_panel": "Supplemental Figure 7A",
+      "sheet": "SFig7A",
+      "mapping_basis": "Workbook sheet and explicit R1441C condition headers.",
+      "groups": [
+        {"column": "A", "header": "R1441C_NT", "expected_n": 72},
+        {"column": "B", "header": "R1441C_NALL", "expected_n": 83}
+      ],
+      "published_summary": {
+        "NT_mean": 133.2,
+        "NT_n": 89,
+        "NT_plus_minus": 5.3,
+        "NALL_mean": 105.3,
+        "NALL_n": 59,
+        "NALL_plus_minus": 5.8,
+        "caption_error_label": "SD",
+        "source": "Supplemental PDF S_Figure 7A caption; it repeats the Figure 3K summary despite different R1441C worksheet values."
+      }
+    }
+  ],
+  "schema": {
+    "header_row": 2,
+    "first_value_row": 3,
+    "last_value_row": 100,
+    "unit": "seconds",
+    "blank_cells": "absent observations, not zero and not inferred pairing",
+    "numeric_values": "finite positive numbers only; formulas and typed strings rejected",
+    "source_cell": "provenance address, not a biological ROI or independent-unit identifier"
+  },
+  "inference_boundary": "Descriptive pooled ROI values only. No culture/run/donor labels; no P values, confidence intervals, efficacy threshold or treatment recommendation."
+}

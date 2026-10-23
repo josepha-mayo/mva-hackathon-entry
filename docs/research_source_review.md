@@ -85,3 +85,14 @@ drug from metabolite exposure. The
 [PBA/elamipretide content record](../release/pba-elam-literature-review.json)
 binds the current changed public bytes. Earlier records remain historical;
 no privacy allowance, clinical validation or new submission is inferred.
+
+
+The subsequent search adds [levacetylleucine](levacetylleucine_challenger.md),
+including the September 2026 A–T approval, original versus regulatory clinical
+endpoints and opposing neuronal findings. The [executed exposure analysis](exposure_time_audit.md)
+keeps public measured totals separate from assumed free/culture profiles.
+The current [NALL-round content record](../release/nall-literature-review.json)
+binds the changed living research files and retained diagnostics. Earlier
+content records bind their earlier bytes. No frozen release, historical
+all-history clearance, controlled payload, clinical advancement or portal
+submission is introduced by this update.

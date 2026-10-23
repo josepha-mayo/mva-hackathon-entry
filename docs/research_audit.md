@@ -110,3 +110,14 @@ not sign new research or validate its scientific claims.
 The original signed sources and receipt remain unchanged so the audit is
 reproducible. These additions and the current manuscript are independently
 scoped, unsigned research; the all-history privacy gate remains separate.
+
+## Historical exposure thresholds do not rank the new medicines
+
+The preserved exposure gate still calls concentrations above 5 micromolar
+`nontranslational_high` and permits advancement only within its ≤2-micromolar
+contract. These are historical probe-specific rules, not a universal clinical
+ceiling. Do not use them to reject the 100-micromolar nominal PBA literature
+condition or qualify a new neural profile. The [exposure-time audit](exposure_time_audit.md)
+uses source-matched adult total AUC and clearly labeled assumptions instead;
+neither this arithmetic nor the separate candidate ledger grants exposure
+qualification. Frozen thresholds, baseline bytes and signatures are unchanged.

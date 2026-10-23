@@ -1,10 +1,16 @@
-# Phenylbutyrate versus elamipretide: protect useful neural function
+# Three neural hypotheses: useful function must decide
 
-Public-source research decision, 23 October 2026. **4-PBA now has the closer actual-drug human aneuploid-neuron stress experiment; elamipretide has distinct mitochondrial and functional-animal evidence. Neither has demonstrated useful neural rescue during BUB1B failure.** The next commitment is a direct, bounded functional comparison, not a clinical drug ranking or combination.
+Public-source research decision, 23 October 2026. **PBA has closer actual-drug human aneuploid-neuron stress evidence; elamipretide has distinct mitochondrial/animal positives; levacetylleucine adds randomized human A–T functional benefit. None has demonstrated useful BUB1B neural rescue.** The next commitment is a direct, bounded functional comparison, not a clinical drug ranking or combination.
 
 The improved hypothesis is that surviving neural cells may have a modifiable secondary protein-stress or mitochondrial constraint, even while the upstream chromosome-instability defect persists. That constraint is not established in this child. This is separate from assuming that phenylbutyrate binds, stabilizes or repairs the N1002K BUBR1 protein. The existing limited ataluren arm asks a different, stop-allele question.
 
-## What each compound actually contributes
+## A new clinical-function challenger
+
+**Levacetylleucine earns a third medicine arm.** September 2026 FDA approval for A–T-associated ataxia follows randomized human functional benefit in a different inherited genome-maintenance disorder. This is the strongest new clinical analogy in this search, without establishing the child's phenotype, a shared neuronal lesion or BUB1B efficacy. The [new challenger and alternative-route audit](levacetylleucine_challenger.md) preserves the actual trial, different SARA/fSARA analyses, immediate-crossover limitation, high-concentration neuronal positives and negative post-injury recovery result.
+
+The common comparison tests PBA, elamipretide and NALL at separately qualified profiles. NALL's known A–T benefit cannot validate a 10 mM neuronal mechanism or substitute for MVA evidence. Its inclusion is a research opportunity, not an overall efficacy ranking.
+
+## PBA and elamipretide evidence
 
 | Question | Sodium 4-phenylbutyrate / parent PBA | Elamipretide / SS31 |
 |---|---|---|
@@ -34,16 +40,18 @@ Measure parent **PBA** and metabolite **phenylacetate/PAA** separately. Glycerol
 
 SS31 peak plasma comparisons likewise cannot represent sustained culture or neural exposure. FDA animal distribution found minimal brain/eye amounts; large isolated-mitochondrial enrichment is not a BBB partition coefficient. The neuronal redox positive prevents dismissing CNS action solely from homogenate or CSF limitations. PLSCR3-dependent protection in kidney models also prevents equating SS31 with genetic Hsp60/Sod2 rescue. [FDA review](https://www.accessdata.fda.gov/drugsatfda_docs/nda/2025/215244Orig1s000IntegratedR.pdf), [PLSCR3 study](https://doi.org/10.1681/ASN.0000000000000338)
 
+The [executed exposure-time audit](exposure_time_audit.md) adds matched adult daily PBA AUC and explicitly assumed free-medium scenarios. Total plasma exposure is similar in magnitude to a hypothetical maintained 100-micromolar daily culture integral; free neuronal equivalence remains unidentified. The historical ≤2-micromolar software gate must not adjudicate this new comparison.
+
 ## One comparison capable of choosing a research condition
 
 Use an available renewable genotype/corrective-reference neural pair, identifying the actual correction. Stop-only repair is WT/N1002K, not automatically a fully corrected reference. Phenotype and initial response can be established together. **Recovery requires a documented deficit before dosing**; prevention of further loss is a separate valid question.
 
-After a short, fixed exposure scout, the shared module contains **two genotypes × four assigned conditions: vehicle, one PBA profile, one elamipretide profile and one NAC comparator profile**. Eight conditions precede biological replication. The scout selects interpretable drug-specific profiles using free-medium and intracellular measurements and compact target-response checks. Equal nominal molarity, equal plasma peaks and one arbitrary concentration do not make fair comparisons. The 100-micromolar PBA literature condition is an anchor, not a selected clinical concentration. A single failed profile cannot eliminate a drug or class.
+After a short, fixed exposure scout, the shared module contains **two genotypes × four assigned conditions: vehicle, one PBA profile, one elamipretide profile and one levacetylleucine/NALL profile**. Eight conditions precede biological replication. The scout selects interpretable drug-specific profiles using free-medium and intracellular measurements and compact target-response checks. Equal nominal molarity, equal plasma peaks and one arbitrary concentration do not make fair comparisons. The 100-micromolar PBA literature condition is an anchor, not a selected clinical concentration. A single failed profile cannot eliminate a drug or class.
 
 The shared functional endpoint is a prespecified evoked neural response per randomized well, interpreted with survival, coverage and starting-cell accounting. Keep total functional output and function per surviving neuron distinct. Prefer a neuron-enriched postmitotic preparation if its deficit persists there. In precursor cultures additionally measure functional descendants per enrolled precursor, remaining reserve, division errors and abnormal-lineage expansion. More activity caused by excessive bursting fails the useful-function criterion. A postmitotic benefit need not repair every chromosome or raise BUBR1.
 
-Use one compact supporting readout per mechanism—protein-stress handling for PBA, mitochondrial function for SS31—without making either the efficacy endpoint. Independent preparations/origins and runs, randomized wells and masked scoring support inference; cells do not create extra donors.
+Use one compact supporting readout per mechanism—protein-stress handling for PBA, mitochondrial function for SS31—without making either the efficacy endpoint. NALL has no verified clinical molecular target or qualified target-specific surrogate; a model-relevant vesicle/metabolic readout would remain supportive and must not be presented as established target engagement. Independent preparations/origins and runs, randomized wells and masked scoring support inference; cells do not create extra donors.
 
-Choose a condition from a **direct between-drug functional contrast**, useful-effect uncertainty, survival/reserve tradeoffs and exposure plausibility. A positive P value for one drug and a negative P value for the other is not a significant difference. Confirm at most one selected profile in a fresh comparison, including response persistence after washout. A tie remains a tie. Marker-only improvement fails; an underexposed negative remains unresolved. No biological screen has been performed here.
+Choose a condition from a **direct between-drug functional contrast**, useful-effect uncertainty, survival/reserve tradeoffs and exposure plausibility. A positive P value for one drug and a negative P value for the other is not a significant difference. Confirm at most one selected profile in a fresh comparison. Assess response persistence after washout separately; a reversible on-treatment benefit can still be useful. A tie remains a tie. Marker-only improvement fails; an underexposed negative remains unresolved. No biological screen has been performed here.
 
-This design replaces the prior two-elamipretide-exposure neural module. It can occupy the single appropriate tissue-module slot alongside the limited cycling-cell experiment; it does not require every ciliary, barrier and neural platform or justify a clinical cocktail.
+This design replaces the earlier PBA/elamipretide/NAC neural module. NAC remains an optional mechanistic follow-up and a protective comparator in the separate cycling arm; it is not a validated positive control for this neural assay. Eight conditions require a shared assay-compatible solvent background. If separate vehicles are necessary, preserve them and revise the count explicitly. It can occupy the single appropriate tissue-module slot alongside the limited cycling-cell experiment; it does not require every ciliary, barrier and neural platform or justify a clinical cocktail.

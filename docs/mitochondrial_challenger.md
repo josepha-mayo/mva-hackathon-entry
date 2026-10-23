@@ -2,7 +2,7 @@
 
 Public-source research decision, 23 October 2026.
 
-**Current comparison:** the [phenylbutyrate-versus-elamipretide design](neural_protection_comparison.md) now replaces the original two-elamipretide-exposure neural module. The mitochondrial rationale and its evidence below remain; elamipretide has no exclusive priority. **Elamipretide is nominated for a bounded mitochondrial-function experiment, not as a superior treatment.** It does not replace ataluren on clinical evidence, and no tested medicine has demonstrated rescue of the proposed BUB1B genotype. The hypothesis is that chromosome instability causes a secondary mitochondrial constraint that remains modifiable after a functional deficit appears. Neither that constraint nor a drug response is established in this child.
+**Current comparison:** the [PBA, elamipretide and levacetylleucine design](neural_protection_comparison.md) replaces the original two-elamipretide-exposure module and the later PBA/elamipretide/NAC module. The mitochondrial rationale and its evidence below remain; elamipretide has no exclusive priority. **Elamipretide is nominated for a bounded mitochondrial-function experiment, not as a superior treatment.** It does not replace ataluren on clinical evidence, and no tested medicine has demonstrated rescue of the proposed BUB1B genotype. The hypothesis is that chromosome instability causes a secondary mitochondrial constraint that remains modifiable after a functional deficit appears. Neither that constraint nor a drug response is established in this child.
 
 ## Why this is more specific than another antioxidant list
 

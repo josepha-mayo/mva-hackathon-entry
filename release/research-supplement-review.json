@@ -14,7 +14,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "0e5359d758953b7911cd6662f240a0cae1b19bc9a7f89ff8260fb4494ea611d6",
+      "sha256": "c7e32601504de79280088c5f60b85786f728a10eb1aca0726167b50090e0ae07",
       "source_class": "public literature and references",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -23,7 +23,7 @@
     {
       "path": "src/mva_hackathon/reference_audit.py",
       "sha256": "cc888e37c15d808f85688edbf7ca66dc84a80089fe359fd516b21da813a361b8",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 5,
       "identifier_findings_sha256": "16ed47ad53a178e94d0ae476d4d7c139ecb2ae4b781ffbb10d5210ccca1997c4",
       "retained_identifier_findings": [
@@ -37,7 +37,7 @@
     {
       "path": "scripts/audit_public_reference.py",
       "sha256": "b94e295b79b49480dcae26ff74c7aff6c17aef45618cc80eac1583a8f0992358",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "retained_identifier_findings": []
@@ -45,7 +45,7 @@
     {
       "path": "tests/test_reference_audit.py",
       "sha256": "4b1a38924b02f33a5af61f85756ea5be271751f6fdd3aae50426d05e28aa52d3",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 6,
       "identifier_findings_sha256": "0fd306cd80b7ee474b20a349cb0944d9ce938408700532f30f0cadcae0f3599c",
       "retained_identifier_findings": [
@@ -67,7 +67,7 @@
     },
     {
       "path": "docs/drug_decision.md",
-      "sha256": "7a43843c14cdf67a54c01aced6d91f2501b778fc1d646da77724cb61fa25e764",
+      "sha256": "7c7b30a2de82c9ef8227859aea9ef6f495e20e7a7d75ab261abc70b4308fa5fc",
       "source_class": "public literature and references",
       "identifier_finding_count": 56,
       "identifier_findings_sha256": "dc512a0d63910591b721410180a6f5278421375e5433b90b6e401c7027d661da",
@@ -208,7 +208,7 @@
     },
     {
       "path": "docs/research_audit.md",
-      "sha256": "57174eadbcec8e83bde7fa57df25859cab490a22dcb8a66605d43d8fd55de2c4",
+      "sha256": "11506bd1e6484fec3066110b39a8a43b1c4b0b728202f9d7c23715241a44cbef",
       "source_class": "public literature and references",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -237,7 +237,7 @@
     },
     {
       "path": "docs/treatment_evidence.md",
-      "sha256": "8eb119ea8d5871a5ee6196e18ad6ccef5c6e1f2d4b7ff0544d0a19ece0c9b499",
+      "sha256": "9a22919d2e67f6a5375bc1b2e72cf22d51914dc47e6bc0d6c30c47731de0e8ff",
       "source_class": "public literature and references",
       "identifier_finding_count": 5,
       "identifier_findings_sha256": "7087fa74fc510fe402c92c22bddaa0c362e3d3603be85d5e39b465e11f8ffb00",
@@ -315,7 +315,7 @@
     },
     {
       "path": "docs/finite_pilot.md",
-      "sha256": "4433687c428c6696360fb8ef70b8ff5d9df59f7d38d06a3d3b6d4da43a0befa4",
+      "sha256": "faad5b98a6769a6f78b386d8da6fccc79fa0241f4618ed85fd9b702ee0379db4",
       "source_class": "public literature and references",
       "identifier_finding_count": 33,
       "identifier_findings_sha256": "72a77ec720907712d97bcbe1d22d09bded42b6441b5e48f3ac63b8b186dd6a0f",
@@ -357,7 +357,7 @@
     },
     {
       "path": "docs/mitochondrial_challenger.md",
-      "sha256": "e6bd22cb0e862ced1aae45009930820a4ceab85733242d78384bc1c2e7b61e3e",
+      "sha256": "8098cd6bab1f633fccc0b19ced22ce3e75993042014feec3b376c953511b3202",
       "source_class": "public literature and references",
       "identifier_finding_count": 28,
       "identifier_findings_sha256": "8eea41fe2fd8155dcd5744fd7d081905dd2cb4492b4f7649f0b698a4a0e62fe9",
@@ -394,10 +394,10 @@
     },
     {
       "path": "docs/neural_protection_comparison.md",
-      "sha256": "b098117342ecae304fac1997938dba691d35e0fb988f016184f1b9e8460dbd22",
+      "sha256": "c2070ea5bdc599cd30d7c2d9d19b3733c56febcb375de92cc7173ee272ee39e0",
       "source_class": "public literature and references",
-      "identifier_finding_count": 26,
-      "identifier_findings_sha256": "a50bf7af307640a75487400c92c491cde5d97439ad5dc18fadf8349e00852878",
+      "identifier_finding_count": 25,
+      "identifier_findings_sha256": "c6e13cc897c278e0e815025cfe5cd1bd083f93c2d571dbda54f82d0ec6beb921",
       "retained_identifier_findings": [
         "non-synthetic biological identifier 'BUB1B': public-source-review: docs/neural_protection_comparison.md",
         "non-synthetic biological identifier 'BUB1B-': public-source-review: docs/neural_protection_comparison.md",
@@ -410,7 +410,6 @@
         "non-synthetic biological identifier 'PLSCR3-': public-source-review: docs/neural_protection_comparison.md",
         "non-synthetic biological identifier 'PMC3769509': public-source-review: docs/neural_protection_comparison.md",
         "non-synthetic biological identifier 'SS31': public-source-review: docs/neural_protection_comparison.md",
-        "non-synthetic biological identifier 'ABP-4': public-source-review: docs/neural_protection_comparison.md(reversed)",
         "non-synthetic biological identifier 'AM-3': public-source-review: docs/neural_protection_comparison.md(reversed)",
         "non-synthetic biological identifier 'B1BUB': public-source-review: docs/neural_protection_comparison.md(reversed)",
         "non-synthetic biological identifier 'K2001N': public-source-review: docs/neural_protection_comparison.md(reversed)",
@@ -429,7 +428,7 @@
     },
     {
       "path": "docs/research_source_review.md",
-      "sha256": "0ab62580cd99941746c102f5ac738de19b2c41202d26243d27a57ef333f90fe9",
+      "sha256": "828822ec81e88d30ff30505ce3b17694f71ba58a8842b999e87a7741286847f5",
       "source_class": "public literature and references",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -500,7 +499,7 @@
     {
       "path": "src/mva_hackathon/fixed_horizon.py",
       "sha256": "dcbec6148e7a545f1e9bb4324d75e54e08d63c78eb03d01c3973cb50a09dd076",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "retained_identifier_findings": []
@@ -508,7 +507,7 @@
     {
       "path": "src/mva_hackathon/timestamp_chain.py",
       "sha256": "44d5089a71784787f29f60249e451fd66509d66d7da59071d7c5d836ba531ad0",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 1,
       "identifier_findings_sha256": "0a3d054bcee8c0b1ba1678b3ab3c8f01b76bf146a9572d1dd50b17e421f83617",
       "retained_identifier_findings": [
@@ -518,7 +517,7 @@
     {
       "path": "scripts/assess_fixed_horizon.py",
       "sha256": "b709cf5b0d713de505d0089c8ed4bb80ebab8e12680810f40553e5295b487f09",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "retained_identifier_findings": []
@@ -526,7 +525,7 @@
     {
       "path": "scripts/verify_timestamp_chain.py",
       "sha256": "d3461930e5fe3c707f1ec7e4e70afdf027459d6d4d0f1f6c7fd52c4c8beeb83c",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "retained_identifier_findings": []
@@ -534,7 +533,7 @@
     {
       "path": "scripts/demo_legacy_lineage_timing.py",
       "sha256": "196927030294c5b3659428b6f61c2c7375d96090fecfceca799538483c2d657c",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "retained_identifier_findings": []
@@ -542,7 +541,7 @@
     {
       "path": "scripts/demo_legacy_verification_power.py",
       "sha256": "ee9b39f5807b4f4664b9fd1d6c90506a769a928ca641f7e6aab1ef950d002fcf",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "retained_identifier_findings": []
@@ -550,7 +549,7 @@
     {
       "path": "tests/test_fixed_horizon.py",
       "sha256": "22f1a85f8de91546bff09968753dc5937ee616d4ac25b3df25b048b23e621056",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "retained_identifier_findings": []
@@ -558,7 +557,7 @@
     {
       "path": "tests/test_timestamp_chain.py",
       "sha256": "0ec765c7c556613ac58913fad433d9db4bea335e8aedb84c623cc22018615cfe",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "retained_identifier_findings": []
@@ -566,10 +565,159 @@
     {
       "path": "templates/community/fixed_horizon.synthetic.json",
       "sha256": "aaed38e324bb292f5177178ea3554a4c2d57cadfffbd74b4c2a0ea3ff4717477",
-      "source_class": "standard code and invented fixtures",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "retained_identifier_findings": []
+    },
+    {
+      "path": "docs/levacetylleucine_challenger.md",
+      "sha256": "3824a1e4d2a8f8760cc0d80cc7b74d0734ca4706899c81b26597c9a0a5b639a2",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 19,
+      "identifier_findings_sha256": "6c2424a5a1cb83555af1ac99c853b82cde3c512a53e8acaf64d01f1848bfd56b",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'BUBR1': public-source-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'GBA1-': public-source-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'JCI196137': public-source-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'LRRK2': public-source-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'LRRK2-': public-source-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'NCT06673056': public-source-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'S1474-4422': public-source-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'TK2': public-source-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'B1BUB': public-source-review: docs/levacetylleucine_challenger.md(reversed)",
+        "non-synthetic biological identifier 'APG06673056': public-source-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'F1474-4422': public-source-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'GX2': public-source-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': public-source-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'TON1-': public-source-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'WPV196137': public-source-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'YEEX2': public-source-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'YEEX2-': public-source-review: docs/levacetylleucine_challenger.md(rot13)"
+      ]
+    },
+    {
+      "path": "docs/exposure_time_audit.md",
+      "sha256": "013054b220fcc87d6bf3ffa673237e5375429c1c0eedc7fd95dadd1f4381c63e",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "docs/nall_source_data_audit.md",
+      "sha256": "d4477a96b67d10e61a99d2c84574345c033621c89e0e5c841b504c561c6f2d58",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 18,
+      "identifier_findings_sha256": "4114e5080272f30bd0b1d4016dbb19eb7277402a61bcbe999d4eb82a5ef9a862",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'GBA1': public-source-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'GBA1-L444P': public-source-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'JCI196137': public-source-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'JCI196137DS1': public-source-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'LRRK2': public-source-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'LRRK2-R1441C': public-source-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'NALL': public-source-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'B1BUB': public-source-review: docs/nall_source_data_audit.md(reversed)",
+        "non-synthetic biological identifier 'C1441R-2KRRL': public-source-review: docs/nall_source_data_audit.md(reversed)",
+        "non-synthetic biological identifier 'P444L-1ABG': public-source-review: docs/nall_source_data_audit.md(reversed)",
+        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'TON1': public-source-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'TON1-Y444C': public-source-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'WPV196137': public-source-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'WPV196137QF1': public-source-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'YEEX2': public-source-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'YEEX2-E1441P': public-source-review: docs/nall_source_data_audit.md(rot13)"
+      ]
+    },
+    {
+      "path": "src/mva_hackathon/published_exposure.py",
+      "sha256": "24e8a13c529f27474adcf17dd9c8dcfe175e3277c8781c0e98f53127d393afdf",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
+      "identifier_finding_count": 1,
+      "identifier_findings_sha256": "4f2774844e6538b4d0e8f60abd146341b6311b99d06c76850dec1f0bc26c092e",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'AUC': public-source-review: src/mva_hackathon/published_exposure.py"
+      ]
+    },
+    {
+      "path": "src/mva_hackathon/nall_source_data.py",
+      "sha256": "522fc7ae00a2ea9e38fa9be7b55e82f63ce99aa3c9d1f7bad6887ee71721a672",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
+      "identifier_finding_count": 1,
+      "identifier_findings_sha256": "3df0a745a559aa2850694755510a95e7420cd6aca651dee1d705312f4407df25",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'NALL': public-source-review: src/mva_hackathon/nall_source_data.py"
+      ]
+    },
+    {
+      "path": "scripts/compare_published_exposure.py",
+      "sha256": "d3f59120ef17127ec06edd8aad6857da14c73afbcde1b36ac9529e92afde89ee",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "scripts/audit_nall_source_data.py",
+      "sha256": "1d1d99ade112df75d4628d0a1e67ae7034c8e396a9565077167f8392043247a4",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
+      "identifier_finding_count": 2,
+      "identifier_findings_sha256": "83b533287d624c3a42923e5c004ce1b7f0a32bf07df911b6dbd7d330e4a028ac",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'JCI196137': public-source-review: scripts/audit_nall_source_data.py",
+        "non-synthetic biological identifier 'WPV196137': public-source-review: scripts/audit_nall_source_data.py(rot13)"
+      ]
+    },
+    {
+      "path": "tests/test_published_exposure.py",
+      "sha256": "f08a9efa8e754162854fd536fa201615721752e727b572cd5889092891f21b9e",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "tests/test_nall_source_data.py",
+      "sha256": "d0ac4eff1043ba549c3c2cb34b3f89b17732db856e0053e7361fa3be8e6233a3",
+      "source_class": "standard code and explicitly invented test fixtures; analyzers consume declared public inputs",
+      "identifier_finding_count": 4,
+      "identifier_findings_sha256": "0fdd8c6f74f1f3db051a288212a84cba582b7a18a407a7edbf0db24a70182c1f",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'B2': public-source-review: tests/test_nall_source_data.py",
+        "non-synthetic biological identifier 'B3': public-source-review: tests/test_nall_source_data.py",
+        "non-synthetic biological identifier 'B4': public-source-review: tests/test_nall_source_data.py",
+        "non-synthetic biological identifier 'B6': public-source-review: tests/test_nall_source_data.py"
+      ]
+    },
+    {
+      "path": "configs/published-exposure-inputs.json",
+      "sha256": "6d8b6d9ce406b448d024dd5245a4ea31116112f8e5f0bcf98b64681219d27f9b",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 4,
+      "identifier_findings_sha256": "0137178c2c9a2af28ab41f1c25ef2a8ca206c42abf15aa1bdca941f65f8b6e25",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'HPN-100-006': public-source-review: configs/published-exposure-inputs.json",
+        "non-synthetic biological identifier 'SPISC-102': public-source-review: configs/published-exposure-inputs.json",
+        "non-synthetic biological identifier 'FCVFP-102': public-source-review: configs/published-exposure-inputs.json(rot13)",
+        "non-synthetic biological identifier 'UCA-100-006': public-source-review: configs/published-exposure-inputs.json(rot13)"
+      ]
+    },
+    {
+      "path": "configs/nall-source-data.json",
+      "sha256": "81b8f6ec40c9ae3d628ee1a79526662d553574a5c4bda20c45ec9189027613fc",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 4,
+      "identifier_findings_sha256": "9823e21948c14467fc1773e37e3a9782295b9afc01d1084ae5b91d5186d20379",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'JCI196137': public-source-review: configs/nall-source-data.json",
+        "non-synthetic biological identifier 'R1441C': public-source-review: configs/nall-source-data.json",
+        "non-synthetic biological identifier 'SD': public-source-review: configs/nall-source-data.json",
+        "non-synthetic biological identifier 'WPV196137': public-source-review: configs/nall-source-data.json(rot13)"
+      ]
     }
   ]
 }

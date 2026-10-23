@@ -1,0 +1,348 @@
+{
+  "schema": "mva-public-literature-content-review/v1",
+  "reviewed_utc": "2026-10-23T21:45:07.907748+00:00",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "c7e32601504de79280088c5f60b85786f728a10eb1aca0726167b50090e0ae07",
+      "scanner_findings": [],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/drug_decision.md",
+      "sha256": "7c7b30a2de82c9ef8227859aea9ef6f495e20e7a7d75ab261abc70b4308fa5fc",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'AM2025-4168': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'BUB1': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'BUB1B': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'BUB1B-': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'BUBR1': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'BUBR1-': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'HSP70': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'HSP90': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'HSPA1': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'HSPB1': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'K1002': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'K668': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'L1002P': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'L1012P': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'LC3-': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'MAD2': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'N1002K': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'N1002R': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'PBA': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'PP2A': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'PTBP1': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'SIRT1': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'SIRT2-': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'SLC6A1': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'STXBP1': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'U0126': nall-exact-content-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'A2PP': nall-exact-content-review: docs/drug_decision.md(reversed)",
+        "non-synthetic biological identifier 'B1BUB': nall-exact-content-review: docs/drug_decision.md(reversed)",
+        "non-synthetic biological identifier 'K2001N': nall-exact-content-review: docs/drug_decision.md(reversed)",
+        "non-synthetic biological identifier 'P2001L': nall-exact-content-review: docs/drug_decision.md(reversed)",
+        "non-synthetic biological identifier 'P2101L': nall-exact-content-review: docs/drug_decision.md(reversed)",
+        "non-synthetic biological identifier 'R2001N': nall-exact-content-review: docs/drug_decision.md(reversed)",
+        "non-synthetic biological identifier 'A1002E': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'A1002X': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'CC2N': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'CGOC1': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'FGKOC1': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'FVEG1': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'FYP6N1': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'H0126': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'NZ2025-4168': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHO1': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O-': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1-': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'UFC70': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'UFC90': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'UFCN1': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'UFCO1': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'X1002': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'X668': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'Y1002C': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'Y1012C': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'YP3-': nall-exact-content-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'ZNQ2': nall-exact-content-review: docs/drug_decision.md(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/treatment_evidence.md",
+      "sha256": "9a22919d2e67f6a5375bc1b2e72cf22d51914dc47e6bc0d6c30c47731de0e8ff",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'BUB1B': nall-exact-content-review: docs/treatment_evidence.md",
+        "non-synthetic biological identifier 'BUBR1': nall-exact-content-review: docs/treatment_evidence.md",
+        "non-synthetic biological identifier 'B1BUB': nall-exact-content-review: docs/treatment_evidence.md(reversed)",
+        "non-synthetic biological identifier 'OHO1O': nall-exact-content-review: docs/treatment_evidence.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': nall-exact-content-review: docs/treatment_evidence.md(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/finite_pilot.md",
+      "sha256": "faad5b98a6769a6f78b386d8da6fccc79fa0241f4618ed85fd9b702ee0379db4",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'BUB1B': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'BUBR1': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'BUBR1-': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'GLI1': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'N1002-': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'N1002K': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'PMC11751902': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'PTCH1': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'R294': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'R294X': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'RPE1': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'SMAD9': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'SMC1A': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'TMEM67': nall-exact-content-review: docs/finite_pilot.md",
+        "non-synthetic biological identifier 'A1CMS': nall-exact-content-review: docs/finite_pilot.md(reversed)",
+        "non-synthetic biological identifier 'B1BUB': nall-exact-content-review: docs/finite_pilot.md(reversed)",
+        "non-synthetic biological identifier 'CO0010-3102': nall-exact-content-review: docs/finite_pilot.md(reversed)",
+        "non-synthetic biological identifier 'K2001N': nall-exact-content-review: docs/finite_pilot.md(reversed)",
+        "non-synthetic biological identifier 'X492R': nall-exact-content-review: docs/finite_pilot.md(reversed)",
+        "non-synthetic biological identifier 'A1002-': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'A1002X': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'CGPU1': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'CZP11751902': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'E294': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'E294K': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'ECR1': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'FZNQ9': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'FZP1N': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'GZRZ67': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1-': nall-exact-content-review: docs/finite_pilot.md(rot13)",
+        "non-synthetic biological identifier 'TYV1': nall-exact-content-review: docs/finite_pilot.md(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/mitochondrial_challenger.md",
+      "sha256": "8098cd6bab1f633fccc0b19ced22ce3e75993042014feec3b376c953511b3202",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'BUB1B': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'BUB1B-': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'BUBR1': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'JCI196687': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'JCI64650': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'LONP1': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'MMPOWER-3': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'N1002K': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'NCT05162768': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'NCT05168774': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'PMC7176297': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'PMC9562127': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'POLG1-': nall-exact-content-review: docs/mitochondrial_challenger.md",
+        "non-synthetic biological identifier 'B1BUB': nall-exact-content-review: docs/mitochondrial_challenger.md(reversed)",
+        "non-synthetic biological identifier 'K2001N': nall-exact-content-review: docs/mitochondrial_challenger.md(reversed)",
+        "non-synthetic biological identifier 'A1002X': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'APG05162768': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'APG05168774': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'CBYT1-': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'CZP7176297': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'CZP9562127': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O-': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'WPV196687': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'WPV64650': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'YBAC1': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)",
+        "non-synthetic biological identifier 'ZZCBJRE-3': nall-exact-content-review: docs/mitochondrial_challenger.md(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/neural_protection_comparison.md",
+      "sha256": "c2070ea5bdc599cd30d7c2d9d19b3733c56febcb375de92cc7173ee272ee39e0",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'BUB1B': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'BUB1B-': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'BUBR1': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'MMPOWER-3': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'N1002K': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'NGN2': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'NGN2-': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'PLSCR3': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'PLSCR3-': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'PMC3769509': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'SS31': nall-exact-content-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'AM-3': nall-exact-content-review: docs/neural_protection_comparison.md(reversed)",
+        "non-synthetic biological identifier 'B1BUB': nall-exact-content-review: docs/neural_protection_comparison.md(reversed)",
+        "non-synthetic biological identifier 'K2001N': nall-exact-content-review: docs/neural_protection_comparison.md(reversed)",
+        "non-synthetic biological identifier 'A1002X': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'ATA2': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'ATA2-': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'CYFPE3': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'CYFPE3-': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'CZP3769509': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'FF31': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O-': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'ZZCBJRE-3': nall-exact-content-review: docs/neural_protection_comparison.md(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/research_source_review.md",
+      "sha256": "828822ec81e88d30ff30505ce3b17694f71ba58a8842b999e87a7741286847f5",
+      "scanner_findings": [],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/research_audit.md",
+      "sha256": "11506bd1e6484fec3066110b39a8a43b1c4b0b728202f9d7c23715241a44cbef",
+      "scanner_findings": [],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/levacetylleucine_challenger.md",
+      "sha256": "3824a1e4d2a8f8760cc0d80cc7b74d0734ca4706899c81b26597c9a0a5b639a2",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'BUB1B': nall-exact-content-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'BUBR1': nall-exact-content-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'GBA1-': nall-exact-content-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'JCI196137': nall-exact-content-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'LRRK2': nall-exact-content-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'LRRK2-': nall-exact-content-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'NCT06673056': nall-exact-content-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'S1474-4422': nall-exact-content-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'TK2': nall-exact-content-review: docs/levacetylleucine_challenger.md",
+        "non-synthetic biological identifier 'B1BUB': nall-exact-content-review: docs/levacetylleucine_challenger.md(reversed)",
+        "non-synthetic biological identifier 'APG06673056': nall-exact-content-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'F1474-4422': nall-exact-content-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'GX2': nall-exact-content-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': nall-exact-content-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': nall-exact-content-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'TON1-': nall-exact-content-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'WPV196137': nall-exact-content-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'YEEX2': nall-exact-content-review: docs/levacetylleucine_challenger.md(rot13)",
+        "non-synthetic biological identifier 'YEEX2-': nall-exact-content-review: docs/levacetylleucine_challenger.md(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/exposure_time_audit.md",
+      "sha256": "013054b220fcc87d6bf3ffa673237e5375429c1c0eedc7fd95dadd1f4381c63e",
+      "scanner_findings": [],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "docs/nall_source_data_audit.md",
+      "sha256": "d4477a96b67d10e61a99d2c84574345c033621c89e0e5c841b504c561c6f2d58",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'BUB1B': nall-exact-content-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'GBA1': nall-exact-content-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'GBA1-L444P': nall-exact-content-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'JCI196137': nall-exact-content-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'JCI196137DS1': nall-exact-content-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'LRRK2': nall-exact-content-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'LRRK2-R1441C': nall-exact-content-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'NALL': nall-exact-content-review: docs/nall_source_data_audit.md",
+        "non-synthetic biological identifier 'B1BUB': nall-exact-content-review: docs/nall_source_data_audit.md(reversed)",
+        "non-synthetic biological identifier 'C1441R-2KRRL': nall-exact-content-review: docs/nall_source_data_audit.md(reversed)",
+        "non-synthetic biological identifier 'P444L-1ABG': nall-exact-content-review: docs/nall_source_data_audit.md(reversed)",
+        "non-synthetic biological identifier 'OHO1O': nall-exact-content-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'TON1': nall-exact-content-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'TON1-Y444C': nall-exact-content-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'WPV196137': nall-exact-content-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'WPV196137QF1': nall-exact-content-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'YEEX2': nall-exact-content-review: docs/nall_source_data_audit.md(rot13)",
+        "non-synthetic biological identifier 'YEEX2-E1441P': nall-exact-content-review: docs/nall_source_data_audit.md(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "src/mva_hackathon/published_exposure.py",
+      "sha256": "24e8a13c529f27474adcf17dd9c8dcfe175e3277c8781c0e98f53127d393afdf",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'AUC': nall-exact-content-review: src/mva_hackathon/published_exposure.py"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "src/mva_hackathon/nall_source_data.py",
+      "sha256": "522fc7ae00a2ea9e38fa9be7b55e82f63ce99aa3c9d1f7bad6887ee71721a672",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'NALL': nall-exact-content-review: src/mva_hackathon/nall_source_data.py"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "scripts/compare_published_exposure.py",
+      "sha256": "d3f59120ef17127ec06edd8aad6857da14c73afbcde1b36ac9529e92afde89ee",
+      "scanner_findings": [],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "scripts/audit_nall_source_data.py",
+      "sha256": "1d1d99ade112df75d4628d0a1e67ae7034c8e396a9565077167f8392043247a4",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'JCI196137': nall-exact-content-review: scripts/audit_nall_source_data.py",
+        "non-synthetic biological identifier 'WPV196137': nall-exact-content-review: scripts/audit_nall_source_data.py(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "tests/test_published_exposure.py",
+      "sha256": "f08a9efa8e754162854fd536fa201615721752e727b572cd5889092891f21b9e",
+      "scanner_findings": [],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "tests/test_nall_source_data.py",
+      "sha256": "d0ac4eff1043ba549c3c2cb34b3f89b17732db856e0053e7361fa3be8e6233a3",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'B2': nall-exact-content-review: tests/test_nall_source_data.py",
+        "non-synthetic biological identifier 'B3': nall-exact-content-review: tests/test_nall_source_data.py",
+        "non-synthetic biological identifier 'B4': nall-exact-content-review: tests/test_nall_source_data.py",
+        "non-synthetic biological identifier 'B6': nall-exact-content-review: tests/test_nall_source_data.py"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "configs/published-exposure-inputs.json",
+      "sha256": "6d8b6d9ce406b448d024dd5245a4ea31116112f8e5f0bcf98b64681219d27f9b",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'HPN-100-006': nall-exact-content-review: configs/published-exposure-inputs.json",
+        "non-synthetic biological identifier 'SPISC-102': nall-exact-content-review: configs/published-exposure-inputs.json",
+        "non-synthetic biological identifier 'FCVFP-102': nall-exact-content-review: configs/published-exposure-inputs.json(rot13)",
+        "non-synthetic biological identifier 'UCA-100-006': nall-exact-content-review: configs/published-exposure-inputs.json(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    },
+    {
+      "path": "configs/nall-source-data.json",
+      "sha256": "81b8f6ec40c9ae3d628ee1a79526662d553574a5c4bda20c45ec9189027613fc",
+      "scanner_findings": [
+        "non-synthetic biological identifier 'JCI196137': nall-exact-content-review: configs/nall-source-data.json",
+        "non-synthetic biological identifier 'R1441C': nall-exact-content-review: configs/nall-source-data.json",
+        "non-synthetic biological identifier 'SD': nall-exact-content-review: configs/nall-source-data.json",
+        "non-synthetic biological identifier 'WPV196137': nall-exact-content-review: configs/nall-source-data.json(rot13)"
+      ],
+      "source_class": "Public primary literature, official records, existing public case labels, proposed research methods"
+    }
+  ],
+  "provenance": "Public primary research, product labels, trial records, event rules and existing public entry. No controlled participant payload, private clinical document or answer key accessed.",
+  "scientific_reviews": [
+    "outputs/nall-round-scientific-audit-2026-10-23.json",
+    "outputs/published-exposure-independent-audit-2026-10-23.json",
+    "outputs/nall-source-data-independent-audit-2026-10-23.json",
+    "outputs/nall-package-audit-2026-10-23.json"
+  ],
+  "scanner_changed": false,
+  "diagnostics_removed": false,
+  "legacy_all_history_result": "NO-GO; no new completed all-history clearance",
+  "frozen_release_changed": false,
+  "operator_attestation_adopted": false,
+  "privacy_allowance_granted": false,
+  "clinical_advancement_granted": false,
+  "portal_submission_performed": false
+}

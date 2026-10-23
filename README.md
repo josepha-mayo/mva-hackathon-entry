@@ -9,7 +9,7 @@ No benefit to the child has been demonstrated.
 
 ## Start with the experiment
 
-**Current neural comparison:** [phenylbutyrate versus elamipretide](docs/neural_protection_comparison.md), testing protein-stress and mitochondrial support against the same useful function. PBA has closer actual-drug human aneuploid-cell marker evidence; elamipretide retains neuronal/animal positives and substantive human trial negatives. Neither has demonstrated useful BUB1B neural rescue. A bounded eight-condition comparison follows measured exposure qualification; no overall drug winner is established.
+**Current neural comparison:** [phenylbutyrate, elamipretide and levacetylleucine](docs/neural_protection_comparison.md), judged on the same useful function. [Levacetylleucine](docs/levacetylleucine_challenger.md) adds randomized human functional benefit in A–T and September 2026 approval, while its BUB1B bridge remains unproved. PBA has closer human aneuploid-neuron stress-marker evidence; elamipretide retains neuronal/animal positives and human trial negatives. The proposed eight conditions use two genotypes by vehicle/three drug profiles; NAC remains an optional neural follow-up. No overall efficacy rank or BUB1B rescue is established. The [executed exposure-time audit](docs/exposure_time_audit.md) challenges peak-only comparisons without predicting drug benefit.
 
 **Current medicine hypotheses:** a limited ataluren stop-allele arm, separate
 fasudil/active-metabolite ciliary comparison and a cilostazol/metabolite barrier

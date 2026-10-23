@@ -1,0 +1,37 @@
+{
+  "schema": "mva.public-literature-exposure/v1",
+  "purpose": "Reproduce public aggregate exposure arithmetic; no individual PK model, brain prediction, efficacy or advancement decision.",
+  "pba": {
+    "analyte": "parent phenylbutyric acid",
+    "molecular_weight_g_mol": 164.2011,
+    "molecular_weight_basis": "free acid, not sodium salt, phenylacetate or glycerol prodrug",
+    "molecular_weight_source": "https://pubchem.ncbi.nlm.nih.gov/compound/4-Phenylbutyric-acid",
+    "clinical_source": "https://doi.org/10.1002/hep.26058",
+    "clinical_context": "Adult UCD randomized crossover HPN-100-006; 44 completers; repeated 24-hour plasma sampling after 14 days of each formulation at PBA-equivalent maintenance treatment. Aggregate parent-PBA AUC values, not the ammonia efficacy endpoint or raw participant curves.",
+    "clinical_auc_unit": "ug*h/mL",
+    "clinical_interval_hours": 24,
+    "clinical_profiles": [
+      {"formulation": "glycerol phenylbutyrate", "total_parent_auc": 433},
+      {"formulation": "sodium phenylbutyrate", "total_parent_auc": 508}
+    ],
+    "binding_source": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=900e7dc0-9afe-4f50-80de-90567bb78519",
+    "external_plasma_bound_fraction_range": [0.81, 0.98],
+    "binding_boundary": "External in-vitro protein-binding range; illustrative fixed-fraction sensitivity only, not measured free AUC, a confidence interval or a bound on every patient. Binding may vary over time and concentration.",
+    "culture_source": "https://doi.org/10.1038/s41598-020-70362-x",
+    "culture_nominal_uM": 100,
+    "culture_treatment_days": 14,
+    "culture_reference_hours": 24,
+    "culture_reference_boundary": "An assumed maintained 100 uM reference over 24 hours; the paper does not measure this concentration-time integral, free-medium fraction or intracellular profile. Do not multiply clinical AUC by 14 or claim equivalent temporal exposure.",
+    "assumed_medium_free_fractions": [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0]
+  },
+  "elamipretide": {
+    "analyte": "parent elamipretide",
+    "source": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2025/215244Orig1s000IntegratedR.pdf",
+    "location": "FDA Table 7, printed page 26 / PDF page 95",
+    "context": "SPISC-102; five healthy volunteers; matched steady-state summaries after seven days of 40 mg subcutaneous once-daily treatment. These study details describe published observations, not a proposed dose.",
+    "cmax_ng_ml": 1370,
+    "auc_tau_ng_h_ml": 3850,
+    "tau_hours": 24,
+    "boundary": "Ratio of group mean peak times interval to group mean measured AUC. No concentration-time curve is reconstructed; a peak held constant is an invented reference, not observed exposure. No between-drug efficacy comparison follows."
+  }
+}
