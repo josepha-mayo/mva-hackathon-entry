@@ -6,19 +6,18 @@ exact genotype, clinical benefit, or acceptable risk for this child.
 
 ## Decision
 
-**No medicine is selected as a treatment lead.** Arimoclomol and formulation-
-specific phenylbutyrate remain unranked exploratory compounds. A negative
-search for better alternatives does not qualify either incumbent. The
-[current treatment-evidence decision](treatment_evidence.md) removes that
-remaining anchor and qualifies the nominal exposure rule. The actionable hypothesis
-is that **recoverable function, the measured loss stage and attainable
-cellular pharmacodynamics must jointly choose the intervention**. A drug
-that raises amount without restoring faithful division does not qualify.
+**NAC is a conditional research nomination; no medicine is an established
+treatment lead.** The [redox-fork design](redox_fork.md) tests protection from
+oxidative amplification against release of abnormal-cell restraint. This
+is an informative experiment priority, not predicted efficacy or a comparative
+drug ranking. The [current decision](treatment_evidence.md) retains arimoclomol
+and formulation-specific phenylbutyrate as separate supply hypotheses.
 
-The initial resource commitment is a small, qualified bridge experiment in
-accessible renewable material. Exact-genotype material follows only if
-causal, functional and exposure prerequisites are met. This is a proposed
-experiment; none has been executed here.
+A small qualified renewable-cell phenotypic pilot can proceed alongside
+mechanistic attribution. Exact-allele confirmation, candidate-specific
+exposure, function and independent replication are needed for stronger claims;
+complete turnover identification is not required before every exploratory
+condition. None of these experiments has been executed here.
 
 The sharper rival is **defective coordination of checkpoint hold with
 attachment/release**, even at normal protein amount. The accompanying
@@ -28,10 +27,12 @@ global phosphatase activator or an engineered recruitment reagent as a medicine.
 
 | Candidate or route | Best supporting evidence | Decisive missing link or counterevidence | Research disposition |
 |---|---|---|---|
+| NAC | Direct BUBR1/MAD2 preservation under oxidant stress; separate Sod1-oocyte chromosome result; approved oral medicine | NAC also weakened ATM�p53 restraint in other checkpoint-defective cells; exact-genotype function and exposure unresolved | Conditional protective nomination; test the redox fork, not growth alone |
+| Hydroxychloroquine | BUBR1 band increased in late-passage WJ-MSCs | Retained LC3-associated cargo may be nonfunctional; another study delayed mitotic chromatin dynamics; exposure/compartment gaps | Conditional lysosomal-loss comparator |
 | Arimoclomol | US approval in NPC with miglustat; proteostasis responses in other systems | BUBR1 dependence on HSP90 does not establish rescue by this drug. Basal-state response at qualified exposure and useful exact-allele function are untested | Unranked exploratory compound; no treatment lead |
 | Phenylbutyrate, specifying formulation | Functional rescue of other unstable proteins; pediatric UCD use and some human repurposing experience | No direct BUBR1 rescue identified. Millimolar nominal cell exposure, binding/time-course gaps, conflicting disease-model results, metabolic toxicity | Unranked exploratory compound; requires its own exposure and response bridge |
 | Teprenone / GGA | Human atrial HSPB1/HSPA1 induction; Japanese medicinal product listing | Adult surgical tissue is not the child's relevant compartment. No direct BUBR1 response; induction is cell-state dependent, and the required HSP90 bridge is missing | Park until target response and relevant exposure are qualified |
-| Nicotinic acid | A marketed precursor; NAPRT-dependent NAD elevation in human cells, separate SIRT2/BUBR1 pathway biology | NA-to-functional-BUBR1 chain untested; cell-context conflict, cancer counterevidence for other NAD precursors, pediatric label gap | Park; reopen only for a demonstrated maintenance bottleneck |
+| Nicotinic acid | Marketed precursor; NAPRT-dependent NAD response, separate SIRT2/BUBR1 biology and toxin-oocyte functional positives | NA-to-functional-BUBR1 chain untested; cell-context conflict and pediatric-development gap | Conditional maintenance/redox hypothesis; pediatric labeling is not an event eligibility rule |
 | Marketed-medicine phenotype screen | Can discover a mechanism missed by the selected stories | Needs a reproducible basal phenotype, material budget, eligible compounds and each compound's exposure qualification | Preserve as the baseline's unexecuted fallback; confirm function and daughter outcomes |
 
 These routes are not an untested cocktail. A strong clinical label cannot
@@ -60,7 +61,7 @@ the abstract's broad wording into universal rescue. Neither target is BUBR1.
 [DeLeeuw et al., 2026](https://doi.org/10.1002/acn3.70430)
 
 The negative 2026 zebrafish study found no locomotion or seizure rescue under
-its tested conditions. Its body reports locomotion at 25–50 micromolar, but
+its tested conditions. Its body reports locomotion at 25�50 micromolar, but
 Figure 1D's caption says 10/25; that discrepancy needs clarification. The
 seizure test used an acute 50-micromolar exposure. The reported negative
 locomotion Z-prime also limits confidence in assay separation. Null fish,
@@ -85,14 +86,14 @@ account of this route. Glycerol phenylbutyrate is a prodrug, hydrolyzed to PBA
 and then metabolized to PAA. Its UCD active moiety PAA is not a substitute
 for measuring PBA for the proposed chaperone hypothesis. A direct culture
 experiment cannot assume intact prodrug provides an equivalent PBA exposure.
-The label reports 81–98% in-vitro PBA protein binding. Sodium burden belongs
+The label reports 81�98% in-vitro PBA protein binding. Sodium burden belongs
 to sodium formulations; removing sodium does not remove the other risks.
 [RAVICTI US label, sections 8.4 and 12](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=900e7dc0-9afe-4f50-80de-90567bb78519)
 
 The adjacent arithmetic receipt converts a reported healthy-adult mean total
 PBA peak of 100 micrograms/mL to approximately 609 micromolar using the acid
 molecular mass. Applying the label's binding-range endpoints gives an
-illustrative 12–116-micromolar free range, **not measured free exposure**.
+illustrative 12�116-micromolar free range, **not measured free exposure**.
 The 2,000-micromolar nominal culture example is about 3.28 times that reported
 total peak. This is neither an exposure ceiling nor a free-exposure ratio:
 medium binding, intracellular exposure, duration and pediatric values remain
@@ -169,7 +170,8 @@ Improved survival alone cannot select a treatment.
 
 1. In accessible, independently characterized renewable models, qualify
    protein/function measurements, the intended basal state, exposure and
-   controls. Independently identify input and recovery. Measure division
+   controls. Identify input/recovery for turnover claims; a qualified
+   phenotypic pilot can proceed in parallel. Measure division
    completion as well as errors; image counts do not create biological replicates.
 2. A recoverable supply defect can justify testing a mechanism class, but
    cannot qualify either named drug. Measure each compound's own relevant
@@ -181,8 +183,9 @@ Improved survival alone cannot select a treatment.
    basal responsiveness. See the current treatment-evidence decision.
 3. For mature-maintenance loss, first test whether the relevant NAD/SIRT2
    link actually controls useful BUBR1. A precursor-induced NAD rise without
-   target/function response is a mechanistic negative. Nicotinic acid remains
-   parked until its own bridge and exposure/safety requirements are met.
+   target/function response fails that proposed mechanistic chain under
+   the tested conditions. It does not automatically exclude another useful
+   phenotypic mechanism. Nicotinic acid needs its own exposure and safety bridge.
 4. Advance only after exact-genotype confirmation, appropriate correction
    comparators and independent replication. Require function in the relevant
    tissue/state, faithful completed divisions, daughter-genotype/fate

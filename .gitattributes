@@ -101,3 +101,6 @@
 /tests/test_fixed_horizon.py text eol=lf
 /tests/test_timestamp_chain.py text eol=lf
 /templates/community/fixed_horizon.synthetic.json text eol=lf
+/README.md text eol=lf
+/docs/redox_fork.md text eol=lf
+/release/redox-literature-review.json text eol=lf

@@ -9,11 +9,17 @@ No benefit to the child has been demonstrated.
 
 ## Start with the experiment
 
-**Treatment-evidence decision:** no medicine is selected as a treatment lead.
-Arimoclomol and formulation-specific phenylbutyrate are unranked exploratory
-compounds. The [current decision](docs/treatment_evidence.md) removes the
-incumbent-drug anchor and distinguishes a mechanism experiment from a
-medicine response, clinical feasibility and benefit to the child.
+**Current medicine hypothesis:** nominate acetylcysteine (NAC) for a bounded
+test of oxidative amplification. The [redox-fork design](docs/redox_fork.md)
+sets its positive evidence against a close counterexample: antioxidant
+response can weaken abnormal-cell restraint. The proposed experiment measures
+new errors and daughter outcomes, not growth or protein abundance alone.
+No exact-genotype rescue or treatment lead is established. HCQ, nicotinic acid,
+arimoclomol and formulation-specific PBA remain distinct conditional branches.
+
+Read the [current medicine decision](docs/treatment_evidence.md). The new
+research cards supersede the prior incumbent-drug framing. The matching
+report candidate is being prepared separately for the next submission.
 
 **Current audit correction:** the frozen v1 lineage checker does not enforce
 its stated fixed daughter horizon and mislabels mother-attempt duration as
@@ -29,11 +35,11 @@ neural output after a deficit exists, while preserving the precursor pool
 and faithful divisions? Developmental mouse genetics support investigating
 FRZB/sFRP3; they do not yet select a medicine or establish postnatal repair.
 
-The proposed rescue route depends on an unresolved question: **where is
+The proposed protein-supply route depends on an unresolved question: **where is
 functional checkpoint protein being lost?** Low input, loss before assembly,
 clearance after assembly, and protein that remains defective when abundant
-can demand different experiments. A folding hypothesis must survive that
-comparison before it earns a drug screen.
+can demand different experiments. This comparison tests the folding hypothesis; a qualified renewable-cell
+phenotypic pilot can proceed alongside it.
 
 [The functional-supply experiment card](docs/functional_supply.md) turns this
 question into competing predictions and a small, staged assay design. Its
@@ -57,8 +63,7 @@ checkpoint hold with attachment and release even at normal abundance.
 A controlled local-recruitment bypass tests downstream sufficiency; it is
 an experimental comparator, not a proposed medicine.
 [The primary-source medicine evidence](docs/drug_decision.md) preserves
-positive and negative observations without assigning either compound
-comparative priority.
+positive and negative observations without treating the named medicines as a measured comparative ranking.
 
 [The faithful-completion audit](docs/faithful_completion.md) adds a concrete
 failure case: aligned chromosomes and a preserved arrest response can still
@@ -116,7 +121,7 @@ and a three-minute YouTube/Vimeo pitch; the panel reviews the latest of at most
 three Track 2 submissions. [Official challenge](https://huggingface.co/spaces/SageBio/rare-disease-real-kid-mva-hackathon-2026).
 
 Requirements were checked against official source commit
-`60e1c30e337ce6fe01813040dbe49979eb8c50aa` on 22 October. Live authenticated inspection on 22 October showed 1 of 3 Track 2 submissions
+`60e1c30e337ce6fe01813040dbe49979eb8c50aa`, freshly rechecked on 23 October. Live authenticated inspection on 22 October showed 1 of 3 Track 2 submissions
 used and 2 remaining. No new hackathon submission was made in this audit.
 The [three-minute research preview](https://www.youtube.com/watch?v=zvhfD3gN97s)
 is hosted unlisted, with generic synthetic narration disclosed. Its hosting
@@ -175,13 +180,13 @@ the missing observation/safety contract or evidence of biological efficacy.
 - [AI / LLM methods line](reports/TRACK2_AI_LINE.md)
 - [Candidate evidence-ledger template](templates/track2_candidate_ledger.synthetic.json)
 - [Scarce-sample stewardship template](templates/track2_sample_stewardship.synthetic.json)
-- [Candidate search protocol](configs/track2-candidate-search-protocol.json) (`track2-candidate-search-v3`; `searched_on` 2026-09-10 — the catalog-refresh pass found no primary wet assay; frequency, conservation, ClinVar, a public software catalog, software proof wording, and an official medicine label are exclusion axes, not hits)
+- [Candidate search protocol](configs/track2-candidate-search-protocol.json) (`track2-candidate-search-v3`; `searched_on` 2026-09-10 � the catalog-refresh pass found no primary wet assay; frequency, conservation, ClinVar, a public software catalog, software proof wording, and an official medicine label are exclusion axes, not hits)
 - [Community templates](templates/community/README.md)
 
-Current drug dispositions are in the treatment-evidence card above:
-arimoclomol and formulation-specific phenylbutyrate are unranked exploratory
-compounds, and nicotinic acid remains parked behind the
-unproven NAPRT/NAD/SIRT2 maintenance chain. Neither abundance, a nearby allele,
+Current drug dispositions are in the treatment-evidence card above: NAC is a
+conditional protective nomination, HCQ a clearance comparator, and nicotinic
+acid, arimoclomol and formulation-specific phenylbutyrate retain separate
+maintenance or supply hypotheses. Neither abundance, a nearby allele,
 an ectopic construct nor a computational result substitutes for exact-allele
 causality and useful function. Develop assays in renewable material before
 considering scarce native material. Exposure, independent replication,

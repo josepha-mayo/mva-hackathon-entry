@@ -1,6 +1,6 @@
 # Exact public-source research review
 
-Reviewed 22–23 October 2026 by Codex in the user-authorized repository audit.
+Reviewed 22�23 October 2026 by Codex in the user-authorized repository audit.
 
 The reference parser, audit corrections, invented test fixtures and literature
 cards contain public reference biology, standard code and published research. They contain no
@@ -33,8 +33,15 @@ release manifest. The frozen policy and signed baseline are unchanged.
 
 The all-history privacy gate remains **NO-GO**, including historical unbound
 report edits and identifier findings. This review does not clear history,
-adopt the prepared operator statements, countersign an attestation, or cover
-a new final report. It grants no biological or clinical advancement. A test
+adopt the prepared operator statements or countersign an attestation. The
+23 October identifier-only review includes the README named in its record.
+The new redox card has a [separate exact-content review](../release/redox-literature-review.json):
+the unchanged scanner treats a punctuation-joined FDA citation URL as base64,
+whose random binary decode contains a NUL. Its non-identifier diagnostic is
+retained. The exact plaintext was reviewed as a public source link; this is
+not an identifier-only checker pass or a new privacy allowance. The separate
+report candidate requires its own final upload review. Neither review grants
+biological or clinical advancement. A test
 pass proves specified software behavior only.
 
 The last completed all-history scan was at the prior public checkout.

@@ -1,13 +1,21 @@
-# No treatment lead is established: choose the functional route first
+# A conditional medicine nomination with a test that can reject it
 
-Research decision · 23 October 2026 · unsigned
+Research decision � 23 October 2026 � unsigned
 
-**Arimoclomol and formulation-specific phenylbutyrate are unranked exploratory
-compounds. No medicine is selected as a treatment lead.** Published responses
-in other diseases justify questions to test, but do not establish activity
-against the proposed BUB1B genotype. Not finding a stronger alternative does
-not validate an incumbent. Neither laboratory rescue nor benefit for the child
-has been demonstrated.
+**Acetylcysteine (NAC) is nominated for a bounded test of oxidative
+amplification in BUB1B-associated MVA. No treatment lead is established.**
+The [redox-fork hypothesis](redox_fork.md) pairs direct checkpoint-protein
+preservation and a separate chromosome-spread positive with the strongest
+opposing observation: NAC can weaken ATM�p53 restraint in other
+checkpoint-defective cells. The experiment must distinguish fewer new errors
+from increased persistence of abnormal lineages.
+
+Hydroxychloroquine is a conditional lysosomal-loss comparator; nicotinic acid,
+arimoclomol and sodium phenylbutyrate retain distinct maintenance or supply
+hypotheses. Glycerol phenylbutyrate is a separate prodrug/formulation question.
+No overall drug ranking, exact-allele response or benefit for the child is
+established. Nomination is appropriate before clinical validation; approval
+elsewhere does not establish MVA safety or efficacy.
 
 The earlier lead/challenger ranking is not adopted by this reassessment.
 The signed historical report retains that wording as an auditable record.
@@ -20,7 +28,7 @@ allele-defined assay development can proceed while documentation is reviewed;
 the unresolved treatment question is mechanism and drug responsiveness.
 [Official organizer overview](https://huggingface.co/spaces/SageBio/rare-disease-real-kid-mva-hackathon-2026/blob/main/tabs/about.py)
 
-## The positive evidence is narrower than a drug nomination
+## A plausible nomination is different from an established treatment lead
 
 The primary BUBR1 work supports distinguishing deficient protein abundance
 from persistent dysfunction. Raising certain other mutant constructs to
@@ -44,7 +52,7 @@ the [medicine evidence card](drug_decision.md). Its own formulation, active
 analyte, exposure profile and useful BUBR1 response are unqualified. A named
 comparison is not a measured ranking.
 
-## The smallest comparison that can change the decision
+## Mechanism comparison alongside a qualified phenotypic pilot
 
 In qualified renewable material, compare WT and unchanged missense sequence
 over assigned, overlapping physiological full-length abundance ranges, with
@@ -60,13 +68,14 @@ localization or a brighter protein band cannot substitute for that outcome.
 
 | Result in a qualified comparison | What changes |
 |---|---|
-| Unchanged missense protein supports useful function at appropriate supply | A supply-directed mechanism remains plausible; distinguish input, early loss and mature loss before choosing a compound |
+| Unchanged missense protein supports useful function at appropriate supply | A supply-directed mechanism remains plausible; distinguish input, early loss and mature loss for attribution while a qualified phenotype pilot can proceed |
 | Amount is appropriate but function remains abnormal | Amount alone is insufficient under that regimen; this does not reject every conformational corrector or mechanism-independent phenotypic hit |
 | WT and correction references fail, RNA/product identity is unresolved, or the comparison is selected/confounded | The assay is unqualified; do not call a drug or mechanism ineffective |
 | A reproducible exact-genotype basal phenotype and a separable functional assay exist | A resource-limited marketed-medicine screen can test unknown mechanisms; each hit still needs its own exposure-qualified confirmation |
 
-This comparison selects a mechanism branch, not a drug. Each exploratory
-compound must subsequently earn priority through its own measured relevant
+This comparison informs a mechanism branch. It is not a universal
+prerequisite for a small qualified renewable-cell medicine pilot. Each
+exploratory compound must earn further priority through its own measured relevant
 cellular response, exposure/time profile, useful function and independent
 confirmation. A functional bypass also does not prove the original molecular
 lesion. Tissue-level relevance remains a separate requirement.

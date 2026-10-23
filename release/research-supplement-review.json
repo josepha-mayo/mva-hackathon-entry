@@ -13,6 +13,14 @@
   "frozen_baseline_changed": false,
   "files": [
     {
+      "path": "README.md",
+      "sha256": "37224f73160a65a9bf163d21f688f7c34d53173647a1c0cead853d6e962dc4de",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
       "path": "src/mva_hackathon/reference_audit.py",
       "sha256": "cc888e37c15d808f85688edbf7ca66dc84a80089fe359fd516b21da813a361b8",
       "source_class": "standard code and invented fixtures",
@@ -59,10 +67,10 @@
     },
     {
       "path": "docs/drug_decision.md",
-      "sha256": "7cf0b435e3c2ec58d8269f0fd7967673a80c78cf6f8f1e7f7ef080ce2048b4af",
+      "sha256": "a44effd5383ae0a4dbd8b22b8b558c6ea634150a4a28ca9a15f5d887a691f75d",
       "source_class": "public literature and references",
-      "identifier_finding_count": 43,
-      "identifier_findings_sha256": "f95f27510c3304065858293e689ff102222849978b4b69827b690fa355a70608",
+      "identifier_finding_count": 47,
+      "identifier_findings_sha256": "e04f919879c701b3a886b7671bac2349ab9bda364d0aadcadb2b6e14d9a2d6a6",
       "retained_identifier_findings": [
         "non-synthetic biological identifier 'AM2025-4168': public-source-review: docs/drug_decision.md",
         "non-synthetic biological identifier 'BUB1': public-source-review: docs/drug_decision.md",
@@ -75,6 +83,8 @@
         "non-synthetic biological identifier 'K668': public-source-review: docs/drug_decision.md",
         "non-synthetic biological identifier 'L1002P': public-source-review: docs/drug_decision.md",
         "non-synthetic biological identifier 'L1012P': public-source-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'LC3-': public-source-review: docs/drug_decision.md",
+        "non-synthetic biological identifier 'MAD2': public-source-review: docs/drug_decision.md",
         "non-synthetic biological identifier 'N1002K': public-source-review: docs/drug_decision.md",
         "non-synthetic biological identifier 'N1002R': public-source-review: docs/drug_decision.md",
         "non-synthetic biological identifier 'PBA': public-source-review: docs/drug_decision.md",
@@ -106,7 +116,9 @@
         "non-synthetic biological identifier 'X1002': public-source-review: docs/drug_decision.md(rot13)",
         "non-synthetic biological identifier 'X668': public-source-review: docs/drug_decision.md(rot13)",
         "non-synthetic biological identifier 'Y1002C': public-source-review: docs/drug_decision.md(rot13)",
-        "non-synthetic biological identifier 'Y1012C': public-source-review: docs/drug_decision.md(rot13)"
+        "non-synthetic biological identifier 'Y1012C': public-source-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'YP3-': public-source-review: docs/drug_decision.md(rot13)",
+        "non-synthetic biological identifier 'ZNQ2': public-source-review: docs/drug_decision.md(rot13)"
       ]
     },
     {
@@ -216,15 +228,15 @@
     },
     {
       "path": "docs/treatment_evidence.md",
-      "sha256": "7901d5f70bae7c59f43535232d2731a528db401643cf132fc1acd4044f7ad480",
+      "sha256": "3bd945b709175aff6bd34cbdbdd5e57ee073ee5a871ed74c95bb37e453c41d98",
       "source_class": "public literature and references",
       "identifier_finding_count": 5,
-      "identifier_findings_sha256": "7087fa74fc510fe402c92c22bddaa0c362e3d3603be85d5e39b465e11f8ffb00",
+      "identifier_findings_sha256": "83bf06dddebe20058495f0e2712aa472a0ad36b3ae4828e261c2489cef9b77fa",
       "retained_identifier_findings": [
-        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/treatment_evidence.md",
+        "non-synthetic biological identifier 'BUB1B-': public-source-review: docs/treatment_evidence.md",
         "non-synthetic biological identifier 'BUBR1': public-source-review: docs/treatment_evidence.md",
         "non-synthetic biological identifier 'B1BUB': public-source-review: docs/treatment_evidence.md(reversed)",
-        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/treatment_evidence.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O-': public-source-review: docs/treatment_evidence.md(rot13)",
         "non-synthetic biological identifier 'OHOE1': public-source-review: docs/treatment_evidence.md(rot13)"
       ]
     },
