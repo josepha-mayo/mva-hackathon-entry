@@ -79,7 +79,7 @@ stop-allele rescue. A useful response through another mechanism remains worth
 investigating under its correct name. Qualified failure retires the tested
 condition; assay failure is unresolved, not a negative medicine result.
 
-Fasudil/belumosudil and cilostazol remain independently testable when a relevant
+Fasudil/hydroxyfasudil and cilostazol/metabolites remain independently testable when a relevant
 ciliary or barrier defect is established. They need not wait for ataluren to
 fail. NAC remains a comparator. No combination or comparative efficacy ranking
 is proposed.

@@ -10,7 +10,9 @@ No benefit to the child has been demonstrated.
 ## Start with the experiment
 
 **Current medicine hypotheses:** a limited ataluren stop-allele arm, separate
-fasudil/belumosudil ciliary hypotheses and a cilostazol barrier hypothesis.
+fasudil/active-metabolite ciliary comparison and a cilostazol/metabolite barrier
+hypothesis. Belumosudil is reserved; selumetinib is deferred after direct-drug
+counterevidence. Human trial negatives and assay-context limits are retained.
 NAC remains a protective comparator. The [ataluren challenge](docs/stop_allele_challenge.md)
 retains both the meaningful positives and the negative controlled human trials.
 The [tissue comparison](docs/tissue_candidates.md) identifies each candidate's

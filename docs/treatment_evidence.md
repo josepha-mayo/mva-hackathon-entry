@@ -3,8 +3,10 @@
 Research decision · 23 October 2026 · unsigned
 
 **Ataluren receives a limited stop-allele feasibility arm alongside one
-available, qualified tissue-function module.** Fasudil and belumosudil remain
-distinct ciliary hypotheses; cilostazol is a barrier-support hypothesis. NAC
+available, qualified tissue-function module.** Fasudil and its active
+metabolite form a ciliary comparison; cilostazol and its metabolites form a
+barrier comparison. Belumosudil is reserved for confirmation; selumetinib is
+deferred after direct-drug counterevidence. NAC
 remains a protective comparator. No overall efficacy ranking or treatment
 lead is established. The [ataluren challenge](stop_allele_challenge.md) weighs
 native-context and human positives against failed controlled trials,

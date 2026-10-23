@@ -7,8 +7,10 @@ exact genotype, clinical benefit, or acceptable risk for this child.
 ## Decision
 
 **Ataluren receives a limited stop-allele feasibility arm alongside one
-available, qualified tissue-function module.** Fasudil and belumosudil remain
-distinct ciliary hypotheses; cilostazol is a barrier-support hypothesis. NAC
+available, qualified tissue-function module.** Fasudil and its active
+metabolite form a ciliary comparison; cilostazol and its metabolites form a
+barrier comparison. Belumosudil is reserved for confirmation; selumetinib is
+deferred after direct-drug counterevidence. NAC
 remains a protective comparator. No overall efficacy ranking or treatment
 lead is established. The [ataluren challenge](stop_allele_challenge.md) weighs
 native-context and human positives against failed controlled trials,
@@ -23,8 +25,9 @@ perfect mechanism is not an entry requirement. The
 maintenance and supply evidence is retained below.
 
 The [broader alternative challenge](alternative_challenge.md) preserves a
-conditional selumetinib/MAPK experiment while separating the U0126 alignment
-positive from an unproved approved-drug or completed-division result. It also
+deferred selumetinib/MAPK mechanism question. Actual-drug BUB1B-depletion
+viability counterevidence strengthens the case against transferring U0126 alignment
+to an approved-drug or completed-division rescue. It also
 records why G-CSF substitution, senolytic model conflation and low-dose
 microtubule stabilization do not displace the current finite pilot.
 
@@ -43,8 +46,9 @@ global phosphatase activator or an engineered recruitment reagent as a medicine.
 | Candidate or route | Best supporting evidence | Decisive missing link or counterevidence | Research disposition |
 |---|---|---|---|
 | Ataluren | Native-context cellular positives and a three-person uncontrolled SDS series | Negative controlled CF/pediatric CNS trials; no exact-stop useful BUBR1 result; exposure/product uncertainty | Limited feasibility arm, not exclusive priority; see stop-allele challenge |
-| Fasudil / belumosudil | Compound-specific ciliary positives in other genetic models | BUBR1 ciliary phenotype and regulated functional rescue unproved; metabolites/readouts differ | Separate ciliary conditions; no pooled class efficacy claim |
-| Cilostazol | Functional barrier positives in a separate rat system | Low-BubR1 mouse barrier phenotype is a different experiment; exact-genotype deficit/exposure unknown | Parallel barrier hypothesis if a suitable platform exists |
+| Fasudil / hydroxyfasudil | Ciliation positives in other genetic models | Gli compound identity unresolved; plasma/CSF exposure gap; no BUB1B drug rescue | Separate parent/metabolite conditions; belumosudil reserved pending free-exposure bridge |
+| Cilostazol | Rat barrier function; a human endothelial positive under added forskolin | COMCID/DREAM negative; cAMP conditioning and parent/metabolite exposure unresolved | Conditional five-condition barrier experiment; no strongest-route rank |
+| Selumetinib | U0126 alignment positive in a transformed BUBR1-depletion model, not a selumetinib result | Actual-drug BUB1B synthetic-lethality screen hit in one cancer line; arrest escape/CNV counterevidence | Defer from first pilot; retain only a qualified later mechanism question |
 | NAC | Direct BUBR1/MAD2 preservation under oxidant stress; separate Sod1-oocyte chromosome result; approved oral medicine | NAC also weakened ATM–p53 restraint in other checkpoint-defective cells; exact-genotype function and exposure unresolved | Conditional protective nomination; test the redox fork, not growth alone |
 | Hydroxychloroquine | BUBR1 band increased in late-passage WJ-MSCs | Retained LC3-associated cargo may be nonfunctional; another study delayed mitotic chromatin dynamics; exposure/compartment gaps | Conditional lysosomal-loss comparator |
 | Arimoclomol | US approval in NPC with miglustat; proteostasis responses in other systems | BUBR1 dependence on HSP90 does not establish rescue by this drug. Basal-state response at qualified exposure and useful exact-allele function are untested | Unranked exploratory compound; no treatment lead |
@@ -210,8 +214,11 @@ Improved survival alone cannot select a treatment.
    phenotypic mechanism. Nicotinic acid needs its own exposure and safety bridge.
 4. Advance only after exact-genotype confirmation, appropriate correction
    comparators and independent replication. Require function in the relevant
-   tissue/state, faithful completed divisions, daughter-genotype/fate
-   qualification, and justified uncertainty bounds on abnormal-clone fitness.
+   tissue/state and an appropriate harm assessment. Cycling or genomic-rescue
+   claims additionally require faithful completed divisions, daughter-genotype/fate
+   qualification and justified uncertainty bounds on abnormal-clone fitness.
+   A genuinely postmitotic functional benefit need not increase proliferation
+   or normalize every pre-existing chromosome.
    An uninformative experiment holds the decision; it is not an efficacy negative.
 
 Assay feasibility must determine material requirements, timing, uncertainty,

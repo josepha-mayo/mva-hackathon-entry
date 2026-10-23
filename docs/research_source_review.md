@@ -53,8 +53,16 @@ The later 23 October ataluren challenge adds the stop-allele, tissue-candidate,
 alternative-challenge and finite-pilot cards to the exact identifier review and refreshes the current
 README and decision-card bindings. Public primary papers, official product
 labels and explicit proposed methods are the sources. No controlled payload
-or clinical record was used. The [current content record](../release/function-literature-review.json)
-retains the unchanged scanner findings for these publication files. Earlier
+or clinical record was used. The [earlier function content record](../release/function-literature-review.json)
+retains the unchanged scanner findings for that historical publication. Earlier
 redox records describe their earlier bytes and do not cover later edits.
 The frozen report and historical signatures remain unchanged; this update
 does not claim exact-genotype rescue or a new portal submission.
+
+The subsequent cilostazol, fasudil and selumetinib challenge updates these
+cards and the finite pilot. The [current tissue-route content record](../release/tissue-literature-review.json)
+binds their new bytes and retained diagnostics. Compound-identity conflicts,
+conditioned assays, negative trials and measured-versus-derived exposure are
+explicit. Previous content receipts remain historical; the unchanged exact
+source checker is refreshed for the current reviewed files. No controlled
+data, patient-specific exposure or performed drug experiment is introduced.

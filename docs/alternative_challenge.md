@@ -6,25 +6,53 @@ genotype was identified in this bounded search. That is not proof of absence
 or evidence that ataluren is best. The main [decision](drug_decision.md) and
 [finite pilot](finite_pilot.md) retain independent functional hypotheses.
 
-## Selumetinib: a conditional extension, with an untested drug substitution
+## Selumetinib: defer from the first pilot after direct-drug counterevidence
 
-In RAS/MEK-transformed ARPE19 cells depleted of BUBR1, research MEK inhibitor
-U0126 improved chromosome alignment from below 50% to above 90%. The experiment
-used 10 micromolar U0126 and MG132 prevented mitotic exit. Untransformed
-BUBR1-depleted cells already aligned above 90%. Separate reduced-lagging and
-micronucleus experiments retained endogenous BUBR1. Thus the source supports
-an excessive-MAPK/attachment hypothesis, not completed faithful divisions in
-inherited BUB1B deficiency. [Primary PNAS study](https://doi.org/10.1073/pnas.2208255119)
+The positive alignment study used **U0126**, not selumetinib. Its ARPE19
+models combined TERT, dominant-negative TP53, CCND1 and mutant CDK4 with
+RAS/MEK transformation. In BUBR1-depleted transformed cells, 10 micromolar
+U0126 improved alignment during MG132-imposed mitotic hold. Untransformed
+depleted cells already aligned well; separate segregation positives retained
+endogenous BUBR1. The senescence-bypass modifications alone and the AKT control
+did not reproduce the defect, supporting the conditional MAPK interpretation.
+This does not show faithful completed divisions in inherited
+MVA. [PNAS 2022](https://doi.org/10.1073/pnas.2208255119)
 
-Selumetinib is a marketed MEK inhibitor, but it did not produce that published
-rescue. A small conditional comparison can ask whether an approved drug
-reproduces the useful effect in a model with excessive mitotic MAPK/Hec1
-activity. U0126 remains a research reference; its concentration cannot be
-assigned to selumetinib. Require unblocked segregation, completed cytokinesis
-and useful descendants, not alignment only during arrest. No such abnormal
-MAPK state is assumed in the child. The product label's high-exposure mouse
-aneugenicity result also requires a fidelity assessment; it is not proof of
-harm at clinical exposure. [KOSELUGO label](https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=7d042c61-f28f-4ab5-ab10-d7558c0d49ff)
+There is opposing evidence using the actual nominated drug. A pooled-siRNA
+screen identified **BUB1B depletion as a selumetinib synthetic-lethality hit**
+at 200 nM in SUM149 BRCA1-mutant/PTEN-deficient breast-cancer cells. It was
+not listed for the other tested line or the table's combined-analysis column.
+The screen measured viability, not rescued segregation, and did not establish
+a validated BUB1B-specific mechanism. Its transformed context and pooled-siRNA
+uncertainty prevent a claim of MVA toxicity, but the hit opposes assuming
+that MEK inhibition generally helps BUBR1-deficient cells.
+[Van Swearingen 2017, Table 1](https://doi.org/10.1093/neuonc/nox052)
+
+In another cancer model, cells escaped G1 arrest during continuous selumetinib
+with ERK still suppressed. Copy-number changes were found in 7/42 treated
+CCNB1-positive cells versus 0/43 treated CCNB1-negative cells. These are
+cross-sectional genome observations, not paired pre/post genomes or filmed
+chromosome-missegregation events. They motivate tracking escape and genome
+outcomes rather than interpreting cytostasis or a clean survivor subset as
+fidelity rescue. EdU itself produced permanent arrest in this study; it is
+not a neutral continuous lineage label. [NAR Cancer 2022](https://doi.org/10.1093/narcan/zcac032)
+
+The current label's 792 ng/mL total peak and 98.4% binding give an illustrative
+parent free estimate of about 28 nM, using free-base molecular mass. This is
+not measured free neural exposure, a pediatric-MVA limit or a way to convert
+10 micromolar U0126 into a selumetinib dose. The active N-desmethyl metabolite
+also contributes. Approved NF1 benefit in its own indication and high-exposure
+mouse aneugenicity must both retain their context.
+[KOSELUGO label](https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=7d042c61-f28f-4ab5-ab10-d7558c0d49ff)
+
+**Disposition:** keep selumetinib outside the first medicine pilot and reduce
+its priority as a general rescue nomination. A later
+mechanistic comparison would require an informative excessive mitotic
+MAPK/Hec1 state, an exposure bridge, and unblocked division/descendant
+outcomes. An acute mitotic perturbation could distinguish an attachment
+effect from prolonged G1 cytostasis; that remains an unexecuted laboratory
+question, not a selected schedule for a child. No such pathway state is
+assumed in this child.
 
 ## Direct-model positives cannot be transferred by pathway name
 
