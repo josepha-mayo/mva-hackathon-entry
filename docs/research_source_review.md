@@ -76,3 +76,12 @@ binds the changed public files. Earlier receipts remain evidence for their
 earlier bytes. The exact-source review is refreshed without altering the
 scanner or granting a historical release clearance. No controlled participant
 data, drug experiment or portal submission is introduced.
+
+The subsequent Sol/high challenge compares parent phenylbutyrate with
+elamipretide on a shared neural-function outcome. The
+[comparison](neural_protection_comparison.md) distinguishes disclosed
+apoptosis markers from useful output, induction from recovery, and parent
+drug from metabolite exposure. The
+[PBA/elamipretide content record](../release/pba-elam-literature-review.json)
+binds the current changed public bytes. Earlier records remain historical;
+no privacy allowance, clinical validation or new submission is inferred.

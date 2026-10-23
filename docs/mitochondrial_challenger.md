@@ -1,6 +1,8 @@
 # A second route: preserve useful neural output under chromosome instability
 
-Public-source research decision, 23 October 2026. **Elamipretide is nominated for a bounded mitochondrial-function experiment, not as a superior treatment.** It does not replace ataluren on clinical evidence, and no tested medicine has demonstrated rescue of the proposed BUB1B genotype. The hypothesis is that chromosome instability causes a secondary mitochondrial constraint that remains modifiable after a functional deficit appears. Neither that constraint nor a drug response is established in this child.
+Public-source research decision, 23 October 2026.
+
+**Current comparison:** the [phenylbutyrate-versus-elamipretide design](neural_protection_comparison.md) now replaces the original two-elamipretide-exposure neural module. The mitochondrial rationale and its evidence below remain; elamipretide has no exclusive priority. **Elamipretide is nominated for a bounded mitochondrial-function experiment, not as a superior treatment.** It does not replace ataluren on clinical evidence, and no tested medicine has demonstrated rescue of the proposed BUB1B genotype. The hypothesis is that chromosome instability causes a secondary mitochondrial constraint that remains modifiable after a functional deficit appears. Neither that constraint nor a drug response is established in this child.
 
 ## Why this is more specific than another antioxidant list
 
@@ -30,7 +32,7 @@ Omaveloxolone also inhibited LONP1 and induced mitochondrial aggregation in susc
 
 Use an available renewable neural model carrying the relevant genotype and an explicitly identified corrective/process reference. Establish baseline function and assay competence alongside the pilot. **For a recovery claim, document the deficit before adding drug.** Do not assume a stop-only corrected WT/N1002K line is fully normal.
 
-One initial module has **two genotypes by four conditions: vehicle, two elamipretide exposures and one NAC comparator**. This is eight assigned conditions before biological replication. It can replace the ciliary/barrier module when the neural platform is more relevant and ready; it is not an obligatory addition to every assay. Select measured exposures and duration prospectively with the responsible scientists. No clinical dose, achievable neural concentration, power or numerical safety margin is established here.
+The revised shared module has **two genotypes by four conditions: vehicle, one PBA exposure profile, one elamipretide profile and one NAC comparator profile**, following a bounded exposure scout. This is eight assigned conditions before biological replication. It can replace the ciliary/barrier module when the neural platform is more relevant and ready; it is not an obligatory addition to every assay. Select measured exposures and duration prospectively with the responsible scientists. No clinical dose, achievable neural concentration, power or numerical safety margin is established here.
 
 Measure evoked neural function per well with survival/coverage and starting-cell accounting. In a precursor model, additionally quantify functional neuronal output per enrolled precursor and remaining precursor reserve. Keep total functional output and per-surviving-neuron function separate so selective loss cannot manufacture improvement. Respiration, ATP-linked output and mitochondrial stress are supporting mechanism measurements, not substitutes for neural function. Randomized wells are treatment units; cells and descendants are not independent donors.
 

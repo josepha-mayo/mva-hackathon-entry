@@ -14,7 +14,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "7c8566a7c336e7dfb1480df79d25f35ea41cbd1ec003bbae0a47b35cc64cdff4",
+      "sha256": "0e5359d758953b7911cd6662f240a0cae1b19bc9a7f89ff8260fb4494ea611d6",
       "source_class": "public literature and references",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -67,7 +67,7 @@
     },
     {
       "path": "docs/drug_decision.md",
-      "sha256": "e9154fd648b1743534248f7a92cde9e2ba13ce9c75e0044adf1341e7251c503c",
+      "sha256": "7a43843c14cdf67a54c01aced6d91f2501b778fc1d646da77724cb61fa25e764",
       "source_class": "public literature and references",
       "identifier_finding_count": 56,
       "identifier_findings_sha256": "dc512a0d63910591b721410180a6f5278421375e5433b90b6e401c7027d661da",
@@ -237,12 +237,15 @@
     },
     {
       "path": "docs/treatment_evidence.md",
-      "sha256": "fb6d61bf057d8e8a5d70f726c07d165b88dd0808f2c7bfafefd5621b2df01e4d",
+      "sha256": "8eb119ea8d5871a5ee6196e18ad6ccef5c6e1f2d4b7ff0544d0a19ece0c9b499",
       "source_class": "public literature and references",
-      "identifier_finding_count": 2,
-      "identifier_findings_sha256": "1dd53ed686eb62691f1999e9c6e630156aed63c2d859cda8afb115da2d888378",
+      "identifier_finding_count": 5,
+      "identifier_findings_sha256": "7087fa74fc510fe402c92c22bddaa0c362e3d3603be85d5e39b465e11f8ffb00",
       "retained_identifier_findings": [
+        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/treatment_evidence.md",
         "non-synthetic biological identifier 'BUBR1': public-source-review: docs/treatment_evidence.md",
+        "non-synthetic biological identifier 'B1BUB': public-source-review: docs/treatment_evidence.md(reversed)",
+        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/treatment_evidence.md(rot13)",
         "non-synthetic biological identifier 'OHOE1': public-source-review: docs/treatment_evidence.md(rot13)"
       ]
     },
@@ -312,7 +315,7 @@
     },
     {
       "path": "docs/finite_pilot.md",
-      "sha256": "39796e075aeb43afcc139f5bdccfe6eeca731539109aea592a258a190ad44986",
+      "sha256": "4433687c428c6696360fb8ef70b8ff5d9df59f7d38d06a3d3b6d4da43a0befa4",
       "source_class": "public literature and references",
       "identifier_finding_count": 33,
       "identifier_findings_sha256": "72a77ec720907712d97bcbe1d22d09bded42b6441b5e48f3ac63b8b186dd6a0f",
@@ -354,7 +357,7 @@
     },
     {
       "path": "docs/mitochondrial_challenger.md",
-      "sha256": "c3b8be541069e9763eafdf52feb4bf22502a923a4a3f6be071843ee615ffd52f",
+      "sha256": "e6bd22cb0e862ced1aae45009930820a4ceab85733242d78384bc1c2e7b61e3e",
       "source_class": "public literature and references",
       "identifier_finding_count": 28,
       "identifier_findings_sha256": "8eea41fe2fd8155dcd5744fd7d081905dd2cb4492b4f7649f0b698a4a0e62fe9",
@@ -390,8 +393,43 @@
       ]
     },
     {
+      "path": "docs/neural_protection_comparison.md",
+      "sha256": "b098117342ecae304fac1997938dba691d35e0fb988f016184f1b9e8460dbd22",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 26,
+      "identifier_findings_sha256": "a50bf7af307640a75487400c92c491cde5d97439ad5dc18fadf8349e00852878",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'BUB1B-': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'BUBR1': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'MMPOWER-3': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'N1002K': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'NGN2': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'NGN2-': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'PLSCR3': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'PLSCR3-': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'PMC3769509': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'SS31': public-source-review: docs/neural_protection_comparison.md",
+        "non-synthetic biological identifier 'ABP-4': public-source-review: docs/neural_protection_comparison.md(reversed)",
+        "non-synthetic biological identifier 'AM-3': public-source-review: docs/neural_protection_comparison.md(reversed)",
+        "non-synthetic biological identifier 'B1BUB': public-source-review: docs/neural_protection_comparison.md(reversed)",
+        "non-synthetic biological identifier 'K2001N': public-source-review: docs/neural_protection_comparison.md(reversed)",
+        "non-synthetic biological identifier 'A1002X': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'ATA2': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'ATA2-': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'CYFPE3': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'CYFPE3-': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'CZP3769509': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'FF31': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O-': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': public-source-review: docs/neural_protection_comparison.md(rot13)",
+        "non-synthetic biological identifier 'ZZCBJRE-3': public-source-review: docs/neural_protection_comparison.md(rot13)"
+      ]
+    },
+    {
       "path": "docs/research_source_review.md",
-      "sha256": "4daab18b9579419ed227ad89a5d12c5045e16932c2db6c76fc45e84ad4b38e4c",
+      "sha256": "0ab62580cd99941746c102f5ac738de19b2c41202d26243d27a57ef333f90fe9",
       "source_class": "public literature and references",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",

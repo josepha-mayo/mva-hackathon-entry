@@ -1,6 +1,6 @@
 # Independent medicine hypotheses with a finite first decision
 
-**23 October new-route review:** [Elamipretide mitochondrial challenger](mitochondrial_challenger.md) adds a separate, bounded neural-function hypothesis. It is not an efficacy-ranked replacement; positive and negative human/model evidence and rival mechanisms are retained.
+**23 October hardened comparison:** [Phenylbutyrate versus elamipretide](neural_protection_comparison.md) compares protein-stress and mitochondrial support on the same useful neural function. PBA has closer actual-drug human aneuploid-cell stress evidence; no useful BUB1B rescue or clinical rank is established. The [mitochondrial evidence](mitochondrial_challenger.md) retains elamipretide positives and counterevidence.
 
 Research decision · 23 October 2026 · unsigned
 

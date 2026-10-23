@@ -9,7 +9,7 @@ No benefit to the child has been demonstrated.
 
 ## Start with the experiment
 
-**New distinct challenger:** [mitochondrial support of neural output](docs/mitochondrial_challenger.md), with elamipretide as a bounded experimental candidate. A 2026 checkpoint-instability model supplies a closer mechanism, but its genetic rescue is not drug efficacy. Human trial failures, neural-exposure gaps and omaveloxolone/lithium rivals remain explicit. No overall drug winner is established.
+**Current neural comparison:** [phenylbutyrate versus elamipretide](docs/neural_protection_comparison.md), testing protein-stress and mitochondrial support against the same useful function. PBA has closer actual-drug human aneuploid-cell marker evidence; elamipretide retains neuronal/animal positives and substantive human trial negatives. Neither has demonstrated useful BUB1B neural rescue. A bounded eight-condition comparison follows measured exposure qualification; no overall drug winner is established.
 
 **Current medicine hypotheses:** a limited ataluren stop-allele arm, separate
 fasudil/active-metabolite ciliary comparison and a cilostazol/metabolite barrier
