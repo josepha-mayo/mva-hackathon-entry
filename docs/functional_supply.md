@@ -139,7 +139,8 @@ the mature amount, while late intervention cannot recover the already lost
 cohort. This is a mathematical example with a fixed rate change, not a drug
 model or a predicted therapeutic window.
 
-After the existing gates license a probe experiment, compare exposure during
+After a scientifically qualified comparison and an independently justified
+exposure protocol support a probe experiment, compare exposure during
 the labeled cohort's birth window with exposure after that cohort has aged.
 Qualify intracellular concentration-time profiles, response onset, carryover,
 recovery and state matching. Do not equate equal nominal exposure with equal
@@ -155,8 +156,10 @@ report a maturation yield.
 The useful output is a measured reason to retain or retire a rescue class
 before scarce participant material is spent on a broad screen. A later
 candidate must still improve division-level function at qualified exposure,
-pass the existing completion and daughter-fate constraints, and pass the
-abnormal-clone counterscreen and independent replication. Neither more
+preserve completion and daughter outcomes, and undergo justified abnormal-
+clone assessment and independent replication. The historical lineage/power
+assurances are withdrawn in the [current audit](research_audit.md); its old
+gate labels cannot license advancement. Neither more
 protein nor a cleaner endpoint cell population is sufficient.
 
 This is an executable explanation of a measurement ambiguity and a proposed

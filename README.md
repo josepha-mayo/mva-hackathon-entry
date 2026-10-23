@@ -9,6 +9,12 @@ No benefit to the child has been demonstrated.
 
 ## Start with the experiment
 
+**Treatment-evidence decision:** no medicine is selected as a treatment lead.
+Arimoclomol and formulation-specific phenylbutyrate are unranked exploratory
+compounds. The [current decision](docs/treatment_evidence.md) removes the
+incumbent-drug anchor and distinguishes a mechanism experiment from a
+medicine response, clinical feasibility and benefit to the child.
+
 **Current audit correction:** the frozen v1 lineage checker does not enforce
 its stated fixed daughter horizon and mislabels mother-attempt duration as
 follow-up. Its timing and neutral-selection assurance is withdrawn. The
@@ -50,9 +56,9 @@ functional rival explicit: the allele may disturb the coordination of
 checkpoint hold with attachment and release even at normal abundance.
 A controlled local-recruitment bypass tests downstream sufficiency; it is
 an experimental comparator, not a proposed medicine.
-[The primary-source medicine decision](docs/drug_decision.md) removes
-arimoclomol's automatic first rank, evaluates phenylbutyrate as an
-exposure-first challenger, and preserves the negative evidence.
+[The primary-source medicine evidence](docs/drug_decision.md) preserves
+positive and negative observations without assigning either compound
+comparative priority.
 
 [The faithful-completion audit](docs/faithful_completion.md) adds a concrete
 failure case: aligned chromosomes and a preserved arrest response can still
@@ -123,7 +129,11 @@ The user will narrate the final pitch; the synthetic preview is a rehearsal.
 - [Methods and evidence report](reports/josephmayo_track1_report.md)
 - [Exact-byte release manifest](release/release-artifacts.json)
 
-The proposed causal pair is a research hypothesis, not a confirmed molecular diagnosis. Phase and the missense mechanism remain unresolved, and the report states the decisive confirmation path.
+The organizers describe the benchmark answer as clinically confirmed. This
+extension has not inspected the underlying clinical phase documentation;
+that does not mean the treating team lacks a diagnosis. Existing clinical
+confirmation should be used where available. The exact missense mechanism
+and medicine response remain unestablished by this work.
 
 ## Track 2 frozen signed surface
 
@@ -168,9 +178,9 @@ the missing observation/safety contract or evidence of biological efficacy.
 - [Candidate search protocol](configs/track2-candidate-search-protocol.json) (`track2-candidate-search-v3`; `searched_on` 2026-09-10 — the catalog-refresh pass found no primary wet assay; frequency, conservation, ClinVar, a public software catalog, software proof wording, and an official medicine label are exclusion axes, not hits)
 - [Community templates](templates/community/README.md)
 
-Current drug dispositions are in the medicine card above: arimoclomol is a
-conditional proteostasis probe, formulation-specific phenylbutyrate is an
-exposure-first challenger, and nicotinic acid remains parked behind the
+Current drug dispositions are in the treatment-evidence card above:
+arimoclomol and formulation-specific phenylbutyrate are unranked exploratory
+compounds, and nicotinic acid remains parked behind the
 unproven NAPRT/NAD/SIRT2 maintenance chain. Neither abundance, a nearby allele,
 an ectopic construct nor a computational result substitutes for exact-allele
 causality and useful function. Develop assays in renewable material before
@@ -181,10 +191,9 @@ reversal of established developmental injury.
 
 ## Win condition
 
-Track 1 evaluates variant prediction. A historical score does not confirm
-the molecular diagnosis: exact alleles, read support, transcript consequence,
-inheritance/phase, genome-wide alternatives and blind spots still require
-independent review. Public participant reports and leaderboard outputs are
+Track 1 evaluates recovery of an organizer-reported clinically confirmed
+answer. A historical score is a pipeline benchmark, not an independent
+review of clinical records or evidence of a drug response. Public participant reports and leaderboard outputs are
 landscape context, not inputs to an independent pipeline.
 
 Track 2 is the larger differentiation opportunity. Candidate medicines remain research hypotheses only. Every proposal must include an exposure-realistic, genotype-matched validation gate and a cancer-safety failure criterion; nothing in this repository is medical advice.

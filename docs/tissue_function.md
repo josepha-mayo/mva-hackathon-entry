@@ -97,9 +97,9 @@ not a clinical risk estimate for MVA. Its dose-reporting discrepancy is not
 used to set an exposure threshold.
 [Palma et al., 2022](https://doi.org/10.3389/fcell.2022.841548)
 
-Arimoclomol remains a conditional proteostasis probe; formulation-specific
-phenylbutyrate remains an exposure-first challenger. No new medicine becomes
-effective by association with this genetic finding. Each needs its own
+Arimoclomol and formulation-specific phenylbutyrate are unranked exploratory
+compounds; no treatment lead is selected. No medicine becomes effective by
+association with this genetic finding. Each needs its own
 eligibility, exposure, causal response and useful functional improvement.
 
 ## Acknowledgement

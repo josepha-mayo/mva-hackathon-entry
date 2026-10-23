@@ -90,6 +90,8 @@
 /docs/faithful_completion.md text eol=lf
 /docs/research_audit.md text eol=lf
 /docs/tissue_function.md text eol=lf
+/docs/treatment_evidence.md text eol=lf
+/docs/functional_supply.md text eol=lf
 /src/mva_hackathon/fixed_horizon.py text eol=lf
 /src/mva_hackathon/timestamp_chain.py text eol=lf
 /scripts/assess_fixed_horizon.py text eol=lf

@@ -116,8 +116,11 @@ limits of imaging and imposed challenges. No new assay has been run.
 
 The medicine comparison can then test **different ways of perturbing the
 same bottleneck**. Phenylbutyrate has precedent in the cytosolic Munc18-1
-system, so its rationale is not limited to ER-trafficking disorders. It is
-a challenger to arimoclomol's stress-contingent network hypothesis. Measure
+system, so its rationale is not limited to ER-trafficking disorders. Both
+it and arimoclomol are unranked exploratory compounds; the different
+mechanistic stories do not establish priority. The
+[current treatment-evidence decision](treatment_evidence.md) requires each
+compound to earn a response independently. Measure
 RNA/nascent input, cohort delivery, actual cellular response and balanced
 function independently: a transcription-driven increase must not be called
 chemical folding rescue. A difference between drugs alone cannot establish
@@ -174,9 +177,10 @@ No K1002 modification or response has been measured here.
 
 A tempting idea is to rescue the stop allele's RNA and use the truncated
 protein, avoiding the missense allele altogether. The older 731X replacement
-construct supported several mitotic functions. But its name hides a sequence
-qualification: the paper says it contains only 715 reference residues; it is
-not the exact 1–736 product predicted here. The newer domain work reports
+construct supported several mitotic functions. But it represents a different
+frameshift product, not the exact 1–736 product predicted here. The older
+sequence/count annotation is not used to assign a precise native-residue
+boundary in this reassessment. The newer domain work reports
 recruitment/release deficits in truncation constructs. Therefore the frozen
 report's categorical statement that NMD-only recovery "is not a rescue
 route" should be read as **not qualified as sufficient**, rather than proof

@@ -1,14 +1,16 @@
 # Which medicine earns the next experiment?
 
-Primary-source decision audit, 22 October 2026. These are research priorities,
+Primary-source decision audit, updated 23 October 2026. These are research questions,
 not treatment choices. No medicine has demonstrated rescue of the proposed
 exact genotype, clinical benefit, or acceptable risk for this child.
 
 ## Decision
 
-**Remove automatic lead status from arimoclomol.** Keep it as the named,
-conditional proteostasis probe, but do not rank it above another medicine
-on approval or the word "chaperone" alone. The leading actionable hypothesis
+**No medicine is selected as a treatment lead.** Arimoclomol and formulation-
+specific phenylbutyrate remain unranked exploratory compounds. A negative
+search for better alternatives does not qualify either incumbent. The
+[current treatment-evidence decision](treatment_evidence.md) removes that
+remaining anchor and qualifies the nominal exposure rule. The actionable hypothesis
 is that **recoverable function, the measured loss stage and attainable
 cellular pharmacodynamics must jointly choose the intervention**. A drug
 that raises amount without restoring faithful division does not qualify.
@@ -26,8 +28,8 @@ global phosphatase activator or an engineered recruitment reagent as a medicine.
 
 | Candidate or route | Best supporting evidence | Decisive missing link or counterevidence | Research disposition |
 |---|---|---|---|
-| Arimoclomol | US approval in NPC with miglustat; proteostasis responses in other systems | BUBR1 dependence on HSP90 does not establish rescue by this drug. Basal-state response at qualified exposure and useful exact-allele function are untested | Conditional bridge probe; no efficacy rank |
-| Phenylbutyrate, specifying formulation | Functional rescue of other unstable proteins; pediatric UCD use and some human repurposing experience | No direct BUBR1 rescue identified. Millimolar nominal cell exposure, binding/time-course gaps, conflicting disease-model results, metabolic toxicity | Exposure-first challenger to the delivery branch; not a replacement lead |
+| Arimoclomol | US approval in NPC with miglustat; proteostasis responses in other systems | BUBR1 dependence on HSP90 does not establish rescue by this drug. Basal-state response at qualified exposure and useful exact-allele function are untested | Unranked exploratory compound; no treatment lead |
+| Phenylbutyrate, specifying formulation | Functional rescue of other unstable proteins; pediatric UCD use and some human repurposing experience | No direct BUBR1 rescue identified. Millimolar nominal cell exposure, binding/time-course gaps, conflicting disease-model results, metabolic toxicity | Unranked exploratory compound; requires its own exposure and response bridge |
 | Teprenone / GGA | Human atrial HSPB1/HSPA1 induction; Japanese medicinal product listing | Adult surgical tissue is not the child's relevant compartment. No direct BUBR1 response; induction is cell-state dependent, and the required HSP90 bridge is missing | Park until target response and relevant exposure are qualified |
 | Nicotinic acid | A marketed precursor; NAPRT-dependent NAD elevation in human cells, separate SIRT2/BUBR1 pathway biology | NA-to-functional-BUBR1 chain untested; cell-context conflict, cancer counterevidence for other NAD precursors, pediatric label gap | Park; reopen only for a demonstrated maintenance bottleneck |
 | Marketed-medicine phenotype screen | Can discover a mechanism missed by the selected stories | Needs a reproducible basal phenotype, material budget, eligible compounds and each compound's exposure qualification | Preserve as the baseline's unexecuted fallback; confirm function and daughter outcomes |
@@ -48,7 +50,7 @@ exact-human-variant binding result was identified in this bounded audit.
 
 ## The evidence that changes the decision
 
-**Phenylbutyrate deserves a real comparison, with its negatives preserved.**
+**Phenylbutyrate has cross-target evidence, with its negatives preserved.**
 Guiberson's primary study rescued Munc18-1 dysfunction in neuronal and worm
 models. A 2026 SLC6A1 study found functional rescue favoring pharmacochaperoning
 over an HDAC-only explanation, including experiments at nominal 2 mM for
@@ -169,12 +171,14 @@ Improved survival alone cannot select a treatment.
    protein/function measurements, the intended basal state, exposure and
    controls. Independently identify input and recovery. Measure division
    completion as well as errors; image counts do not create biological replicates.
-2. For an early-delivery defect with recoverable function, arimoclomol and
-   an exposure-feasible phenylbutyrate condition are distinct candidate probes.
-   Measure the relevant response before interpreting cohort timing. A
-   qualified arimoclomol response failure retires that bridge; it cannot be
-   rescued by a supraceiling concentration or imposed heat shock. Each
-   alternative gets its own justified exposure limit and pharmacodynamics.
+2. A recoverable supply defect can justify testing a mechanism class, but
+   cannot qualify either named drug. Measure each compound's own relevant
+   response, functional effect and exposure/time profile. Failure under the
+   inherited nominal screen rule rejects that tested condition; it is not
+   a verdict on every clinical exposure or the whole mechanism. Above-cap
+   results cannot pass the frozen screen, and a different exposure hypothesis
+   requires independent prespecification. Imposed heat shock cannot replace
+   basal responsiveness. See the current treatment-evidence decision.
 3. For mature-maintenance loss, first test whether the relevant NAD/SIRT2
    link actually controls useful BUBR1. A precursor-induced NAD rise without
    target/function response is a mechanistic negative. Nicotinic acid remains

@@ -59,7 +59,7 @@
     },
     {
       "path": "docs/drug_decision.md",
-      "sha256": "7a240192b0466ef3bbdf2dab251d9dbf7a0170af2c7f9309885b0d383b2066ea",
+      "sha256": "7cf0b435e3c2ec58d8269f0fd7967673a80c78cf6f8f1e7f7ef080ce2048b4af",
       "source_class": "public literature and references",
       "identifier_finding_count": 43,
       "identifier_findings_sha256": "f95f27510c3304065858293e689ff102222849978b4b69827b690fa355a70608",
@@ -111,7 +111,7 @@
     },
     {
       "path": "docs/balanced_function.md",
-      "sha256": "5c867d117a07ca32873cc804e1cd2386963b9f8ea3da4e5700b247ad7eb062cd",
+      "sha256": "5d8f19e9c6dd48de0be2e1d3db2d798eac674a2ff244cfa5f0713f3a6551609e",
       "source_class": "public literature and references",
       "identifier_finding_count": 36,
       "identifier_findings_sha256": "9d4ece092b183c83ef00197746fb4ca55cba2300895b91ae47853808326cd03a",
@@ -195,7 +195,7 @@
     },
     {
       "path": "docs/tissue_function.md",
-      "sha256": "2f96a5d13eb988775203c071cad8b4efec1c28c5c7e41175b65f9e5deff36abf",
+      "sha256": "1f78bdc11e03b7c3f2173e677aefd94a8cdcf468a9993af42c4a7f067d8fb777",
       "source_class": "public literature and references",
       "identifier_finding_count": 12,
       "identifier_findings_sha256": "eddb852a0c47f3687af7451232587aa55789ad9ef08b0e12b0ddd300aa468ab1",
@@ -213,6 +213,28 @@
         "non-synthetic biological identifier 'OHOE1': public-source-review: docs/tissue_function.md(rot13)",
         "non-synthetic biological identifier 'PQ68': public-source-review: docs/tissue_function.md(rot13)"
       ]
+    },
+    {
+      "path": "docs/treatment_evidence.md",
+      "sha256": "7901d5f70bae7c59f43535232d2731a528db401643cf132fc1acd4044f7ad480",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 5,
+      "identifier_findings_sha256": "7087fa74fc510fe402c92c22bddaa0c362e3d3603be85d5e39b465e11f8ffb00",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/treatment_evidence.md",
+        "non-synthetic biological identifier 'BUBR1': public-source-review: docs/treatment_evidence.md",
+        "non-synthetic biological identifier 'B1BUB': public-source-review: docs/treatment_evidence.md(reversed)",
+        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/treatment_evidence.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': public-source-review: docs/treatment_evidence.md(rot13)"
+      ]
+    },
+    {
+      "path": "docs/functional_supply.md",
+      "sha256": "5ff7f2c0410e276d195c2f53a7e0cde3571820d60e49bed71c10b961c40e2f54",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
     },
     {
       "path": "src/mva_hackathon/fixed_horizon.py",
