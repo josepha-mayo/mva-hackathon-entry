@@ -31,6 +31,20 @@ The card links runnable reference arithmetic and a threshold-boundary demo:
 an observed 20% increase can pass the standalone clone checker. A pass under
 that rule is not proof of absent fitness gain or clinical safety.
 
+[The balanced-function comparison](docs/balanced_function.md) makes the
+functional rival explicit: the allele may disturb the coordination of
+checkpoint hold with attachment and release even at normal abundance.
+A controlled local-recruitment bypass tests downstream sufficiency; it is
+an experimental comparator, not a proposed medicine.
+[The primary-source medicine decision](docs/drug_decision.md) removes
+arimoclomol's automatic first rank, evaluates phenylbutyrate as an
+exposure-first challenger, and preserves the negative evidence.
+
+The [full-translation public-reference audit](docs/public_reference_audit.md)
+adds an independent CDS/protein comparison and eleven tests. These living
+supplements have a [source and content review](docs/research_source_review.md);
+they do not inherit the frozen signature or a historical privacy clearance.
+
 ```sh
 python scripts/demo_functional_supply.py
 python -m unittest tests.test_functional_supply -v
@@ -76,8 +90,11 @@ three Track 2 submissions. [Official challenge](https://huggingface.co/spaces/Sa
 
 Requirements were checked against official source commit
 `60e1c30e337ce6fe01813040dbe49979eb8c50aa` on 22 October. Live authenticated inspection on 22 October showed 1 of 3 Track 2 submissions
-used and 2 remaining. No new submission was made in this audit. Final video
-hosting still requires verification.
+used and 2 remaining. No new hackathon submission was made in this audit.
+The [three-minute research preview](https://www.youtube.com/watch?v=zvhfD3gN97s)
+is hosted unlisted, with generic synthetic narration disclosed. Its hosting
+and playback were verified; no human listening review is claimed.
+The user will narrate the final pitch; the synthetic preview is a rehearsal.
 
 ## Track 1 release surfaces
 

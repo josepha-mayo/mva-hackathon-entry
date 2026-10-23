@@ -84,8 +84,10 @@ compares the annotated public protein with an independently obtained protein
 sequence, checks the reported codons and exon coordinates, and computes
 ideal tryptic fragments. It explicitly does not translate the complete CDS.
 It agrees on every reported result with the separate full-translation review.
-The broader parser remains a private review candidate. Exact input identities
-and source digests accompany the research review.
+The broader [full-translation parser](public_reference_audit.md) is now a
+public research supplement with eleven tests. Exact input identities and
+source digests accompany the research review; neither runner validates a
+participant call or phase.
 
 ```text
 python scripts/audit_reference_case.py --help
