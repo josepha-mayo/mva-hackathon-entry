@@ -38,6 +38,15 @@ direction.** Raising protein or globally activating PP2A cannot be presumed
 to repair that balance.
 [Corno et al., 2023](https://doi.org/10.15252/embj.2022112630)
 
+The relevant MVA precedent is older and more direct than the engineered
+retargeting comparison below. Xu et al. restored alignment by genetic local
+B56 recruitment in two established MVA fibroblast lines. Their chemical
+Aurora-inhibition experiment was in HeLa systems, not those MVA lines; both
+used an imposed metaphase block for the reported endpoint. These results
+support downstream sufficiency for alignment, not faithful division or a
+medicine response in this proposed allele.
+[Xu et al., 2013, Figures 3–4](https://doi.org/10.1242/bio.20134051)
+
 ## The discriminating experiment
 
 A direct target precedent provides a useful calibration. In the 2012 human
@@ -93,6 +102,18 @@ original lesion was folding, that the construct is a therapy, or that a
 global phosphatase-activating medicine will reproduce its localized action.
 Only feasible, informative comparisons should consume scarce material.
 
+The sharper functional question is whether correct attachments can persist
+while incorrect ones are removed before release. A short-term nocodazole
+response can survive an Aurora perturbation that compromises another
+checkpoint response. Separately, merotelic attachments can evade the
+checkpoint and alignment can coexist with segregation errors. Qualify
+unattached-kinetochore and microtubule-present challenge cohorts, then
+measure actual error resolution and basal faithful completion. Neither a
+single arrest response nor cold-stable fibers establishes biorientation.
+The [figure-level endpoint audit](faithful_completion.md) specifies the
+published counterexamples and the proposed comparison, including the
+limits of imaging and imposed challenges. No new assay has been run.
+
 The medicine comparison can then test **different ways of perturbing the
 same bottleneck**. Phenylbutyrate has precedent in the cytosolic Munc18-1
 system, so its rationale is not limited to ER-trafficking disorders. It is
@@ -123,6 +144,33 @@ assistance or a stalled client, and cannot settle that distinction alone.
 | Comparison, exposure or normalization is unqualified | Mechanism unresolved; no efficacy conclusion |
 
 ## An alternative I tested against the literature and did not promote
+
+### A new lysine is a mechanism question, not a mechanism assignment
+
+The frozen baseline proposed N1002R as a comparator and said that a stable
+Arg replacement would identify modification-driven turnover rather than
+misfolding. That inference is too strong and is not adopted here. Lys and
+Arg differ chemically; changing the residue can alter structure, interactions
+and clearance together. A stable comparator would narrow possibilities,
+not identify their causal order. Folding defects and enhanced modification
+can also coexist.
+
+The published SIRT2 work identifies a different residue, K668. It does not
+show that SIRT2 acts on an introduced K1002, or that new-lysine turnover would
+select a NAD precursor. A modification hypothesis needs qualified site-level
+evidence relative to protein amount, a causal perturbation that preserves the
+intended protein sequence, and restored useful function. More modification
+could be a consequence of defective protein rather than its initiating cause.
+[North et al., 2014, Figure 3](https://doi.org/10.15252/embj.201386907)
+
+If remnant proteomics is used, a diglycine-lysine signal is not automatically
+ubiquitin-specific: NEDD8 and ISG15 can contribute. Primary work used
+additional discrimination controls. Neither enrichment intensity nor global
+proteasome inhibition alone establishes a target-specific causal pathway.
+No K1002 modification or response has been measured here.
+[Kim et al., 2011, Figure 2](https://pubmed.ncbi.nlm.nih.gov/21906983/)
+
+### Recovering the truncated product
 
 A tempting idea is to rescue the stop allele's RNA and use the truncated
 protein, avoiding the missense allele altogether. The older 731X replacement

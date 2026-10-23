@@ -103,6 +103,11 @@ lifespan extension came from SIRT2 transgenesis, not an NMN treatment trial.
 A separate melanoma study found SIRT1 knockdown lowered BUB proteins while
 SIRT2 knockdown did not. This limits a universal SIRT2-maintenance story;
 it does not establish that this child's cells resemble melanoma.
+The SIRT2 target-site result is K668, not the newly introduced K1002. A stable
+N1002R comparator would not prove modification-driven turnover or choose a
+NAD medicine; residue chemistry can alter several mechanisms at once.
+The [mechanism comparison](balanced_function.md) corrects that inference in
+the frozen baseline while preserving its original bytes.
 [North et al., 2014](https://pubmed.ncbi.nlm.nih.gov/24825348/),
 [Singh et al., 2014, Figure 6](https://www.oncotarget.com/article/1898/text/)
 
@@ -147,6 +152,18 @@ that native rapamycin repairs BUBR1 attachment function.
 [engineered PP2A assay](https://doi.org/10.1038/s41467-025-58185-8)
 
 ## First experiment and the decision it buys
+
+Do not erase partial mechanistic rescue when excluding a drug class from
+advancement. Aurora inhibition improved alignment in engineered HeLa
+systems; a separate genetic local-recruitment experiment improved alignment
+in MVA fibroblasts. Neither demonstrated completed faithful division in this
+allele. Aurora perturbation is therefore a possible assay benchmark, not an
+advanced medicine. Preserved nocodazole arrest and aligned chromosomes can
+miss other checkpoint or attachment-correction defects. The
+[endpoint audit](faithful_completion.md) separates those experiments and
+adds the required functional comparison. It also records a neural BubR1-loss
+mouse result in which reducing apoptosis did not provide full tissue rescue.
+Improved survival alone cannot select a treatment.
 
 1. In accessible, independently characterized renewable models, qualify
    protein/function measurements, the intended basal state, exposure and

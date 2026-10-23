@@ -2,7 +2,7 @@
 
 Reviewed 22–23 October 2026 by Codex in the user-authorized repository audit.
 
-The new reference parser, invented test fixtures and two literature cards
+The new reference parser, invented test fixtures and three literature cards
 contain public reference biology and published research. They contain no
 downloaded challenge data, private clinical record or credential. The case
 labels discussed in the cards were already present in the public entry;

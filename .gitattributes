@@ -75,7 +75,6 @@
 /tests/test_method_delta.py text eol=lf
 /JUDGES.md text eol=lf
 /reports/TRACK2_METHOD_IMPROVEMENTS.md text eol=lf
-/reports/TRACK2_SESSION_HANDOFF.md text eol=lf
 /reports/TRACK2_LINEAGE_ADVERSARIAL.json text eol=lf
 /scripts/run_lineage_adversarial_benchmark.py text eol=lf
 /src/mva_hackathon/reference_audit.py text eol=lf
@@ -88,3 +87,4 @@
 /release/research-supplement-review.json text eol=lf
 /scripts/check_research_supplement.py text eol=lf
 /tests/test_research_supplement.py text eol=lf
+/docs/faithful_completion.md text eol=lf

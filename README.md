@@ -40,6 +40,13 @@ an experimental comparator, not a proposed medicine.
 arimoclomol's automatic first rank, evaluates phenylbutyrate as an
 exposure-first challenger, and preserves the negative evidence.
 
+[The faithful-completion audit](docs/faithful_completion.md) adds a concrete
+failure case: aligned chromosomes and a preserved arrest response can still
+miss attachment errors. It separates published MVA genetic rescue from HeLa
+drug experiments and asks whether wrong attachments are corrected before
+anaphase. This sharpens the proposed functional test; no new biology has
+been measured.
+
 The [full-translation public-reference audit](docs/public_reference_audit.md)
 adds an independent CDS/protein comparison and eleven tests. These living
 supplements have a [source and content review](docs/research_source_review.md);
