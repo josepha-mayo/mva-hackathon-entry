@@ -14,7 +14,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "c7e32601504de79280088c5f60b85786f728a10eb1aca0726167b50090e0ae07",
+      "sha256": "3efdd85945a17d451f2c4805391f9dd9a6a7335e9b8d1190c72808b3508c3744",
       "source_class": "public literature and references",
       "identifier_finding_count": 0,
       "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -428,11 +428,15 @@
     },
     {
       "path": "docs/research_source_review.md",
-      "sha256": "828822ec81e88d30ff30505ce3b17694f71ba58a8842b999e87a7741286847f5",
+      "sha256": "4108f1ed7b87cb8a44b89985bd2b1f5b0305d696d883262d0380cb34327c3dc5",
       "source_class": "public literature and references",
-      "identifier_finding_count": 0,
-      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "retained_identifier_findings": []
+      "identifier_finding_count": 3,
+      "identifier_findings_sha256": "55f808d38a76f18fbaec792dd58947fa2bb52bebf8e2d640a7b74a543d9e564a",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/research_source_review.md",
+        "non-synthetic biological identifier 'B1BUB': public-source-review: docs/research_source_review.md(reversed)",
+        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/research_source_review.md(rot13)"
+      ]
     },
     {
       "path": "docs/alternative_challenge.md",
@@ -717,6 +721,32 @@
         "non-synthetic biological identifier 'R1441C': public-source-review: configs/nall-source-data.json",
         "non-synthetic biological identifier 'SD': public-source-review: configs/nall-source-data.json",
         "non-synthetic biological identifier 'WPV196137': public-source-review: configs/nall-source-data.json(rot13)"
+      ]
+    },
+    {
+      "path": "docs/child_benefit_decision.md",
+      "sha256": "2879280316c95197e1333f185ffcd0e4409e710d1c438bf0803966c49252aee1",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 17,
+      "identifier_findings_sha256": "2700e693c50dbf2bbdd3da984249284871cd12c2d4ed29022a1e5fea01375c98",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'BUBR1': public-source-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'BUBR1-': public-source-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'CAN-09-4319': public-source-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'GM21284': public-source-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'HDAC11': public-source-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'PMC5191862': public-source-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'PMC6522074': public-source-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'B1BUB': public-source-review: docs/child_benefit_decision.md(reversed)",
+        "non-synthetic biological identifier 'CZP5191862': public-source-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'CZP6522074': public-source-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': public-source-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1-': public-source-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'PNA-09-4319': public-source-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'TZ21284': public-source-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'UQNP11': public-source-review: docs/child_benefit_decision.md(rot13)"
       ]
     }
   ]

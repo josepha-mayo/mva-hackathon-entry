@@ -1,0 +1,60 @@
+{
+  "schema": "mva-public-literature-content-review/v1",
+  "reviewed_utc": "2026-10-23T23:02:28.439752+00:00",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "3efdd85945a17d451f2c4805391f9dd9a6a7335e9b8d1190c72808b3508c3744",
+      "retained_diagnostics": [],
+      "source_class": "Public primary studies and official repository records; explicit proposed research controls; no controlled participant data"
+    },
+    {
+      "path": "docs/research_source_review.md",
+      "sha256": "4108f1ed7b87cb8a44b89985bd2b1f5b0305d696d883262d0380cb34327c3dc5",
+      "retained_diagnostics": [
+        "non-synthetic biological identifier 'BUB1B': child-benefit-public-content-review: docs/research_source_review.md",
+        "non-synthetic biological identifier 'B1BUB': child-benefit-public-content-review: docs/research_source_review.md(reversed)",
+        "non-synthetic biological identifier 'OHO1O': child-benefit-public-content-review: docs/research_source_review.md(rot13)"
+      ],
+      "source_class": "Public primary studies and official repository records; explicit proposed research controls; no controlled participant data"
+    },
+    {
+      "path": "docs/child_benefit_decision.md",
+      "sha256": "2879280316c95197e1333f185ffcd0e4409e710d1c438bf0803966c49252aee1",
+      "retained_diagnostics": [
+        "non-synthetic biological identifier 'BUB1B': child-benefit-public-content-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'BUBR1': child-benefit-public-content-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'BUBR1-': child-benefit-public-content-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'CAN-09-4319': child-benefit-public-content-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'GM21284': child-benefit-public-content-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'HDAC11': child-benefit-public-content-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'PMC5191862': child-benefit-public-content-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'PMC6522074': child-benefit-public-content-review: docs/child_benefit_decision.md",
+        "non-synthetic biological identifier 'B1BUB': child-benefit-public-content-review: docs/child_benefit_decision.md(reversed)",
+        "non-synthetic biological identifier 'CZP5191862': child-benefit-public-content-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'CZP6522074': child-benefit-public-content-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': child-benefit-public-content-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': child-benefit-public-content-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1-': child-benefit-public-content-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'PNA-09-4319': child-benefit-public-content-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'TZ21284': child-benefit-public-content-review: docs/child_benefit_decision.md(rot13)",
+        "non-synthetic biological identifier 'UQNP11': child-benefit-public-content-review: docs/child_benefit_decision.md(rot13)"
+      ],
+      "source_class": "Public primary studies and official repository records; explicit proposed research controls; no controlled participant data"
+    }
+  ],
+  "sources": [
+    "outputs/child-benefit-human-evidence-2026-10-23.sources.json",
+    "outputs/child-benefit-bub1b-function-2026-10-23.sources.json",
+    "outputs/child-benefit-model-feasibility-2026-10-23.sources.json"
+  ],
+  "scientific_review": "outputs/child-benefit-scientific-audit-2026-10-23.json",
+  "provenance": "Bounded public evidence; no case-specific clinical priority verified in this extension, no controlled file or patient contact. No assay-ready neural model, material acquisition, wet result or clinical benefit claimed.",
+  "scanner_changed": false,
+  "diagnostics_removed": false,
+  "frozen_release_changed": false,
+  "privacy_allowance_granted": false,
+  "clinical_advancement_granted": false,
+  "portal_submission_performed": false,
+  "historical_all_history_result": "NO-GO; no new completed historical clearance"
+}

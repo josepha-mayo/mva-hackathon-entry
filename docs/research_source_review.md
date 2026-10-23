@@ -96,3 +96,12 @@ binds the changed living research files and retained diagnostics. Earlier
 content records bind their earlier bytes. No frozen release, historical
 all-history clearance, controlled payload, clinical advancement or portal
 submission is introduced by this update.
+
+The subsequent [child-benefit decision](child_benefit_decision.md) adds direct
+BUB1B lineage/stage evidence, a proposed late-restoration benchmark and an
+official cycling-model access lead, with neural availability unverified.
+The [child-benefit content record](../release/child-benefit-literature-review.json)
+binds the new card and updated navigation. The main NALL research report,
+analyses and media remain unchanged; earlier records retain their earlier
+bindings. The exact-source review is refreshed without changing the scanner
+or granting historical clearance, clinical benefit or a new submission.
