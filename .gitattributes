@@ -88,3 +88,14 @@
 /scripts/check_research_supplement.py text eol=lf
 /tests/test_research_supplement.py text eol=lf
 /docs/faithful_completion.md text eol=lf
+/docs/research_audit.md text eol=lf
+/docs/tissue_function.md text eol=lf
+/src/mva_hackathon/fixed_horizon.py text eol=lf
+/src/mva_hackathon/timestamp_chain.py text eol=lf
+/scripts/assess_fixed_horizon.py text eol=lf
+/scripts/verify_timestamp_chain.py text eol=lf
+/scripts/demo_legacy_lineage_timing.py text eol=lf
+/scripts/demo_legacy_verification_power.py text eol=lf
+/tests/test_fixed_horizon.py text eol=lf
+/tests/test_timestamp_chain.py text eol=lf
+/templates/community/fixed_horizon.synthetic.json text eol=lf

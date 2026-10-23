@@ -184,6 +184,109 @@
         "non-synthetic biological identifier 'ZT132-': public-source-review: docs/faithful_completion.md(rot13)",
         "non-synthetic biological identifier 'ZVF12-XNEQ-3Q': public-source-review: docs/faithful_completion.md(rot13)"
       ]
+    },
+    {
+      "path": "docs/research_audit.md",
+      "sha256": "57174eadbcec8e83bde7fa57df25859cab490a22dcb8a66605d43d8fd55de2c4",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "docs/tissue_function.md",
+      "sha256": "2f96a5d13eb988775203c071cad8b4efec1c28c5c7e41175b65f9e5deff36abf",
+      "source_class": "public literature and references",
+      "identifier_finding_count": 12,
+      "identifier_findings_sha256": "eddb852a0c47f3687af7451232587aa55789ad9ef08b0e12b0ddd300aa468ab1",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'BUB1B': public-source-review: docs/tissue_function.md",
+        "non-synthetic biological identifier 'BUBR1': public-source-review: docs/tissue_function.md",
+        "non-synthetic biological identifier 'CD68': public-source-review: docs/tissue_function.md",
+        "non-synthetic biological identifier 'N1002K': public-source-review: docs/tissue_function.md",
+        "non-synthetic biological identifier 'SFRP1': public-source-review: docs/tissue_function.md",
+        "non-synthetic biological identifier 'B1BUB': public-source-review: docs/tissue_function.md(reversed)",
+        "non-synthetic biological identifier 'K2001N': public-source-review: docs/tissue_function.md(reversed)",
+        "non-synthetic biological identifier 'A1002X': public-source-review: docs/tissue_function.md(rot13)",
+        "non-synthetic biological identifier 'FSEC1': public-source-review: docs/tissue_function.md(rot13)",
+        "non-synthetic biological identifier 'OHO1O': public-source-review: docs/tissue_function.md(rot13)",
+        "non-synthetic biological identifier 'OHOE1': public-source-review: docs/tissue_function.md(rot13)",
+        "non-synthetic biological identifier 'PQ68': public-source-review: docs/tissue_function.md(rot13)"
+      ]
+    },
+    {
+      "path": "src/mva_hackathon/fixed_horizon.py",
+      "sha256": "dcbec6148e7a545f1e9bb4324d75e54e08d63c78eb03d01c3973cb50a09dd076",
+      "source_class": "standard code and invented fixtures",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "src/mva_hackathon/timestamp_chain.py",
+      "sha256": "44d5089a71784787f29f60249e451fd66509d66d7da59071d7c5d836ba531ad0",
+      "source_class": "standard code and invented fixtures",
+      "identifier_finding_count": 1,
+      "identifier_findings_sha256": "0a3d054bcee8c0b1ba1678b3ab3c8f01b76bf146a9572d1dd50b17e421f83617",
+      "retained_identifier_findings": [
+        "non-synthetic biological identifier 'DER': public-source-review: src/mva_hackathon/timestamp_chain.py"
+      ]
+    },
+    {
+      "path": "scripts/assess_fixed_horizon.py",
+      "sha256": "b709cf5b0d713de505d0089c8ed4bb80ebab8e12680810f40553e5295b487f09",
+      "source_class": "standard code and invented fixtures",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "scripts/verify_timestamp_chain.py",
+      "sha256": "d3461930e5fe3c707f1ec7e4e70afdf027459d6d4d0f1f6c7fd52c4c8beeb83c",
+      "source_class": "standard code and invented fixtures",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "scripts/demo_legacy_lineage_timing.py",
+      "sha256": "196927030294c5b3659428b6f61c2c7375d96090fecfceca799538483c2d657c",
+      "source_class": "standard code and invented fixtures",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "scripts/demo_legacy_verification_power.py",
+      "sha256": "ee9b39f5807b4f4664b9fd1d6c90506a769a928ca641f7e6aab1ef950d002fcf",
+      "source_class": "standard code and invented fixtures",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "tests/test_fixed_horizon.py",
+      "sha256": "22f1a85f8de91546bff09968753dc5937ee616d4ac25b3df25b048b23e621056",
+      "source_class": "standard code and invented fixtures",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "tests/test_timestamp_chain.py",
+      "sha256": "0ec765c7c556613ac58913fad433d9db4bea335e8aedb84c623cc22018615cfe",
+      "source_class": "standard code and invented fixtures",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
+    },
+    {
+      "path": "templates/community/fixed_horizon.synthetic.json",
+      "sha256": "aaed38e324bb292f5177178ea3554a4c2d57cadfffbd74b4c2a0ea3ff4717477",
+      "source_class": "standard code and invented fixtures",
+      "identifier_finding_count": 0,
+      "identifier_findings_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_identifier_findings": []
     }
   ]
 }

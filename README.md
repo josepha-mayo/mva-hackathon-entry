@@ -9,6 +9,20 @@ No benefit to the child has been demonstrated.
 
 ## Start with the experiment
 
+**Current audit correction:** the frozen v1 lineage checker does not enforce
+its stated fixed daughter horizon and mislabels mother-attempt duration as
+follow-up. Its timing and neutral-selection assurance is withdrawn. The
+[audit and runnable corrections](docs/research_audit.md) also qualify the
+historical power assumptions and add actual timestamp-chain verification.
+The new follow-up assessor checks descriptive timing/accounting only; it
+grants no generation, clone-safety or clinical certificate.
+
+The [neural-output hypothesis](docs/tissue_function.md) adds a separate,
+testable question: can a specific extracellular perturbation improve durable
+neural output after a deficit exists, while preserving the precursor pool
+and faithful divisions? Developmental mouse genetics support investigating
+FRZB/sFRP3; they do not yet select a medicine or establish postnatal repair.
+
 The proposed rescue route depends on an unresolved question: **where is
 functional checkpoint protein being lost?** Low input, loss before assembly,
 clearance after assembly, and protein that remains defective when abundant
@@ -74,8 +88,8 @@ Negative results retire hypotheses before scarce material is spent.
 
 | Evidence | Supported conclusion | Remaining gap |
 |---|---|---|
-| Signed report and reproducible synthetic benchmarks | A checkable experiment contract and software behavior on configured scenarios | Exact-genotype biology and drug response |
-| 126 configured unsafe paths blocked; one constructed complete path opens | The declared software gate is non-vacuous | Real assay calibration and independent replication |
+| Signed report and reproducible synthetic benchmarks | Preserved bytes and configured software behavior; timing/power assurances are corrected above | Complete observation contract, exact-genotype biology and drug response |
+| 126 configured unsafe paths blocked; one constructed path opens under historical rules | Those configured examples are non-vacuous | Uncovered semantic defects, real assay calibration and independent replication |
 | New functional-supply counterexamples | Bulk amount and turnover alone can be insufficient to identify mechanism or function | Qualified native measurements and independent input/recovery estimates |
 | Historical Track 1 score recorded as 100 points | A previous automated result reported in the project record | Fresh authenticated portal verification |
 
@@ -83,9 +97,9 @@ The functional-supply supplement is a **research candidate outside the signed
 release**. The frozen report remains the auditable baseline. No wet-lab result,
 treatment recommendation, or new submission is established by these demos.
 
-Read [JUDGES.md](JUDGES.md) for the frozen claims-to-evidence map, then the
-[signed report](reports/josephmayo_track2_report.md) for its conditional probe
-and alternatives. The public repository and its working supplements must not
+Read the [current corrections](docs/research_audit.md) before [JUDGES.md](JUDGES.md)
+and the [signed report](reports/josephmayo_track2_report.md), which preserve the
+historical claims, including the withdrawn assurances. The public repository and its working supplements must not
 be confused with the latest uploaded portal entry.
 
 ## Deadline and submission state
@@ -122,7 +136,12 @@ The proposed causal pair is a research hypothesis, not a confirmed molecular dia
 
 These files remain frozen and reproducible. Their signatures cover their recorded bytes; living research supplements do not replace them. Current portal status must be verified separately.
 
-## Track 2 living Phase-2 research surface (not uploaded or judged)
+## Historical Phase-2 contracts and records
+
+These records preserve the earlier methods and configured receipts. Read the
+current audit corrections above before interpreting lineage, power, program-
+gate or judge-package assurances. They are not an integrated replacement for
+the missing observation/safety contract or evidence of biological efficacy.
 
 - [Timestamped lineage contract](reports/TRACK2_LINEAGE_CONTRACT.md)
 - [Lineage adversarial receipt](reports/TRACK2_LINEAGE_ADVERSARIAL.json)
@@ -147,13 +166,26 @@ These files remain frozen and reproducible. Their signatures cover their recorde
 - [Candidate evidence-ledger template](templates/track2_candidate_ledger.synthetic.json)
 - [Scarce-sample stewardship template](templates/track2_sample_stewardship.synthetic.json)
 - [Candidate search protocol](configs/track2-candidate-search-protocol.json) (`track2-candidate-search-v3`; `searched_on` 2026-09-10 — the catalog-refresh pass found no primary wet assay; frequency, conservation, ClinVar, a public software catalog, software proof wording, and an official medicine label are exclusion axes, not hits)
-- [Community handoff toolkit](templates/community/README.md)
+- [Community templates](templates/community/README.md)
 
-Nicotinic acid and arimoclomol remain branch-conditional laboratory probes in the targeted lane; neither is a lead, treatment, dose recommendation, or reason to administer a medicine. The conditional NAPRT→NAD→SIRT2 challenger is retained in the private candidate ledger only — it is not part of the bound attempt report and has no exposure-gate eligibility. Analog, homolog, nearby, unmatched-line, ectopic, cell-free, imposed-stress, or computational correction cannot stand in for exact genetic reversal of an assay-matched missense defect. Unlabeled recreation cannot restore that defect. Before any phenotype screen, a renewable exact-genotype/corrected system must reproduce the correction-defined signature and assay separability. Only a valid participant A1 signal may spend resource-intensive native-lineage material. Advancement additionally requires measured exposure, matched-control safety, architecture/lineage qualification, clone safety, frozen confirmation, analytic transfer, and biologically independent replication. The plausible postnatal objective is reducing ongoing chromosome-missegregation or abnormal-clone risk, not reversing established prenatal injury.
+Current drug dispositions are in the medicine card above: arimoclomol is a
+conditional proteostasis probe, formulation-specific phenylbutyrate is an
+exposure-first challenger, and nicotinic acid remains parked behind the
+unproven NAPRT/NAD/SIRT2 maintenance chain. Neither abundance, a nearby allele,
+an ectopic construct nor a computational result substitutes for exact-allele
+causality and useful function. Develop assays in renewable material before
+considering scarce native material. Exposure, independent replication,
+relevant tissue function and justified abnormal-clone assessment remain
+necessary. No software label licenses advancement, reduced cancer risk or
+reversal of established developmental injury.
 
 ## Win condition
 
-Track 1 is now a reproducibility and qualitative-review contest, not merely a gene-identification contest. The entry must independently verify exact alleles, read support, transcript consequence, inheritance/phase uncertainty, genome-wide alternatives, and blind spots. Public participant reports and leaderboard outputs are segregated landscape context and are forbidden as pipeline inputs.
+Track 1 evaluates variant prediction. A historical score does not confirm
+the molecular diagnosis: exact alleles, read support, transcript consequence,
+inheritance/phase, genome-wide alternatives and blind spots still require
+independent review. Public participant reports and leaderboard outputs are
+landscape context, not inputs to an independent pipeline.
 
 Track 2 is the larger differentiation opportunity. Candidate medicines remain research hypotheses only. Every proposal must include an exposure-realistic, genotype-matched validation gate and a cancer-safety failure criterion; nothing in this repository is medical advice.
 
@@ -164,6 +196,16 @@ Controlled genomic and clinical files live outside this repository under a dedic
 Account-specific access records and machine-specific storage verdicts must remain in a private operations record outside this public tree.
 
 ## Local checks
+
+The long command list below includes historical demonstrations. In
+particular, lineage, power and program-gate outputs retain the limitations
+in the current audit card. For the new descriptive and cryptographic checks:
+
+```powershell
+python -m unittest tests.test_fixed_horizon tests.test_timestamp_chain -q
+python scripts/verify_timestamp_chain.py .
+python scripts/assess_fixed_horizon.py --input templates/community/fixed_horizon.synthetic.json
+```
 
 ```powershell
 python -m unittest discover -s tests -v

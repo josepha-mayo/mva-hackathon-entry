@@ -2,8 +2,8 @@
 
 Reviewed 22–23 October 2026 by Codex in the user-authorized repository audit.
 
-The new reference parser, invented test fixtures and three literature cards
-contain public reference biology and published research. They contain no
+The reference parser, audit corrections, invented test fixtures and literature
+cards contain public reference biology, standard code and published research. They contain no
 downloaded challenge data, private clinical record or credential. The case
 labels discussed in the cards were already present in the public entry;
 their discussion does not independently confirm those calls or their phase.
@@ -11,8 +11,9 @@ their discussion does not independently confirm those calls or their phase.
 The unchanged privacy scanner conservatively flags biological words and
 short strings. In the reference code its findings are format labels,
 standard nuclear-code table rows, cleavage residues and invented peptide
-fixtures. In the literature cards they are public gene, variant and source
-names. These findings are retained, not hidden through string rewriting.
+fixtures. In the audit code they include certificate and timing vocabulary;
+in the literature cards they are public gene, variant and source names.
+These findings are retained, not hidden through string rewriting.
 The content was reviewed under the public-code, methods and allowed-evidence
 scope in [data governance](../DATA_GOVERNANCE.md).
 

@@ -1,0 +1,74 @@
+{
+  "schema": "mva-fixed-horizon-followup/v1",
+  "study_id": "syn-followup",
+  "synthetic_only": true,
+  "horizon_hours": 48,
+  "prespecified_at": "2025-12-31T00:00:00Z",
+  "adjudication_blinded": true,
+  "adjudication_locked_at": "2026-01-08T00:00:00Z",
+  "unblinded_at": "2026-01-08T01:00:00Z",
+  "founders": [
+    {
+      "founder_id": "syn-vehicle",
+      "arm": "vehicle",
+      "edit_event_id": "syn-event-1",
+      "exposure_started_at": "2026-01-01T00:00:00Z",
+      "division_completed_at": "2026-01-01T12:00:00Z",
+      "division_class": "bipolar",
+      "daughter_ids": [
+        "syn-vehicle-a",
+        "syn-vehicle-b"
+      ]
+    },
+    {
+      "founder_id": "syn-treatment",
+      "arm": "treatment",
+      "edit_event_id": "syn-event-1",
+      "exposure_started_at": "2026-01-01T00:00:00Z",
+      "division_completed_at": "2026-01-01T12:00:00Z",
+      "division_class": "bipolar",
+      "daughter_ids": [
+        "syn-treatment-a",
+        "syn-treatment-b"
+      ]
+    }
+  ],
+  "daughters": [
+    {
+      "daughter_id": "syn-vehicle-a",
+      "founder_id": "syn-vehicle",
+      "observation_started_at": "2026-01-01T12:00:00Z",
+      "observed_until": "2026-01-01T18:00:00Z",
+      "continuous_observation": true,
+      "first_reproduced_at": "2026-01-01T18:00:00Z",
+      "died_at": null
+    },
+    {
+      "daughter_id": "syn-vehicle-b",
+      "founder_id": "syn-vehicle",
+      "observation_started_at": "2026-01-01T12:00:00Z",
+      "observed_until": "2026-01-01T18:00:00Z",
+      "continuous_observation": true,
+      "first_reproduced_at": "2026-01-01T18:00:00Z",
+      "died_at": null
+    },
+    {
+      "daughter_id": "syn-treatment-a",
+      "founder_id": "syn-treatment",
+      "observation_started_at": "2026-01-01T12:00:00Z",
+      "observed_until": "2026-01-01T18:00:00Z",
+      "continuous_observation": true,
+      "first_reproduced_at": "2026-01-01T18:00:00Z",
+      "died_at": null
+    },
+    {
+      "daughter_id": "syn-treatment-b",
+      "founder_id": "syn-treatment",
+      "observation_started_at": "2026-01-01T12:00:00Z",
+      "observed_until": "2026-01-01T18:00:00Z",
+      "continuous_observation": true,
+      "first_reproduced_at": "2026-01-01T18:00:00Z",
+      "died_at": null
+    }
+  ]
+}
