@@ -105,3 +105,12 @@ binds the new card and updated navigation. The main NALL research report,
 analyses and media remain unchanged; earlier records retain their earlier
 bindings. The exact-source review is refreshed without changing the scanner
 or granting historical clearance, clinical benefit or a new submission.
+
+The 24 October [first informative test](first_informative_test.md) corrects
+resource-specific drug eligibility and retains newly inspected direct-model
+chemical evidence. The [Aurora source-data audit](aurora_source_data.md)
+reproduces measured public percentages, with source identity and descriptive
+limits explicit. Its script/result and the changed navigation/pilot prose
+have a separate follow-up content record; earlier byte bindings remain
+historical. No approved-drug efficacy rank, exact-child result, model access,
+clinical treatment, frozen-release change or revised submission is implied.
