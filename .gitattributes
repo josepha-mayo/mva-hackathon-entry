@@ -105,3 +105,5 @@
 /docs/redox_fork.md text eol=lf
 /release/redox-literature-review.json text eol=lf
 /research/public_cin/** -text
+/docs/therapeutic_hypothesis.md text eol=lf
+/release/therapeutic-literature-review.json text eol=lf
