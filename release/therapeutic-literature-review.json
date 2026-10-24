@@ -24,7 +24,7 @@
     },
     {
       "path": "docs/therapeutic_hypothesis.md",
-      "sha256": "0cfe9fc27cf5e11cc2fc90c6398f11c91e35cc92096c0aae4e8483fe89d2c21f",
+      "sha256": "8537a6244c729c136cf4e69b3ee4a6d94852ddf258396ac64cce51d0b6be2dbb",
       "source_class": "Public primary literature, existing public entry and explicitly proposed research; no controlled participant payload",
       "identifier_finding_count": 144,
       "identifier_findings_sha256": "cbaa66d19fa497a2dbce6fa3b46540f911cb622643f43d067941201fc7af16f9",
@@ -220,5 +220,31 @@
   "legacy_policy_changed": false,
   "privacy_allowance_granted": false,
   "clinical_advancement_granted": false,
-  "clinical_benefit_demonstrated": false
+  "clinical_benefit_demonstrated": false,
+  "scientific_attribution_corrections": [
+    {
+      "utc": "2026-10-24T14:21:31.300604+00:00",
+      "scope": "docs/therapeutic_hypothesis.md",
+      "previous_sha256": "0cfe9fc27cf5e11cc2fc90c6398f11c91e35cc92096c0aae4e8483fe89d2c21f",
+      "current_sha256": "8537a6244c729c136cf4e69b3ee4a6d94852ddf258396ac64cce51d0b6be2dbb",
+      "previous_statement": "Rapamycin increased neuroblast counts without restoring progeny counts or brain size.",
+      "corrected_statement": "Rapamycin increased neuroblast counts while measured brain-lobe area decreased; its effect on Pros-positive progeny was not reported in that comparison. Genetic autophagy enhancement did not restore progeny counts or brain size.",
+      "source_doi": "10.1038/s41467-026-70521-0",
+      "source_workbook_sha256": "4d73e1684479bf504c1957900f09a6ed378a6fa4040b8f6ab4b4b0d42db76271",
+      "source_sheet": "Figure S6",
+      "drug_Pros_endpoint_reported": false,
+      "source_means_NBs": [
+        23.58,
+        28.44
+      ],
+      "source_means_brain_area_um2": [
+        37719,
+        29698
+      ],
+      "qualification": "Root and independent Astra/max source inspection; lobe-level summaries, no new animal experiment or clinical inference.",
+      "legacy_policy_changed": false,
+      "all_history_privacy_pass_claimed": false
+    }
+  ],
+  "candidate_source_note": "candidate_md_sha256 identifies the preserved historical draft; current public text has the attribution correction recorded below"
 }
