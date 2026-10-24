@@ -1,36 +1,28 @@
-# A faithful division
+# Before the next faulty division
 
-An experimental decision method for **Rare Disease, Real Kid: MVA 2026**.
+**Phenylbutyrate to preserve useful neural capacity in BUB1B-associated MVA.**
 
-The practical goal is to find a measurable way to improve chromosome
-segregation while preserving healthy divisions and checking abnormal-clone
-fitness. A fall in the number of abnormal cells alone cannot establish that.
-No benefit to the child has been demonstrated.
+We nominate phenylbutyrate (PBA) as a research candidate for cells whose useful function is limited by ongoing aneuploid protein stress. The intended benefit is preserved neural capacity in surviving cells. No drug rescue or clinical benefit in MVA has been demonstrated by this project.
 
-## Start with the experiment
+## Read the therapeutic case first
 
-**24 October practical correction:** [the first informative test must fit the actual resource](docs/first_informative_test.md). The listed MVA line's frameshift makes it unsuitable for the native-stop ataluren arm. A smaller qualified functional pilot is a conditional option. A newly retained Aurora-inhibitor mouse-survival positive is weighed against [actual misalignment source-data reanalysis](docs/aurora_source_data.md) and a failed enzyme-to-cell bridge for an approved drug; no new medicine advances to clinical priority.
+The [current medicine hypothesis](docs/therapeutic_hypothesis.md) puts the proposed benefit, actual-drug evidence, realistic exposure and strongest counterevidence together. Human trisomic-neuron marker effects and functional rescue in other disorders motivate the candidate; they do not jointly establish useful BUB1B function at attainable neural exposure. A 2026 STXBP1 zebrafish negative and the randomized pediatric SMA negative remain beside the positives.
 
-**Current neural comparison:** [phenylbutyrate, elamipretide and levacetylleucine](docs/neural_protection_comparison.md), judged on the same useful function. [Levacetylleucine](docs/levacetylleucine_challenger.md) adds randomized human functional benefit in A–T and September 2026 approval, while its BUB1B bridge remains unproved. PBA has closer human aneuploid-neuron stress-marker evidence; elamipretide retains neuronal/animal positives and human trial negatives. The proposed eight conditions use two genotypes by vehicle/three drug profiles; NAC remains an optional neural follow-up. No overall efficacy rank or BUB1B rescue is established. The [executed exposure-time audit](docs/exposure_time_audit.md) challenges peak-only comparisons without predicting drug benefit.
+The two opportunities are separate: downstream preservation of neural function is the primary therapeutic hypothesis; increased functional supply of residual BUBR1 is conditional on a recoverable protein defect. A cycling-cell response cannot establish neural benefit or identify its molecular mediator. The [existing neural comparison](docs/neural_protection_comparison.md), [lineage and benefit qualification](docs/child_benefit_decision.md), and [measured-source exposure arithmetic](docs/exposure_time_audit.md) provide the supporting questions.
 
-**First decision for patient benefit:** [choose the relevant function and verify that the experiment can test it](docs/child_benefit_decision.md). Direct BUB1B neural studies can show precursor/maturation deficits without increased neuron death. A public cycling-cell resource lead exists, but an assay-ready BUB1B neural pair was not verified. The proposed comparison remains conditional on model and endpoint qualification; no clinical benefit has been demonstrated.
+Fresh independent challenges retained fluoxetine/sFRP3, lithium, lamivudine, NAC, elamipretide and symptom-matched levacetylleucine as serious alternatives. Their useful functional observations and specific counterevidence are summarized in the therapeutic case. No phenotype-free clinical ranking or medicine combination is proposed.
 
-**Current medicine hypotheses:** a limited ataluren stop-allele arm, separate
-fasudil/active-metabolite ciliary comparison and a cilostazol/metabolite barrier
-hypothesis. Belumosudil is reserved; selumetinib is deferred after direct-drug
-counterevidence. Human trial negatives and assay-context limits are retained.
-NAC remains a protective comparator. The [ataluren challenge](docs/stop_allele_challenge.md)
-retains both the meaningful positives and the negative controlled human trials.
-The [tissue comparison](docs/tissue_candidates.md) identifies each candidate's
-missing functional bridge. No overall efficacy ranking or child benefit is established.
+The [annotation namespace check](docs/annotation_namespace_check.md) explains why a published niflumic-acid “BUB1B activator” annotation is insufficient evidence for a drug hypothesis. A likely database identifier collision is an inference; the underlying ingestion defect was not traced.
 
-Start with the [finite pilot](docs/finite_pilot.md): eight cycling-cell conditions,
-one available tissue module, all-founder outcomes and staged confirmation.
-It is a proposed experiment, not an executed drug screen. Ataluren does not
-have exclusive priority. The [current decision](docs/treatment_evidence.md)
-and [full evidence comparison](docs/drug_decision.md) preserve earlier alternatives.
-The matching report candidate is prepared separately for the next submission;
-the frozen signed report and existing portal entry have not been replaced.
+## Reproduce the supporting analyses
+
+The [Aurora workbook reproduction](docs/aurora_source_data.md) retains all 60 source percentages and distinguishes an imposed chromosome-alignment challenge from a separate mouse-survival abstract. The [synaptic-source audit](docs/nall_source_data_audit.md) preserves grouping and dispersion limitations. These executed analyses are public-source reproductions, not new MVA drug experiments.
+
+The [resource-specific first experiment](docs/first_informative_test.md) and [finite pilot](docs/finite_pilot.md) remain supporting cycling-cell proposals. GM21284's frameshift excludes it from a native L737Ter ataluren restoration claim. Resource access, assay competence and a qualified BUB1B neural pair remain unconfirmed.
+
+## Supporting research and earlier audits
+
+The documents below preserve earlier mechanisms, negative evidence, software corrections and historical release claims. They must be read with the therapeutic scope above. The signed historical report and public working supplements remain distinct from the latest uploaded portal report.
 
 **Current audit correction:** the frozen v1 lineage checker does not enforce
 its stated fixed daughter horizon and mislabels mother-attempt duration as
