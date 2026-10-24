@@ -20,7 +20,7 @@
     },
     {
       "path": "docs/therapeutic_hypothesis.md",
-      "sha256": "1572be02777ca15f32eb405e1b74de4e3d16e573b8398d9f6b2c88a8863c7313",
+      "sha256": "7ab4d37fca222af6a6d23beebf95a54c2e8a9c9e12906a8163ff666703f7051a",
       "source_class": "Current public primary-source research synthesis and exact previously reviewed public-analysis link",
       "identifier_finding_count": 124,
       "identifier_findings_sha256": "45d82203e482046dedbd39d2c16b73469ab25acdbec325b5f3e2145c0fa3ff0f",
@@ -285,8 +285,8 @@
       "all_findings_sha256": "71d8a52fd14ea9b62cc6abae2bf2e908f75b9949d7855cd9607445a68d1f5d61",
       "offline_exact_content_review": {
         "schema": "exact-public-citation-content-review/v1",
-        "utc": "2026-10-24T16:20:35.801560+00:00",
-        "reviewed_public_case_sha256": "1572be02777ca15f32eb405e1b74de4e3d16e573b8398d9f6b2c88a8863c7313",
+        "utc": "2026-10-24T17:19:47.211061+00:00",
+        "reviewed_public_case_sha256": "7ab4d37fca222af6a6d23beebf95a54c2e8a9c9e12906a8163ff666703f7051a",
         "scanner_sha256": "996c8c8c112757921f4ed507dd453aaad8c95f46b8c6ab65b440f1d888ad8c56",
         "retained_all_findings": [
           "non-synthetic biological identifier 'BUB1B': public-source-review: docs/therapeutic_hypothesis.md",
@@ -426,22 +426,22 @@
             "scanner_match": "p. 217](https://www.accessdata.fda.gov/drugsatfda_docs/nda/2013/203284Orig1s000PharmR.pdf",
             "inverse_source_text": "p. 217](https://www.accessdata.fda.gov/drugsatfda_docs/nda/2013/203284Orig1s000PharmR.pdf",
             "source_char_span": [
-              14689,
-              14778
+              14816,
+              14905
             ],
             "source_line": 61,
-            "source_context": "ih.gov/dailymed/drugInfo.cfm?setid=900e7dc0-9afe-4f50-80de-90567bb78519), [FDA review, printed p. 217](https://www.accessdata.fda.gov/drugsatfda_docs/nda/2013/203284Orig1s000PharmR.pdf).\n\n### 4. UDCA: useful output despite incomp"
+            "source_context": "nlm.nih.gov/dailymed/drugInfo.cfm?setid=900e7dc0-9afe-4f50-80de-90567bb78519), [FDA review, printed p. 217](https://www.accessdata.fda.gov/drugsatfda_docs/nda/2013/203284Orig1s000PharmR.pdf).\n\n### 4. UDCA: useful output despite incomplete disposal repair\n\n**A"
           },
           {
             "view": "(rot13)",
             "scanner_match": "c. 217](uggcf://jjj.npprffqngn.sqn.tbi/qehtfngsqn_qbpf/aqn/2013/203284Bevt1f000CunezE.cqs",
             "inverse_source_text": "p. 217](https://www.accessdata.fda.gov/drugsatfda_docs/nda/2013/203284Orig1s000PharmR.pdf",
             "source_char_span": [
-              14689,
-              14778
+              14816,
+              14905
             ],
             "source_line": 61,
-            "source_context": "ih.gov/dailymed/drugInfo.cfm?setid=900e7dc0-9afe-4f50-80de-90567bb78519), [FDA review, printed p. 217](https://www.accessdata.fda.gov/drugsatfda_docs/nda/2013/203284Orig1s000PharmR.pdf).\n\n### 4. UDCA: useful output despite incomp"
+            "source_context": "nlm.nih.gov/dailymed/drugInfo.cfm?setid=900e7dc0-9afe-4f50-80de-90567bb78519), [FDA review, printed p. 217](https://www.accessdata.fda.gov/drugsatfda_docs/nda/2013/203284Orig1s000PharmR.pdf).\n\n### 4. UDCA: useful output despite incomplete disposal repair\n\n**A"
           }
         ],
         "adjudication": "Both HGVS-like findings trace to the same FDA review printed-page-217 Markdown citation; the second is its ROT13 view. This is a page reference and public FDA URL, not a participant variant or an opaque payload. Exact text and every diagnostic are retained.",
@@ -536,6 +536,20 @@
       "later_root_checks": "Existing programme rechecked; supporting analysis condensed; oral SLC6A1 physiology preprint checked directly, including spontaneous/evoked discordance. No new biological result.",
       "public_projection_changes": "Research-status header, published SVG-relative link, omit submission-specific media bookkeeping, current reproducibility paragraph.",
       "public_case_sha256": "1572be02777ca15f32eb405e1b74de4e3d16e573b8398d9f6b2c88a8863c7313",
+      "legacy_policy_changed": false,
+      "all_history_cleared": false,
+      "clinical_benefit_demonstrated": false
+    },
+    {
+      "utc": "2026-10-24T17:19:47.211061+00:00",
+      "working_report_sha256": "0b58e1e29faafd7c70ca2ddf51c8c60c93ff48e01645f3c2ded9cd512f995de8",
+      "previous_public_case_sha256": "1572be02777ca15f32eb405e1b74de4e3d16e573b8398d9f6b2c88a8863c7313",
+      "public_case_sha256": "7ab4d37fca222af6a6d23beebf95a54c2e8a9c9e12906a8163ff666703f7051a",
+      "change": "One explicit loss-of-function-direction sentence in the existing mechanism paragraph; residual activity and phase remain unresolved.",
+      "scientific_basis": "Primary Suijkerbuijk 2010 patient-cell/replacement findings rechecked; this is a root synthesis, not an exact-allele result.",
+      "primary_source": "https://doi.org/10.1158/0008-5472.CAN-09-4319",
+      "independent_review_of_this_revision": false,
+      "diagnostic_multiset_unchanged": true,
       "legacy_policy_changed": false,
       "all_history_cleared": false,
       "clinical_benefit_demonstrated": false
