@@ -1,0 +1,23 @@
+{
+  "source_url": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Invertebrates/Drosophila_melanogaster.gene_info.gz",
+  "source_gzip_sha256": "89b8f8a18fb6587a615461d175b67a947311dc182448826c90490b8f03f79999",
+  "source_gzip_bytes": 1402920,
+  "source_row_count": 25079,
+  "projection_row_count": 14073,
+  "fields": [
+    "GeneID",
+    "Symbol",
+    "Synonyms",
+    "chromosome",
+    "dbXrefs"
+  ],
+  "projection_sha256": "27926d175620d4a4123769c873d1bb3bdac5a025569aaf795b2f3bf30fa7dc05",
+  "projection_bytes": 1629865,
+  "deposited_gene_count": 14150,
+  "unmapped_deposited_gene_count": 77,
+  "all_deposited_gene_mapping_lists_preserved": true,
+  "all_effective_fixed_panel_match_lists_preserved": true,
+  "selection": "Keep every original row with any deposited FBgn cross-reference or any canonical/alias match to a fixed panel label. Preserve source row order and all five complete fields, without deduplication.",
+  "original_counting_annotation_release": "Unknown. This frozen NCBI snapshot is not asserted to be the original counting annotation.",
+  "rolling_source_download_required": false
+}

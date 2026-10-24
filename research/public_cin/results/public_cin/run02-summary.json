@@ -1,0 +1,517 @@
+{
+  "source": "Audited run02; exact full original result retained in provenance/public_cin/run02/descriptive-results.json",
+  "original_results_sha256": "316a80379df02d227385eeaa5aa8e96ddebf77040e24182196d9d495cc69c263",
+  "subset_definition": "Genes passing >=1 CPM in >=3/6 libraries in each of all three contrasts, assigned to nuclear arms 2R,3L,3R,4. The same 5599 genes are used for CIN/X and CIN/2L.",
+  "primary_method": "chromosome_common_reference",
+  "biological_units_per_condition": 3,
+  "brains_per_pool": 3,
+  "common_deposited_genes": 8990,
+  "positive_all_18_reference_genes": 8916,
+  "primary_threeway_detected_genes": 8711,
+  "primary_comparisons": [
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.1321923553537633,
+      "direction_agreement_fraction": 0.45150919807108414
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13988272078181202,
+      "direction_agreement_fraction": 0.5618860510805501
+    }
+  ],
+  "all_identical_background_sensitivities": [
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.12631531063554946,
+      "direction_agreement_fraction": 0.46987951807228917
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.12924273389556776,
+      "direction_agreement_fraction": 0.46936953027326306
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.13777942066944462,
+      "direction_agreement_fraction": 0.4685430463576159
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.12855718629809218,
+      "direction_agreement_fraction": 0.464815784878645
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.13157763143659845,
+      "direction_agreement_fraction": 0.46454724057867475
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.14078113362167238,
+      "direction_agreement_fraction": 0.46254139072847683
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.1129650396357207,
+      "direction_agreement_fraction": 0.464291950410337
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.11544715891871325,
+      "direction_agreement_fraction": 0.4627612073584569
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.1199048692786927,
+      "direction_agreement_fraction": 0.46254139072847683
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.12699638588901932,
+      "direction_agreement_fraction": 0.4531168150864327
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.13007718493876783,
+      "direction_agreement_fraction": 0.45258081800321487
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.1378883629364672,
+      "direction_agreement_fraction": 0.4515728476821192
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.12899588598994136,
+      "direction_agreement_fraction": 0.45189453466038065
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.1321923553537633,
+      "direction_agreement_fraction": 0.45150919807108414
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.14039320460368346,
+      "direction_agreement_fraction": 0.45012417218543044
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.13313416481061577,
+      "direction_agreement_fraction": 0.5582329317269076
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13737695529747104,
+      "direction_agreement_fraction": 0.5592070012502233
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.17200544399985926,
+      "direction_agreement_fraction": 0.5680877483443708
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.13327501115344823,
+      "direction_agreement_fraction": 0.5550899249170596
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13749926941672364,
+      "direction_agreement_fraction": 0.555992141453831
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.17212652780059878,
+      "direction_agreement_fraction": 0.5639486754966887
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.13004967378221258,
+      "direction_agreement_fraction": 0.535358826610791
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13408249880435985,
+      "direction_agreement_fraction": 0.5354527594213252
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.16712309527715707,
+      "direction_agreement_fraction": 0.539114238410596
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.13473007979376617,
+      "direction_agreement_fraction": 0.5606774925790117
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13898071743121304,
+      "direction_agreement_fraction": 0.5611716377924629
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.1735763539093468,
+      "direction_agreement_fraction": 0.5666390728476821
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.1355573500842978,
+      "direction_agreement_fraction": 0.5612013270473197
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13988272078181202,
+      "direction_agreement_fraction": 0.5618860510805501
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.17460246522555053,
+      "direction_agreement_fraction": 0.5672599337748344
+    }
+  ],
+  "fixed_panel_mapping": {
+    "bub3": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Bub3",
+          "gene_id": "43490",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0025457"
+          ]
+        }
+      ]
+    },
+    "Hsp70Ba": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp70Ba",
+          "gene_id": "44921",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0013277"
+          ]
+        }
+      ]
+    },
+    "Hsp70Bb": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp70Bb",
+          "gene_id": "48582",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0013278"
+          ]
+        }
+      ]
+    },
+    "Hsp70Bc": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp70Bc",
+          "gene_id": "48583",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0013279"
+          ]
+        }
+      ]
+    },
+    "Hsp70Bbb": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp70Bbb",
+          "gene_id": "50022",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0051354"
+          ]
+        }
+      ]
+    },
+    "Hsp60": {
+      "mapping_mode": "alias",
+      "ambiguous": true,
+      "candidates": [
+        {
+          "symbol": "Hsp60A",
+          "gene_id": "32045",
+          "chromosome": "X",
+          "flybase_ids": [
+            "FBgn0015245"
+          ]
+        },
+        {
+          "symbol": "Hsp60C",
+          "gene_id": "33796",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0031728"
+          ]
+        },
+        {
+          "symbol": "mAcon1",
+          "gene_id": "44149",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0010100"
+          ]
+        },
+        {
+          "symbol": "Hsp60B",
+          "gene_id": "48572",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0011244"
+          ]
+        }
+      ]
+    },
+    "Hsp60c": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp60C",
+          "gene_id": "33796",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0031728"
+          ]
+        }
+      ]
+    },
+    "Sod2": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Sod2",
+          "gene_id": "36878",
+          "chromosome": "2R",
+          "flybase_ids": [
+            "FBgn0010213"
+          ]
+        }
+      ]
+    },
+    "GTPx-1": {
+      "mapping_mode": "alias",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Gtpx",
+          "gene_id": "38413",
+          "chromosome": "3L",
+          "flybase_ids": [
+            "FBgn0035438"
+          ]
+        }
+      ]
+    },
+    "pros": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "pros",
+          "gene_id": "41363",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0004595"
+          ]
+        }
+      ]
+    },
+    "dpn": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "dpn",
+          "gene_id": "35800",
+          "chromosome": "2R",
+          "flybase_ids": [
+            "FBgn0010109"
+          ]
+        }
+      ]
+    },
+    "wor": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "wor",
+          "gene_id": "34906",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0001983"
+          ]
+        }
+      ]
+    },
+    "Myc": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Myc",
+          "gene_id": "31310",
+          "chromosome": "X",
+          "flybase_ids": [
+            "FBgn0262656"
+          ]
+        }
+      ]
+    }
+  },
+  "limits": [
+    "Descriptive relative expression; no DESeq2 reproduction, drug rescue, functional rescue or patient efficacy.",
+    "Deposited trisomy row selection and exact original annotation/normalization are unresolved."
+  ],
+  "primary_background_gene_ids_file": "fixtures/public_cin/primary_background_gene_ids.txt",
+  "primary_background_gene_ids_sha256": "2f0ddcce559ca0f16d79154e206bccfe3dd96c7939ff0c8dbd93e70a442483a4"
+}

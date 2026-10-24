@@ -16,6 +16,8 @@ The [annotation namespace check](docs/annotation_namespace_check.md) explains wh
 
 ## Reproduce the supporting analyses
 
+The [public CIN count-analysis capsule](research/public_cin/README.md) provides fixed input hashes, portable code, a frozen annotation projection and independently reproduced descriptive results. Its separate post hoc pool-omission check can reverse the correlation signs; computational sensitivities do not establish stable biological direction or drug benefit. The capsule preserves its preparation-time snapshot and correction history. Exact-byte public-source review covers this component only; it does not clear older repository history.
+
 The [Aurora workbook reproduction](docs/aurora_source_data.md) retains all 60 source percentages and distinguishes an imposed chromosome-alignment challenge from a separate mouse-survival abstract. The [synaptic-source audit](docs/nall_source_data_audit.md) preserves grouping and dispersion limitations. These executed analyses are public-source reproductions, not new MVA drug experiments.
 
 The [resource-specific first experiment](docs/first_informative_test.md) and [finite pilot](docs/finite_pilot.md) remain supporting cycling-cell proposals. GM21284's frameshift excludes it from a native L737Ter ataluren restoration claim. Resource access, assay competence and a qualified BUB1B neural pair remain unconfirmed.

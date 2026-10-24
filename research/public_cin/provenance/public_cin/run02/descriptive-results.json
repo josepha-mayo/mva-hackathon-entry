@@ -1,0 +1,4710 @@
+{
+  "provenance": {
+    "completed_utc": "2026-10-24T13:44:01.273305+00:00",
+    "script_sha256": "b751cd43832c3c51aa26ad1b01a2649e8802fb773717d6f2f10f8c474d67f956",
+    "plan_sha256": "ba2935dc9ae18f46dfa1117023e00d501dc4b1bcc4ec5369ceec3092ddbd2328",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.3.5",
+    "openpyxl": "3.1.5",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "annotation_sha256": "89b8f8a18fb6587a615461d175b67a947311dc182448826c90490b8f03f79999",
+    "source_sha256": {
+      "GSE290206": "8ca3791e8a69284403f41698ef9af3fa9efbe47b3978c6bcacd906f282a747e9",
+      "GSE301548": "d35eb3c42787a2137bfe453a32b2fc9772e602eeee69a2ca46e154be92993b18"
+    },
+    "soft_metadata_sha256": {
+      "GSE290206": "3fb83551ebff9ba6a1640afb7b572e02765ae0d3c2c86578112ca0086d717899",
+      "GSE301548": "15459700f0b711325a82763e0c42f0be0bbecdfccbf9dd01570fc8f4814813a6"
+    },
+    "common_rows": 8990,
+    "positive_in_all_18_libraries": 8916,
+    "cpm_denominator": "sum of deposited workbook counts; not total mapped reads",
+    "replication_unit": "three matched collection-day pools per condition, each containing three brains",
+    "estimand": "median of three matched-pool log2 normalized-count differences, pseudocount 0.5",
+    "inference": "descriptive only; no P values, DESeq2 reproduction, drug response or patient inference",
+    "row_selection": "trisomy 8990 rows are a strict subset of CIN 14150; selection rule unresolved",
+    "revision": "run02 adds identical three-way-detected comparison universe after independent review; run01 retained"
+  },
+  "input_qc": {
+    "CIN": {
+      "accession": "GSE290206",
+      "gene_rows": 14150,
+      "ordered_libraries": [
+        "0916_2024",
+        "0917_2024",
+        "0933_2024",
+        "0934_2024",
+        "1224_2024",
+        "1225_2024"
+      ],
+      "paired_libraries": [
+        [
+          "0916_2024",
+          "0917_2024"
+        ],
+        [
+          "0933_2024",
+          "0934_2024"
+        ],
+        [
+          "1224_2024",
+          "1225_2024"
+        ]
+      ],
+      "sample_metadata": [
+        {
+          "title": "ctrl brain 4",
+          "tissue": "Brain",
+          "genotype": "ctrl",
+          "batch": "4",
+          "library": "0916_2024",
+          "geo_sample": "GSM8808448"
+        },
+        {
+          "title": "CIN brain 4",
+          "tissue": "Brain",
+          "genotype": "CIN",
+          "batch": "4",
+          "library": "0917_2024",
+          "geo_sample": "GSM8808449"
+        },
+        {
+          "title": "ctrl brain 5",
+          "tissue": "Brain",
+          "genotype": "ctrl",
+          "batch": "5",
+          "library": "0933_2024",
+          "geo_sample": "GSM8808450"
+        },
+        {
+          "title": "CIN brain 5",
+          "tissue": "Brain",
+          "genotype": "CIN",
+          "batch": "5",
+          "library": "0934_2024",
+          "geo_sample": "GSM8808451"
+        },
+        {
+          "title": "ctrl brain 6",
+          "tissue": "Brain",
+          "genotype": "ctrl",
+          "batch": "6",
+          "library": "1224_2024",
+          "geo_sample": "GSM8808452"
+        },
+        {
+          "title": "CIN brain 6",
+          "tissue": "Brain",
+          "genotype": "CIN",
+          "batch": "6",
+          "library": "1225_2024",
+          "geo_sample": "GSM8808453"
+        }
+      ],
+      "deposited_count_sums": [
+        24700290,
+        25666856,
+        26292208,
+        24668180,
+        25278697,
+        26249911
+      ],
+      "positive_all_six": 11243,
+      "common_row_count_fractions": [
+        0.9980832208852609,
+        0.9923030697643684,
+        0.998272377884733,
+        0.9985285091968682,
+        0.9986744174353607,
+        0.9986095190951314
+      ],
+      "chromosome_assignment_counts": {
+        "2L": 2575,
+        "2R": 2820,
+        "3L": 2832,
+        "3R": 3353,
+        "4": 108,
+        "MT": 30,
+        "X": 2326,
+        "Y": 29,
+        "unmapped": 77
+      },
+      "detection_counts": {
+        "0.5": 9806,
+        "1.0": 9080,
+        "5.0": 7823
+      }
+    },
+    "X": {
+      "accession": "GSE301548",
+      "gene_rows": 8990,
+      "ordered_libraries": [
+        "0919_2024",
+        "0920_2024",
+        "0936_2024",
+        "0937_2024",
+        "1212_2024",
+        "1213_2024"
+      ],
+      "paired_libraries": [
+        [
+          "0919_2024",
+          "0920_2024"
+        ],
+        [
+          "0936_2024",
+          "0937_2024"
+        ],
+        [
+          "1212_2024",
+          "1213_2024"
+        ]
+      ],
+      "sample_metadata": [
+        {
+          "title": "CDX/Y BRAIN 4",
+          "tissue": "Brain",
+          "genotype": "CDXY",
+          "batch": "4",
+          "library": "0919_2024",
+          "geo_sample": "GSM9085035"
+        },
+        {
+          "title": "CDX/X BRAIN 4",
+          "tissue": "Brain",
+          "genotype": "CDXX",
+          "batch": "4",
+          "library": "0920_2024",
+          "geo_sample": "GSM9085036"
+        },
+        {
+          "title": "CDX/Y BRAIN 5",
+          "tissue": "Brain",
+          "genotype": "CDXY",
+          "batch": "5",
+          "library": "0936_2024",
+          "geo_sample": "GSM9085040"
+        },
+        {
+          "title": "CDX/X BRAIN 5",
+          "tissue": "Brain",
+          "genotype": "CDXX",
+          "batch": "5",
+          "library": "0937_2024",
+          "geo_sample": "GSM9085041"
+        },
+        {
+          "title": "CDXY brain 6",
+          "tissue": "Brain",
+          "genotype": "CDXY",
+          "batch": "6",
+          "library": "1212_2024",
+          "geo_sample": "GSM9085047"
+        },
+        {
+          "title": "CDXX brain 6",
+          "tissue": "Brain",
+          "genotype": "CDXX",
+          "batch": "6",
+          "library": "1213_2024",
+          "geo_sample": "GSM9085048"
+        }
+      ],
+      "deposited_count_sums": [
+        24265150,
+        26423579,
+        25135136,
+        22949943,
+        24113539,
+        28272926
+      ],
+      "positive_all_six": 8947,
+      "common_row_count_fractions": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "chromosome_assignment_counts": {
+        "2L": 1565,
+        "2R": 1772,
+        "3L": 1752,
+        "3R": 2172,
+        "4": 87,
+        "MT": 18,
+        "X": 1564,
+        "Y": 9,
+        "unmapped": 51
+      },
+      "detection_counts": {
+        "0.5": 8952,
+        "1.0": 8866,
+        "5.0": 7802
+      }
+    },
+    "2L": {
+      "accession": "GSE301548",
+      "gene_rows": 8990,
+      "ordered_libraries": [
+        "0921_2024",
+        "0922_2024",
+        "0938_2024",
+        "0939_2024",
+        "1210_2024",
+        "1211_2024"
+      ],
+      "paired_libraries": [
+        [
+          "0921_2024",
+          "0922_2024"
+        ],
+        [
+          "0938_2024",
+          "0939_2024"
+        ],
+        [
+          "1210_2024",
+          "1211_2024"
+        ]
+      ],
+      "sample_metadata": [
+        {
+          "title": "C2L BRAIN 4",
+          "tissue": "Brain",
+          "genotype": "C2L",
+          "batch": "4",
+          "library": "0921_2024",
+          "geo_sample": "GSM9085037"
+        },
+        {
+          "title": "T2L BRAIN 4",
+          "tissue": "Brain",
+          "genotype": "T2L",
+          "batch": "4",
+          "library": "0922_2024",
+          "geo_sample": "GSM9085038"
+        },
+        {
+          "title": "C2L BRAIN 5",
+          "tissue": "Brain",
+          "genotype": "C2L",
+          "batch": "5",
+          "library": "0938_2024",
+          "geo_sample": "GSM9085042"
+        },
+        {
+          "title": "T2L BRAIN 5",
+          "tissue": "Brain",
+          "genotype": "T2L",
+          "batch": "5",
+          "library": "0939_2024",
+          "geo_sample": "GSM9085043"
+        },
+        {
+          "title": "C2L brain 6",
+          "tissue": "Brain",
+          "genotype": "C2L",
+          "batch": "6",
+          "library": "1210_2024",
+          "geo_sample": "GSM9085045"
+        },
+        {
+          "title": "T2L brain 6",
+          "tissue": "Brain",
+          "genotype": "T2L",
+          "batch": "6",
+          "library": "1211_2024",
+          "geo_sample": "GSM9085046"
+        }
+      ],
+      "deposited_count_sums": [
+        25753695,
+        24668993,
+        26328712,
+        27142240,
+        24067221,
+        23521025
+      ],
+      "positive_all_six": 8951,
+      "common_row_count_fractions": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "chromosome_assignment_counts": {
+        "2L": 1565,
+        "2R": 1772,
+        "3L": 1752,
+        "3R": 2172,
+        "4": 87,
+        "MT": 18,
+        "X": 1564,
+        "Y": 9,
+        "unmapped": 51
+      },
+      "detection_counts": {
+        "0.5": 8944,
+        "1.0": 8855,
+        "5.0": 7747
+      }
+    }
+  },
+  "shared_detection_counts": {
+    "0.5": 8904,
+    "1.0": 8711,
+    "5.0": 7588
+  },
+  "normalization": {
+    "CIN": {
+      "global_median": {
+        "size_factors": {
+          "factors": [
+            0.9804091199403949,
+            0.9891163065832406,
+            0.969139813671352,
+            0.9875238542474799,
+            1.0075756650637062,
+            1.0693837870431107
+          ],
+          "positive_reference_genes": 11243
+        },
+        "finite_effect_genes": 14150
+      },
+      "global_common_reference": {
+        "size_factors": {
+          "factors": [
+            0.9831130532200587,
+            0.978909881543604,
+            0.9666202202031969,
+            0.9900476147139388,
+            1.0138262306433292,
+            1.0709725610887253
+          ],
+          "positive_reference_genes": 8916
+        },
+        "finite_effect_genes": 14150
+      },
+      "library_sum": {
+        "size_factors": {
+          "factors": [
+            0.9698736266245457,
+            1.0078264956715075,
+            1.0323813657623815,
+            0.9686128057130943,
+            0.9925851694750557,
+            1.03072054539204
+          ],
+          "positive_reference_genes": null
+        },
+        "finite_effect_genes": 14150
+      },
+      "chromosome_median": {
+        "size_factors": {
+          "X": {
+            "factors": [
+              0.9965417274229763,
+              0.9904538881092141,
+              0.9484371614385751,
+              0.9945572220343958,
+              1.0035951240717071,
+              1.0702207582929884
+            ],
+            "positive_reference_genes": 1953
+          },
+          "2L": {
+            "factors": [
+              0.9666296528825313,
+              0.986821179494338,
+              0.9762284142462817,
+              0.991890116598355,
+              1.0092534609850632,
+              1.0727194868498229
+            ],
+            "positive_reference_genes": 1976
+          },
+          "2R": {
+            "factors": [
+              0.985992295109683,
+              0.9989253142601581,
+              0.9706511806597996,
+              0.9694561032891829,
+              1.009769549648404,
+              1.0685131061456685
+            ],
+            "positive_reference_genes": 2231
+          },
+          "3L": {
+            "factors": [
+              0.9720777584966582,
+              0.9927553586724993,
+              0.9752647037903747,
+              0.9916799385711375,
+              1.006762443385603,
+              1.0642305288548723
+            ],
+            "positive_reference_genes": 2205
+          },
+          "3R": {
+            "factors": [
+              0.9862884402096745,
+              0.9790279585890747,
+              0.9679857042597012,
+              0.9933199045035918,
+              1.0057566182619375,
+              1.0709026222734508
+            ],
+            "positive_reference_genes": 2673
+          },
+          "4": {
+            "factors": [
+              0.8536088344345463,
+              0.9366226829328966,
+              1.0842770047757249,
+              0.9982459505429419,
+              1.0623166809205826,
+              1.0877888979845913
+            ],
+            "positive_reference_genes": 100
+          }
+        },
+        "finite_effect_genes": 14014
+      },
+      "chromosome_common_reference": {
+        "size_factors": {
+          "X": {
+            "factors": [
+              0.9975026384018824,
+              0.9782107011698322,
+              0.9495967857845901,
+              0.9955929288165384,
+              1.0102731264218796,
+              1.0729851152281678
+            ],
+            "positive_reference_genes": 1554
+          },
+          "2L": {
+            "factors": [
+              0.9719435069037184,
+              0.9803587358839968,
+              0.9720061203034066,
+              0.9894594535227473,
+              1.0178185755663747,
+              1.0721031689295488
+            ],
+            "positive_reference_genes": 1548
+          },
+          "2R": {
+            "factors": [
+              0.9852240122043567,
+              0.9940348326749046,
+              0.9657539995752044,
+              0.9753548995951482,
+              1.0127766559248255,
+              1.0703370059090873
+            ],
+            "positive_reference_genes": 1757
+          },
+          "3L": {
+            "factors": [
+              0.9766514136723311,
+              0.9801456887153527,
+              0.9706430434273006,
+              0.995412768742956,
+              1.012250403199113,
+              1.0681175990769942
+            ],
+            "positive_reference_genes": 1737
+          },
+          "3R": {
+            "factors": [
+              0.9884666830848354,
+              0.9708088051960344,
+              0.9653695954985871,
+              0.9946247021570738,
+              1.0128148716140892,
+              1.0715719342249281
+            ],
+            "positive_reference_genes": 2157
+          },
+          "4": {
+            "factors": [
+              0.8516194700742489,
+              0.9352401069536305,
+              1.0681634800324271,
+              1.0003912152808283,
+              1.0729687531524295,
+              1.0950567474359572
+            ],
+            "positive_reference_genes": 87
+          }
+        },
+        "finite_effect_genes": 14014
+      }
+    },
+    "X": {
+      "global_median": {
+        "size_factors": {
+          "factors": [
+            1.0260759340872883,
+            1.0484799985669289,
+            0.9903951625238917,
+            0.8603596713482883,
+            1.0024878924157108,
+            1.088159747691696
+          ],
+          "positive_reference_genes": 8947
+        },
+        "finite_effect_genes": 8990
+      },
+      "global_common_reference": {
+        "size_factors": {
+          "factors": [
+            1.0261895137019441,
+            1.0483349866993148,
+            0.9908438257063162,
+            0.860137307083796,
+            1.0024947212441195,
+            1.087970853118711
+          ],
+          "positive_reference_genes": 8916
+        },
+        "finite_effect_genes": 8990
+      },
+      "library_sum": {
+        "size_factors": {
+          "factors": [
+            0.9653944177399164,
+            1.0512679980675859,
+            1.0000070052537737,
+            0.9130686132024434,
+            0.9593625402090555,
+            1.1248446819234064
+          ],
+          "positive_reference_genes": null
+        },
+        "finite_effect_genes": 8990
+      },
+      "chromosome_median": {
+        "size_factors": {
+          "X": {
+            "factors": [
+              0.8753876416987547,
+              1.2405306847766178,
+              0.8666405514997025,
+              1.0010061939408708,
+              0.8464041487472851,
+              1.2541183517592247
+            ],
+            "positive_reference_genes": 1557
+          },
+          "2L": {
+            "factors": [
+              1.067366981824679,
+              1.0029154794501027,
+              1.0225087416295533,
+              0.8362094158235253,
+              1.0401242359474587,
+              1.0503997323422676
+            ],
+            "positive_reference_genes": 1555
+          },
+          "2R": {
+            "factors": [
+              1.038875947537781,
+              1.0306742162201594,
+              1.0022482286029717,
+              0.8387655679772866,
+              1.025681545366092,
+              1.0831446626616699
+            ],
+            "positive_reference_genes": 1765
+          },
+          "3L": {
+            "factors": [
+              1.0650882860201498,
+              1.0134762133748936,
+              1.0276705448522803,
+              0.8357265658413021,
+              1.0352659403716582,
+              1.0419113975401222
+            ],
+            "positive_reference_genes": 1743
+          },
+          "3R": {
+            "factors": [
+              1.064802407562851,
+              1.0159708225416635,
+              1.0320285472853459,
+              0.829672987321404,
+              1.0243626975019458,
+              1.0538949504322357
+            ],
+            "positive_reference_genes": 2162
+          },
+          "4": {
+            "factors": [
+              1.0284754471094577,
+              0.9140227573894651,
+              1.0860406524762385,
+              0.8406438834556156,
+              1.0873123926231605,
+              1.0716095752462411
+            ],
+            "positive_reference_genes": 87
+          }
+        },
+        "finite_effect_genes": 8912
+      },
+      "chromosome_common_reference": {
+        "size_factors": {
+          "X": {
+            "factors": [
+              0.8757009849690646,
+              1.2401319160555924,
+              0.8670239043038854,
+              1.0008697630770254,
+              0.8463009136399152,
+              1.2538420392707506
+            ],
+            "positive_reference_genes": 1554
+          },
+          "2L": {
+            "factors": [
+              1.067875113889887,
+              1.0029711109692176,
+              1.0230563808923463,
+              0.8363291855790991,
+              1.0404616883865438,
+              1.0487891740000301
+            ],
+            "positive_reference_genes": 1548
+          },
+          "2R": {
+            "factors": [
+              1.038792433695729,
+              1.0305723298283438,
+              1.0028541024734279,
+              0.8385748852042656,
+              1.0255801525203558,
+              1.0830375893500879
+            ],
+            "positive_reference_genes": 1757
+          },
+          "3L": {
+            "factors": [
+              1.0650110725726745,
+              1.0134027415384306,
+              1.0275960439994603,
+              0.8356659799442057,
+              1.0348300122599003,
+              1.0426526237571818
+            ],
+            "positive_reference_genes": 1737
+          },
+          "3R": {
+            "factors": [
+              1.0644327410392616,
+              1.0162078529524672,
+              1.0321535691000598,
+              0.8293128494169291,
+              1.0247796216856226,
+              1.0539160902775153
+            ],
+            "positive_reference_genes": 2157
+          },
+          "4": {
+            "factors": [
+              1.0284754471094577,
+              0.9140227573894651,
+              1.0860406524762385,
+              0.8406438834556156,
+              1.0873123926231605,
+              1.0716095752462411
+            ],
+            "positive_reference_genes": 87
+          }
+        },
+        "finite_effect_genes": 8912
+      }
+    },
+    "2L": {
+      "global_median": {
+        "size_factors": {
+          "factors": [
+            1.056565735443653,
+            0.9722575706287903,
+            1.0052175824677247,
+            1.0602047452699739,
+            0.9783265394245061,
+            0.9336594325097353
+          ],
+          "positive_reference_genes": 8951
+        },
+        "finite_effect_genes": 8990
+      },
+      "global_common_reference": {
+        "size_factors": {
+          "factors": [
+            1.0567624956670159,
+            0.9723569813487104,
+            1.0052560015950034,
+            1.0600996014062791,
+            0.9782658550417418,
+            0.9335049609199516
+          ],
+          "positive_reference_genes": 8916
+        },
+        "finite_effect_genes": 8990
+      },
+      "library_sum": {
+        "size_factors": {
+          "factors": [
+            1.0213661759738946,
+            0.9783479630995385,
+            1.0441707837946355,
+            1.076434502938925,
+            0.9544822783328221,
+            0.9328206829830193
+          ],
+          "positive_reference_genes": null
+        },
+        "finite_effect_genes": 8990
+      },
+      "chromosome_median": {
+        "size_factors": {
+          "X": {
+            "factors": [
+              1.0826846514977628,
+              0.967096311945507,
+              1.0400705332821651,
+              1.022961061616496,
+              1.0025794527763234,
+              0.8953391968281087
+            ],
+            "positive_reference_genes": 1560
+          },
+          "2L": {
+            "factors": [
+              0.8985842884045588,
+              1.1219920919640372,
+              0.8509270389425104,
+              1.2481620580890107,
+              0.8380953882864614,
+              1.1142807601221072
+            ],
+            "positive_reference_genes": 1557
+          },
+          "2R": {
+            "factors": [
+              1.0887911227402813,
+              0.9428963124690795,
+              1.0235903249250622,
+              1.0402421835069564,
+              1.0014922931887313,
+              0.9134467742570048
+            ],
+            "positive_reference_genes": 1763
+          },
+          "3L": {
+            "factors": [
+              1.0791418504595878,
+              0.9378039539350359,
+              1.0356135906646522,
+              1.0344780387304986,
+              1.0042737792789684,
+              0.9184135126895607
+            ],
+            "positive_reference_genes": 1745
+          },
+          "3R": {
+            "factors": [
+              1.0897098765169024,
+              0.9349473849015432,
+              1.035703021656613,
+              1.0283847346216062,
+              1.0081748708382594,
+              0.914061061796549
+            ],
+            "positive_reference_genes": 2163
+          },
+          "4": {
+            "factors": [
+              0.9367186919051284,
+              0.9309207258211861,
+              1.10825258552683,
+              1.0694914377049558,
+              0.9906129054044679,
+              0.9766929824953408
+            ],
+            "positive_reference_genes": 87
+          }
+        },
+        "finite_effect_genes": 8912
+      },
+      "chromosome_common_reference": {
+        "size_factors": {
+          "X": {
+            "factors": [
+              1.0831382835931438,
+              0.9660456112428424,
+              1.0405964222163906,
+              1.0231032486282674,
+              1.0027045158059522,
+              0.8952486999145615
+            ],
+            "positive_reference_genes": 1554
+          },
+          "2L": {
+            "factors": [
+              0.8994395176650977,
+              1.1219980605049613,
+              0.8509232357004317,
+              1.2479419636541755,
+              0.8378317761355992,
+              1.1137669586844083
+            ],
+            "positive_reference_genes": 1548
+          },
+          "2R": {
+            "factors": [
+              1.089355085248966,
+              0.9429785668384357,
+              1.0236351672077852,
+              1.0395377743773133,
+              1.0015361673827936,
+              0.9134328015763823
+            ],
+            "positive_reference_genes": 1757
+          },
+          "3L": {
+            "factors": [
+              1.0792269541955586,
+              0.9382305517965676,
+              1.0351113289874043,
+              1.034220999301059,
+              1.0043529787377954,
+              0.9185247440228513
+            ],
+            "positive_reference_genes": 1737
+          },
+          "3R": {
+            "factors": [
+              1.08964178004288,
+              0.9349839426573671,
+              1.0357006636461044,
+              1.0283823932728213,
+              1.008091356694258,
+              0.9141623322302771
+            ],
+            "positive_reference_genes": 2157
+          },
+          "4": {
+            "factors": [
+              0.9367186919051284,
+              0.9309207258211861,
+              1.10825258552683,
+              1.0694914377049558,
+              0.9906129054044679,
+              0.9766929824953408
+            ],
+            "positive_reference_genes": 87
+          }
+        },
+        "finite_effect_genes": 8912
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8926,
+      "spearman_descriptive_rho": -0.12784839852127863,
+      "direction_agreement_fraction": 0.4624691911270446
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8848,
+      "spearman_descriptive_rho": -0.12479734035854528,
+      "direction_agreement_fraction": 0.46338155515370705
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7291,
+      "spearman_descriptive_rho": -0.13603136643273822,
+      "direction_agreement_fraction": 0.4664655054176382
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5743,
+      "spearman_descriptive_rho": -0.12482667180603202,
+      "direction_agreement_fraction": 0.4701375587671948
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.12631531063554946,
+      "direction_agreement_fraction": 0.46987951807228917
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8769,
+      "spearman_descriptive_rho": -0.12659151160674612,
+      "direction_agreement_fraction": 0.46288060212110843
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8692,
+      "spearman_descriptive_rho": -0.1236058775978139,
+      "direction_agreement_fraction": 0.46375977910722505
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7159,
+      "spearman_descriptive_rho": -0.1356295304609481,
+      "direction_agreement_fraction": 0.46682497555524516
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5641,
+      "spearman_descriptive_rho": -0.12616607853935793,
+      "direction_agreement_fraction": 0.4699521361460734
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.12924273389556776,
+      "direction_agreement_fraction": 0.46936953027326306
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7664,
+      "spearman_descriptive_rho": -0.12566278474747597,
+      "direction_agreement_fraction": 0.4637265135699374
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7601,
+      "spearman_descriptive_rho": -0.12315261325302349,
+      "direction_agreement_fraction": 0.46428101565583474
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6239,
+      "spearman_descriptive_rho": -0.14146438519353477,
+      "direction_agreement_fraction": 0.46706202917134154
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4890,
+      "spearman_descriptive_rho": -0.13416818817825776,
+      "direction_agreement_fraction": 0.4689161554192229
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.13777942066944462,
+      "direction_agreement_fraction": 0.4685430463576159
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8926,
+      "spearman_descriptive_rho": -0.12946303946919172,
+      "direction_agreement_fraction": 0.46134886847412054
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8848,
+      "spearman_descriptive_rho": -0.12646640707738485,
+      "direction_agreement_fraction": 0.462251356238698
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7291,
+      "spearman_descriptive_rho": -0.1381780782017542,
+      "direction_agreement_fraction": 0.4616650665203676
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5743,
+      "spearman_descriptive_rho": -0.1270424699092535,
+      "direction_agreement_fraction": 0.4650879331359916
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.12855718629809218,
+      "direction_agreement_fraction": 0.464815784878645
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8769,
+      "spearman_descriptive_rho": -0.12822783910836705,
+      "direction_agreement_fraction": 0.4619682974113354
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8692,
+      "spearman_descriptive_rho": -0.12529777630979141,
+      "direction_agreement_fraction": 0.46283939254486883
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7159,
+      "spearman_descriptive_rho": -0.13779977999871396,
+      "direction_agreement_fraction": 0.46221539321134236
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5641,
+      "spearman_descriptive_rho": -0.12839799037251937,
+      "direction_agreement_fraction": 0.4651657507534125
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.13157763143659845,
+      "direction_agreement_fraction": 0.46454724057867475
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7664,
+      "spearman_descriptive_rho": -0.12779322905280646,
+      "direction_agreement_fraction": 0.46216075156576203
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7601,
+      "spearman_descriptive_rho": -0.1253352283967785,
+      "direction_agreement_fraction": 0.46270227601631364
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6239,
+      "spearman_descriptive_rho": -0.14422189418152345,
+      "direction_agreement_fraction": 0.46129187369770797
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4890,
+      "spearman_descriptive_rho": -0.13704810447753496,
+      "direction_agreement_fraction": 0.4629856850715746
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.14078113362167238,
+      "direction_agreement_fraction": 0.46254139072847683
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8926,
+      "spearman_descriptive_rho": -0.12006016695039232,
+      "direction_agreement_fraction": 0.46123683620882816
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8848,
+      "spearman_descriptive_rho": -0.11686762806749224,
+      "direction_agreement_fraction": 0.4625904159132007
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7291,
+      "spearman_descriptive_rho": -0.12415270944649953,
+      "direction_agreement_fraction": 0.4567274722260321
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5743,
+      "spearman_descriptive_rho": -0.11164798869897324,
+      "direction_agreement_fraction": 0.4645655580706948
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.1129650396357207,
+      "direction_agreement_fraction": 0.464291950410337
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8769,
+      "spearman_descriptive_rho": -0.11883559666112906,
+      "direction_agreement_fraction": 0.4612840688790056
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8692,
+      "spearman_descriptive_rho": -0.11570387435001858,
+      "direction_agreement_fraction": 0.4626092959042798
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7159,
+      "spearman_descriptive_rho": -0.12382235860484914,
+      "direction_agreement_fraction": 0.4563486520463752
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5641,
+      "spearman_descriptive_rho": -0.11304306612387427,
+      "direction_agreement_fraction": 0.4635702889558589
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.11544715891871325,
+      "direction_agreement_fraction": 0.4627612073584569
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7664,
+      "spearman_descriptive_rho": -0.1151714016259335,
+      "direction_agreement_fraction": 0.46242171189979125
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7601,
+      "spearman_descriptive_rho": -0.11267460568134642,
+      "direction_agreement_fraction": 0.4634916458360742
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6239,
+      "spearman_descriptive_rho": -0.12656230961879045,
+      "direction_agreement_fraction": 0.4560025645135438
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4890,
+      "spearman_descriptive_rho": -0.11715470408155437,
+      "direction_agreement_fraction": 0.46278118609406954
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.1199048692786927,
+      "direction_agreement_fraction": 0.46254139072847683
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8848,
+      "spearman_descriptive_rho": -0.13955163214278068,
+      "direction_agreement_fraction": 0.4482368896925859
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8848,
+      "spearman_descriptive_rho": -0.13955163214278068,
+      "direction_agreement_fraction": 0.4482368896925859
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7291,
+      "spearman_descriptive_rho": -0.1364322656117795,
+      "direction_agreement_fraction": 0.45220134412289126
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5743,
+      "spearman_descriptive_rho": -0.12551437181972988,
+      "direction_agreement_fraction": 0.45342155667769457
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.12699638588901932,
+      "direction_agreement_fraction": 0.4531168150864327
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8692,
+      "spearman_descriptive_rho": -0.13968902499952404,
+      "direction_agreement_fraction": 0.4481132075471698
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8692,
+      "spearman_descriptive_rho": -0.13968902499952404,
+      "direction_agreement_fraction": 0.4481132075471698
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7159,
+      "spearman_descriptive_rho": -0.13626045189512248,
+      "direction_agreement_fraction": 0.4522978069562788
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5641,
+      "spearman_descriptive_rho": -0.127083421204842,
+      "direction_agreement_fraction": 0.45328842403829106
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.13007718493876783,
+      "direction_agreement_fraction": 0.45258081800321487
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7601,
+      "spearman_descriptive_rho": -0.14618648986812624,
+      "direction_agreement_fraction": 0.4469148796211025
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7601,
+      "spearman_descriptive_rho": -0.14618648986812624,
+      "direction_agreement_fraction": 0.4469148796211025
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6239,
+      "spearman_descriptive_rho": -0.1411604990880801,
+      "direction_agreement_fraction": 0.45231607629427795
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4890,
+      "spearman_descriptive_rho": -0.13414539403924683,
+      "direction_agreement_fraction": 0.4521472392638037
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.1378883629364672,
+      "direction_agreement_fraction": 0.4515728476821192
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8848,
+      "spearman_descriptive_rho": -0.1412496149637271,
+      "direction_agreement_fraction": 0.4456374321880651
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8848,
+      "spearman_descriptive_rho": -0.1412496149637271,
+      "direction_agreement_fraction": 0.4456374321880651
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7291,
+      "spearman_descriptive_rho": -0.1380939412571724,
+      "direction_agreement_fraction": 0.45055547935811274
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5743,
+      "spearman_descriptive_rho": -0.12748918112987073,
+      "direction_agreement_fraction": 0.4522026815253352
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": -0.12899588598994136,
+      "direction_agreement_fraction": 0.45189453466038065
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8692,
+      "spearman_descriptive_rho": -0.1414292580571257,
+      "direction_agreement_fraction": 0.4455821445006903
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8692,
+      "spearman_descriptive_rho": -0.1414292580571257,
+      "direction_agreement_fraction": 0.4455821445006903
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7159,
+      "spearman_descriptive_rho": -0.13794704408698638,
+      "direction_agreement_fraction": 0.45076127950831124
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5641,
+      "spearman_descriptive_rho": -0.129083792588261,
+      "direction_agreement_fraction": 0.452224782839922
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.1321923553537633,
+      "direction_agreement_fraction": 0.45150919807108414
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7601,
+      "spearman_descriptive_rho": -0.14821385325443748,
+      "direction_agreement_fraction": 0.443888961978687
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7601,
+      "spearman_descriptive_rho": -0.14821385325443748,
+      "direction_agreement_fraction": 0.443888961978687
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6239,
+      "spearman_descriptive_rho": -0.14306866617808742,
+      "direction_agreement_fraction": 0.45039269113640007
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4890,
+      "spearman_descriptive_rho": -0.13651881680950312,
+      "direction_agreement_fraction": 0.4507157464212679
+    },
+    {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": -0.14039320460368346,
+      "direction_agreement_fraction": 0.45012417218543044
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8919,
+      "spearman_descriptive_rho": 0.09654360293980607,
+      "direction_agreement_fraction": 0.5427738535710281
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8841,
+      "spearman_descriptive_rho": 0.09593770282676822,
+      "direction_agreement_fraction": 0.5426987897296686
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7294,
+      "spearman_descriptive_rho": 0.13174663645368362,
+      "direction_agreement_fraction": 0.5562105840416781
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5739,
+      "spearman_descriptive_rho": 0.1313308237492102,
+      "direction_agreement_fraction": 0.5577626764244642
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.13313416481061577,
+      "direction_agreement_fraction": 0.5582329317269076
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8756,
+      "spearman_descriptive_rho": 0.10081511518160217,
+      "direction_agreement_fraction": 0.543741434444952
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8679,
+      "spearman_descriptive_rho": 0.10004474026964719,
+      "direction_agreement_fraction": 0.5436110150939049
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7158,
+      "spearman_descriptive_rho": 0.1356468991170185,
+      "direction_agreement_fraction": 0.5571388656049175
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5628,
+      "spearman_descriptive_rho": 0.13499377646230593,
+      "direction_agreement_fraction": 0.55863539445629
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13737695529747104,
+      "direction_agreement_fraction": 0.5592070012502233
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7639,
+      "spearman_descriptive_rho": 0.1311126025177847,
+      "direction_agreement_fraction": 0.5507265348867653
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7576,
+      "spearman_descriptive_rho": 0.12951632866998772,
+      "direction_agreement_fraction": 0.5504223864836325
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6220,
+      "spearman_descriptive_rho": 0.17045760307756327,
+      "direction_agreement_fraction": 0.5657556270096463
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4866,
+      "spearman_descriptive_rho": 0.1714507512480484,
+      "direction_agreement_fraction": 0.5676120016440608
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_median",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.17200544399985926,
+      "direction_agreement_fraction": 0.5680877483443708
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8919,
+      "spearman_descriptive_rho": 0.09682195035043764,
+      "direction_agreement_fraction": 0.5413162910640207
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8841,
+      "spearman_descriptive_rho": 0.09628551629375053,
+      "direction_agreement_fraction": 0.5412283678316933
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7294,
+      "spearman_descriptive_rho": 0.13228357568233243,
+      "direction_agreement_fraction": 0.5519605154921854
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5739,
+      "spearman_descriptive_rho": 0.1314954402616164,
+      "direction_agreement_fraction": 0.5548004878898762
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.13327501115344823,
+      "direction_agreement_fraction": 0.5550899249170596
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8756,
+      "spearman_descriptive_rho": 0.10113005219645994,
+      "direction_agreement_fraction": 0.5421425308359982
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8679,
+      "spearman_descriptive_rho": 0.10043211790014185,
+      "direction_agreement_fraction": 0.5419979260283443
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7158,
+      "spearman_descriptive_rho": 0.13619378047584593,
+      "direction_agreement_fraction": 0.5526683431126013
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5628,
+      "spearman_descriptive_rho": 0.13515681631196416,
+      "direction_agreement_fraction": 0.5554371002132196
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13749926941672364,
+      "direction_agreement_fraction": 0.555992141453831
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7639,
+      "spearman_descriptive_rho": 0.13152906437675685,
+      "direction_agreement_fraction": 0.548762927084697
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7576,
+      "spearman_descriptive_rho": 0.12999706837673802,
+      "direction_agreement_fraction": 0.5484424498416051
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6220,
+      "spearman_descriptive_rho": 0.17092591276241434,
+      "direction_agreement_fraction": 0.5602893890675241
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4866,
+      "spearman_descriptive_rho": 0.17156197412672528,
+      "direction_agreement_fraction": 0.5637073571722153
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "global_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.17212652780059878,
+      "direction_agreement_fraction": 0.5639486754966887
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8919,
+      "spearman_descriptive_rho": 0.09150376078425003,
+      "direction_agreement_fraction": 0.5290951900437268
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8841,
+      "spearman_descriptive_rho": 0.09095490502362351,
+      "direction_agreement_fraction": 0.5287863363872866
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7294,
+      "spearman_descriptive_rho": 0.12508541205178492,
+      "direction_agreement_fraction": 0.5276939950644365
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5739,
+      "spearman_descriptive_rho": 0.12810756853005928,
+      "direction_agreement_fraction": 0.5349364000696986
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.13004967378221258,
+      "direction_agreement_fraction": 0.535358826610791
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8756,
+      "spearman_descriptive_rho": 0.09543663315874379,
+      "direction_agreement_fraction": 0.5294655093650068
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8679,
+      "spearman_descriptive_rho": 0.09472707499220794,
+      "direction_agreement_fraction": 0.5290932135038598
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7158,
+      "spearman_descriptive_rho": 0.12872371436876598,
+      "direction_agreement_fraction": 0.5278010617490919
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5628,
+      "spearman_descriptive_rho": 0.13173101905877263,
+      "direction_agreement_fraction": 0.5348258706467661
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13408249880435985,
+      "direction_agreement_fraction": 0.5354527594213252
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7639,
+      "spearman_descriptive_rho": 0.12400150777588209,
+      "direction_agreement_fraction": 0.5327922502945411
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7576,
+      "spearman_descriptive_rho": 0.12220936789408512,
+      "direction_agreement_fraction": 0.53220696937698
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6220,
+      "spearman_descriptive_rho": 0.16188965330909694,
+      "direction_agreement_fraction": 0.5311897106109325
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4866,
+      "spearman_descriptive_rho": 0.16676167228862696,
+      "direction_agreement_fraction": 0.5390464447184545
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "library_sum",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.16712309527715707,
+      "direction_agreement_fraction": 0.539114238410596
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8841,
+      "spearman_descriptive_rho": 0.12385864707552423,
+      "direction_agreement_fraction": 0.5588734306073974
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8841,
+      "spearman_descriptive_rho": 0.12385864707552423,
+      "direction_agreement_fraction": 0.5588734306073974
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7294,
+      "spearman_descriptive_rho": 0.1337339176402853,
+      "direction_agreement_fraction": 0.5601864546202359
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5739,
+      "spearman_descriptive_rho": 0.13292164446877525,
+      "direction_agreement_fraction": 0.5602021258058896
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.13473007979376617,
+      "direction_agreement_fraction": 0.5606774925790117
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8679,
+      "spearman_descriptive_rho": 0.12896540036697868,
+      "direction_agreement_fraction": 0.5599723470445904
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8679,
+      "spearman_descriptive_rho": 0.12896540036697868,
+      "direction_agreement_fraction": 0.5599723470445904
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7158,
+      "spearman_descriptive_rho": 0.13759748415737472,
+      "direction_agreement_fraction": 0.5609108689578094
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5628,
+      "spearman_descriptive_rho": 0.1366699788655198,
+      "direction_agreement_fraction": 0.5609452736318408
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13898071743121304,
+      "direction_agreement_fraction": 0.5611716377924629
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7576,
+      "spearman_descriptive_rho": 0.16354261380558735,
+      "direction_agreement_fraction": 0.5674498416050686
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7576,
+      "spearman_descriptive_rho": 0.16354261380558735,
+      "direction_agreement_fraction": 0.5674498416050686
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6220,
+      "spearman_descriptive_rho": 0.17219182087195936,
+      "direction_agreement_fraction": 0.567524115755627
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4866,
+      "spearman_descriptive_rho": 0.17315503723832573,
+      "direction_agreement_fraction": 0.5674064940402795
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_median",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.1735763539093468,
+      "direction_agreement_fraction": 0.5666390728476821
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "covered_all",
+      "genes": 8841,
+      "spearman_descriptive_rho": 0.12487989030398666,
+      "direction_agreement_fraction": 0.5593258681144667
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "assigned_nuclear",
+      "genes": 8841,
+      "spearman_descriptive_rho": 0.12487989030398666,
+      "direction_agreement_fraction": 0.5593258681144667
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "off_dosage_nuclear",
+      "genes": 7294,
+      "spearman_descriptive_rho": 0.13464623271291126,
+      "direction_agreement_fraction": 0.5608719495475734
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "common_off_X_and_2L",
+      "genes": 5739,
+      "spearman_descriptive_rho": 0.1337492834862583,
+      "direction_agreement_fraction": 0.560724864959052
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 0.5,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5727,
+      "spearman_descriptive_rho": 0.1355573500842978,
+      "direction_agreement_fraction": 0.5612013270473197
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "covered_all",
+      "genes": 8679,
+      "spearman_descriptive_rho": 0.13010956346825453,
+      "direction_agreement_fraction": 0.5605484502822906
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "assigned_nuclear",
+      "genes": 8679,
+      "spearman_descriptive_rho": 0.13010956346825453,
+      "direction_agreement_fraction": 0.5605484502822906
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 7158,
+      "spearman_descriptive_rho": 0.1385952602181309,
+      "direction_agreement_fraction": 0.5617490919251188
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 5628,
+      "spearman_descriptive_rho": 0.13758533528114214,
+      "direction_agreement_fraction": 0.5616560056858564
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13988272078181202,
+      "direction_agreement_fraction": 0.5618860510805501
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "covered_all",
+      "genes": 7576,
+      "spearman_descriptive_rho": 0.1649000386310376,
+      "direction_agreement_fraction": 0.5678458289334741
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "assigned_nuclear",
+      "genes": 7576,
+      "spearman_descriptive_rho": 0.1649000386310376,
+      "direction_agreement_fraction": 0.5678458289334741
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "off_dosage_nuclear",
+      "genes": 6220,
+      "spearman_descriptive_rho": 0.1731890761469755,
+      "direction_agreement_fraction": 0.5681672025723473
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "common_off_X_and_2L",
+      "genes": 4866,
+      "spearman_descriptive_rho": 0.1741592648722439,
+      "direction_agreement_fraction": 0.5678175092478421
+    },
+    {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 5.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 4832,
+      "spearman_descriptive_rho": 0.17460246522555053,
+      "direction_agreement_fraction": 0.5672599337748344
+    }
+  ],
+  "fixed_panel_mapping": {
+    "bub3": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Bub3",
+          "gene_id": "43490",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0025457"
+          ]
+        }
+      ]
+    },
+    "Hsp70Ba": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp70Ba",
+          "gene_id": "44921",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0013277"
+          ]
+        }
+      ]
+    },
+    "Hsp70Bb": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp70Bb",
+          "gene_id": "48582",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0013278"
+          ]
+        }
+      ]
+    },
+    "Hsp70Bc": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp70Bc",
+          "gene_id": "48583",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0013279"
+          ]
+        }
+      ]
+    },
+    "Hsp70Bbb": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp70Bbb",
+          "gene_id": "50022",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0051354"
+          ]
+        }
+      ]
+    },
+    "Hsp60": {
+      "mapping_mode": "alias",
+      "ambiguous": true,
+      "candidates": [
+        {
+          "symbol": "Hsp60A",
+          "gene_id": "32045",
+          "chromosome": "X",
+          "flybase_ids": [
+            "FBgn0015245"
+          ]
+        },
+        {
+          "symbol": "Hsp60C",
+          "gene_id": "33796",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0031728"
+          ]
+        },
+        {
+          "symbol": "mAcon1",
+          "gene_id": "44149",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0010100"
+          ]
+        },
+        {
+          "symbol": "Hsp60B",
+          "gene_id": "48572",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0011244"
+          ]
+        }
+      ]
+    },
+    "Hsp60c": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Hsp60C",
+          "gene_id": "33796",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0031728"
+          ]
+        }
+      ]
+    },
+    "Sod2": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Sod2",
+          "gene_id": "36878",
+          "chromosome": "2R",
+          "flybase_ids": [
+            "FBgn0010213"
+          ]
+        }
+      ]
+    },
+    "GTPx-1": {
+      "mapping_mode": "alias",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Gtpx",
+          "gene_id": "38413",
+          "chromosome": "3L",
+          "flybase_ids": [
+            "FBgn0035438"
+          ]
+        }
+      ]
+    },
+    "pros": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "pros",
+          "gene_id": "41363",
+          "chromosome": "3R",
+          "flybase_ids": [
+            "FBgn0004595"
+          ]
+        }
+      ]
+    },
+    "dpn": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "dpn",
+          "gene_id": "35800",
+          "chromosome": "2R",
+          "flybase_ids": [
+            "FBgn0010109"
+          ]
+        }
+      ]
+    },
+    "wor": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "wor",
+          "gene_id": "34906",
+          "chromosome": "2L",
+          "flybase_ids": [
+            "FBgn0001983"
+          ]
+        }
+      ]
+    },
+    "Myc": {
+      "mapping_mode": "canonical",
+      "ambiguous": false,
+      "candidates": [
+        {
+          "symbol": "Myc",
+          "gene_id": "31310",
+          "chromosome": "X",
+          "flybase_ids": [
+            "FBgn0262656"
+          ]
+        }
+      ]
+    }
+  },
+  "fixed_panel_effects": [
+    {
+      "requested": "bub3",
+      "symbol": "Bub3",
+      "gene": "FBgn0025457",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.65677915240164,
+          "three_pool_log2_differences": [
+            -0.8903811734472669,
+            -0.34185275371549295,
+            -0.65677915240164
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.6499995064473776,
+          "three_pool_log2_differences": [
+            -0.8714478118572355,
+            -0.34928935800115646,
+            -0.6499995064473776
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.6252863257365178,
+          "three_pool_log2_differences": [
+            -0.9329947554346187,
+            -0.22277859529439858,
+            -0.6252863257365178
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.6614329024217334,
+          "three_pool_log2_differences": [
+            -0.8669701017874196,
+            -0.3520126572016977,
+            -0.6614329024217334
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.6522462213615885,
+          "three_pool_log2_differences": [
+            -0.8516278895503024,
+            -0.35780984067422494,
+            -0.6522462213615885
+          ]
+        }
+      }
+    },
+    {
+      "requested": "bub3",
+      "symbol": "Bub3",
+      "gene": "FBgn0025457",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.13840109130919132,
+          "three_pool_log2_differences": [
+            -0.032642064840501916,
+            -0.15147657666712178,
+            -0.13840109130919132
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.13814084955914296,
+          "three_pool_log2_differences": [
+            -0.03228289293497788,
+            -0.15045042375479767,
+            -0.13814084955914296
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.22331178624222225,
+          "three_pool_log2_differences": [
+            -0.12440462624803494,
+            -0.22331178624222225,
+            -0.24965467344858183
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.03969270521237078,
+          "three_pool_log2_differences": [
+            0.06622890343974852,
+            -0.03969270521237078,
+            -0.06111313534073837
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.03889171967920646,
+          "three_pool_log2_differences": [
+            0.06539155974808253,
+            -0.03889171967920646,
+            -0.060555096131828634
+          ]
+        }
+      }
+    },
+    {
+      "requested": "bub3",
+      "symbol": "Bub3",
+      "gene": "FBgn0025457",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.46113215460610313,
+          "three_pool_log2_differences": [
+            -0.46113215460610313,
+            -0.009049733150407135,
+            -0.48894178560601276
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.4610110257132565,
+          "three_pool_log2_differences": [
+            -0.4610110257132565,
+            -0.008851544049718996,
+            -0.4887926002739764
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.5190147796436779,
+          "three_pool_log2_differences": [
+            -0.5190147796436779,
+            0.02387693967369131,
+            -0.5232383080153458
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.3601349286134923,
+          "three_pool_log2_differences": [
+            -0.3601349286134923,
+            0.07800118249415888,
+            -0.4149897491297381
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.36028147195977844,
+          "three_pool_log2_differences": [
+            -0.36028147195977844,
+            0.07800118252364996,
+            -0.4152690459329538
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Ba",
+      "symbol": "Hsp70Ba",
+      "gene": "FBgn0013277",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 2.3628144282617995,
+          "three_pool_log2_differences": [
+            2.2321407902613597,
+            2.3628144282617995,
+            3.0192960582771473
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 2.3553909591415962,
+          "three_pool_log2_differences": [
+            2.2510678608322845,
+            2.3553909591415962,
+            3.026054307649167
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 2.4815866837336724,
+          "three_pool_log2_differences": [
+            2.1895496840435733,
+            2.4815866837336724,
+            3.0508354946070124
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 2.3526634396288397,
+          "three_pool_log2_differences": [
+            2.2555393536137682,
+            2.3526634396288397,
+            3.01464880271436
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 2.346879072749161,
+          "three_pool_log2_differences": [
+            2.2708764982346494,
+            2.346879072749161,
+            3.0238111703869928
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Ba",
+      "symbol": "Hsp70Ba",
+      "gene": "FBgn0013277",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.8104904943300575,
+          "three_pool_log2_differences": [
+            2.9459520497925027,
+            -0.31912089534240184,
+            0.8104904943300575
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.810750305513035,
+          "three_pool_log2_differences": [
+            2.946310673473432,
+            -0.31809741028230487,
+            0.810750305513035
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.6994986928752667,
+          "three_pool_log2_differences": [
+            2.8544569199268937,
+            -0.3907252669569923,
+            0.6994986928752667
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.8876123958387367,
+          "three_pool_log2_differences": [
+            3.044641884884225,
+            -0.20763496377318358,
+            0.8876123958387367
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.8881687031513916,
+          "three_pool_log2_differences": [
+            3.0438062450930294,
+            -0.2068362160923849,
+            0.8881687031513916
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Ba",
+      "symbol": "Hsp70Ba",
+      "gene": "FBgn0013277",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.10703285910692983,
+          "three_pool_log2_differences": [
+            -0.5375564740355321,
+            -0.10703285910692983,
+            0.5007043303813008
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.10683536986782194,
+          "three_pool_log2_differences": [
+            -0.5374354553924112,
+            -0.10683536986782194,
+            0.5008533401255377
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.07421309723857217,
+          "three_pool_log2_differences": [
+            -0.5953135440102715,
+            -0.07421309723857217,
+            0.46649360063677126
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.02028406093472057,
+          "three_pool_log2_differences": [
+            -0.43681743941682516,
+            -0.02028406093472057,
+            0.5744955844805064
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.020284061102532114,
+          "three_pool_log2_differences": [
+            -0.4369636300447759,
+            -0.020284061102532114,
+            0.5742168576093922
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Bb",
+      "symbol": "Hsp70Bb",
+      "gene": "FBgn0013278",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 2.8102008997761736,
+          "three_pool_log2_differences": [
+            2.4330407034012875,
+            2.8102008997761736,
+            3.5103389087569763
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 2.8027767190020727,
+          "three_pool_log2_differences": [
+            2.451969114887307,
+            2.8027767190020727,
+            3.5170968498573725
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 2.928979909978792,
+          "three_pool_log2_differences": [
+            2.390446240442749,
+            2.928979909978792,
+            3.5418832985023414
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 2.8000484253134994,
+          "three_pool_log2_differences": [
+            2.456441108663924,
+            2.8000484253134994,
+            3.5056915033631615
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 2.7942636483870995,
+          "three_pool_log2_differences": [
+            2.4717793332379614,
+            2.7942636483870995,
+            3.5148536589226973
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Bb",
+      "symbol": "Hsp70Bb",
+      "gene": "FBgn0013278",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.7960616242508571,
+          "three_pool_log2_differences": [
+            2.9670507185382524,
+            -0.3020452165123624,
+            0.7960616242508571
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.7963214770308458,
+          "three_pool_log2_differences": [
+            2.9674093587815857,
+            -0.3010214652636236,
+            0.7963214770308458
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.6850437502979894,
+          "three_pool_log2_differences": [
+            2.8755484646169833,
+            -0.37367440478537883,
+            0.6850437502979894
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.8731999536868438,
+          "three_pool_log2_differences": [
+            3.0657458089016183,
+            -0.19052924477922506,
+            0.8731999536868438
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.8737564361104955,
+          "three_pool_log2_differences": [
+            3.0649101206447025,
+            -0.18973026452673025,
+            0.8737564361104955
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Bb",
+      "symbol": "Hsp70Bb",
+      "gene": "FBgn0013278",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.1340889112340795,
+          "three_pool_log2_differences": [
+            -0.49510421843536623,
+            -0.1340889112340795,
+            0.49605671825074893
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.13389138380587617,
+          "three_pool_log2_differences": [
+            -0.49498320510502314,
+            -0.13389138380587617,
+            0.4962057383338232
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.1012603476850531,
+          "three_pool_log2_differences": [
+            -0.552870453297337,
+            -0.1012603476850531,
+            0.4618409249019759
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.04732238037953085,
+          "three_pool_log2_differences": [
+            -0.3943431755276352,
+            -0.04732238037953085,
+            0.5698574581961635
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.04732238074898998,
+          "three_pool_log2_differences": [
+            -0.39448939438349573,
+            -0.04732238074898998,
+            0.569578697705257
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Bc",
+      "symbol": "Hsp70Bc",
+      "gene": "FBgn0013279",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 2.229580284704819,
+          "three_pool_log2_differences": [
+            2.2072980211286435,
+            2.229580284704819,
+            2.9868825037875784
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 2.2262247191820546,
+          "three_pool_log2_differences": [
+            2.2262247191820546,
+            2.2221566571080507,
+            2.9936404270117967
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 2.3483593049197466,
+          "three_pool_log2_differences": [
+            2.164707930468019,
+            2.3483593049197466,
+            3.018422152875825
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 2.2306960250615866,
+          "three_pool_log2_differences": [
+            2.2306960250615866,
+            2.219429514688626,
+            2.9822353755139837
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 2.246032869651355,
+          "three_pool_log2_differences": [
+            2.246032869651355,
+            2.2136449006894026,
+            2.9913973565140104
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Bc",
+      "symbol": "Hsp70Bc",
+      "gene": "FBgn0013279",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.7198576500187368,
+          "three_pool_log2_differences": [
+            2.9440235697188326,
+            -0.18711623342473604,
+            0.7198576500187368
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.7201174781167552,
+          "three_pool_log2_differences": [
+            2.944382230284247,
+            -0.18609237732029538,
+            0.7201174781167552
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.6088455317807462,
+          "three_pool_log2_differences": [
+            2.8525113334791206,
+            -0.25876663659297083,
+            0.6088455317807462
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.796991026890705,
+          "three_pool_log2_differences": [
+            3.0427253895849216,
+            -0.07558642635289026,
+            0.796991026890705
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.7975475024609064,
+          "three_pool_log2_differences": [
+            3.0418896379586338,
+            -0.07478729511541271,
+            0.7975475024609064
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Bc",
+      "symbol": "Hsp70Bc",
+      "gene": "FBgn0013279",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.11466231936049986,
+          "three_pool_log2_differences": [
+            -0.4435797018069838,
+            -0.11466231936049986,
+            0.5441128846583378
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.11446478505608315,
+          "three_pool_log2_differences": [
+            -0.4434587085936821,
+            -0.11446478505608315,
+            0.5442619137208835
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.08183481714912766,
+          "three_pool_log2_differences": [
+            -0.501342337563794,
+            -0.08183481714912766,
+            0.5098993943019385
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.027893707314134097,
+          "three_pool_log2_differences": [
+            -0.34282204738117716,
+            -0.027893707314134097,
+            0.6179111648328419
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.02789370753044018,
+          "three_pool_log2_differences": [
+            -0.3429682592756702,
+            -0.02789370753044018,
+            0.6176324102729085
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Bbb",
+      "symbol": "Hsp70Bbb",
+      "gene": "FBgn0051354",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 2.208113287373476,
+          "three_pool_log2_differences": [
+            2.0701555133376726,
+            2.208113287373476,
+            2.931041622216015
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 2.200689332227827,
+          "three_pool_log2_differences": [
+            2.0890828557113394,
+            2.200689332227827,
+            2.937800877822295
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 2.326900055967984,
+          "three_pool_log2_differences": [
+            2.0275630102354345,
+            2.326900055967984,
+            2.962578397406209
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 2.197962318090628,
+          "three_pool_log2_differences": [
+            2.0935548618564397,
+            2.197962318090628,
+            2.9263940878979273
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 2.1921773779525324,
+          "three_pool_log2_differences": [
+            2.1088922254782094,
+            2.1921773779525324,
+            2.9355575838398034
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Bbb",
+      "symbol": "Hsp70Bbb",
+      "gene": "FBgn0051354",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.8089412258489102,
+          "three_pool_log2_differences": [
+            2.984948713401918,
+            -0.2320416613288323,
+            0.8089412258489102
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.8092010822488405,
+          "three_pool_log2_differences": [
+            2.985307358362081,
+            -0.23101788351703245,
+            0.8092010822488405
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.6979226489111472,
+          "three_pool_log2_differences": [
+            2.8934447203923996,
+            -0.3036808495195533,
+            0.6979226489111472
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.8860802119625868,
+          "three_pool_log2_differences": [
+            3.083645234757224,
+            -0.12052137509147265,
+            0.8860802119625868
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.8866366939810764,
+          "three_pool_log2_differences": [
+            3.0828095336085335,
+            -0.11972233258115761,
+            0.8866366939810764
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp70Bbb",
+      "symbol": "Hsp70Bbb",
+      "gene": "FBgn0051354",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.09513389638028436,
+          "three_pool_log2_differences": [
+            -0.480695696462087,
+            -0.09513389638028436,
+            0.5073020197572333
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.09493634220324587,
+          "three_pool_log2_differences": [
+            -0.4805746863855944,
+            -0.09493634220324587,
+            0.5074510400839705
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.06230541885926222,
+          "three_pool_log2_differences": [
+            -0.5384631586613216,
+            -0.06230541885926222,
+            0.47308756629188675
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.008357571195478641,
+          "three_pool_log2_differences": [
+            -0.3799311046362055,
+            -0.008357571195478641,
+            0.5811006534960574
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.00835757125861658,
+          "three_pool_log2_differences": [
+            -0.3800773277444529,
+            -0.00835757125861658,
+            0.5808218998630723
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "Hsp60A",
+      "gene": "FBgn0015245",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": true,
+      "chromosome": "X",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.08105170625623259,
+          "three_pool_log2_differences": [
+            0.3598761732552056,
+            -0.255324247793677,
+            0.08105170625623259
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.08783174036767072,
+          "three_pool_log2_differences": [
+            0.3788129796886075,
+            -0.26276168161154523,
+            0.08783174036767072
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.11255131424137055,
+          "three_pool_log2_differences": [
+            0.31725557786918657,
+            -0.1362375056720122,
+            0.11255131424137055
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.07421254268398769,
+          "three_pool_log2_differences": [
+            0.38147179223530614,
+            -0.2967129154985688,
+            0.07421254268398769
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.08005858515319453,
+          "three_pool_log2_differences": [
+            0.40080607020620107,
+            -0.29645165443480437,
+            0.08005858515319453
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "Hsp60A",
+      "gene": "FBgn0015245",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": true,
+      "chromosome": "X",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.965145781780901,
+          "three_pool_log2_differences": [
+            0.8845662484143233,
+            0.965145781780901,
+            1.0702230997645774
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.9661720315529969,
+          "three_pool_log2_differences": [
+            0.8849254629884005,
+            0.9661720315529969,
+            1.0704833765530655
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.893299438432793,
+          "three_pool_log2_differences": [
+            0.7927949523527467,
+            0.893299438432793,
+            0.9589581477595708
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.5541659967384298,
+          "three_pool_log2_differences": [
+            0.4127929208147112,
+            0.5541659967384298,
+            0.6213019259305597
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.555000599129075,
+          "three_pool_log2_differences": [
+            0.4137730083899136,
+            0.555000599129075,
+            0.6214438443426413
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "Hsp60A",
+      "gene": "FBgn0015245",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": true,
+      "chromosome": "X",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.044210802407548044,
+          "three_pool_log2_differences": [
+            -0.05134506101186531,
+            0.18992272679594002,
+            -0.044210802407548044
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.0440615966844522,
+          "three_pool_log2_differences": [
+            -0.051223930310111854,
+            0.19012093097057914,
+            -0.0440615966844522
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.07850906008107117,
+          "three_pool_log2_differences": [
+            -0.10923266272554955,
+            0.22285135477554263,
+            -0.07850906008107117
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.051571860460081,
+          "three_pool_log2_differences": [
+            -0.00843842313739529,
+            0.2906785967713805,
+            0.051571860460081
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.0518976143477996,
+          "three_pool_log2_differences": [
+            -0.006265960763572664,
+            0.29120730741876955,
+            0.0518976143477996
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "Hsp60C",
+      "gene": "FBgn0031728",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": true,
+      "chromosome": "2L",
+      "passes_primary_detection": false,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 2.3345722246072134,
+          "three_pool_log2_differences": [
+            2.3345722246072134,
+            2.3364362385509767,
+            -2.798027233319604
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 2.3334837657098113,
+          "three_pool_log2_differences": [
+            2.3465819462751956,
+            2.3334837657098113,
+            -2.7903912916372082
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 2.3129372883634147,
+          "three_pool_log2_differences": [
+            2.3129372883634147,
+            2.3588511382854565,
+            -2.8165631166386476
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 2.331333967211478,
+          "three_pool_log2_differences": [
+            2.3372598861847544,
+            2.331333967211478,
+            -2.7959722601875545
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 2.3341710315454636,
+          "three_pool_log2_differences": [
+            2.344867997187518,
+            2.3341710315454636,
+            -2.785542225326178
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "Hsp60C",
+      "gene": "FBgn0031728",
+      "contrast": "X",
+      "present": false
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "Hsp60C",
+      "gene": "FBgn0031728",
+      "contrast": "2L",
+      "present": false
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "mAcon1",
+      "gene": "FBgn0010100",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": true,
+      "chromosome": "2L",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.01366138208630474,
+          "three_pool_log2_differences": [
+            0.24643338293314265,
+            -0.23629275028468122,
+            0.01366138208630474
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.020441466529065977,
+          "three_pool_log2_differences": [
+            0.2653701416171472,
+            -0.2437302927101026,
+            0.020441466529065977
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.04516106390782326,
+          "three_pool_log2_differences": [
+            0.20381287644107715,
+            -0.11720433808450714,
+            0.04516106390782326
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.011568673381917804,
+          "three_pool_log2_differences": [
+            0.22936505423204778,
+            -0.23214367950765968,
+            0.011568673381917804
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.02458907414116851,
+          "three_pool_log2_differences": [
+            0.24675243112169376,
+            -0.23485720313074587,
+            0.02458907414116851
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "mAcon1",
+      "gene": "FBgn0010100",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": true,
+      "chromosome": "2L",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.26239512713168445,
+          "three_pool_log2_differences": [
+            0.21585896890635148,
+            0.26239512713168445,
+            0.39854341518394953
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.26342140488577215,
+          "three_pool_log2_differences": [
+            0.21621818520828207,
+            0.26342140488577215,
+            0.3988036922409073
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.1905491324709132,
+          "three_pool_log2_differences": [
+            0.12408594903930492,
+            0.1905491324709132,
+            0.28727650965103635
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.3495030920441575,
+          "three_pool_log2_differences": [
+            0.3368704299351748,
+            0.3495030920441575,
+            0.502661408429292
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.35006891157282816,
+          "three_pool_log2_differences": [
+            0.3374770155065274,
+            0.35006891157282816,
+            0.5053430344325349
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "mAcon1",
+      "gene": "FBgn0010100",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": true,
+      "chromosome": "2L",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.5286246476019834,
+          "three_pool_log2_differences": [
+            0.5286246476019834,
+            0.5965035673715331,
+            0.4828563673035404
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.5287457767993029,
+          "three_pool_log2_differences": [
+            0.5287457767993029,
+            0.5967017810966535,
+            0.48300558127088955
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.47073622285398287,
+          "three_pool_log2_differences": [
+            0.47073622285398287,
+            0.629433515956265,
+            0.44855728529690353
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.08833640063519965,
+          "three_pool_log2_differences": [
+            0.08833640063519965,
+            0.12066250167597836,
+            0.004533567061050903
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.08970109612191202,
+          "three_pool_log2_differences": [
+            0.08970109612191202,
+            0.12091046256974458,
+            0.004745092803577933
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "Hsp60B",
+      "gene": "FBgn0011244",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": true,
+      "chromosome": "2L",
+      "passes_primary_detection": false,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.0,
+          "three_pool_log2_differences": [
+            3.1839672183055816,
+            0.0,
+            0.0
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.0,
+          "three_pool_log2_differences": [
+            3.1972923432290736,
+            0.0,
+            0.0
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.0,
+          "three_pool_log2_differences": [
+            3.1599317489557968,
+            0.0,
+            0.0
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.0,
+          "three_pool_log2_differences": [
+            3.186950310843791,
+            0.0,
+            0.0
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.0,
+          "three_pool_log2_differences": [
+            3.195391410694644,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "Hsp60B",
+      "gene": "FBgn0011244",
+      "contrast": "X",
+      "present": false
+    },
+    {
+      "requested": "Hsp60",
+      "symbol": "Hsp60B",
+      "gene": "FBgn0011244",
+      "contrast": "2L",
+      "present": false
+    },
+    {
+      "requested": "Hsp60c",
+      "symbol": "Hsp60C",
+      "gene": "FBgn0031728",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2L",
+      "passes_primary_detection": false,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 2.3345722246072134,
+          "three_pool_log2_differences": [
+            2.3345722246072134,
+            2.3364362385509767,
+            -2.798027233319604
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 2.3334837657098113,
+          "three_pool_log2_differences": [
+            2.3465819462751956,
+            2.3334837657098113,
+            -2.7903912916372082
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 2.3129372883634147,
+          "three_pool_log2_differences": [
+            2.3129372883634147,
+            2.3588511382854565,
+            -2.8165631166386476
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 2.331333967211478,
+          "three_pool_log2_differences": [
+            2.3372598861847544,
+            2.331333967211478,
+            -2.7959722601875545
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 2.3341710315454636,
+          "three_pool_log2_differences": [
+            2.344867997187518,
+            2.3341710315454636,
+            -2.785542225326178
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Hsp60c",
+      "symbol": "Hsp60C",
+      "gene": "FBgn0031728",
+      "contrast": "X",
+      "present": false
+    },
+    {
+      "requested": "Hsp60c",
+      "symbol": "Hsp60C",
+      "gene": "FBgn0031728",
+      "contrast": "2L",
+      "present": false
+    },
+    {
+      "requested": "Sod2",
+      "symbol": "Sod2",
+      "gene": "FBgn0010213",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.3907715745331046,
+          "three_pool_log2_differences": [
+            -0.02113908721894653,
+            -0.4353053301027021,
+            -0.3907715745331046
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.383991865437336,
+          "three_pool_log2_differences": [
+            -0.0022040061971626557,
+            -0.4427421738225856,
+            -0.383991865437336
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.3162271897143327,
+          "three_pool_log2_differences": [
+            -0.06375584900518305,
+            -0.3162271897143327,
+            -0.3592757895072278
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.38645910500637903,
+          "three_pool_log2_differences": [
+            -0.02718245015666021,
+            -0.40642199646568145,
+            -0.38645910500637903
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.38462975874668714,
+          "three_pool_log2_differences": [
+            -0.02122741140487605,
+            -0.42246846936457594,
+            -0.38462975874668714
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Sod2",
+      "symbol": "Sod2",
+      "gene": "FBgn0010213",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.0620466918582494,
+          "three_pool_log2_differences": [
+            0.0412983970092764,
+            -0.0620466918582494,
+            -0.0847061437451
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.06102050758433286,
+          "three_pool_log2_differences": [
+            0.04165757455677266,
+            -0.06102050758433286,
+            -0.08444590106742922
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.13388493705332571,
+          "three_pool_log2_differences": [
+            -0.05046516772219789,
+            -0.13388493705332571,
+            -0.19595975360968332
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.008218612748326137,
+          "three_pool_log2_differences": [
+            0.08388833787883243,
+            -0.008218612748326137,
+            -0.04505028502497055
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.007018903974117308,
+          "three_pool_log2_differences": [
+            0.08391497719013508,
+            -0.007018903974117308,
+            -0.04505028578373249
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Sod2",
+      "symbol": "Sod2",
+      "gene": "FBgn0010213",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.2875823029756184,
+          "three_pool_log2_differences": [
+            -0.2875823029756184,
+            0.013736154948976065,
+            -0.34009937531781453
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.28746117747503597,
+          "three_pool_log2_differences": [
+            -0.28746117747503597,
+            0.013934344315485347,
+            -0.3399501866622696
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.3454651097925421,
+          "three_pool_log2_differences": [
+            -0.3454651097925421,
+            0.046662751488039333,
+            -0.37439569537065687
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.20001240137172793,
+          "three_pool_log2_differences": [
+            -0.20001240137172793,
+            0.06728136470465174,
+            -0.2747706950459179
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.19939126034791954,
+          "three_pool_log2_differences": [
+            -0.19939126034791954,
+            0.06832166220130098,
+            -0.2746854380588548
+          ]
+        }
+      }
+    },
+    {
+      "requested": "GTPx-1",
+      "symbol": "Gtpx",
+      "gene": "FBgn0035438",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3L",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.10390745889865016,
+          "three_pool_log2_differences": [
+            0.12469529368257604,
+            -0.31751858295913493,
+            -0.10390745889865016
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.09712788654467097,
+          "three_pool_log2_differences": [
+            0.14363047182757605,
+            -0.3249557748085756,
+            -0.09712788654467097
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.0724106915014886,
+          "three_pool_log2_differences": [
+            0.08207839594457056,
+            -0.19843547129273986,
+            -0.0724106915014886
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.09810411343502068,
+          "three_pool_log2_differences": [
+            0.10708734030292888,
+            -0.3144886645935969,
+            -0.09810411343502068
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.09552127838868785,
+          "three_pool_log2_differences": [
+            0.13229821300208044,
+            -0.3267607492724327,
+            -0.09552127838868785
+          ]
+        }
+      }
+    },
+    {
+      "requested": "GTPx-1",
+      "symbol": "Gtpx",
+      "gene": "FBgn0035438",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3L",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.030214950471640023,
+          "three_pool_log2_differences": [
+            -0.2788578293390138,
+            -0.030214950471640023,
+            -0.020685200503153922
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.029188737999520598,
+          "three_pool_log2_differences": [
+            -0.27849863843508693,
+            -0.029188737999520598,
+            -0.020424946464576266
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.13194317574031444,
+          "three_pool_log2_differences": [
+            -0.3706260139844595,
+            -0.1020554729843699,
+            -0.13194317574031444
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.06498432903511109,
+          "three_pool_log2_differences": [
+            -0.17604789690640743,
+            0.06498432903511109,
+            0.08837516757286679
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.06498432959421585,
+          "three_pool_log2_differences": [
+            -0.1760478984859244,
+            0.06498432959421585,
+            0.08674177710541642
+          ]
+        }
+      }
+    },
+    {
+      "requested": "GTPx-1",
+      "symbol": "Gtpx",
+      "gene": "FBgn0035438",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3L",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.14266497673156486,
+          "three_pool_log2_differences": [
+            -0.23700930419427912,
+            -0.14266497673156486,
+            0.01493780312881654
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.14246677819764564,
+          "three_pool_log2_differences": [
+            -0.23688817647810723,
+            -0.14246677819764564,
+            0.015087004665229387
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.1097362089874867,
+          "three_pool_log2_differences": [
+            -0.2948941001884524,
+            -0.1097362089874867,
+            -0.019359295434565382
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.06425618648436782,
+          "three_pool_log2_differences": [
+            -0.15446543517424516,
+            -0.06425618648436782,
+            0.07644779913691835
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.06459749642680634,
+          "three_pool_log2_differences": [
+            -0.15500771254536083,
+            -0.06459749642680634,
+            0.0763868574941089
+          ]
+        }
+      }
+    },
+    {
+      "requested": "pros",
+      "symbol": "pros",
+      "gene": "FBgn0004595",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -2.3231016598576613,
+          "three_pool_log2_differences": [
+            -2.6642206213159056,
+            -1.67143929965148,
+            -2.3231016598576613
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -2.3163212482629287,
+          "three_pool_log2_differences": [
+            -2.6452834791602537,
+            -1.67887717763921,
+            -2.3163212482629287
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -2.291601597519973,
+          "three_pool_log2_differences": [
+            -2.7068421878406195,
+            -1.5523453498109632,
+            -2.291601597519973
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -2.3277561483806632,
+          "three_pool_log2_differences": [
+            -2.640805206918875,
+            -1.6816010582530474,
+            -2.3277561483806632
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -2.3185683099820533,
+          "three_pool_log2_differences": [
+            -2.625459950067235,
+            -1.68739920364132,
+            -2.3185683099820533
+          ]
+        }
+      }
+    },
+    {
+      "requested": "pros",
+      "symbol": "pros",
+      "gene": "FBgn0004595",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.09464930523970949,
+          "three_pool_log2_differences": [
+            0.9025416168391054,
+            -0.7340554910945905,
+            -0.09464930523970949
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.0943890182900482,
+          "three_pool_log2_differences": [
+            0.9029008510757457,
+            -0.7330291609796049,
+            -0.0943890182900482
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.2059211840427757,
+          "three_pool_log2_differences": [
+            0.8107639057961791,
+            -0.8059045839892605,
+            -0.2059211840427757
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.017348450959126183,
+          "three_pool_log2_differences": [
+            1.0014297219850903,
+            -0.6222520838961927,
+            -0.017348450959126183
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.016790321692965904,
+          "three_pool_log2_differences": [
+            1.000592232524248,
+            -0.6214509572600022,
+            -0.016790321692965904
+          ]
+        }
+      }
+    },
+    {
+      "requested": "pros",
+      "symbol": "pros",
+      "gene": "FBgn0004595",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "3R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.4683488154301756,
+          "three_pool_log2_differences": [
+            -0.4451589249322758,
+            -0.4683488154301756,
+            -0.6481774088328898
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.4681505939961319,
+          "three_pool_log2_differences": [
+            -0.44503778676865835,
+            -0.4681505939961319,
+            -0.6480281909923526
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.5030501102461109,
+          "three_pool_log2_differences": [
+            -0.5030501102461109,
+            -0.43541662935514935,
+            -0.682478361904689
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.381283701140557,
+          "three_pool_log2_differences": [
+            -0.34414451054670536,
+            -0.381283701140557,
+            -0.574213891312219
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.38128370114312915,
+          "three_pool_log2_differences": [
+            -0.3442910776157291,
+            -0.38128370114312915,
+            -0.5744932335852653
+          ]
+        }
+      }
+    },
+    {
+      "requested": "dpn",
+      "symbol": "dpn",
+      "gene": "FBgn0010109",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.9107801247160179,
+          "three_pool_log2_differences": [
+            -0.9107801247160179,
+            -1.1237512301231778,
+            0.16792567443374473
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.8918894284200096,
+          "three_pool_log2_differences": [
+            -0.8918894284200096,
+            -1.131169177601457,
+            0.17468984236090623
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.9533045534196978,
+          "three_pool_log2_differences": [
+            -0.9533045534196978,
+            -1.0049183976141016,
+            0.19936920724236362
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.9167969222119083,
+          "three_pool_log2_differences": [
+            -0.9167969222119083,
+            -1.094964539776738,
+            0.1722290204251733
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.9108590913012096,
+          "three_pool_log2_differences": [
+            -0.9108590913012096,
+            -1.1109691635101715,
+            0.17405361144691245
+          ]
+        }
+      }
+    },
+    {
+      "requested": "dpn",
+      "symbol": "dpn",
+      "gene": "FBgn0010109",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.38252774760913066,
+          "three_pool_log2_differences": [
+            0.7315229671784191,
+            0.38252774760913066,
+            0.31807346548589255
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.38355098939552246,
+          "three_pool_log2_differences": [
+            0.7318811276938169,
+            0.38355098939552246,
+            0.31833309932941045
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.31085530911661596,
+          "three_pool_log2_differences": [
+            0.6400814631273102,
+            0.31085530911661596,
+            0.20711493900017075
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.43621549194746656,
+          "three_pool_log2_differences": [
+            0.7739939556218438,
+            0.43621549194746656,
+            0.3576158077509035
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.43741166368246454,
+          "three_pool_log2_differences": [
+            0.7740207247681123,
+            0.43741166368246454,
+            0.35761590717046854
+          ]
+        }
+      }
+    },
+    {
+      "requested": "dpn",
+      "symbol": "dpn",
+      "gene": "FBgn0010109",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2R",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.9264687020087017,
+          "three_pool_log2_differences": [
+            -0.9264687020087017,
+            0.365523574195306,
+            -1.117397073855674
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.9263475376459542,
+          "three_pool_log2_differences": [
+            -0.9263475376459542,
+            0.3657212884895822,
+            -1.1172487375369018
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.984215656374082,
+          "three_pool_log2_differences": [
+            -0.984215656374082,
+            0.3983373970502022,
+            -1.1516314841913902
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.8391654478438033,
+          "three_pool_log2_differences": [
+            -0.8391654478438033,
+            0.41893264966303967,
+            -1.0522679436884186
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.8385454075501153,
+          "three_pool_log2_differences": [
+            -0.8385454075501153,
+            0.4199706456740264,
+            -1.0521829034776697
+          ]
+        }
+      }
+    },
+    {
+      "requested": "wor",
+      "symbol": "wor",
+      "gene": "FBgn0001983",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2L",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.2039579811902552,
+          "three_pool_log2_differences": [
+            -0.8020818714622013,
+            -0.2039579811902552,
+            -0.018939537094928127
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.21139320607743173,
+          "three_pool_log2_differences": [
+            -0.7831536110020227,
+            -0.21139320607743173,
+            -0.012161324194874368
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.08490611102529044,
+          "three_pool_log2_differences": [
+            -0.8446846438634061,
+            -0.08490611102529044,
+            0.012551412894032055
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.19980984948433544,
+          "three_pool_log2_differences": [
+            -0.8191465522455417,
+            -0.19980984948433544,
+            -0.021031644652040882
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.20252273097137774,
+          "three_pool_log2_differences": [
+            -0.801765947846544,
+            -0.20252273097137774,
+            -0.00801486803087137
+          ]
+        }
+      }
+    },
+    {
+      "requested": "wor",
+      "symbol": "wor",
+      "gene": "FBgn0001983",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2L",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.28318596624919756,
+          "three_pool_log2_differences": [
+            -0.28318596624919756,
+            -0.007800418399433795,
+            -0.3777339299628686
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.28282692053830516,
+          "three_pool_log2_differences": [
+            -0.28282692053830516,
+            -0.0067746173934946086,
+            -0.37747379495678857
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.37492170616931375,
+          "three_pool_log2_differences": [
+            -0.37492170616931375,
+            -0.07961110311636332,
+            -0.4889490675885497
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.1622313637073045,
+          "three_pool_log2_differences": [
+            -0.1622313637073045,
+            0.07926690038932449,
+            -0.2736653153789561
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.16162503334123812,
+          "three_pool_log2_differences": [
+            -0.16162503334123812,
+            0.07983244786681176,
+            -0.27098506208769635
+          ]
+        }
+      }
+    },
+    {
+      "requested": "wor",
+      "symbol": "wor",
+      "gene": "FBgn0001983",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "2L",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": -0.17589184479097675,
+          "three_pool_log2_differences": [
+            -0.17589184479097675,
+            0.8349310404764179,
+            -0.33126508026956714
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": -0.17577074164058892,
+          "three_pool_log2_differences": [
+            -0.17577074164058892,
+            0.835129194416254,
+            -0.3311159276806048
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.23376312698734125,
+          "three_pool_log2_differences": [
+            -0.23376312698734125,
+            0.867841381711111,
+            -0.36555562080133797
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": -0.6160391576469326,
+          "three_pool_log2_differences": [
+            -0.6160391576469326,
+            0.359251852907553,
+            -0.8094364097552127
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": -0.6146747981945193,
+          "three_pool_log2_differences": [
+            -0.6146747981945193,
+            0.3594997427702058,
+            -0.8092250648292794
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Myc",
+      "symbol": "Myc",
+      "gene": "FBgn0262656",
+      "contrast": "CIN",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "X",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.014218032627034916,
+          "three_pool_log2_differences": [
+            0.014218032627034916,
+            -0.5341088068659143,
+            0.09407059628726877
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.03315414671241257,
+          "three_pool_log2_differences": [
+            0.03315414671241257,
+            -0.5415459907864228,
+            0.10085020332929773
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": -0.02840105526753156,
+          "three_pool_log2_differences": [
+            -0.02840105526753156,
+            -0.4150253202132408,
+            0.1255685458524365
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.035813038096288,
+          "three_pool_log2_differences": [
+            0.035813038096288,
+            -0.5754963516490861,
+            0.08723184698401276
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.055146583058863996,
+          "three_pool_log2_differences": [
+            0.055146583058863996,
+            -0.5752350564165862,
+            0.09307751530113428
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Myc",
+      "symbol": "Myc",
+      "gene": "FBgn0262656",
+      "contrast": "X",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "X",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 1.4687547339815197,
+          "three_pool_log2_differences": [
+            1.4339372454482486,
+            1.7214330658278367,
+            1.4687547339815197
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 1.46901500892913,
+          "three_pool_log2_differences": [
+            1.4342964459694159,
+            1.722459287612308,
+            1.46901500892913
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 1.357492719749974,
+          "three_pool_log2_differences": [
+            1.3421721306543137,
+            1.6495854885012786,
+            1.357492719749974
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 1.019844442297714,
+          "three_pool_log2_differences": [
+            0.9621825563149393,
+            1.3104601252854398,
+            1.019844442297714
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 1.0199863650065186,
+          "three_pool_log2_differences": [
+            0.9631626051429656,
+            1.3112947031704465,
+            1.0199863650065186
+          ]
+        }
+      }
+    },
+    {
+      "requested": "Myc",
+      "symbol": "Myc",
+      "gene": "FBgn0262656",
+      "contrast": "2L",
+      "present": true,
+      "mapping_ambiguous": false,
+      "chromosome": "X",
+      "passes_primary_detection": true,
+      "methods": {
+        "global_median": {
+          "median_log2_difference": 0.11629721771649848,
+          "three_pool_log2_differences": [
+            0.11629721771649848,
+            0.20721178712218347,
+            -0.18368279536344723
+          ]
+        },
+        "global_common_reference": {
+          "median_log2_difference": 0.11641834003967233,
+          "three_pool_log2_differences": [
+            0.11641834003967233,
+            0.20740998471102934,
+            -0.18353360439654054
+          ]
+        },
+        "library_sum": {
+          "median_log2_difference": 0.058412633667249025,
+          "three_pool_log2_differences": [
+            0.058412633667249025,
+            0.24013900934490984,
+            -0.21797870869092684
+          ]
+        },
+        "chromosome_median": {
+          "median_log2_difference": 0.15920157557897596,
+          "three_pool_log2_differences": [
+            0.15920157557897596,
+            0.307964177764255,
+            -0.08790784583917777
+          ]
+        },
+        "chromosome_common_reference": {
+          "median_log2_difference": 0.16137393721642113,
+          "three_pool_log2_differences": [
+            0.16137393721642113,
+            0.3084928661321129,
+            -0.0875821171564155
+          ]
+        }
+      }
+    }
+  ]
+}

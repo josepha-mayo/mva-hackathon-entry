@@ -1,0 +1,65 @@
+{
+  "public_downloads": [
+    {
+      "name": "GSE290206_rawcounts_AGonzalez.xlsx",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE290nnn/GSE290206/suppl/GSE290206_rawcounts_AGonzalez.xlsx",
+      "bytes": 660590,
+      "sha256": "8ca3791e8a69284403f41698ef9af3fa9efbe47b3978c6bcacd906f282a747e9"
+    },
+    {
+      "name": "GSE301548_rawcounts_lbarrio_brain.xlsx",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE301nnn/GSE301548/suppl/GSE301548_rawcounts_lbarrio_brain.xlsx",
+      "bytes": 899003,
+      "sha256": "d35eb3c42787a2137bfe453a32b2fc9772e602eeee69a2ca46e154be92993b18"
+    },
+    {
+      "name": "GSE290206_family.soft.gz",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE290nnn/GSE290206/soft/GSE290206_family.soft.gz",
+      "bytes": 3236,
+      "sha256": "7dbcea4156815fe72cf07f1be84c852f173af0808cccb105a98f2d4f89c8459a",
+      "decoded_name": "GSE290206_family.soft.txt",
+      "decoded_sha256": "3fb83551ebff9ba6a1640afb7b572e02765ae0d3c2c86578112ca0086d717899",
+      "decoded_bytes": 22710
+    },
+    {
+      "name": "GSE301548_family.soft.gz",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE301nnn/GSE301548/soft/GSE301548_family.soft.gz",
+      "bytes": 3826,
+      "sha256": "b52f15c902cac70da59504bd34659ab9fc4823ab876cac325f73016d01b1f1aa",
+      "decoded_name": "GSE301548_family.soft.txt",
+      "decoded_sha256": "15459700f0b711325a82763e0c42f0be0bbecdfccbf9dd01570fc8f4814813a6",
+      "decoded_bytes": 51194
+    }
+  ],
+  "annotation": {
+    "source_url": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Invertebrates/Drosophila_melanogaster.gene_info.gz",
+    "source_gzip_sha256": "89b8f8a18fb6587a615461d175b67a947311dc182448826c90490b8f03f79999",
+    "source_gzip_bytes": 1402920,
+    "source_row_count": 25079,
+    "projection_row_count": 14073,
+    "fields": [
+      "GeneID",
+      "Symbol",
+      "Synonyms",
+      "chromosome",
+      "dbXrefs"
+    ],
+    "projection_sha256": "27926d175620d4a4123769c873d1bb3bdac5a025569aaf795b2f3bf30fa7dc05",
+    "projection_bytes": 1629865,
+    "deposited_gene_count": 14150,
+    "unmapped_deposited_gene_count": 77,
+    "all_deposited_gene_mapping_lists_preserved": true,
+    "all_effective_fixed_panel_match_lists_preserved": true,
+    "selection": "Keep every original row with any deposited FBgn cross-reference or any canonical/alias match to a fixed panel label. Preserve source row order and all five complete fields, without deduplication.",
+    "original_counting_annotation_release": "Unknown. This frozen NCBI snapshot is not asserted to be the original counting annotation.",
+    "rolling_source_download_required": false
+  },
+  "paper": "https://doi.org/10.1038/s41467-026-70521-0",
+  "supplement_bundle": {
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13121444/supplementaryFiles?inlineImages=false",
+    "sha256": "da05583194a0a283ef04884e3581a05285935385f5dc9ae40c22f6a5d1b26ab2",
+    "bytes": 13558079,
+    "downloaded_by_capsule": false
+  },
+  "download_policy": "The acquisition script downloads only the four fixed public GEO URLs; it does not download sequencing reads or a rolling annotation."
+}

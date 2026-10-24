@@ -1,0 +1,105 @@
+{
+  "completed_utc": "2026-10-24T14:40:28.147249+00:00",
+  "status": "verified_posthoc_extension",
+  "scientific_interpretation": "Conditional omission summaries cross zero. Prior normalization/filter sign stability does not establish biological direction. These are not confidence intervals or preregistered results.",
+  "method_audit": {
+    "full_data_factors_held_fixed": true,
+    "common_reference_held_fixed": true,
+    "detection_held_fixed": true,
+    "same_frozen_genes": 5599,
+    "factor_refit_after_omission": false,
+    "CPM_refilter_after_omission": false,
+    "omission_combinations_per_comparison": 9,
+    "retained_summary": "Median of two paired effects; equals their mean.",
+    "independent_cross_series_omission_choices": true,
+    "frozen_gene_ids_sha256": "2f0ddcce559ca0f16d79154e206bccfe3dd96c7939ff0c8dbd93e70a442483a4"
+  },
+  "scientific_keys_exactly_equal_to_reviewer": [
+    "genes",
+    "within_contrast_pairwise_rank_correlations",
+    "leave_one_pool_pair_out_correlations"
+  ],
+  "numeric_correlations_matched": 27,
+  "script_execution": {
+    "type": "POST HOC conditional reviewer diagnostic; not preregistered",
+    "genes": 5599,
+    "within_CIN": {
+      "4-5": 0.03295680439889109,
+      "4-6": 0.26785029224252477,
+      "5-6": 0.29998970662134083
+    },
+    "conditional_omission_ranges": {
+      "X": {
+        "min": -0.34141814004835874,
+        "max": 0.16466987845273895
+      },
+      "2L": {
+        "min": -0.09832336463202594,
+        "max": 0.294598194255554
+      }
+    },
+    "verified_against_shipped_result": true
+  },
+  "original_reviewer_script_sha256": "e556a248d31490fd1b65db7aa771e7c90f44dab5e3ab6e2bef2d1daf3fd26d98",
+  "original_reviewer_result_sha256": "9b7863b5649577412061e5d30fab32b4889863a332846c2c5440e151b3574f6a",
+  "portable_result_sha256": "2f5666273968745d4bc7a0ee610b4d4391a0376ec42ddff1591385bf63c46a8a",
+  "portable_result_has_machine_specific_paths": false,
+  "input_mismatch_guard": {
+    "failed_closed": true,
+    "wrong_input_preserved": true,
+    "output_created": false
+  },
+  "primary_files_unchanged": {
+    ".gitignore": "c8c6ca325307412b51d3cdc89dce8da3fdc10b868da0d96ba20d571f9e0a41ba",
+    "analysis/public_cin/acquire_inputs.py": "dd1fec1eeb2562cd3a59d26cebdb2814c0674a338f1224f43e273d101b2e3c3a",
+    "analysis/public_cin/compare_public_cin_counts.py": "c10e224ec90b7e6051a8702f639b55854f0e9da4601e7ec4dbaeb65079b02443",
+    "analysis/public_cin/verify_results.py": "f17a09419eb8f8a8e325d0226fb690c038565b148c49d2385219a480e4efccce",
+    "fixtures/public_cin/annotation-projection-provenance.json": "3089c95345703b48761199d68613b00ba74cce3ec4509fdb93d184e8ed7da62f",
+    "fixtures/public_cin/gene_info_projection.tsv": "27926d175620d4a4123769c873d1bb3bdac5a025569aaf795b2f3bf30fa7dc05",
+    "fixtures/public_cin/primary_background_gene_ids.txt": "2f0ddcce559ca0f16d79154e206bccfe3dd96c7939ff0c8dbd93e70a442483a4",
+    "fixtures/public_cin/sources.json": "1b57aaa5d3298e53e88df5753f38be2a4f75ca3eccb8be0d725aeb1b5e792dbc",
+    "fixtures/public_cin/unmapped_deposited_FBgn.txt": "befa990da1206eca9c48ce071c3502c073c641b91aee45f5ba61900c66dbfa34",
+    "provenance/public_cin/capsule-adaptation.json": "bf8d21455515737fe8f8d4c9ecb71f33291cc1ffdde57b0d7830d98793c64492",
+    "provenance/public_cin/run01/analysis-plan.md": "18cdc840cefcada0a2b7bc3c1c4449d525aabf691ef4654932495496380fc092",
+    "provenance/public_cin/run01/compare_public_cin_counts.py.txt": "935822b786da7fa268f453eac80861f1c40dce785f8db19b7af025d55ee30c1c",
+    "provenance/public_cin/run01/descriptive-results.json": "c73869023cd6bb1ac4dba0b8c36a1397e541874fb45add6a075476a8df4190d2",
+    "provenance/public_cin/run02/analysis-plan.md": "ba2935dc9ae18f46dfa1117023e00d501dc4b1bcc4ec5369ceec3092ddbd2328",
+    "provenance/public_cin/run02/compare_public_cin_counts.py.txt": "b751cd43832c3c51aa26ad1b01a2649e8802fb773717d6f2f10f8c474d67f956",
+    "provenance/public_cin/run02/descriptive-results.json": "316a80379df02d227385eeaa5aa8e96ddebf77040e24182196d9d495cc69c263",
+    "provenance/public_cin/source-table-ID-conflicts.json": "95bef1466a84b07bb1b8b89b1c10fba8ca29478a1ba5353d8ee23537874ad6b7",
+    "requirements-public-cin.txt": "7e7b4c990605a5f7fe85702bf01bae0a62800c1b9b6b73c5a882fa4d1eab4f53",
+    "results/public_cin/run02-summary.json": "ca095215c8694a227c1f7395d4b01b37251c1eaf21a792ed6d4dc60f364da875",
+    "verification/public_cin-verification.json": "bbdfdd4f41966add5ab250b9ad5d383fd71c71c9c04ead8ac3b1d8a2b88f1aad"
+  },
+  "changes": {
+    "modified_existing": [
+      "README.md",
+      "docs/public-cin-methods-and-audit.md"
+    ],
+    "added": [
+      "analysis/public_cin/posthoc_pool_sensitivity.py",
+      "docs/public-cin-posthoc-pool-sensitivity.md",
+      "results/public_cin/posthoc-pool-sensitivity.json",
+      "provenance/public_cin/posthoc-diagnostic-origin.json",
+      "provenance/public_cin/capsule-manifest-before-posthoc.json",
+      "verification/public_cin-posthoc-verification.json"
+    ],
+    "refreshed": [
+      "manifest.json",
+      "manifest.sha256"
+    ]
+  },
+  "rapamycin_capsule_prose_check": {
+    "scope": "Capsule Markdown files only",
+    "existing_rapamycin_endpoint_claims_found": false,
+    "endpoint_correction_needed": false,
+    "new_intervention_claims_added": false
+  },
+  "figure_check": {
+    "figures_or_plot_code_previously_shipped": false,
+    "replacement_needed": false
+  },
+  "no_original_reviewer_or_parent_study_files_modified": true,
+  "publication_performed": false,
+  "scope": "Listed post hoc extension and preservation of listed primary capsule files; not a global repository, privacy or history review."
+}

@@ -1,0 +1,154 @@
+{
+  "source": "Supplementary Data 1, 41467_2026_70521_MOESM3_ESM.xlsx",
+  "source_sha256": "e1c6577ae516201a3ac8c483f903188f2b5b4aace991ea843af70a3ee2510173",
+  "source_bundle": {
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13121444/supplementaryFiles?inlineImages=false",
+    "sha256": "da05583194a0a283ef04884e3581a05285935385f5dc9ae40c22f6a5d1b26ab2",
+    "bytes": 13558079,
+    "downloaded_by_capsule": false
+  },
+  "internal_check": {
+    "symbols_present_in_both_sheets": 61,
+    "same_symbol_different_FBgn": 27,
+    "same_symbol_different_chromosome": 0,
+    "same_symbol_matching_P_and_FC": 61,
+    "examples": [
+      {
+        "symbol": "Adk3",
+        "strict": {
+          "gene": "FBgn0026602",
+          "chromosome": "2R",
+          "adjusted_p": 8.99990756846813e-11,
+          "fold_change": 2.68125849054748
+        },
+        "broad": {
+          "gene": "FBgn0035770",
+          "chromosome": "2R",
+          "adjusted_p": 8.99990756846813e-11,
+          "fold_change": 2.68125849054748
+        }
+      },
+      {
+        "symbol": "CG12224",
+        "strict": {
+          "gene": "FBgn0037974",
+          "chromosome": "3R",
+          "adjusted_p": 0.00163746434991248,
+          "fold_change": 6.22619612219122
+        },
+        "broad": {
+          "gene": "FBgn0033153",
+          "chromosome": "3R",
+          "adjusted_p": 0.00163746434991248,
+          "fold_change": 6.22619612219122
+        }
+      },
+      {
+        "symbol": "CG14275",
+        "strict": {
+          "gene": "FBgn0032022",
+          "chromosome": "2L",
+          "adjusted_p": 0.00812966393112714,
+          "fold_change": 1.61362132553731
+        },
+        "broad": {
+          "gene": "FBgn0038455",
+          "chromosome": "2L",
+          "adjusted_p": 0.00812966393112714,
+          "fold_change": 1.61362132553731
+        }
+      },
+      {
+        "symbol": "CG15784",
+        "strict": {
+          "gene": "FBgn0029766",
+          "chromosome": "X",
+          "adjusted_p": 0.000815140770412279,
+          "fold_change": 3.26807993714313
+        },
+        "broad": {
+          "gene": "FBgn0039098",
+          "chromosome": "X",
+          "adjusted_p": 0.000815140770412279,
+          "fold_change": 3.26807993714313
+        }
+      },
+      {
+        "symbol": "CG18278",
+        "strict": {
+          "gene": "FBgn0033836",
+          "chromosome": "2R",
+          "adjusted_p": 3.10233539607829e-15,
+          "fold_change": 4.05177716688779
+        },
+        "broad": {
+          "gene": "FBgn0262532",
+          "chromosome": "2R",
+          "adjusted_p": 3.10233539607829e-15,
+          "fold_change": 4.05177716688779
+        }
+      },
+      {
+        "symbol": "CG30059",
+        "strict": {
+          "gene": "FBgn0260475",
+          "chromosome": "2R",
+          "adjusted_p": 5.41905282234066e-15,
+          "fold_change": 3.39646820344225
+        },
+        "broad": {
+          "gene": "FBgn0032598",
+          "chromosome": "2R",
+          "adjusted_p": 5.41905282234066e-15,
+          "fold_change": 3.39646820344225
+        }
+      },
+      {
+        "symbol": "CG31676",
+        "strict": {
+          "gene": "FBgn0051676",
+          "chromosome": "2L",
+          "adjusted_p": 0.00669069084273892,
+          "fold_change": 1.96899817752637
+        },
+        "broad": {
+          "gene": "FBgn0036995",
+          "chromosome": "2L",
+          "adjusted_p": 0.00669069084273892,
+          "fold_change": 1.96899817752637
+        }
+      },
+      {
+        "symbol": "CG3397",
+        "strict": {
+          "gene": "FBgn0037975",
+          "chromosome": "3R",
+          "adjusted_p": 0.00137560746093771,
+          "fold_change": 9.36460372219675
+        },
+        "broad": {
+          "gene": "FBgn0033836",
+          "chromosome": "3R",
+          "adjusted_p": 0.00137560746093771,
+          "fold_change": 9.36460372219675
+        }
+      }
+    ]
+  },
+  "example": {
+    "stricter_sheet": "P VALUE 0.01, FC~1.5 ",
+    "stricter_cells": {
+      "B8": "FBgn0013278",
+      "C8": "Hsp70Bb",
+      "D8": "3R"
+    },
+    "broader_sheet": "P VALUE 0.05, FC 1.25",
+    "broader_cells": {
+      "B6": "FBgn0260475",
+      "C6": "Hsp70Bb",
+      "D6": "3R"
+    },
+    "same_adjusted_P_and_FC": true
+  },
+  "cause": "Unknown; do not infer that other paper biology or GEO counts are invalid."
+}

@@ -1,0 +1,272 @@
+"""Descriptive public fly RNA-count contrasts; no drug or patient inference."""
+from pathlib import Path
+from datetime import datetime, timezone
+import csv
+import gzip
+import hashlib
+import io
+import json
+import os
+import platform
+import re
+import sys
+import numpy as np
+import openpyxl
+
+ROOT = Path(__file__).resolve().parent
+SOURCES = {
+    'GSE290206': ('GSE290206_rawcounts_AGonzalez.xlsx', '8ca3791e8a69284403f41698ef9af3fa9efbe47b3978c6bcacd906f282a747e9'),
+    'GSE301548': ('GSE301548_rawcounts_lbarrio_brain.xlsx', 'd35eb3c42787a2137bfe453a32b2fc9772e602eeee69a2ca46e154be92993b18'),
+}
+ANNOTATION_SHA = '89b8f8a18fb6587a615461d175b67a947311dc182448826c90490b8f03f79999'
+ARMS = ('X', '2L', '2R', '3L', '3R', '4')
+PANEL = ['bub3','Hsp70Ba','Hsp70Bb','Hsp70Bc','Hsp70Bbb','Hsp60','Hsp60c','Sod2','GTPx-1','pros','dpn','wor','Myc']
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def save_json(path, value):
+    with path.open('w', encoding='utf-8', newline='\n') as handle:
+        json.dump(value, handle, indent=2, allow_nan=False)
+        handle.write('\n'); handle.flush(); os.fsync(handle.fileno())
+
+def samples(accession):
+    text = (ROOT/(accession+'_family.soft.txt')).read_text(encoding='utf-8')
+    out = {}
+    for block in text.split('^SAMPLE = ')[1:]:
+        lines = block.splitlines()
+        single = {}
+        for line in lines[1:]:
+            if line.startswith('!Sample_description = Library name: '):
+                single['library'] = line.split('Library name: ',1)[1].strip()
+            if line.startswith('!Sample_title = '): single['title'] = line.split(' = ',1)[1]
+            if line.startswith('!Sample_characteristics_ch1 = '):
+                key,value = line.split(' = ',1)[1].split(': ',1)
+                single[key] = value
+        single['geo_sample'] = lines[0].strip()
+        assert all(k in single for k in ['library','genotype','batch','geo_sample'])
+        assert single['library'] not in out
+        out[single['library']] = single
+    return out
+
+def load_counts(accession):
+    filename, expected = SOURCES[accession]
+    path = ROOT/filename
+    assert sha(path)==expected, filename
+    book = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    assert len(book.sheetnames)==1
+    rows = list(book.active.values); book.close()
+    assert rows[0][0]=='gene'
+    libraries = list(rows[0][1:])
+    genes = [row[0] for row in rows[1:]]
+    assert len(genes)==len(set(genes)) and all(re.fullmatch(r'FBgn\d{7}',g) for g in genes)
+    values = np.array([row[1:] for row in rows[1:]], dtype=np.float64)
+    assert values.shape==(len(genes),len(libraries))
+    assert np.isfinite(values).all() and (values>=0).all() and (values==np.floor(values)).all()
+    metadata = samples(accession)
+    assert set(libraries)==set(metadata)
+    assert (values.sum(axis=0)>0).all()
+    return {'accession':accession,'genes':genes,'index':{g:i for i,g in enumerate(genes)},
+            'libraries':libraries,'counts':values,'samples':metadata,'source_sha256':expected}
+
+def annotation():
+    path = ROOT/'Drosophila_melanogaster.gene_info.gz'
+    assert sha(path)==ANNOTATION_SHA
+    rows = list(csv.DictReader(io.StringIO(gzip.decompress(path.read_bytes()).decode('utf-8')), delimiter='\t'))
+    mapped = {}
+    for row in rows:
+        for item in row['dbXrefs'].split('|'):
+            if item.startswith('FLYBASE:FBgn'):
+                mapped.setdefault(item.split(':',1)[1],[]).append(row)
+    return rows,mapped
+
+def contrast(data, case, control):
+    metadata = data['samples']; groups = {}
+    for library in data['libraries']:
+        record = metadata[library]
+        if record['genotype'] in [case,control]:
+            key=(record['batch'],record['genotype'])
+            assert key not in groups
+            groups[key]=library
+    batches = sorted({batch for batch,group in groups})
+    assert batches==['4','5','6']
+    pairs=[(groups[(batch,control)],groups[(batch,case)]) for batch in batches]
+    ordered=[library for pair in pairs for library in pair]
+    return {'name':case+'_vs_'+control,'genes':data['genes'],'index':data['index'],
+            'counts':data['counts'][:,[data['libraries'].index(x) for x in ordered]],
+            'pairs':pairs,'libraries':ordered,'accession':data['accession']}
+
+def factors(counts, method='median', reference=None):
+    if method=='library_sum':
+        result=counts.sum(axis=0)
+    else:
+        mask=(counts>0).all(axis=1)
+        if reference is not None: mask &= reference
+        assert mask.sum()>=20
+        selected=counts[mask]
+        geometric=np.exp(np.log(selected).mean(axis=1))
+        result=np.median(selected/geometric[:,None],axis=0)
+    assert np.isfinite(result).all() and (result>0).all()
+    return result/np.exp(np.log(result).mean())
+
+def effects(counts, size_factors):
+    normalized=counts/size_factors
+    pairs=np.log2(normalized[:,1::2]+.5)-np.log2(normalized[:,0::2]+.5)
+    return np.median(pairs,axis=1),pairs
+
+def ranks(values):
+    order=np.argsort(values,kind='stable'); result=np.empty(len(values),dtype=float)
+    start=0
+    while start<len(order):
+        end=start+1
+        while end<len(order) and values[order[end]]==values[order[start]]: end+=1
+        result[order[start:end]]=(start+end-1)/2
+        start=end
+    return result
+
+def describe(x,y):
+    assert len(x)==len(y) and np.isfinite(x).all() and np.isfinite(y).all()
+    return {'genes':len(x),'spearman_descriptive_rho':float(np.corrcoef(ranks(x),ranks(y))[0,1]),
+            'direction_agreement_fraction':float(np.mean(np.sign(x)==np.sign(y)))}
+
+def main():
+    datasets={key:load_counts(key) for key in SOURCES}
+    ann_rows,ann=annotation()
+    contrasts={
+        'CIN':contrast(datasets['GSE290206'],'CIN','ctrl'),
+        'X':contrast(datasets['GSE301548'],'CDXX','CDXY'),
+        '2L':contrast(datasets['GSE301548'],'T2L','C2L'),
+    }
+    common=sorted(set.intersection(*(set(c['genes']) for c in contrasts.values())))
+    common_positive={gene for gene in common if all((c['counts'][c['index'][gene]]>0).all() for c in contrasts.values())}
+    assert len(common)==8990 and len(common_positive)==8916
+    canonical={}
+    for row in ann_rows:
+        canonical.setdefault(row['Symbol'].casefold(),[]).append(row)
+    panel={}
+    for label in PANEL:
+        matches=canonical.get(label.casefold(),[])
+        mode='canonical'
+        if not matches:
+            mode='alias'
+            matches=[r for r in ann_rows if label.casefold() in {x.casefold() for x in r['Synonyms'].split('|')}]
+        panel[label]={'mapping_mode':mode,'ambiguous':len(matches)!=1,'candidates':[
+            {'symbol':r['Symbol'],'gene_id':r['GeneID'],'chromosome':r['chromosome'],
+             'flybase_ids':[x.split(':',1)[1] for x in r['dbXrefs'].split('|') if x.startswith('FLYBASE:FBgn')]}
+            for r in matches]}
+    provenance={
+        'completed_utc':datetime.now(timezone.utc).isoformat(),
+        'script_sha256':sha(Path(__file__)), 'plan_sha256':sha(ROOT/'analysis-plan.md'),
+        'python':sys.version,'numpy':np.__version__,'openpyxl':openpyxl.__version__,
+        'platform':platform.platform(),'annotation_sha256':ANNOTATION_SHA,
+        'source_sha256':{k:v['source_sha256'] for k,v in datasets.items()},
+        'soft_metadata_sha256':{k:sha(ROOT/(k+'_family.soft.txt')) for k in SOURCES},
+        'common_rows':len(common),'positive_in_all_18_libraries':len(common_positive),
+        'cpm_denominator':'sum of deposited workbook counts; not total mapped reads',
+        'replication_unit':'three matched collection-day pools per condition, each containing three brains',
+        'estimand':'median of three matched-pool log2 normalized-count differences, pseudocount 0.5',
+        'inference':'descriptive only; no P values, DESeq2 reproduction, drug response or patient inference',
+        'row_selection':'trisomy 8990 rows are a strict subset of CIN 14150; selection rule unresolved',
+        'revision':'run02 adds identical three-way-detected comparison universe after independent review; run01 retained',
+    }
+    summaries={}; arrays={}; qc={}; gene_rows=[]
+    for name,c in contrasts.items():
+        counts=c['counts']; genes=c['genes']
+        arms=[]
+        for gene in genes:
+            records=ann.get(gene,[])
+            assigned={r['chromosome'] for r in records}
+            arms.append(next(iter(assigned)) if len(assigned)==1 else ('ambiguous' if assigned else 'unmapped'))
+        arms=np.array(arms,dtype=object)
+        reference=np.array([gene in common_positive for gene in genes])
+        cpm=counts/counts.sum(axis=0)*1e6
+        detection={threshold:(cpm>=threshold).sum(axis=1)>=3 for threshold in [.5,1.,5.]}
+        qc[name]={
+            'accession':c['accession'],'gene_rows':len(genes),'ordered_libraries':c['libraries'],
+            'paired_libraries':c['pairs'],'sample_metadata':[datasets[c['accession']]['samples'][lib] for lib in c['libraries']],
+            'deposited_count_sums':counts.sum(axis=0).astype(int).tolist(),
+            'positive_all_six':int((counts>0).all(axis=1).sum()),
+            'common_row_count_fractions':(counts[[c['index'][g] for g in common]].sum(axis=0)/counts.sum(axis=0)).tolist(),
+            'chromosome_assignment_counts':{str(arm):int((arms==arm).sum()) for arm in sorted(set(arms))},
+            'detection_counts':{str(t):int(m.sum()) for t,m in detection.items()},
+        }
+        arrays[name]={'genes':genes,'arms':arms,'index':c['index'],'detection':detection,'methods':{}}
+        summaries[name]={}
+        for method in ['global_median','global_common_reference','library_sum','chromosome_median','chromosome_common_reference']:
+            pair=np.full((len(genes),3),np.nan); median=np.full(len(genes),np.nan); sf_record={}
+            if method.startswith('chromosome_'):
+                for arm in ARMS:
+                    selected=arms==arm
+                    local_reference=reference[selected] if method.endswith('common_reference') else None
+                    sf=factors(counts[selected],reference=local_reference)
+                    median[selected],pair[selected]=effects(counts[selected],sf)
+                    sf_record[arm]={'factors':sf.tolist(),'positive_reference_genes':int(((counts[selected]>0).all(axis=1)&(local_reference if local_reference is not None else True)).sum())}
+            else:
+                local_reference=reference if method=='global_common_reference' else None
+                sf=factors(counts,method='library_sum' if method=='library_sum' else 'median',reference=local_reference)
+                median,pair=effects(counts,sf)
+                sf_record={'factors':sf.tolist(),'positive_reference_genes':None if method=='library_sum' else int(((counts>0).all(axis=1)&(local_reference if local_reference is not None else True)).sum())}
+            arrays[name]['methods'][method]={'median':median,'pairs':pair}
+            summaries[name][method]={'size_factors':sf_record,'finite_effect_genes':int(np.isfinite(median).sum())}
+            for i,gene in enumerate(genes):
+                if np.isfinite(median[i]):
+                    symbols=sorted({r['Symbol'] for r in ann.get(gene,[])})
+                    gene_rows.append([name,method,gene,'|'.join(symbols),str(arms[i]),bool(detection[1.][i]),float(median[i]),*map(float,pair[i])])
+    comparisons=[]
+    for other in ['X','2L']:
+        a=arrays['CIN']; b=arrays[other]
+        shared=sorted(set(a['genes'])&set(b['genes']))
+        ia=np.array([a['index'][g] for g in shared]); ib=np.array([b['index'][g] for g in shared])
+        assert np.array_equal(a['arms'][ia],b['arms'][ib])
+        arms=a['arms'][ia]; nuclear=np.isin(arms,ARMS)
+        subsets={'covered_all':np.ones(len(shared),dtype=bool),'assigned_nuclear':nuclear,
+                 'off_dosage_nuclear':nuclear&(arms!=other),
+                 'common_off_X_and_2L':nuclear&(arms!='X')&(arms!='2L')}
+        for method in a['methods']:
+            x=a['methods'][method]['median'][ia]; y=b['methods'][method]['median'][ib]
+            finite=np.isfinite(x)&np.isfinite(y)
+            for threshold in [.5,1.,5.]:
+                detected=a['detection'][threshold][ia]&b['detection'][threshold][ib]
+                threeway=np.array([all(c['detection'][threshold][c['index'][gene]] for c in arrays.values()) for gene in shared])
+                for subset,mask in subsets.items():
+                    eligible=finite&detected&mask
+                    assert eligible.sum()>2
+                    comparisons.append({'comparison':'CIN_vs_'+other,'method':method,'cpm_threshold':threshold,
+                                        'subset':subset,**describe(x[eligible],y[eligible])})
+                eligible=finite&threeway&subsets['common_off_X_and_2L']
+                comparisons.append({'comparison':'CIN_vs_'+other,'method':method,'cpm_threshold':threshold,
+                                    'subset':'identical_threeway_detected_off_X_and_2L',**describe(x[eligible],y[eligible])})
+    shared_detection={}
+    for threshold in [.5,1.,5.]:
+        eligible=[gene for gene in common if all(c['detection'][threshold][c['index'][gene]] for c in arrays.values())]
+        shared_detection[str(threshold)]=len(eligible)
+    assert shared_detection['1.0']==8711
+    panel_effects=[]
+    for label,mapping in panel.items():
+        for candidate in mapping['candidates']:
+            for gene in candidate['flybase_ids']:
+                for name,c in arrays.items():
+                    if gene not in c['index']:
+                        panel_effects.append({'requested':label,'symbol':candidate['symbol'],'gene':gene,'contrast':name,'present':False})
+                        continue
+                    i=c['index'][gene]
+                    values={}
+                    for method,v in c['methods'].items():
+                        if np.isfinite(v['median'][i]):
+                            values[method]={'median_log2_difference':float(v['median'][i]),'three_pool_log2_differences':v['pairs'][i].tolist()}
+                    panel_effects.append({'requested':label,'symbol':candidate['symbol'],'gene':gene,'contrast':name,
+                        'present':True,'mapping_ambiguous':mapping['ambiguous'],'chromosome':candidate['chromosome'],
+                        'passes_primary_detection':bool(c['detection'][1.][i]),'methods':values})
+    result={'provenance':provenance,'input_qc':qc,'shared_detection_counts':shared_detection,
+            'normalization':summaries,'comparisons':comparisons,'fixed_panel_mapping':panel,'fixed_panel_effects':panel_effects}
+    save_json(ROOT/'descriptive-results.json',result)
+    with (ROOT/'all-gene-descriptive-effects.tsv').open('w',encoding='utf-8',newline='') as handle:
+        writer=csv.writer(handle,delimiter='\t',lineterminator='\n')
+        writer.writerow(['contrast','normalization','FlyBase_gene','symbols','chromosome','primary_detection','median_log2_difference','pool_4','pool_5','pool_6'])
+        writer.writerows(gene_rows); handle.flush(); os.fsync(handle.fileno())
+    print(json.dumps({'qc':{k:{x:v[x] for x in ['gene_rows','positive_all_six','detection_counts']} for k,v in qc.items()},
+                      'shared_detection':shared_detection,'primary_chromosome_background':[r for r in comparisons if r['cpm_threshold']==1. and r['method']=='chromosome_common_reference' and r['subset']=='identical_threeway_detected_off_X_and_2L'],
+                      'results_sha256':sha(ROOT/'descriptive-results.json'),'effects_sha256':sha(ROOT/'all-gene-descriptive-effects.tsv')},indent=2))
+
+if __name__=='__main__':
+    main()

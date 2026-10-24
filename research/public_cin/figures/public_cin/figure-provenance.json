@@ -1,0 +1,49 @@
+{
+  "shipped_svg": "figures/public_cin/cin-trisomy-relative-expression.svg",
+  "shipped_svg_sha256": "09b6620d4ed59367fbab4c4a3fdf51c9b12b3d870239708b17dbaf394355e893",
+  "shipped_svg_bytes": 91707,
+  "shipped_svg_origin": "Exact copy of the visually inspected source SVG; not a new scientific analysis.",
+  "original_plot_script_sha256": "94820ffb61ee2953ac86f392bf4b8dd1e8d2c225ab2fbb27e77e99784fb350e3",
+  "portable_plot_script": "analysis/public_cin/plot_public_cin_comparison.py",
+  "portable_plot_script_sha256": "0444a2050affa19f0afa5bcdeb5ee6c45c8149745c06c7b89d172bec2d610071",
+  "source_results_sha256": "316a80379df02d227385eeaa5aa8e96ddebf77040e24182196d9d495cc69c263",
+  "source_effects_sha256": "364d2840e4db304d13c5ff0626130dbc556757ad3d26a3e03178a9422bd849ca",
+  "original_posthoc_diagnostic_sha256": "9b7863b5649577412061e5d30fab32b4889863a332846c2c5440e151b3574f6a",
+  "portable_posthoc_diagnostic_sha256": "2f5666273968745d4bc7a0ee610b4d4391a0376ec42ddff1591385bf63c46a8a",
+  "original_render_runtime": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.5.4"
+  },
+  "regeneration_runtime": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.3.5"
+  },
+  "regenerated_svg_sha256": "d7ebdc2dfe029b9e4b9ffb89e48896cd17f9e250e0d49edc745cfdf5cf3ee38f",
+  "regenerated_svg_shipped": false,
+  "same_gene_universe": 5599,
+  "comparison_statistics": {
+    "X": {
+      "comparison": "CIN_vs_X",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": -0.1321923553537633,
+      "direction_agreement_fraction": 0.45150919807108414
+    },
+    "2L": {
+      "comparison": "CIN_vs_2L",
+      "method": "chromosome_common_reference",
+      "cpm_threshold": 1.0,
+      "subset": "identical_threeway_detected_off_X_and_2L",
+      "genes": 5599,
+      "spearman_descriptive_rho": 0.13988272078181202,
+      "direction_agreement_fraction": 0.5618860510805501
+    }
+  },
+  "labels_identical": true,
+  "rendering_identical_excluding_creation_metadata_and_generated_IDs": true,
+  "rendering_identical_with_inline_colourbar_pixel_comparison": true,
+  "source_visual_check": "Source PNG matching SHA16782b4f633c7666ec13c3d86ad60f40403e7daedd33e8c41fe0df5ae784568e was visually inspected for labels, caveat and clipping; the SVG was copied byte-for-byte.",
+  "output_policy": "Regenerated SVG and a path-sanitized figure manifest go under ignored data/public_cin/figures by default. No PNG/PDF or 20 MB TSV is shipped."
+}

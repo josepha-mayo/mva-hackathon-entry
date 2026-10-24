@@ -1,0 +1,26 @@
+{
+  "original_reviewer_script": "pool_sensitivity.py",
+  "original_reviewer_script_sha256": "e556a248d31490fd1b65db7aa771e7c90f44dab5e3ab6e2bef2d1daf3fd26d98",
+  "original_reviewer_result_sha256": "9b7863b5649577412061e5d30fab32b4889863a332846c2c5440e151b3574f6a",
+  "original_reviewer_result_utc": "2026-10-24T14:27:30.838373+00:00",
+  "original_reviewer_result_absolute_input_path_copied": false,
+  "reviewer_raw_validator_script_sha256": "eb4be9afcf9f651cc89118619064653a3ce9a9897a9be53325ffec2c14258132",
+  "reviewer_raw_validator_result_sha256": "0b531a654a72d4def9f487a682e2fd7016571f1ba1050002861f6d9e025028fe",
+  "reviewer_raw_validator_maximum_pool_effect_errors": {
+    "CIN": 7.105427357601002e-15,
+    "X": 3.552713678800501e-15,
+    "2L": 7.105427357601002e-15
+  },
+  "scope": "Reviewer implementations were inspected. Portable scientific values exactly match the original reviewer diagnostic. Raw validation summary corroborates full-data preprocessing and the same pool effects; original reviewer files were not executed or modified in place.",
+  "capsule_original_manifest_sha256": "2466814cac6444111a049018d6f99369e98be7e32202e98f7d4303c15000c405",
+  "new_script": "analysis/public_cin/posthoc_pool_sensitivity.py",
+  "new_script_sha256": "168ac4097b4da83772631dc51716924674ef3ca4224c1411468dfdde2bd78ac5",
+  "adaptation": "Same average-tie rank statistic, using the already verified NumPy rank helper instead of adding SciPy. Adds checksum/subset guards, portable paths, CLI and explicit held-fixed documentation.",
+  "held_fixed": {
+    "normalization": "Run02 chromosome_common_reference factors estimated from all six libraries per contrast, within nuclear arm.",
+    "reference": "8916 common genes positive in all 18 full-data libraries; chromosome-specific subsets remain fixed.",
+    "detection": "Full-data >=1 CPM in >=3/6 libraries for each of all three contrasts; no re-filtering after omission.",
+    "universe": "Same 5599 genes assigned to 2R,3L,3R,4 in every calculation.",
+    "other": "Annotation, pseudocount 0.5 and the exported pool_4/pool_5/pool_6 effects are unchanged."
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "created_utc": "2026-10-24T14:40:28.180070+00:00",
+  "purpose": "Locally staged public fly-count run02 capsule with a separately labelled POST HOC conditional pool diagnostic",
+  "verification_status": "primary_numerics_and_posthoc_extension_verified",
+  "interpretation_notice": "Pool omission crosses correlation signs; no robust biological direction or drug efficacy established. Ranges are not confidence intervals.",
+  "verification_files": [
+    {
+      "path": "verification/public_cin-verification.json",
+      "sha256": "bbdfdd4f41966add5ab250b9ad5d383fd71c71c9c04ead8ac3b1d8a2b88f1aad"
+    },
+    {
+      "path": "verification/public_cin-posthoc-verification.json",
+      "sha256": "9e37aafc2c106cc5c23d5ff209343ce637b087d031814693cca4dfbcaf3623d1"
+    }
+  ],
+  "previous_manifest": {
+    "path": "provenance/public_cin/capsule-manifest-before-posthoc.json",
+    "sha256": "2466814cac6444111a049018d6f99369e98be7e32202e98f7d4303c15000c405"
+  },
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 44,
+      "sha256": "c8c6ca325307412b51d3cdc89dce8da3fdc10b868da0d96ba20d571f9e0a41ba"
+    },
+    {
+      "path": "analysis/public_cin/acquire_inputs.py",
+      "bytes": 3201,
+      "sha256": "dd1fec1eeb2562cd3a59d26cebdb2814c0674a338f1224f43e273d101b2e3c3a"
+    },
+    {
+      "path": "analysis/public_cin/compare_public_cin_counts.py",
+      "bytes": 16673,
+      "sha256": "c10e224ec90b7e6051a8702f639b55854f0e9da4601e7ec4dbaeb65079b02443"
+    },
+    {
+      "path": "analysis/public_cin/posthoc_pool_sensitivity.py",
+      "bytes": 6212,
+      "sha256": "168ac4097b4da83772631dc51716924674ef3ca4224c1411468dfdde2bd78ac5"
+    },
+    {
+      "path": "analysis/public_cin/verify_results.py",
+      "bytes": 2922,
+      "sha256": "f17a09419eb8f8a8e325d0226fb690c038565b148c49d2385219a480e4efccce"
+    },
+    {
+      "path": "docs/public-cin-methods-and-audit.md",
+      "bytes": 6405,
+      "sha256": "5bd0c6c60453e257e67d33178eb92f8bb182f4332235e29f0286ba792a0c4774"
+    },
+    {
+      "path": "docs/public-cin-posthoc-pool-sensitivity.md",
+      "bytes": 4183,
+      "sha256": "8cf753ec427eb8b91e2da1a031a25e71cf216f16667e6ac9ae32dc0ed066d33b"
+    },
+    {
+      "path": "fixtures/public_cin/annotation-projection-provenance.json",
+      "bytes": 1105,
+      "sha256": "3089c95345703b48761199d68613b00ba74cce3ec4509fdb93d184e8ed7da62f"
+    },
+    {
+      "path": "fixtures/public_cin/gene_info_projection.tsv",
+      "bytes": 1629865,
+      "sha256": "27926d175620d4a4123769c873d1bb3bdac5a025569aaf795b2f3bf30fa7dc05"
+    },
+    {
+      "path": "fixtures/public_cin/primary_background_gene_ids.txt",
+      "bytes": 67188,
+      "sha256": "2f0ddcce559ca0f16d79154e206bccfe3dd96c7939ff0c8dbd93e70a442483a4"
+    },
+    {
+      "path": "fixtures/public_cin/sources.json",
+      "bytes": 3154,
+      "sha256": "1b57aaa5d3298e53e88df5753f38be2a4f75ca3eccb8be0d725aeb1b5e792dbc"
+    },
+    {
+      "path": "fixtures/public_cin/unmapped_deposited_FBgn.txt",
+      "bytes": 924,
+      "sha256": "befa990da1206eca9c48ce071c3502c073c641b91aee45f5ba61900c66dbfa34"
+    },
+    {
+      "path": "provenance/public_cin/capsule-adaptation.json",
+      "bytes": 2032,
+      "sha256": "bf8d21455515737fe8f8d4c9ecb71f33291cc1ffdde57b0d7830d98793c64492"
+    },
+    {
+      "path": "provenance/public_cin/capsule-manifest-before-posthoc.json",
+      "bytes": 4706,
+      "sha256": "2466814cac6444111a049018d6f99369e98be7e32202e98f7d4303c15000c405"
+    },
+    {
+      "path": "provenance/public_cin/posthoc-diagnostic-origin.json",
+      "bytes": 2143,
+      "sha256": "3a2d2bacd838af6bc17e09dbdff43cffb20c6d38110512ded4f03fcc1aa58df6"
+    },
+    {
+      "path": "provenance/public_cin/run01/analysis-plan.md",
+      "bytes": 4678,
+      "sha256": "18cdc840cefcada0a2b7bc3c1c4449d525aabf691ef4654932495496380fc092"
+    },
+    {
+      "path": "provenance/public_cin/run01/compare_public_cin_counts.py.txt",
+      "bytes": 15018,
+      "sha256": "935822b786da7fa268f453eac80861f1c40dce785f8db19b7af025d55ee30c1c"
+    },
+    {
+      "path": "provenance/public_cin/run01/descriptive-results.json",
+      "bytes": 127460,
+      "sha256": "c73869023cd6bb1ac4dba0b8c36a1397e541874fb45add6a075476a8df4190d2"
+    },
+    {
+      "path": "provenance/public_cin/run02/analysis-plan.md",
+      "bytes": 5268,
+      "sha256": "ba2935dc9ae18f46dfa1117023e00d501dc4b1bcc4ec5369ceec3092ddbd2328"
+    },
+    {
+      "path": "provenance/public_cin/run02/compare_public_cin_counts.py.txt",
+      "bytes": 15598,
+      "sha256": "b751cd43832c3c51aa26ad1b01a2649e8802fb773717d6f2f10f8c474d67f956"
+    },
+    {
+      "path": "provenance/public_cin/run02/descriptive-results.json",
+      "bytes": 136734,
+      "sha256": "316a80379df02d227385eeaa5aa8e96ddebf77040e24182196d9d495cc69c263"
+    },
+    {
+      "path": "provenance/public_cin/source-table-ID-conflicts.json",
+      "bytes": 4334,
+      "sha256": "95bef1466a84b07bb1b8b89b1c10fba8ca29478a1ba5353d8ee23537874ad6b7"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2931,
+      "sha256": "266690969a912900a7c7fa895adfe723d4af06f9d6c2ae0bb8cf7e324c5a9bfc"
+    },
+    {
+      "path": "requirements-public-cin.txt",
+      "bytes": 29,
+      "sha256": "7e7b4c990605a5f7fe85702bf01bae0a62800c1b9b6b73c5a882fa4d1eab4f53"
+    },
+    {
+      "path": "results/public_cin/posthoc-pool-sensitivity.json",
+      "bytes": 5096,
+      "sha256": "2f5666273968745d4bc7a0ee610b4d4391a0376ec42ddff1591385bf63c46a8a"
+    },
+    {
+      "path": "results/public_cin/run02-summary.json",
+      "bytes": 15739,
+      "sha256": "ca095215c8694a227c1f7395d4b01b37251c1eaf21a792ed6d4dc60f364da875"
+    },
+    {
+      "path": "verification/public_cin-posthoc-verification.json",
+      "bytes": 5740,
+      "sha256": "9e37aafc2c106cc5c23d5ff209343ce637b087d031814693cca4dfbcaf3623d1"
+    },
+    {
+      "path": "verification/public_cin-verification.json",
+      "bytes": 6887,
+      "sha256": "bbdfdd4f41966add5ab250b9ad5d383fd71c71c9c04ead8ac3b1d8a2b88f1aad"
+    }
+  ],
+  "file_count_excluding_manifest_and_companion": 28,
+  "bytes_excluding_manifest_and_companion": 2096269,
+  "manifest_exclusions": [
+    "manifest.json (hashed by manifest.sha256)",
+    "manifest.sha256 (checksum companion)"
+  ],
+  "generated_data_directory_not_shipped": "data/public_cin",
+  "external_publication_performed": false
+}

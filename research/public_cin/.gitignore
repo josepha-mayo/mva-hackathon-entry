@@ -1,0 +1,4 @@
+/data/public_cin/
+.venv/
+__pycache__/
+*.pyc

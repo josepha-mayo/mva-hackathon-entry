@@ -1,0 +1,112 @@
+{
+  "completed_utc": "2026-10-24T14:54:32.247845+00:00",
+  "status": "verified_plot_extension",
+  "no_new_biological_estimator": true,
+  "primary_results_and_all_listed_existing_protected_files_unchanged": {
+    ".gitignore": "c8c6ca325307412b51d3cdc89dce8da3fdc10b868da0d96ba20d571f9e0a41ba",
+    "analysis/public_cin/acquire_inputs.py": "dd1fec1eeb2562cd3a59d26cebdb2814c0674a338f1224f43e273d101b2e3c3a",
+    "analysis/public_cin/compare_public_cin_counts.py": "c10e224ec90b7e6051a8702f639b55854f0e9da4601e7ec4dbaeb65079b02443",
+    "analysis/public_cin/posthoc_pool_sensitivity.py": "168ac4097b4da83772631dc51716924674ef3ca4224c1411468dfdde2bd78ac5",
+    "analysis/public_cin/verify_results.py": "f17a09419eb8f8a8e325d0226fb690c038565b148c49d2385219a480e4efccce",
+    "docs/public-cin-methods-and-audit.md": "5bd0c6c60453e257e67d33178eb92f8bb182f4332235e29f0286ba792a0c4774",
+    "docs/public-cin-posthoc-pool-sensitivity.md": "8cf753ec427eb8b91e2da1a031a25e71cf216f16667e6ac9ae32dc0ed066d33b",
+    "fixtures/public_cin/annotation-projection-provenance.json": "3089c95345703b48761199d68613b00ba74cce3ec4509fdb93d184e8ed7da62f",
+    "fixtures/public_cin/gene_info_projection.tsv": "27926d175620d4a4123769c873d1bb3bdac5a025569aaf795b2f3bf30fa7dc05",
+    "fixtures/public_cin/primary_background_gene_ids.txt": "2f0ddcce559ca0f16d79154e206bccfe3dd96c7939ff0c8dbd93e70a442483a4",
+    "fixtures/public_cin/sources.json": "1b57aaa5d3298e53e88df5753f38be2a4f75ca3eccb8be0d725aeb1b5e792dbc",
+    "fixtures/public_cin/unmapped_deposited_FBgn.txt": "befa990da1206eca9c48ce071c3502c073c641b91aee45f5ba61900c66dbfa34",
+    "provenance/public_cin/capsule-adaptation.json": "bf8d21455515737fe8f8d4c9ecb71f33291cc1ffdde57b0d7830d98793c64492",
+    "provenance/public_cin/capsule-manifest-before-posthoc.json": "2466814cac6444111a049018d6f99369e98be7e32202e98f7d4303c15000c405",
+    "provenance/public_cin/posthoc-diagnostic-origin.json": "3a2d2bacd838af6bc17e09dbdff43cffb20c6d38110512ded4f03fcc1aa58df6",
+    "provenance/public_cin/run01/analysis-plan.md": "18cdc840cefcada0a2b7bc3c1c4449d525aabf691ef4654932495496380fc092",
+    "provenance/public_cin/run01/compare_public_cin_counts.py.txt": "935822b786da7fa268f453eac80861f1c40dce785f8db19b7af025d55ee30c1c",
+    "provenance/public_cin/run01/descriptive-results.json": "c73869023cd6bb1ac4dba0b8c36a1397e541874fb45add6a075476a8df4190d2",
+    "provenance/public_cin/run02/analysis-plan.md": "ba2935dc9ae18f46dfa1117023e00d501dc4b1bcc4ec5369ceec3092ddbd2328",
+    "provenance/public_cin/run02/compare_public_cin_counts.py.txt": "b751cd43832c3c51aa26ad1b01a2649e8802fb773717d6f2f10f8c474d67f956",
+    "provenance/public_cin/run02/descriptive-results.json": "316a80379df02d227385eeaa5aa8e96ddebf77040e24182196d9d495cc69c263",
+    "provenance/public_cin/source-table-ID-conflicts.json": "95bef1466a84b07bb1b8b89b1c10fba8ca29478a1ba5353d8ee23537874ad6b7",
+    "requirements-public-cin.txt": "7e7b4c990605a5f7fe85702bf01bae0a62800c1b9b6b73c5a882fa4d1eab4f53",
+    "results/public_cin/posthoc-pool-sensitivity.json": "2f5666273968745d4bc7a0ee610b4d4391a0376ec42ddff1591385bf63c46a8a",
+    "results/public_cin/run02-summary.json": "ca095215c8694a227c1f7395d4b01b37251c1eaf21a792ed6d4dc60f364da875",
+    "verification/public_cin-posthoc-verification.json": "9e37aafc2c106cc5c23d5ff209343ce637b087d031814693cca4dfbcaf3623d1",
+    "verification/public_cin-verification.json": "bbdfdd4f41966add5ab250b9ad5d383fd71c71c9c04ead8ac3b1d8a2b88f1aad"
+  },
+  "same_frozen_gene_ids": 5599,
+  "comparison_statistics_match_frozen_results": true,
+  "plot_statements_geometry_and_labels_unchanged": true,
+  "required_labels_verified": [
+    "Public fly-brain expression: full-cohort descriptive comparison",
+    "Descriptive Spearman \u03c1 = -0.132",
+    "Descriptive Spearman \u03c1 = 0.140",
+    "Same 5,599 genes",
+    "A separate post hoc check omitting collection-day pairs can reverse either correlation sign.",
+    "These are relative-expression summaries, not DESeq2 reproduction, drug response or patient benefit."
+  ],
+  "shipped_svg_sha256": "09b6620d4ed59367fbab4c4a3fdf51c9b12b3d870239708b17dbaf394355e893",
+  "regenerated_svg_sha256": "d7ebdc2dfe029b9e4b9ffb89e48896cd17f9e250e0d49edc745cfdf5cf3ee38f",
+  "canonical_svg_equal_without_metadata_and_generated_IDs": true,
+  "canonical_svg_equal_comparing_decoded_colourbar_pixels": true,
+  "no_machine_specific_paths_in_shipped_or_generated_svg": true,
+  "no_binary_PNG_PDF_files_shipped": true,
+  "generated_figure_manifest": {
+    "script_sha256": "0444a2050affa19f0afa5bcdeb5ee6c45c8149745c06c7b89d172bec2d610071",
+    "source_results_sha256": "316a80379df02d227385eeaa5aa8e96ddebf77040e24182196d9d495cc69c263",
+    "source_effects_sha256": "364d2840e4db304d13c5ff0626130dbc556757ad3d26a3e03178a9422bd849ca",
+    "posthoc_diagnostic_sha256": "2f5666273968745d4bc7a0ee610b4d4391a0376ec42ddff1591385bf63c46a8a",
+    "original_posthoc_diagnostic_sha256": "9b7863b5649577412061e5d30fab32b4889863a332846c2c5440e151b3574f6a",
+    "original_plot_script_sha256": "94820ffb61ee2953ac86f392bf4b8dd1e8d2c225ab2fbb27e77e99784fb350e3",
+    "logical_data_directory": "data/public_cin",
+    "path_note": "Only project-relative logical paths are serialized; --data-dir is not embedded.",
+    "matplotlib": "3.10.8",
+    "numpy": "2.3.5",
+    "same_gene_universe": 5599,
+    "comparison_statistics": {
+      "X": {
+        "comparison": "CIN_vs_X",
+        "method": "chromosome_common_reference",
+        "cpm_threshold": 1.0,
+        "subset": "identical_threeway_detected_off_X_and_2L",
+        "genes": 5599,
+        "spearman_descriptive_rho": -0.1321923553537633,
+        "direction_agreement_fraction": 0.45150919807108414
+      },
+      "2L": {
+        "comparison": "CIN_vs_2L",
+        "method": "chromosome_common_reference",
+        "cpm_threshold": 1.0,
+        "subset": "identical_threeway_detected_off_X_and_2L",
+        "genes": 5599,
+        "spearman_descriptive_rho": 0.13988272078181202,
+        "direction_agreement_fraction": 0.5618860510805501
+      }
+    },
+    "files": [
+      {
+        "path": "figures/cin-trisomy-relative-expression.svg",
+        "sha256": "d7ebdc2dfe029b9e4b9ffb89e48896cd17f9e250e0d49edc745cfdf5cf3ee38f",
+        "bytes": 91707
+      }
+    ]
+  },
+  "changes": {
+    "modified_existing": [
+      "README.md"
+    ],
+    "added": [
+      "analysis/public_cin/plot_public_cin_comparison.py",
+      "requirements-public-cin-plot.txt",
+      "figures/public_cin/cin-trisomy-relative-expression.svg",
+      "figures/public_cin/figure-provenance.json",
+      "docs/public-cin-figure.md",
+      "provenance/public_cin/capsule-manifest-before-plot.json",
+      "verification/public_cin-plot-verification.json"
+    ],
+    "refreshed": [
+      "manifest.json",
+      "manifest.sha256"
+    ]
+  },
+  "previous_manifest_sha256": "2e465fd5dbf2cd59e977114e599b4f49ea7f40835cadfb6eb2521658b9c06775",
+  "scope": "Public figure content, source metrics, labels and I/O adaptation; not a global privacy/history review.",
+  "external_publication_performed": false
+}

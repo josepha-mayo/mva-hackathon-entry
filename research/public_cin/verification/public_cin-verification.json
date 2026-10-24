@@ -1,0 +1,181 @@
+{
+  "completed_utc": "2026-10-24T14:21:18.834092+00:00",
+  "status": "verified",
+  "scope": "Listed public capsule inputs, I/O adaptation and regenerated scientific results only; no publication or global/history/privacy audit claim.",
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.3.5",
+    "openpyxl": "3.1.5"
+  },
+  "public_acquisition": [
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE290nnn/GSE290206/suppl/GSE290206_rawcounts_AGonzalez.xlsx",
+      "file": "GSE290206_rawcounts_AGonzalez.xlsx",
+      "bytes": 660590,
+      "sha256": "8ca3791e8a69284403f41698ef9af3fa9efbe47b3978c6bcacd906f282a747e9",
+      "acquisition": "fresh public HTTPS download verified in this task"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE301nnn/GSE301548/suppl/GSE301548_rawcounts_lbarrio_brain.xlsx",
+      "file": "GSE301548_rawcounts_lbarrio_brain.xlsx",
+      "bytes": 899003,
+      "sha256": "d35eb3c42787a2137bfe453a32b2fc9772e602eeee69a2ca46e154be92993b18",
+      "acquisition": "fresh public HTTPS download verified in this task"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE290nnn/GSE290206/soft/GSE290206_family.soft.gz",
+      "file": "GSE290206_family.soft.gz",
+      "bytes": 3236,
+      "sha256": "7dbcea4156815fe72cf07f1be84c852f173af0808cccb105a98f2d4f89c8459a",
+      "acquisition": "fresh public HTTPS download verified in this task"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE301nnn/GSE301548/soft/GSE301548_family.soft.gz",
+      "file": "GSE301548_family.soft.gz",
+      "bytes": 3826,
+      "sha256": "b52f15c902cac70da59504bd34659ab9fc4823ab876cac325f73016d01b1f1aa",
+      "acquisition": "fresh public HTTPS download verified in this task"
+    }
+  ],
+  "execution": [
+    {
+      "script": "analysis/public_cin/compare_public_cin_counts.py",
+      "returncode": 0,
+      "stdout": {
+        "qc": {
+          "CIN": {
+            "gene_rows": 14150,
+            "positive_all_six": 11243,
+            "detection_counts": {
+              "0.5": 9806,
+              "1.0": 9080,
+              "5.0": 7823
+            }
+          },
+          "X": {
+            "gene_rows": 8990,
+            "positive_all_six": 8947,
+            "detection_counts": {
+              "0.5": 8952,
+              "1.0": 8866,
+              "5.0": 7802
+            }
+          },
+          "2L": {
+            "gene_rows": 8990,
+            "positive_all_six": 8951,
+            "detection_counts": {
+              "0.5": 8944,
+              "1.0": 8855,
+              "5.0": 7747
+            }
+          }
+        },
+        "shared_detection": {
+          "0.5": 8904,
+          "1.0": 8711,
+          "5.0": 7588
+        },
+        "primary_chromosome_background": [
+          {
+            "comparison": "CIN_vs_X",
+            "method": "chromosome_common_reference",
+            "cpm_threshold": 1.0,
+            "subset": "identical_threeway_detected_off_X_and_2L",
+            "genes": 5599,
+            "spearman_descriptive_rho": -0.1321923553537633,
+            "direction_agreement_fraction": 0.45150919807108414
+          },
+          {
+            "comparison": "CIN_vs_2L",
+            "method": "chromosome_common_reference",
+            "cpm_threshold": 1.0,
+            "subset": "identical_threeway_detected_off_X_and_2L",
+            "genes": 5599,
+            "spearman_descriptive_rho": 0.13988272078181202,
+            "direction_agreement_fraction": 0.5618860510805501
+          }
+        ],
+        "results_sha256": "38ed14a3437ed60a9b76aa2152bc89b7b30ea2ce7a620f76556cc5e74c1663b8",
+        "effects_sha256": "364d2840e4db304d13c5ff0626130dbc556757ad3d26a3e03178a9422bd849ca"
+      }
+    },
+    {
+      "script": "analysis/public_cin/verify_results.py",
+      "returncode": 0,
+      "stdout": {
+        "scientific_keys_identical": [
+          "input_qc",
+          "shared_detection_counts",
+          "normalization",
+          "comparisons",
+          "fixed_panel_mapping",
+          "fixed_panel_effects"
+        ],
+        "panel_mapping_identical": true,
+        "effects_tsv_sha256": "364d2840e4db304d13c5ff0626130dbc556757ad3d26a3e03178a9422bd849ca",
+        "common_rows": 8990,
+        "common_positive_reference": 8916,
+        "primary_threeway_detection": 8711,
+        "identical_primary_background_genes": 5599,
+        "status": "verified"
+      }
+    }
+  ],
+  "unchanged_computational_helpers_AST": [
+    "samples",
+    "load_counts",
+    "contrast",
+    "factors",
+    "effects",
+    "ranks",
+    "describe"
+  ],
+  "annotation_projection": {
+    "source_url": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Invertebrates/Drosophila_melanogaster.gene_info.gz",
+    "source_gzip_sha256": "89b8f8a18fb6587a615461d175b67a947311dc182448826c90490b8f03f79999",
+    "source_gzip_bytes": 1402920,
+    "source_row_count": 25079,
+    "projection_row_count": 14073,
+    "fields": [
+      "GeneID",
+      "Symbol",
+      "Synonyms",
+      "chromosome",
+      "dbXrefs"
+    ],
+    "projection_sha256": "27926d175620d4a4123769c873d1bb3bdac5a025569aaf795b2f3bf30fa7dc05",
+    "projection_bytes": 1629865,
+    "deposited_gene_count": 14150,
+    "unmapped_deposited_gene_count": 77,
+    "all_deposited_gene_mapping_lists_preserved": true,
+    "all_effective_fixed_panel_match_lists_preserved": true,
+    "selection": "Keep every original row with any deposited FBgn cross-reference or any canonical/alias match to a fixed panel label. Preserve source row order and all five complete fields, without deduplication.",
+    "original_counting_annotation_release": "Unknown. This frozen NCBI snapshot is not asserted to be the original counting annotation.",
+    "rolling_source_download_required": false
+  },
+  "primary_background_gene_ids_sha256": "2f0ddcce559ca0f16d79154e206bccfe3dd96c7939ff0c8dbd93e70a442483a4",
+  "guards": {
+    "existing_mismatch": {
+      "failed_closed": true,
+      "corrupt_existing_file_preserved": true,
+      "network_calls": 0
+    },
+    "download_mismatch": {
+      "failed_closed": true,
+      "input_files_created": 0,
+      "simulated_URL": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE290nnn/GSE290206/suppl/GSE290206_rawcounts_AGonzalez.xlsx"
+    },
+    "verify_only_network_calls": 0
+  },
+  "default_generated_directory": "data/public_cin",
+  "generated_directory_ignored": true,
+  "tested_from_non_project_working_directory": true,
+  "regenerated_20MB_TSV_shipped": false,
+  "capsule_estimator_filter_changes": false,
+  "parent_original_code_plan_result_hashes_unchanged": {
+    "compare_public_cin_counts.py": true,
+    "analysis-plan.md": true,
+    "descriptive-results.json": true
+  }
+}

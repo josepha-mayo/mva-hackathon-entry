@@ -1,0 +1,143 @@
+{
+  "utc": "2026-10-24T14:36:39.033655+00:00",
+  "type": "POST HOC conditional reviewer diagnostic; not preregistered",
+  "input": "data/public_cin/all-gene-descriptive-effects.tsv",
+  "input_path_note": "Logical project-relative input; a supplied --data-dir path is deliberately not serialized.",
+  "input_sha256": "364d2840e4db304d13c5ff0626130dbc556757ad3d26a3e03178a9422bd849ca",
+  "script": "analysis/public_cin/posthoc_pool_sensitivity.py",
+  "script_sha256": "168ac4097b4da83772631dc51716924674ef3ca4224c1411468dfdde2bd78ac5",
+  "original_reviewer_script_sha256": "e556a248d31490fd1b65db7aa771e7c90f44dab5e3ab6e2bef2d1daf3fd26d98",
+  "frozen_gene_ids_sha256": "2f0ddcce559ca0f16d79154e206bccfe3dd96c7939ff0c8dbd93e70a442483a4",
+  "genes": 5599,
+  "held_fixed": {
+    "normalization": "Run02 chromosome_common_reference factors estimated from all six libraries per contrast, within nuclear arm.",
+    "reference": "8916 common genes positive in all 18 full-data libraries; chromosome-specific subsets remain fixed.",
+    "detection": "Full-data >=1 CPM in >=3/6 libraries for each of all three contrasts; no re-filtering after omission.",
+    "universe": "Same 5599 genes assigned to 2R,3L,3R,4 in every calculation.",
+    "other": "Annotation, pseudocount 0.5 and the exported pool_4/pool_5/pool_6 effects are unchanged."
+  },
+  "omission": "Independently omit one matched control/case collection-day pair from CIN and from the other contrast; enumerate all 3x3 combinations.",
+  "retained_summary": "Median of two remaining paired log2 effects, numerically their arithmetic mean.",
+  "within_contrast_pairwise_rank_correlations": {
+    "CIN": {
+      "4-5": 0.03295680439889109,
+      "4-6": 0.26785029224252477,
+      "5-6": 0.29998970662134083
+    },
+    "X": {
+      "4-5": 0.5273290760443827,
+      "4-6": 0.7399462030491697,
+      "5-6": 0.6639582654491525
+    },
+    "2L": {
+      "4-5": 0.3300273972819717,
+      "4-6": 0.6006741271535344,
+      "5-6": 0.2916297478108056
+    }
+  },
+  "leave_one_pool_pair_out_correlations": {
+    "X": {
+      "min": -0.34141814004835874,
+      "max": 0.16466987845273895,
+      "values": [
+        {
+          "drop_CIN_pair": "4",
+          "drop_other_pair": "4",
+          "rho": -0.3062975840366095
+        },
+        {
+          "drop_CIN_pair": "4",
+          "drop_other_pair": "5",
+          "rho": -0.34141814004835874
+        },
+        {
+          "drop_CIN_pair": "4",
+          "drop_other_pair": "6",
+          "rho": -0.3279666676718054
+        },
+        {
+          "drop_CIN_pair": "5",
+          "drop_other_pair": "4",
+          "rho": 0.16466987845273895
+        },
+        {
+          "drop_CIN_pair": "5",
+          "drop_other_pair": "5",
+          "rho": 0.014751268347737127
+        },
+        {
+          "drop_CIN_pair": "5",
+          "drop_other_pair": "6",
+          "rho": 0.07508241613085952
+        },
+        {
+          "drop_CIN_pair": "6",
+          "drop_other_pair": "4",
+          "rho": -0.21229698031034427
+        },
+        {
+          "drop_CIN_pair": "6",
+          "drop_other_pair": "5",
+          "rho": -0.32547707945911664
+        },
+        {
+          "drop_CIN_pair": "6",
+          "drop_other_pair": "6",
+          "rho": -0.2794377708444351
+        }
+      ]
+    },
+    "2L": {
+      "min": -0.09832336463202594,
+      "max": 0.294598194255554,
+      "values": [
+        {
+          "drop_CIN_pair": "4",
+          "drop_other_pair": "4",
+          "rho": -0.09832336463202594
+        },
+        {
+          "drop_CIN_pair": "4",
+          "drop_other_pair": "5",
+          "rho": 0.1200450430912313
+        },
+        {
+          "drop_CIN_pair": "4",
+          "drop_other_pair": "6",
+          "rho": -0.09830272806387627
+        },
+        {
+          "drop_CIN_pair": "5",
+          "drop_other_pair": "4",
+          "rho": 0.1751626104205659
+        },
+        {
+          "drop_CIN_pair": "5",
+          "drop_other_pair": "5",
+          "rho": 0.294598194255554
+        },
+        {
+          "drop_CIN_pair": "5",
+          "drop_other_pair": "6",
+          "rho": 0.1889102094528842
+        },
+        {
+          "drop_CIN_pair": "6",
+          "drop_other_pair": "4",
+          "rho": -0.04865516867185634
+        },
+        {
+          "drop_CIN_pair": "6",
+          "drop_other_pair": "5",
+          "rho": 0.2003932176687512
+        },
+        {
+          "drop_CIN_pair": "6",
+          "drop_other_pair": "6",
+          "rho": -0.002745383079513428
+        }
+      ]
+    }
+  },
+  "limitations": "Only three biological pools per condition. Full-data factors and feature selection are held fixed, so this is not a refitted pipeline or independent validation. The overlapping omission summaries are not new experiments, confidence intervals, P values or preregistered results. Sign changes preclude treating computational sign stability as robust biological direction. No drug, functional-rescue or patient-efficacy inference."
+}
