@@ -104,3 +104,4 @@
 /README.md text eol=lf
 /docs/redox_fork.md text eol=lf
 /release/redox-literature-review.json text eol=lf
+/research/public_cin/** -text
