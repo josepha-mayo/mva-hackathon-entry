@@ -14,16 +14,12 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "a901f4634585233c990388286c86e4291d9ee444058c69e32113abe92cd34c63",
-      "source_class": "Public primary literature, existing public entry and explicitly proposed research; no controlled participant payload",
-      "identifier_finding_count": 6,
-      "identifier_findings_sha256": "ae512260bb95604a56c4b15c61fc4c9a2eaa5e7f30f9dcaf7a00de97268e4e3b",
+      "sha256": "4852f1ea64fc5a54b2bdae5545f9dfda9c7a85db78846352dd714c208c8a4da0",
+      "source_class": "Current public primary-source research synthesis and exact previously reviewed public-analysis link",
+      "identifier_finding_count": 2,
+      "identifier_findings_sha256": "20879c80deed9fb621d358c2b171e2c896a77680847cdb985685594a9cd4866a",
       "retained_identifier_findings": [
-        "non-synthetic biological identifier 'BUBR1': public-source-review: README.md",
         "non-synthetic biological identifier 'GM21284': public-source-review: README.md",
-        "non-synthetic biological identifier 'STXBP1': public-source-review: README.md",
-        "non-synthetic biological identifier 'FGKOC1': public-source-review: README.md(rot13)",
-        "non-synthetic biological identifier 'OHOE1': public-source-review: README.md(rot13)",
         "non-synthetic biological identifier 'TZ21284': public-source-review: README.md(rot13)"
       ]
     },
@@ -1008,7 +1004,35 @@
         "non-synthetic biological identifier 'T21': public-source-review: reports/aurora_source_reanalysis.json(rot13)",
         "non-synthetic biological identifier 'T22': public-source-review: reports/aurora_source_reanalysis.json(rot13)"
       ]
-    },
+    }
+  ],
+  "additional_document_review_scope": "The annotation namespace document and current therapeutic case have separate exact-content reviews in release/therapeutic-literature-review.json. This identifier-only comparison cannot accept their retained nonidentifier diagnostics and excludes those paths.",
+  "scientific_attribution_corrections": [
+    {
+      "utc": "2026-10-24T14:21:31.300604+00:00",
+      "scope": "docs/therapeutic_hypothesis.md",
+      "previous_sha256": "0cfe9fc27cf5e11cc2fc90c6398f11c91e35cc92096c0aae4e8483fe89d2c21f",
+      "current_sha256": "8537a6244c729c136cf4e69b3ee4a6d94852ddf258396ac64cce51d0b6be2dbb",
+      "previous_statement": "Rapamycin increased neuroblast counts without restoring progeny counts or brain size.",
+      "corrected_statement": "Rapamycin increased neuroblast counts while measured brain-lobe area decreased; its effect on Pros-positive progeny was not reported in that comparison. Genetic autophagy enhancement did not restore progeny counts or brain size.",
+      "source_doi": "10.1038/s41467-026-70521-0",
+      "source_workbook_sha256": "4d73e1684479bf504c1957900f09a6ed378a6fa4040b8f6ab4b4b0d42db76271",
+      "source_sheet": "Figure S6",
+      "drug_Pros_endpoint_reported": false,
+      "source_means_NBs": [
+        23.58,
+        28.44
+      ],
+      "source_means_brain_area_um2": [
+        37719,
+        29698
+      ],
+      "qualification": "Root and independent Astra/max source inspection; lobe-level summaries, no new animal experiment or clinical inference.",
+      "legacy_policy_changed": false,
+      "all_history_privacy_pass_claimed": false
+    }
+  ],
+  "historical_identifier_only_reviews": [
     {
       "path": "docs/therapeutic_hypothesis.md",
       "sha256": "8537a6244c729c136cf4e69b3ee4a6d94852ddf258396ac64cce51d0b6be2dbb",
@@ -1163,30 +1187,32 @@
       ]
     }
   ],
-  "additional_document_review_scope": "docs/annotation_namespace_check.md has a separate exact-content offline review in release/therapeutic-literature-review.json; this identifier-only comparison does not claim to cover its retained binary-pattern diagnostics",
-  "scientific_attribution_corrections": [
+  "separate_exact_content_reviews": [
     {
-      "utc": "2026-10-24T14:21:31.300604+00:00",
-      "scope": "docs/therapeutic_hypothesis.md",
-      "previous_sha256": "0cfe9fc27cf5e11cc2fc90c6398f11c91e35cc92096c0aae4e8483fe89d2c21f",
-      "current_sha256": "8537a6244c729c136cf4e69b3ee4a6d94852ddf258396ac64cce51d0b6be2dbb",
-      "previous_statement": "Rapamycin increased neuroblast counts without restoring progeny counts or brain size.",
-      "corrected_statement": "Rapamycin increased neuroblast counts while measured brain-lobe area decreased; its effect on Pros-positive progeny was not reported in that comparison. Genetic autophagy enhancement did not restore progeny counts or brain size.",
-      "source_doi": "10.1038/s41467-026-70521-0",
-      "source_workbook_sha256": "4d73e1684479bf504c1957900f09a6ed378a6fa4040b8f6ab4b4b0d42db76271",
-      "source_sheet": "Figure S6",
-      "drug_Pros_endpoint_reported": false,
-      "source_means_NBs": [
-        23.58,
-        28.44
+      "path": "docs/therapeutic_hypothesis.md",
+      "sha256": "1572be02777ca15f32eb405e1b74de4e3d16e573b8398d9f6b2c88a8863c7313",
+      "review_manifest": "release/therapeutic-literature-review.json",
+      "retained_other_findings": [
+        "HGVS-like variant: public-source-review: docs/therapeutic_hypothesis.md",
+        "HGVS-like variant: public-source-review: docs/therapeutic_hypothesis.md(rot13)"
       ],
-      "source_means_brain_area_um2": [
-        37719,
-        29698
-      ],
-      "qualification": "Root and independent Astra/max source inspection; lobe-level summaries, no new animal experiment or clinical inference.",
+      "all_findings_sha256": "71d8a52fd14ea9b62cc6abae2bf2e908f75b9949d7855cd9607445a68d1f5d61",
+      "scope": "Exact current public citation content; no privacy allowance or all-history pass."
+    }
+  ],
+  "current_research_revisions": [
+    {
+      "utc": "2026-10-24T16:21:36.248832+00:00",
+      "working_report_sha256": "ad04f93d99cfb019bc93b072944c542870ceec0d2c04d48158c1ad9493767dfb",
+      "independent_transfer_reviewed_input_sha256": "b627357f629ecbb3f8b797eb884dafb7d36f9c6ecacf8005584122a2239cdc99",
+      "independent_transfer_review_json_sha256": "382dcfc1d1d96f54b3f393c8bdf02737dad583fbddedcbebd0999a67dd808e71",
+      "applied_findings": "F1-F4; exact additions and source qualifications retained",
+      "later_root_checks": "Existing programme rechecked; supporting analysis condensed; oral SLC6A1 physiology preprint checked directly, including spontaneous/evoked discordance. No new biological result.",
+      "public_projection_changes": "Research-status header, published SVG-relative link, omit submission-specific media bookkeeping, current reproducibility paragraph.",
+      "public_case_sha256": "1572be02777ca15f32eb405e1b74de4e3d16e573b8398d9f6b2c88a8863c7313",
       "legacy_policy_changed": false,
-      "all_history_privacy_pass_claimed": false
+      "all_history_cleared": false,
+      "clinical_benefit_demonstrated": false
     }
   ]
 }

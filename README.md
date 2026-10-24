@@ -1,26 +1,24 @@
-# Before the next faulty division
+# Preserving useful neural capacity
 
-**Phenylbutyrate to preserve useful neural capacity in BUB1B-associated MVA.**
+**Phenylbutyrate and ursodeoxycholic acid: separate research hypotheses for BUB1B-associated MVA.**
 
-We nominate phenylbutyrate (PBA) as a research candidate for cells whose useful function is limited by ongoing aneuploid protein stress. The intended benefit is preserved neural capacity in surviving cells. No drug rescue or clinical benefit in MVA has been demonstrated by this project.
+The intended benefit is usable function retained or recovered in surviving neural tissue. PBA could reduce reversible protein-quality injury; UDCA could preserve output downstream of incomplete protein disposal. Neither limiting lesion is established in this child, and neither medicine has demonstrated BUB1B neural rescue or clinical benefit in this project.
 
 ## Read the therapeutic case first
 
-The [current medicine hypothesis](docs/therapeutic_hypothesis.md) puts the proposed benefit, actual-drug evidence, realistic exposure and strongest counterevidence together. Human trisomic-neuron marker effects and functional rescue in other disorders motivate the candidate; they do not jointly establish useful BUB1B function at attainable neural exposure. A 2026 STXBP1 zebrafish negative and the randomized pediatric SMA negative remain beside the positives.
+The [current medicine hypotheses](docs/therapeutic_hypothesis.md) compare actual drug effects, functional negatives, timing, active-analyte exposure and long-term safety. PBA retains the closer human aneuploid-cell precedent; UDCA adds a distinct functional-protection precedent and tentative human brain pharmacodynamics. These are separate conditional nominations, without a combination proposal or a clinical winner.
 
-The two opportunities are separate: downstream preservation of neural function is the primary therapeutic hypothesis; increased functional supply of residual BUBR1 is conditional on a recoverable protein defect. A cycling-cell response cannot establish neural benefit or identify its molecular mediator. The [existing neural comparison](docs/neural_protection_comparison.md), [lineage and benefit qualification](docs/child_benefit_decision.md), and [measured-source exposure arithmetic](docs/exposure_time_audit.md) provide the supporting questions.
+The [existing-programme and benefit analysis](docs/child_benefit_decision.md), [neural comparison](docs/neural_protection_comparison.md) and [measured-source exposure arithmetic](docs/exposure_time_audit.md) retain supporting questions. The MVA Society's public programme descriptions do not establish material access or a published drug response in its MVA model.
 
-Fresh independent challenges retained fluoxetine/sFRP3, lithium, lamivudine, NAC, elamipretide and symptom-matched levacetylleucine as serious alternatives. Their useful functional observations and specific counterevidence are summarized in the therapeutic case. No phenotype-free clinical ranking or medicine combination is proposed.
-
-The [annotation namespace check](docs/annotation_namespace_check.md) explains why a published niflumic-acid “BUB1B activator” annotation is insufficient evidence for a drug hypothesis. A likely database identifier collision is an inference; the underlying ingestion defect was not traced.
+The [annotation namespace check](docs/annotation_namespace_check.md) explains why a published niflumic-acid “BUB1B activator” annotation is insufficient evidence for a medicine hypothesis. The underlying database-ingestion defect was not traced.
 
 ## Reproduce the supporting analyses
 
-The [public CIN count-analysis capsule](research/public_cin/README.md) provides fixed input hashes, portable code, a frozen annotation projection and independently reproduced descriptive results. Its separate post hoc pool-omission check can reverse the correlation signs; computational sensitivities do not establish stable biological direction or drug benefit. The capsule preserves its preparation-time snapshot and correction history. Exact-byte public-source review covers this component only; it does not clear older repository history.
+The [public CIN count-analysis capsule](research/public_cin/README.md) contains fixed input hashes, portable code, a frozen annotation projection and independently reproduced descriptive results. Its post hoc pool-omission check can reverse the correlation signs. Computational sensitivities do not establish stable biological direction, drug response or patient benefit. The exact-byte review covers this component; older repository history remains separate.
 
-The [Aurora workbook reproduction](docs/aurora_source_data.md) retains all 60 source percentages and distinguishes an imposed chromosome-alignment challenge from a separate mouse-survival abstract. The [synaptic-source audit](docs/nall_source_data_audit.md) preserves grouping and dispersion limitations. These executed analyses are public-source reproductions, not new MVA drug experiments.
+The [Aurora workbook reproduction](docs/aurora_source_data.md) retains all 60 source percentages and separates an imposed alignment challenge from a different mouse-survival abstract. The [synaptic-source audit](docs/nall_source_data_audit.md) preserves grouping/dispersion limitations. These analyses reproduce public measurements; they are not new MVA drug experiments.
 
-The [resource-specific first experiment](docs/first_informative_test.md) and [finite pilot](docs/finite_pilot.md) remain supporting cycling-cell proposals. GM21284's frameshift excludes it from a native L737Ter ataluren restoration claim. Resource access, assay competence and a qualified BUB1B neural pair remain unconfirmed.
+The [resource-specific first experiment](docs/first_informative_test.md) and [finite pilot](docs/finite_pilot.md) remain supporting cycling-cell proposals. GM21284's upstream frameshift excludes native L737Ter ataluren restoration claims. A cycling response cannot establish useful neural communication; resource access and competence remain unconfirmed.
 
 ## Supporting research and earlier audits
 
